@@ -1,0 +1,10 @@
+# private source material (Papermorph keeps it out of version control)
+*.pdf
+books/*/pages/
+books/*/source.md
+# upstream engine checkout and the skill itself
+engine/
+.claude/
+# working leftovers
+_to_delete/
+__pycache__/

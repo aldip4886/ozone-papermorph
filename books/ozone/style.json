@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "tier": "custom",
+  "book": {
+    "title": "Protecting the Ozone Layer",
+    "subtitle": "An introductory course on the international legal framework",
+    "slug": "ozone",
+    "language": "en",
+    "readers": "adult learners: officials, students and practitioners new to ozone law; no science background assumed",
+    "pilot": "ch01",
+    "source": "Introductory Course to the International Legal Framework on Ozone Layer Protection, course workbook (Ozone Secretariat / UNEP), Markdown copy at books/ozone/source.md",
+    "use": "open web; publishing openly needs the workbook owner's (Ozone Secretariat / UNEP) permission, which the user was told at intake"
+  },
+  "words": [
+    "Pilot: Lesson 1. Style: a mix (diagrams that change, with illustrated scenes where they help). Narration in English. For the open web.",
+    "Art: flat infographic drawn in code; the molecules are the characters (an O3 trio, a CFC, a chlorine atom that breaks ozone apart); no licensing worries on the open web.",
+    "Palette and voice: night-sky board (deep navy fading up to space), UV in violet, ozone in sky blue, ozone-depleting substances in warning orange, a clean sans-serif font, a calm US male voice (Andrew) at a slightly slow pace.",
+    "Shared pieces: all five (atmosphere cross-section, UV rays, molecules, globe with polar hole, treaty timeline).",
+    "ch01 storyboard: approved as shown ('go ahead')."
+  ],
+  "look": {
+    "palette": {
+      "board": "#0b1730",
+      "boardTop": "#050b1c",
+      "ink": "#eef3fb",
+      "dim": "#93a4c3",
+      "ground": "#1d3b2f"
+    },
+    "meaning": {
+      "uv": "#a77bff (violet; UV-C deepest #8a5cf6, UV-B #a77bff, UV-A #c9b3ff)",
+      "ozone": "#5cc8ff (sky blue: O3, the ozone layer band, healthy readings)",
+      "oxygen": "#9fe3ff (pale blue: O and O2)",
+      "ods": "#ff8a3d (warning orange: CFCs, halons, chlorine and bromine, depletion)",
+      "law": "#ffd166 (gold: treaties, dates, legal milestones)",
+      "good": "#5fd39a (green: recovery, right answers)"
+    },
+    "fonts": {
+      "text": "system UI sans-serif",
+      "math": "engine default (chemical formulas set with subscripts: O₃, O₂)"
+    },
+    "notation": "Chemical formulas with Unicode subscripts (O₃, CFC-11). Units with a space (10 km, 220 DU). Thousands with a no-break space (100 000). Say 'O three', 'Dobson units', 'kilometres' in narration."
+  },
+  "voice": {
+    "engine": "edge",
+    "voice": "en-US-AndrewNeural",
+    "rate": "-6%"
+  },
+  "pacing": {
+    "minutes": [
+      7,
+      11
+    ],
+    "checks": "two or three quick checks inside the lesson, a short practice set at the end built from the workbook's knowledge refresher"
+  },
+  "engine": {
+    "source": "DozenTwelve/Papermorph",
+    "ref": "engine-v2.12"
+  },
+  "models": {
+    "extract": "haiku",
+    "narration": "sonnet",
+    "picture": "opus",
+    "checks": "haiku",
+    "review": "sonnet",
+    "rework": "opus",
+    "register": "haiku"
+  },
+  "scenes": {
+    "art": "flat vector infographic on the night-sky board, drawn in code; no human cast: molecules are the characters (round atoms with a soft highlight, simple eyes only on the chlorine 'villain' and the ozone trio when they act)",
+    "cast": [
+      {
+        "name": "Ozone trio",
+        "look": "three sky-blue oxygen atoms in a bent chain",
+        "file": "site/ozone/lib/ozone.js"
+      },
+      {
+        "name": "Chlorine",
+        "look": "a larger orange atom marked Cl that knocks one atom off O3 and moves on",
+        "file": "site/ozone/lib/ozone.js"
+      },
+      {
+        "name": "CFC",
+        "look": "carbon centre with chlorine and fluorine atoms, orange-tinted",
+        "file": "site/ozone/lib/ozone.js"
+      }
+    ],
+    "storyboard": "the user reviews the layout sheet before motion in the pilot; later chapters self-check"
+  },
+  "components": [
+    {
+      "name": "atmosphere",
+      "file": "site/ozone/lib/ozone.js",
+      "what": "cross-section with altitude scale (km), troposphere / stratosphere bands, the ozone-layer band at 15–35 km"
+    },
+    {
+      "name": "uvRay",
+      "file": "site/ozone/lib/ozone.js",
+      "what": "UV-A, UV-B, UV-C rays that travel down and stop (absorbed) or pass at the depth their type allows"
+    },
+    {
+      "name": "molecule",
+      "file": "site/ozone/lib/ozone.js",
+      "what": "O, O₂, O₃, Cl, CFC built from atoms that can bond, split and move"
+    },
+    {
+      "name": "globe",
+      "file": "site/ozone/lib/ozone.js",
+      "what": "Earth seen over the South Pole with an ozone-hole patch whose area can grow and shrink by year"
+    },
+    {
+      "name": "timeline",
+      "file": "site/ozone/lib/ozone.js",
+      "what": "treaty timeline with gold milestone pins (1985, 1987, 1990, 2016 …) for lessons 2–5"
+    }
+  ],
+  "images": {
+    "sources": [
+      "drawn in code only (open web; no third-party images)"
+    ]
+  },
+  "approved": []
+}

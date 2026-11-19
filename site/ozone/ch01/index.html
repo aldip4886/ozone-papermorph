@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1 · Introduction to Ozone Depletion</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%235cc8ff%27/%3E%3C/svg%3E">
+<link rel="expect" href="#bar" blocking="render"><!-- hold the first frame until the player exists, so the page transition can run -->
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/ozone.js"></script>
+<script src="audio/en/timings.js"></script>
+<script>
+'use strict';
+const CHAPTER = { number: 1, title: 'Introduction to Ozone Depletion', minutes: 8, language: 'en' };
+
+/* ---------- chapter drawing helpers ---------- */
+const lbl = (p, str, x, y, t0, o = {}) => { const e = ozLabel(p, str, x, y, o); show(e, t0); return e; };
+const tag = (p, str, x, y, colr, t0, o = {}) => { const e = ozTag(p, str, x, y, colr, o); tw(e, { o: 1 }, t0, .4); return e; };
+// the ozone layer as a horizontal band across the stage (sunscreen, ground)
+function ozoneBand(p, y0, y1, { x0 = 0, x1 = 1600, o = 1 } = {}) {
+  const g = G(p, { o });
+  mk('rect', { x: x0, y: y0, width: x1 - x0, height: y1 - y0, fill: OZ.ozone, opacity: .16 }, g);
+  mk('rect', { x: x0, y: (y0 + y1) / 2 - (y1 - y0) * .22, width: x1 - x0, height: (y1 - y0) * .44, fill: OZ.ozone, opacity: .14 }, g);
+  let seed = 3, d = ''; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+  for (let i = 0; i < (x1 - x0) / 12; i++) { const dx = x0 + rnd() * (x1 - x0), dy = y0 + 6 + rnd() * (y1 - y0 - 12); d += `M${dx.toFixed(1)} ${dy.toFixed(1)}m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0`; }
+  ozBob(path(g, d, { fill: OZ.ozone, 'fill-opacity': .7, 'stroke-opacity': .7 }), { amp: 8, per: 7, key: 'x' });
+  return g;
+}
+// the atmosphere as laid out in 'layers' and 'q1' (one place, so the quick check shows the same picture)
+const ATM = { x: 260, y: 80, w: 740, h: 700, top: 60 };
+
+/* ---------- beats: [id, title, run(m, D), { ask }?] ---------- */
+const BEATS = [
+  ['intro', 'Introduction to ozone depletion', (m, D) => {
+    const p = panel(0);
+    // Earth's limb at the bottom, the ozone layer a thin glowing shell around it
+    const earth = G(p, { o: 0, y: 40 });
+    mk('circle', { cx: 800, cy: 2150, r: 1520, fill: OZ.ozone, opacity: .10 }, earth);
+    mk('circle', { cx: 800, cy: 2150, r: 1490, fill: OZ.ozone, opacity: .16 }, earth);
+    mk('circle', { cx: 800, cy: 2150, r: 1450, fill: OZ.sea }, earth);
+    path(earth, 'M380 760C470 720 560 712 640 724C700 700 780 702 820 716C900 700 1010 706 1080 730L1130 900H330Z', { fill: OZ.land, 'fill-opacity': .9, 'stroke-opacity': .9 });
+    tw(earth, { o: 1, y: 0 }, .1, 1.4, out);
+    sun(p, 1380, 150, 56, 1);
+    const g = G(p, { o: 0, y: 20 });
+    T(g, 'Lesson 1', { x: 800, y: 260, size: 30, fill: OZ.dim, anchor: 'middle', weight: 600 });
+    T(g, 'Introduction to Ozone Depletion', { x: 800, y: 350, size: 76, weight: 700, anchor: 'middle' });
+    tw(g, { o: 1, y: 0 }, .2, 1.1, out);
+    const sub = G(p, { o: 0 });
+    T(sub, 'what the ozone layer is · how it gets damaged · why it matters', { x: 800, y: 440, size: 32, fill: OZ.ozone, anchor: 'middle', weight: 550 });
+    show(sub, m('sub'), .8);
+  }],
+
+  ['layers', 'Where ozone is', (m) => {
+    const p = panel(0);
+    const A = atmosphere(p, ATM);
+    tw(A.space, { o: .6 }, .2, .6);
+    const lx = ATM.x + ATM.w + 40;
+    show(A.tropo, m('tropo'), .7);
+    lbl(p, 'Troposphere', lx, A.yAt(7), m('tropo', .2), { size: 34 });
+    lbl(p, 'from the ground to about 10–15 km', lx, A.yAt(7) + 36, m('tropo', .5), { size: 24, fill: OZ.dim, weight: 500 });
+    show(A.strato, m('strato'), .7);
+    lbl(p, 'Stratosphere', lx, A.yAt(46), m('strato', .2), { size: 34 });
+    lbl(p, 'up to about 50 km', lx, A.yAt(46) + 36, m('strato', .5), { size: 24, fill: OZ.dim, weight: 500 });
+    show(A.band, m('band'), .9);
+    lbl(p, 'The ozone layer', lx, A.yAt(26), m('band', .3), { size: 36, fill: OZ.ozone, weight: 700 });
+    lbl(p, 'about 15–35 km', lx, A.yAt(26) + 38, m('band', .6), { size: 24, fill: OZ.dim, weight: 500 });
+    const n90 = G(p, { x: ATM.x + ATM.w / 2, y: A.yAt(25) + 20, o: 0, s: .6 });
+    mk('rect', { x: -140, y: -52, width: 280, height: 76, rx: 38, fill: 'rgba(8,16,36,.78)' }, n90);
+    T(n90, '≈ 90 % of ozone', { y: 0, size: 36, fill: OZ.ozone, anchor: 'middle', weight: 750 });
+    pop(n90, m('ninety'));
+    const n10 = G(p, { x: ATM.x + ATM.w / 2, y: A.yAt(5) + 18, o: 0, s: .6 });
+    mk('rect', { x: -120, y: -46, width: 240, height: 66, rx: 33, fill: 'rgba(8,16,36,.7)' }, n10);
+    T(n10, '≈ 10 %', { y: 0, size: 32, fill: OZ.oxygen, anchor: 'middle', weight: 700 });
+    pop(n10, m('ten'));
+  }],
+
+  ['molecule', 'The ozone molecule', (m) => {
+    const p = panel(0);
+    sun(p, 150, 120, 50, 1);
+    const a = O2(p, 520, 430, { o: 0 }); put(a, { s: 1.6 });
+    const b = O2(p, 1080, 430, { o: 0 }); put(b, { s: 1.6 });
+    show(a, m('o2'), .5); show(b, m('o2', .4), .5);
+    const la = lbl(p, 'O₂ · oxygen', 520, 540, m('o2', .2), { size: 30, fill: OZ.oxygen, anchor: 'middle' });
+    const lb = lbl(p, 'O₂', 1080, 540, m('o2', .6), { size: 30, fill: OZ.oxygen, anchor: 'middle' });
+    hide(lb, m('o3'), .3);
+    // UV splits the left pair
+    const R = uvRay(p, 'C', 520, 130, 368, { label: false });
+    const uvt = lbl(p, 'ultraviolet light', 545, 170, m('split', -.2), { size: 24, fill: OZ.uvB, weight: 600 });
+    draw(R.ray, m('split', -.3), .6, lin);
+    tw(R.burst, { o: 1, s: 1 }, m('split', .3), .25, back); hide(R.burst, m('split', .9), .4); hide(R.ray, m('split', .9), .4);
+    hide(a.bond, m('split', .3), .2);
+    tw(a.a, { x: -80 }, m('split', .3), .7, out); tw(a.b, { x: 80 }, m('split', .3), .7, out);
+    hide(la, m('split', .3), .3);
+    const lOO = lbl(p, 'O + O', 520, 540, m('split', .6), { size: 30, fill: OZ.oxygen, anchor: 'middle' });
+    hide(lOO, m('join'), .3);
+    lbl(p, 'O', 392, 540, m('join', .4), { size: 30, fill: OZ.oxygen, anchor: 'middle' });
+    // one atom joins the other pair: a free copy takes its place, flies over, and the trio forms
+    const fly = atom(p, 'O', 520 + 80 * 1.6, 430, { o: 0, s: 1.6 });
+    tw(fly, { o: 1 }, m('join', -.05), .05); tw(a.b, { o: 0 }, m('join'), .05);
+    tw(fly, { x: 1154, y: 459 }, m('join'), 1.1, io);
+    const o3 = O3(p, 1080, 430, { o: 0 }); put(o3, { s: 1.6 });
+    tw(fly, { o: 0 }, m('o3'), .3); tw(b, { o: 0 }, m('o3'), .3); tw(o3, { o: 1 }, m('o3'), .3);
+    tw(o3, { s: 1.8 }, m('o3', .3), .22, out); tw(o3, { s: 1.6 }, m('o3', .52), .4);
+    lbl(p, 'O₃ · ozone', 1080, 540, m('o3', .2), { size: 40, fill: OZ.ozone, anchor: 'middle', weight: 750 });
+    hide(uvt, m('join'), .4);
+    // the two steps, written out under the picture
+    lbl(p, 'O₂ + UV light  →  O + O', 800, 680, m('split', 1), { size: 34, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    lbl(p, 'O + O₂  →  O₃', 800, 740, m('o3', .5), { size: 34, fill: OZ.ozone, anchor: 'middle', weight: 650 });
+  }],
+
+  ['sunscreen', 'Our planet’s sunscreen', (m) => {
+    const p = panel(0);
+    sun(p, 110, 90, 54, 1);
+    const band = ozoneBand(p, 230, 330, { o: 0 }); show(band, .2, .6);
+    lbl(p, 'ozone layer', 30, 220, .4, { size: 26, fill: OZ.ozone, weight: 650 });
+    // the ground
+    mk('rect', { x: 0, y: 560, width: 1600, height: 30, fill: OZ.ground }, p);
+    path(p, 'M0 560H1600', { stroke: OZ.good, 'stroke-width': 3, 'fill-opacity': .6, 'stroke-opacity': .6 });
+    lbl(p, 'the ground', 30, 548, .4, { size: 22, fill: OZ.dim, weight: 500 });
+    // three kinds of UV
+    const C = uvRay(p, 'C', 470, 120, 262);
+    const B1 = uvRay(p, 'B', 780, 120, 292, { label: false }), B2 = uvRay(p, 'B', 860, 120, 312), B3 = uvRay(p, 'B', 700, 120, 548, { label: false, width: 3.5 });
+    const Aa = uvRay(p, 'A', 1190, 120, 548);
+    const t0 = m('rays');
+    for (const [i, R] of [C, B2, Aa].entries()) { if (R.label) show(R.label, t0 + i * .2, .4); }
+    playRay(C, m('uvc'), .8, true);
+    lbl(p, 'stopped completely', 470, 400, m('uvc', .8), { size: 24, fill: OZ.uvC, anchor: 'middle' });
+    playRay(B1, m('uvb'), .9, true); playRay(B2, m('uvb', .1), .9, true); playRay(B3, m('uvb', .25), 1.8, false);
+    lbl(p, 'mostly absorbed', 822, 400, m('uvb', 1), { size: 24, fill: OZ.uvB, anchor: 'middle' });
+    lbl(p, 'some gets through', 718, 520, m('uvb', 1.8), { size: 20, fill: OZ.uvB, anchor: 'start', weight: 500 });
+    playRay(Aa, m('uva'), 1.8, false);
+    lbl(p, 'passes almost freely', 1214, 400, m('uva', 1), { size: 24, fill: OZ.uvA, anchor: 'start' });
+    const sh = tag(p, '“our planet’s sunscreen”', 1380, 280, OZ.ozone, m('shield'), { size: 28 });
+    pulse(band, m('shield', .2), 1.02);
+    // what more UV-B would do
+    const harms = [['skin', 'skin cancer', 'harm'], ['eye', 'cataracts', 'harm'], ['shield', 'weaker immunity', 'harm'], ['plankton', 'plankton', 'sea'], ['fish', 'young fish', 'sea'], ['bottle', 'plastics wear out', 'plastic']];
+    harms.forEach(([icon, name, mark], i) => {
+      const x = 170 + i * 250, t = m(mark, (i % 3) * .35 * (mark === 'harm' ? 1 : .6));
+      const ic = ozIcon(p, icon, x, 670, { s: .7, colr: OZ.bad || '#ff8a6b' });
+      tw(ic, { o: 1 }, t, .4);
+      lbl(p, name, x, 750, t + .15, { size: 24, fill: OZ.ink, anchor: 'middle', weight: 550 });
+    });
+  }],
+
+  ['ground', 'Ozone near the ground', (m) => {
+    const p = panel(0);
+    // top: the ozone layer, far up
+    const band = ozoneBand(p, 70, 170, { o: 0 }); show(band, .2, .6);
+    const up = O3(p, 800, 120, { o: 0 }); show(up, .4, .5);
+    lbl(p, 'ozone layer, 15–35 km up', 40, 210, .5, { size: 24, fill: OZ.ozone, weight: 600 });
+    path(p, 'M0 260H1600', { stroke: OZ.faint, 'stroke-width': 2, 'stroke-dasharray': '10 12' });
+    // bottom: a city
+    skyline(p, 0, 720, 1600);
+    mk('rect', { x: 0, y: 720, width: 1600, height: 40, fill: OZ.ground }, p);
+    const low = O3(p, 800, 470, { o: 0 });
+    tw(low, { o: 1 }, m('same'), .5);
+    const sameArrow = path(p, 'M800 190V400', { stroke: OZ.dim, 'stroke-width': 3, 'stroke-dasharray': '6 10' }, { d: 0 });
+    draw(sameArrow, m('same', .1), .8);
+    lbl(p, 'the same molecule: O₃', 830, 300, m('same', .5), { size: 28, fill: OZ.ink, weight: 650 });
+    // cars and industry release NOx and VOCs
+    const cars = [[260, 690], [430, 700], [1180, 694]].map(([x, y]) => ozIcon(p, 'car', x, y, { s: .9, colr: OZ.dim }));
+    cars.forEach((c, i) => tw(c, { o: 1 }, m('cars', i * .15), .4));
+    const fac = ozIcon(p, 'factory', 1420, 668, { s: 1, colr: OZ.dim }); tw(fac, { o: 1 }, m('cars', .3), .4);
+    tag(p, 'NOₓ', 330, 600, OZ.smog, m('cars', 1.2), { size: 26 });
+    tag(p, 'VOCs', 1300, 590, OZ.smog, m('cars', 1.6), { size: 26 });
+    const s2 = sun(p, 1480, 360, 40, 0); show(s2, m('sun'), .6);
+    lbl(p, '+ sunlight  →  O₃ near the ground', 800, 560, m('sun', .4), { size: 30, fill: OZ.ink, anchor: 'middle', weight: 650 });
+    // smog
+    const haze = mk('rect', { x: 0, y: 380, width: 1600, height: 340, fill: OZ.smog }, p);
+    put(haze, { o: 0 }); tw(haze, { o: .22 }, m('smog'), 1.2);
+    const lungs = ozIcon(p, 'lungs', 140, 470, { s: .8, colr: '#ff8a6b' }); tw(lungs, { o: 1 }, m('smog', .6), .4);
+    lbl(p, 'smog · hard on the lungs', 210, 480, m('smog', .8), { size: 26, fill: '#ffb39b', weight: 650 });
+    // the rule
+    tag(p, 'High up: ozone protects us', 1180, 120, OZ.ozone, m('rule'), { size: 28 });
+    tag(p, 'Down here: ozone harms us', 1240, 470, '#ff8a6b', m('rule', 1.6), { size: 28 });
+  }],
+
+  ['q1', 'Quick check', () => {
+    const p = panel(0);
+    const A = atmosphere(p, ATM);
+    put(A.tropo, { o: 1 }); put(A.strato, { o: 1 }); put(A.band, { o: 1 }); put(A.space, { o: .6 });
+    S.q1 = A;
+  }, { ask: done => {
+    const A = S.q1, x = ATM.x, w = ATM.w;
+    quiz({ x: 1080, y: 150, w: 470, cls: 'side' }, [{
+      id: 'c-where', prompt: ['Click the part of the atmosphere that holds most of Earth’s ozone.'],
+      build: pickEls([
+        { el: A.space, box: [x, A.yAt(60), w, A.yAt(50) - A.yAt(60)], label: 'above 50 km' },
+        { el: A.band, box: [x, A.yAt(35), w, A.yAt(15) - A.yAt(35)], label: 'the band between 15 and 35 km' },
+        { el: A.tropo, box: [x, A.yAt(12), w, A.yAt(0) - A.yAt(12)], label: 'the troposphere, near the ground' },
+      ], 1, 'Right. About 90 % of ozone sits in the stratosphere, most of it in this band between about 15 and 35 km: the ozone layer.',
+      i => i === 0 ? 'Above 50 km the air is too thin. Look lower, in the stratosphere.' : 'Only about 10 % of ozone is down here, near the ground. Look higher.'),
+    }], done);
+  } }],
+
+  ['hole', 'The ozone hole', (m) => {
+    const p = panel(0);
+    const gl = globe(p, 430, 450, 300, { o: 0 }); show(gl, .2, .6);
+    clockRun(t => put(gl, { r: -t * 2.5 }), 0, { tail: true });   // Earth turns slowly about the pole
+    lbl(p, 'Antarctica, seen from above the South Pole', 430, 815, .5, { size: 22, fill: OZ.dim, anchor: 'middle', weight: 500 });
+    // a short timeline over the right half
+    const L = timeline(p, { x0: 860, x1: 1540, y: 200, from: 1970, to: 2000, ticks: 10,
+      pins: [{ year: 1974, label: 'first warnings', up: true }, { year: 1985, label: 'hole found', up: true }] });
+    draw(L.line, .3, .8); show(L.ticks, .5, .4);
+    tw(L.pins[0].g, { o: 1 }, .9, .5);
+    tw(L.pins[1].g, { o: 1 }, m('found'), .5);
+    // the hole appears, then grows (illustrative sizes)
+    tw(gl.hole, { s: .45 }, m('found', .3), 1, out);
+    const yr = lbl(p, '', 740, 300, m('grow'), { size: 34, fill: OZ.ods, anchor: 'middle', weight: 750 });
+    prog(q => { yr.textContent = String(Math.round(1985 + q * 15)); }, m('grow'), 2.6, lin);
+    tw(gl.hole, { s: 1 }, m('grow'), 2.6, io);
+    hide(yr, m('du'), .4);
+    // Dobson units: a column of air's ozone squeezed into a thin layer
+    const col = mk('rect', { x: 930, y: 300, width: 120, height: 340, rx: 10, fill: OZ.ozone }, p);
+    put(col, { o: 0, a_y: 300, a_height: 340 });
+    tw(col, { o: .45 }, m('du'), .5);
+    const colL = lbl(p, 'all the ozone above one spot', 990, 280, m('du', .2), { size: 22, fill: OZ.dim, anchor: 'middle', weight: 500 });
+    tw(col, { a_y: 628, a_height: 12, o: .95 }, m('du', 2.6), 1.4, io);
+    hide(colL, m('du', 2.6), .4);
+    const gr = path(p, 'M880 640H1100', { stroke: OZ.ground, 'stroke-width': 10 }, { o: 0 }); show(gr, m('du'), .4);
+    lbl(p, 'squeezed to the ground', 990, 680, m('du', 3.2), { size: 22, fill: OZ.dim, anchor: 'middle', weight: 500 });
+    tag(p, '1 Dobson unit (DU) = 0.01 mm', 925, 750, OZ.ozone, m('du', 4.6), { size: 22 });
+    // the 220 DU threshold on a gauge
+    const gx = 1330, gy = yDU => 660 - (yDU - 100) / 400 * 380;
+    const gauge = G(p, { o: 0 });
+    path(gauge, `M${gx} ${gy(100)}V${gy(500)}`, { stroke: OZ.dim, 'stroke-width': 3 });
+    for (const v of [100, 200, 300, 400, 500]) {
+      path(gauge, `M${gx - 8} ${gy(v)}H${gx + 8}`, { stroke: OZ.dim, 'stroke-width': 3 });
+      T(gauge, String(v), { x: gx + 18, y: gy(v) + 8, size: 22, fill: OZ.dim, weight: 500 });
+    }
+    T(gauge, 'DU', { x: gx, y: gy(500) - 18, size: 22, fill: OZ.dim, anchor: 'middle', weight: 650 });
+    mk('rect', { x: gx - 14, y: gy(220), width: 28, height: gy(100) - gy(220), fill: OZ.ods, opacity: .35 }, gauge);
+    show(gauge, m('line'), .5);
+    const thr = G(p, { o: 0 });
+    path(thr, `M${gx - 70} ${gy(220)}H${gx + 70}`, { stroke: OZ.ods, 'stroke-width': 4, 'stroke-dasharray': '10 6' });
+    T(thr, '220', { x: gx - 80, y: gy(220) + 9, size: 28, fill: OZ.ods, anchor: 'end', weight: 750 });
+    show(thr, m('line', .4), .5);
+    lbl(p, 'never lower before 1979', gx - 80, gy(220) - 26, m('line', 1.6), { size: 20, fill: OZ.dim, anchor: 'end', weight: 500 });
+    tag(p, 'below 220 DU  =  the ozone hole', 1370, 750, OZ.ods, m('def'), { size: 26 });
+    pulse(gl.hole, m('def', .2), 1.06);
+  }],
+
+  ['poles', 'Why over the poles', (m) => {
+    const p = panel(0);
+    const gl = globe(p, 470, 450, 320, { o: 0 }); show(gl, .2, .6);
+    put(gl.hole, { s: 0 });
+    // the vortex spins for the rest of the beat
+    show(gl.vortex, m('vortex'), .6);
+    clockRun(t => { put(gl.vortex, { r: t * 22 }); }, m('arctic', 4), { tail: true });
+    const steps = [
+      ['vortex', '1', 'A polar vortex locks in the cold', OZ.ink],
+      ['clouds', '2', 'Polar stratospheric clouds form', '#f2b6e6'],
+      ['react', '3', 'Chlorine and bromine turn reactive', OZ.ods],
+      ['spring', '4', 'Spring sunlight: ozone is destroyed', OZ.law],
+    ];
+    steps.forEach(([mark, n, str, colr], i) => {
+      const g = G(p, { x: 940, y: 210 + i * 110, o: 0 });
+      mk('circle', { cx: 22, cy: -10, r: 24, fill: colr }, g);
+      T(g, n, { x: 22, y: 0, size: 26, fill: '#0b1730', anchor: 'middle', weight: 800 });
+      T(g, str, { x: 64, y: 0, size: 30, fill: OZ.ink, weight: 600 });
+      tw(g, { o: 1 }, m(mark, .2), .5);
+    });
+    tw(gl.clouds, { o: 1 }, m('clouds'), 1);
+    const reactive = [[-90, -60, 'Cl'], [60, -80, 'Cl'], [-20, 70, 'Br'], [100, 40, 'Cl']].map(([dx, dy, k]) => atom(p, k, 470 + dx, 450 + dy, { o: 0, s: .5, eyes: true }));
+    reactive.forEach((a, i) => pop(a, m('react', .3 + i * .2)));
+    const s2 = sun(p, 860, 120, 46, 0);
+    tw(s2, { o: 1, x: 820, y: 150 }, m('spring'), 1);
+    tw(gl.hole, { s: 1 }, m('spring', .5), 2.4, io);
+    reactive.forEach((a, i) => pulse(a, m('spring', .6 + i * .15), 1.25));
+    // the Arctic too
+    const arc = G(p, { x: 1000, y: 690, o: 0 });
+    mk('circle', { r: 64, fill: OZ.sea }, arc);
+    mk('circle', { r: 30, fill: OZ.ice }, arc);
+    mk('circle', { r: 26, fill: OZ.ods, opacity: .45 }, arc);
+    show(arc, m('arctic'), .5);
+    lbl(p, 'The Arctic too:', 1086, 680, m('arctic', .2), { size: 28, fill: OZ.ink, weight: 650 });
+    lbl(p, 'serious losses in 2011 and 2020', 1086, 718, m('arctic', .5), { size: 26, fill: OZ.dim, weight: 500 });
+  }],
+
+  ['uses', 'Where the chemicals came from', (m) => {
+    const p = panel(0);
+    const c = CFC(p, 300, 470, { o: 0, s: 1.2 });
+    tw(c, { o: 1, s: 1.5 }, m('cfc'), .5, back);
+    lbl(p, 'CFC-11 · a chlorofluorocarbon', 300, 640, m('cfc', .3), { size: 26, fill: OZ.ods, anchor: 'middle', weight: 650 });
+    const tiles = [
+      ['fridge', [['fridge', -50], ['ac', 60]], 'Fridges and air conditioners'],
+      ['foam', [['foam', -50], ['shoe', 60]], 'Foams: insulation, mattresses, shoe soles'],
+      ['spray', [['spray', -80], ['inhaler', 0], ['extinguisher', 80]], 'Sprays, inhalers, fire extinguishers'],
+      ['farm', [['farm', 0]], 'Fumigants in agriculture'],
+    ];
+    tiles.forEach(([mark, icons, str], i) => {
+      const x = 880 + (i % 2) * 380, y = 260 + Math.floor(i / 2) * 270;
+      const g = G(p, { x, y, o: 0, s: .92 });
+      mk('rect', { x: -170, y: -110, width: 340, height: 220, rx: 22, fill: 'rgba(16,32,63,.85)', stroke: OZ.ods, 'stroke-width': 2, 'stroke-opacity': .5 }, g);
+      icons.forEach(([nm, dx]) => put(ozIcon(g, nm, dx, -24, { s: .62, colr: OZ.ink }), { o: 1 }));
+      const words = str.split(': ');
+      T(g, words[0] + (words[1] ? ':' : ''), { y: 62, size: 22, fill: OZ.ink, anchor: 'middle', weight: 650 });
+      if (words[1]) T(g, words[1], { y: 90, size: 20, fill: OZ.dim, anchor: 'middle', weight: 500 });
+      tw(g, { o: 1, s: 1 }, m(mark), .45, back);
+    });
+    tag(p, 'very stable down here', 300, 720, OZ.good, m('stable'), { size: 26 });
+    // the CFC drifts up, out of the top of the picture, toward the stratosphere
+    const strat = G(p, { o: 0 });
+    mk('rect', { x: 0, y: 0, width: 640, height: 110, fill: OZ.ozone, opacity: .12 }, strat);
+    T(strat, 'stratosphere ↑', { x: 420, y: 64, size: 26, fill: OZ.ozone, weight: 650 });
+    show(strat, m('drift'), .5);
+    tw(c, { y: 210, s: 1 }, m('drift', .2), 2.4, io);
+  }],
+
+  ['chain', 'The chain reaction', (m) => {
+    const p = panel(0);
+    const c = CFC(p, 200, 420, { o: 0 }); show(c, .2, .4);
+    lbl(p, 'CFC', 200, 540, .4, { size: 26, fill: OZ.ods, anchor: 'middle' });
+    const o3 = O3(p, 800, 400, { o: 0, eyes: true }); show(o3, .3, .4);
+    const o3L = lbl(p, 'O₃', 800, 480, .5, { size: 26, fill: OZ.ozone, anchor: 'middle' });
+    // UV breaks off a chlorine
+    const R = uvRay(p, 'C', 200, 60, 320, { label: false });
+    draw(R.ray, m('hit', -.4), .6, lin); hide(R.ray, m('hit', .6), .4);
+    hide(c.bonds[0], m('hit', .2), .15); hide(c.cl[0], m('hit', .2), .05);
+    const cl = atom(p, 'Cl', 200, 348, { o: 0, eyes: true });
+    tw(cl, { o: 1 }, m('hit', .2), .05);
+    tw(cl, { x: 520, y: 330 }, m('hit', .5), 1.4, io);
+    const clL = lbl(p, 'Cl · chlorine', 520, 270, m('hit', 1.4), { size: 26, fill: OZ.ods, anchor: 'middle' });
+    // Cl takes one O from O3: ClO + O2
+    tw(cl, { x: 686, y: 418 }, m('attack', -.3), .9, io); hide(clL, m('attack', -.3), .3);
+    const clo = G(p, { x: 686, y: 418, o: 0 });
+    bond(clo, 0, 0, 68, 0); atom(clo, 'Cl', 0, 0, { eyes: true }); atom(clo, 'O', 68, 0);
+    const pr = O2(p, 823, 384, { o: 0, kind: 'Oz' }); put(pr, { r: 32 });
+    tw(clo, { o: 1 }, m('left'), .05); tw(cl, { o: 0 }, m('left'), .05);
+    tw(o3, { o: 0 }, m('left'), .05); tw(pr, { o: 1 }, m('left'), .05); hide(o3L, m('left'), .2);
+    tw(pr, { x: 1080, y: 190, r: 0 }, m('left', .2), 1.4, io);
+    lbl(p, 'O₂', 1080, 270, m('left', 1.2), { size: 26, fill: OZ.oxygen, anchor: 'middle' });
+    const cloL = lbl(p, 'ClO', 720, 380, m('left', .4), { size: 26, fill: OZ.ods, anchor: 'middle' });
+    lbl(p, 'Cl + O₃  →  ClO + O₂', 800, 700, m('left', .6), { size: 32, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    // ClO meets a loose O: O2 forms, Cl is free again
+    const loose = atom(p, 'O', 1100, 560, { o: 0 });
+    tw(loose, { o: 1 }, m('free', -.6), .4);
+    tw(clo, { x: 940, y: 560 }, m('free', -.2), 1, io);
+    const pr2 = O2(p, 1034, 560, { o: 0 });
+    const cl2 = atom(p, 'Cl', 940, 560, { o: 0, eyes: true });
+    const tFree = m('free', 1.1);
+    tw(clo, { o: 0 }, tFree, .05); tw(loose, { o: 0 }, tFree, .05); tw(pr2, { o: 1 }, tFree, .05); tw(cl2, { o: 1 }, tFree, .05);
+    tw(pr2, { x: 1240, y: 600 }, tFree + .2, 1.2, io); hide(cloL, m('free', -.2), .3);
+    tw(cl2, { x: 860, y: 590 }, tFree + .2, 1, io);
+    lbl(p, 'ClO + O  →  Cl + O₂', 800, 750, tFree + .3, { size: 32, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    // ready again: a loop arrow back to the start
+    const loop = path(p, 'M830 600C720 650 590 620 560 520C548 470 556 430 570 400', { fill: 'none', stroke: OZ.ods, 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-dasharray': '2 14' }, { d: 0 });
+    const next = O3(p, 600, 330, { o: 0, eyes: true }); show(next, m('again', -.4), .5);
+    lbl(p, 'the next O₃', 600, 270, m('again', -.2), { size: 24, fill: OZ.ozone, anchor: 'middle' });
+    draw(loop, m('again'), 1.2);
+    pulse(cl2, m('again', .2), 1.25);
+    tw(cl2, { x: 600, y: 430 }, m('again', 1.3), 1.4, io);   // off to the next ozone molecule
+    // the count
+    const cnt = G(p, { x: 1330, y: 120, o: 0 });
+    T(cnt, 'ozone destroyed by one Cl atom', { y: -14, size: 22, fill: OZ.dim, anchor: 'middle', weight: 550 });
+    const num = T(cnt, '1', { y: 52, size: 60, fill: OZ.ods, anchor: 'middle', weight: 800 });
+    show(cnt, m('count'), .4);
+    prog(q => { num.textContent = (q < 1 ? '' : 'up to ') + Math.round(1 + (q * q) * 99999).toLocaleString('en-US').replace(/,/g, ' '); }, m('count', .2), 3, lin);
+  }],
+
+  ['cure', 'The only cure', (m) => {
+    const p = panel(0);
+    // the rejected idea: carry ozone up
+    const rk = ozIcon(p, 'rocket', 330, 420, { s: 1.4, colr: OZ.dim }); tw(rk, { o: 1 }, m('ship'), .4);
+    const small = O3(p, 330, 220, { o: 0 }); put(small, { s: .7 });
+    show(small, m('ship', .3), .4); tw(small, { y: 120 }, m('ship', .3), 2, io);
+    lbl(p, 'ship ozone up?', 330, 560, m('ship', .4), { size: 28, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    const X = path(p, 'M210 220L450 520M450 220L210 520', { stroke: '#ff8a6b', 'stroke-width': 12, 'stroke-linecap': 'round' }, { d: 0 });
+    draw(X, m('no'), .5);
+    ['too unstable', 'too costly', 'impractical'].forEach((s, i) => tag(p, s, 330, 630 + i * 56, '#ff8a6b', m('no', .4 + i * .4), { size: 22 }));
+    // the cure: stop making them
+    const fac = ozIcon(p, 'factory', 980, 340, { s: 1.6, colr: OZ.ink }); tw(fac, { o: 1 }, m('only'), .4);
+    const smoke = G(p, { o: 0 });
+    for (let i = 0; i < 4; i++) mk('circle', { cx: 1050 + i * 26, cy: 240 - i * 40, r: 20 + i * 8, fill: OZ.ods, opacity: .45 }, smoke);
+    tw(smoke, { o: 1 }, m('only'), .3); tw(smoke, { o: 0 }, m('only', 1.4), .8);
+    const ok = G(p, { x: 1170, y: 250, o: 0, s: .5 });
+    mk('circle', { r: 40, fill: OZ.good }, ok); path(ok, 'M-18 0L-4 14L20 -14', { fill: 'none', stroke: '#0b1730', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+    pop(ok, m('only', 1.8));
+    lbl(p, 'Stop producing and using', 1000, 490, m('only', .4), { size: 34, fill: OZ.ink, anchor: 'middle', weight: 700 });
+    lbl(p, 'ozone-depleting substances', 1000, 534, m('only', .7), { size: 34, fill: OZ.ods, anchor: 'middle', weight: 700 });
+    // which takes countries acting together
+    const L = timeline(p, { x0: 760, x1: 1500, y: 770, from: 1984, to: 1988, ticks: 1,
+      pins: [{ year: 1985, label: 'Vienna Convention', sub: 'Lesson 2', up: true }, { year: 1987, label: 'Montreal Protocol', sub: 'Lesson 3', up: true }] });
+    // keep the pins clear of the words above
+    put(L.g, { o: 1 });
+    draw(L.line, m('law'), .7); show(L.ticks, m('law', .3), .4);
+    L.pins.forEach((pin, i) => tw(pin.g, { o: 1 }, m('law', .8 + i * .5), .5));
+  }],
+
+  ['q2', 'Quick check', () => {
+    const p = panel(0);
+    // the cycle, as a picture beside the card
+    const cl = atom(p, 'Cl', 420, 450, { eyes: true }); put(cl, { s: 1.4 });
+    const ring = path(p, 'M420 250A200 200 0 1 1 419 250', { fill: 'none', stroke: OZ.ods, 'stroke-width': 5, 'stroke-dasharray': '2 14', 'stroke-linecap': 'round' });
+    const in1 = O3(p, 420, 250); put(in1, { s: .8 });
+    const out1 = O2(p, 620, 450); put(out1, { s: .8 });
+    const out2 = O2(p, 220, 450); put(out2, { s: .8 });
+    T(p, 'O₃ in', { x: 420, y: 190, size: 24, fill: OZ.ozone, anchor: 'middle', weight: 650 });
+    T(p, 'O₂ out', { x: 620, y: 520, size: 24, fill: OZ.oxygen, anchor: 'middle', weight: 650 });
+    T(p, 'O₂ out', { x: 220, y: 520, size: 24, fill: OZ.oxygen, anchor: 'middle', weight: 650 });
+  }, { ask: done => quiz({ x: 860, y: 170, w: 680, cls: 'side' }, [{
+    id: 'c-chain', prompt: ['Why can a single chlorine atom destroy so many ozone molecules?'],
+    build: choice([
+      ['It is set free again after each reaction, so it is never used up.'],
+      ['It is much bigger than an ozone molecule.'],
+      ['Sunlight gives it new energy before every reaction.'],
+      ['It splits into more chlorine atoms each time.'],
+    ], 0, 'Right. The chlorine takes part in the reaction but comes out unchanged, ready for the next ozone molecule. That is why one atom can destroy up to 100 000 of them.',
+    [null, 'Size is not the reason. Think about what happens to the chlorine at the end of each cycle.',
+      'Ultraviolet light is needed once, to break the chlorine off the CFC. After that the cycle frees the chlorine by itself.',
+      'There is only ever one chlorine atom here. What happens to it after it reacts?']),
+  }], done) }],
+
+  ['climate', 'Ozone and climate', (m) => {
+    const p = panel(0);
+    // two problems
+    const oz = G(p, { x: 230, y: 250, o: 0 }), cc = G(p, { x: 650, y: 250, o: 0 });
+    mk('circle', { r: 170, fill: OZ.ozone, opacity: .16, stroke: OZ.ozone, 'stroke-width': 3 }, oz);
+    T(oz, 'Ozone depletion', { y: -10, size: 28, fill: OZ.ozone, anchor: 'middle', weight: 700 });
+    T(oz, 'ozone treaties', { y: 26, size: 22, fill: OZ.dim, anchor: 'middle', weight: 500 });
+    mk('circle', { r: 170, fill: OZ.climate, opacity: .14, stroke: OZ.climate, 'stroke-width': 3 }, cc);
+    T(cc, 'Climate change', { y: -10, size: 28, fill: OZ.climate, anchor: 'middle', weight: 700 });
+    T(cc, 'climate treaties', { y: 26, size: 22, fill: OZ.dim, anchor: 'middle', weight: 500 });
+    show(oz, m('two'), .5); show(cc, m('two', .3), .5);
+    ozBob(oz, { amp: 5, per: 4.2, base: 250 }); ozBob(cc, { amp: 5, per: 3.7, base: 250 });
+    tw(oz, { x: 290 }, m('linked'), 1, io); tw(cc, { x: 610 }, m('linked'), 1, io);
+    lbl(p, 'linked', 450, 470, m('linked', .8), { size: 26, fill: OZ.ink, anchor: 'middle', weight: 650 });
+    // greenhouse power, to scale: warming per kg over 100 years, CO2 = 1
+    const bx = 1000, base = 470, H = 330, max = 11000;
+    const ax = G(p, { o: 0 });
+    path(ax, `M${bx - 20} ${base}H${bx + 520}`, { stroke: OZ.dim, 'stroke-width': 2 });
+    T(ax, 'warming per kilogram, over 100 years', { x: bx + 250, y: 90, size: 22, fill: OZ.dim, anchor: 'middle', weight: 550 });
+    show(ax, m('ghg'), .4);
+    [['CO₂', 1, '1', OZ.dim], ['CFC-11', 4750, '> 4 500', OZ.ods], ['CFC-12', 10900, '> 10 000', OZ.ods]].forEach(([name, v, s, colr], i) => {
+      const x = bx + 40 + i * 170, h = Math.max(3, v / max * H);
+      const bar = mk('rect', { x, y: base, width: 100, height: 0, rx: 6, fill: colr }, p);
+      put(bar, { a_y: base, a_height: 0 });
+      const t = m('ghg', 1 + i * 1.6);
+      tw(bar, { a_y: base - h, a_height: h }, t, 1.2, out);
+      lbl(p, name, x + 50, base + 34, t, { size: 24, fill: OZ.ink, anchor: 'middle', weight: 650 });
+      lbl(p, s.replace(/ /g, ' '), x + 50, base - h - 14, t + 1, { size: 26, fill: colr, anchor: 'middle', weight: 750 });
+    });
+    tag(p, 'phasing them out slowed climate change too', 1250, 560, OZ.good, m('bonus'), { size: 24 });
+    // the other direction
+    const th = ozIcon(p, 'thermometer', 200, 690, { s: .8, colr: OZ.climate }); tw(th, { o: 1 }, m('cool'), .4);
+    const ar = path(p, 'M260 690H380', { stroke: OZ.dim, 'stroke-width': 4 }, { d: 0 }); draw(ar, m('cool', .3), .4);
+    const ac = ozIcon(p, 'ac', 460, 690, { s: .8, colr: OZ.ink }); tw(ac, { o: 1 }, m('cool', .6), .4);
+    lbl(p, 'more demand for cooling', 540, 700, m('cool', .9), { size: 26, fill: OZ.ink, weight: 600 });
+    const arc = G(p, { x: 1060, y: 690, o: 0 });
+    mk('circle', { r: 56, fill: OZ.sea }, arc); mk('circle', { r: 26, fill: OZ.ice }, arc); mk('circle', { r: 24, fill: OZ.ods, opacity: .45 }, arc);
+    show(arc, m('cold'), .5);
+    lbl(p, 'colder stratosphere, more ozone loss', 1136, 684, m('cold', .3), { size: 24, fill: OZ.ink, weight: 600 });
+    lbl(p, 'as over the Arctic in 2020', 1136, 718, m('cold', .6), { size: 22, fill: OZ.dim, weight: 500 });
+  }],
+
+  ['wrap', 'Summary', (m) => {
+    const p = panel(0);
+    T(p, 'Lesson 1 in four points', { x: 160, y: 140, size: 30, fill: OZ.dim, weight: 600 });
+    [['Most ozone is in the stratosphere and screens out harmful UV. Near the ground, ozone is a pollutant.', 'w1', OZ.ozone],
+     ['CFCs and similar chemicals release chlorine and bromine high up; one atom destroys thousands of ozone molecules.', 'w2', OZ.ods],
+     ['Cold and the polar vortex make the loss worst over the poles: the ozone hole.', 'w3', OZ.uvB],
+     ['Ozone depletion and climate change are different problems, but closely linked.', 'w4', OZ.climate]].forEach(([str, mark, colr], i) => {
+      const g = G(p, { x: -16, y: 250 + i * 130, o: 0 });
+      mk('circle', { cx: 190, cy: -10, r: 28, fill: colr }, g);
+      T(g, String(i + 1), { x: 190, y: 1, size: 30, fill: '#0b1730', weight: 800, anchor: 'middle' });
+      const words = str.split(' '), lines = ['']; for (const w of words) { if ((lines.at(-1) + ' ' + w).length > 62) lines.push(w); else lines[lines.length - 1] = (lines.at(-1) + ' ' + w).trim(); }
+      lines.forEach((ln, j) => T(g, ln, { x: 250, y: j * 40, size: 32, weight: 600 }));
+      tw(g, { o: 1, x: 0 }, m(mark), .6);
+      ozBob(g, { amp: 2.5, per: 4 + i * .4, base: 250 + i * 130 });
+    });
+  }],
+
+  ['final1', 'Chapter practice', () => { panel(0); }, { ask: done => quiz(SCREEN, [
+    { id: 'p-strato', prompt: ['In Earth’s atmosphere, most naturally occurring ozone is found in the …'],
+      build: choice([['troposphere'], ['stratosphere'], ['region above 50 km']], 1,
+        'Right: about 90 % of ozone is in the stratosphere, most of it in the ozone layer between about 15 and 35 km.',
+        ['Only about 10 % of ozone is in the troposphere, near the ground.', null, 'Above 50 km there is very little ozone. Look lower.']) },
+    { id: 'p-role', prompt: ['The ozone layer’s main role for health and the environment is protection from …'],
+      build: choice([['UV-A and visible light'], ['UV-B and UV-C radiation'], ['the Sun’s heat (infrared)']], 1,
+        'Right: it stops all UV-C and most UV-B, the most harmful kinds of ultraviolet light.',
+        ['UV-A passes through the ozone layer almost freely, and visible light passes too.', null, 'Ozone’s shield is against ultraviolet light, not heat.']) },
+    { id: 'p-hole', prompt: ['The biggest ozone hole forms over …'],
+      build: choice([['the Arctic'], ['the equator'], ['Antarctica']], 2,
+        'Right: Antarctica’s cold and its strong polar vortex make the hole there the largest, every southern spring.',
+        ['The Arctic has had serious losses (2011, 2020), but the largest hole is in the south.', 'Over the equator the air is too warm for polar stratospheric clouds to form.', null]) },
+    { id: 'p-sectors', prompt: ['For each sector: have ozone-depleting substances been used there?'],
+      build: grid([
+        { parts: ['Refrigeration'], ans: ['y'], why: 'CFCs were the classic refrigerants in fridges and air conditioners.' },
+        { parts: ['Construction'], ans: ['y'], why: 'They were used to blow insulating foams for buildings.' },
+        { parts: ['Livestock'], ans: ['n'], why: 'Livestock matters for climate (methane), but not as a use of ozone-depleting substances.' },
+        { parts: ['Agriculture'], ans: ['y'], why: 'Methyl bromide was used as a fumigant to sterilise soils.' },
+        { parts: ['Textiles'], ans: ['n'], why: 'Textiles are not among the uses listed for these substances.' },
+      ], [['y', 'used', OZ.ods, 'y'], ['n', 'not used', OZ.dim, 'n']], { multi: false, text: true }) },
+  ], done, 'Chapter practice') }],
+
+  ['finish', 'Finished', () => { panel(0); }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run: (m, D) => { run(m, D); ozLive(); }, ...extra }));   // ozLive: the ambient drift (ozone.js)
+
+boot();
+</script>
+</body>
+</html>
