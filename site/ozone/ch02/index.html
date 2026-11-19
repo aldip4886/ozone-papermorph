@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2 · The Vienna Convention</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%235cc8ff%27/%3E%3C/svg%3E">
+<link rel="expect" href="#bar" blocking="render">
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/ozone.js"></script>
+<script src="audio/en/timings.js"></script>
+<script>
+'use strict';
+const CHAPTER = { number: 2, title: 'The Vienna Convention for the Protection of the Ozone Layer', minutes: 7, language: 'en' };
+
+/* ---------- chapter drawing helpers ---------- */
+const lbl = (p, str, x, y, t0, o = {}) => { const e = ozLabel(p, str, x, y, o); show(e, t0); return e; };
+const tag = (p, str, x, y, colr, t0, o = {}) => { const e = ozTag(p, str, x, y, colr, o); tw(e, { o: 1 }, t0, .4); return e; };
+function ozoneBand(p, y0, y1, { x0 = 0, x1 = 1600, o = 1 } = {}) {
+  const g = G(p, { o });
+  mk('rect', { x: x0, y: y0, width: x1 - x0, height: y1 - y0, fill: OZ.ozone, opacity: .16 }, g);
+  let seed = 3, d = ''; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+  for (let i = 0; i < (x1 - x0) / 12; i++) { const dx = x0 + rnd() * (x1 - x0), dy = y0 + 6 + rnd() * (y1 - y0 - 12); d += `M${dx.toFixed(1)} ${dy.toFixed(1)}m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0`; }
+  ozBob(path(g, d, { fill: OZ.ozone, 'fill-opacity': .7, 'stroke-opacity': .7 }), { amp: 8, per: 7, key: 'x' });
+  return g;
+}
+// a rounded box with a title and up to two lines under it, centred on (x, y); starts hidden
+function box(p, x, y, w, h, title, lines = [], colr = OZ.law, { size = 28 } = {}) {
+  const g = G(p, { x, y, o: 0 });
+  mk('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 18, fill: 'rgba(16,32,63,.92)', stroke: colr, 'stroke-width': 2.5 }, g);
+  const top = -h / 2 + size + 16;
+  T(g, title, { y: top, size, fill: colr, anchor: 'middle', weight: 750 });
+  lines.forEach((ln, i) => T(g, ln, { y: top + 36 + i * 30, size: 22, fill: OZ.ink, anchor: 'middle', weight: 500 }));
+  return g;
+}
+// an arrow from (x1,y1) to (x2,y2), drawn on with draw()
+function arrowLine(p, x1, y1, x2, y2, colr = OZ.dim) {
+  const a = Math.atan2(y2 - y1, x2 - x1), hx = x2 - Math.cos(a) * 18, hy = y2 - Math.sin(a) * 18;
+  const n = [-Math.sin(a) * 10, Math.cos(a) * 10];
+  return path(p, `M${x1} ${y1}L${x2} ${y2}M${(hx + n[0]).toFixed(1)} ${(hy + n[1]).toFixed(1)}L${x2} ${y2}L${(hx - n[0]).toFixed(1)} ${(hy - n[1]).toFixed(1)}`,
+    { fill: 'none', stroke: colr, 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, { d: 0 });
+}
+// a small group of delegates in one colour
+function delegates(p, x, y, colr, n = 3) {
+  const g = G(p, { x, y, o: 0 });
+  for (let i = 0; i < n; i++) put(ozIcon(g, 'person', (i - (n - 1) / 2) * 56, i % 2 ? 6 : 0, { s: .62, colr }), { o: 1 });
+  return g;
+}
+const GROUPS = [
+  { key: 'dev', name: 'Developing countries', concern: 'limits could slow industrial growth', colr: OZ.good, x: 330, y: 220 },
+  { key: 'ind', name: 'ODS-reliant industries (e.g. EU)', concern: 'controls would be costly', colr: OZ.ods, x: 1270, y: 220 },
+  { key: 'doubt', name: 'Sceptical countries', concern: 'harm not yet proven', colr: OZ.dim, x: 330, y: 620 },
+  { key: 'early', name: 'Early movers (US, Canada, Sweden, Norway)', concern: 'already cut CFCs; want others to', colr: OZ.ozone, x: 1270, y: 620 },
+];
+function roundTable(p, x, y, r = 120, o = 0) {
+  const g = G(p, { x, y, o });
+  mk('circle', { r, fill: 'rgba(255,209,102,.08)', stroke: OZ.law, 'stroke-width': 3 }, g);
+  put(ozIcon(g, 'globe', 0, 0, { s: 1.1, colr: OZ.ozone }), { o: 1 });
+  return g;
+}
+
+/* ---------- beats ---------- */
+const BEATS = [
+  ['intro', 'The Vienna Convention', (m) => {
+    const p = panel(0);
+    const doc = ozIcon(p, 'doc', 800, 150, { s: 1.3, colr: OZ.law }); tw(doc, { o: 1 }, .1, .8);
+    const seal = G(p, { x: 836, y: 196, o: 0, s: .4 });
+    mk('circle', { r: 26, fill: OZ.law }, seal); T(seal, '1985', { y: 6, size: 14, fill: '#0b1730', anchor: 'middle', weight: 800 });
+    pop(seal, .8);
+    const g = G(p, { o: 0, y: 20 });
+    T(g, 'Lesson 2', { x: 800, y: 300, size: 30, fill: OZ.dim, anchor: 'middle', weight: 600 });
+    T(g, 'The Vienna Convention', { x: 800, y: 390, size: 76, weight: 700, anchor: 'middle' });
+    T(g, 'for the Protection of the Ozone Layer', { x: 800, y: 450, size: 38, fill: OZ.ink, anchor: 'middle', weight: 500 });
+    tw(g, { o: 1, y: 0 }, .2, 1.1, out);
+    lbl(p, 'from science to the first global agreement on ozone', 800, 540, m('sub'), { size: 30, fill: OZ.law, anchor: 'middle', weight: 550 });
+    const band = ozoneBand(p, 700, 780, { o: 0 }); show(band, .6, .8);
+  }],
+
+  ['science', 'The scientific warning', (m) => {
+    const p = panel(0);
+    // the paper
+    const paper = G(p, { x: 250, y: 250, o: 0 });
+    mk('rect', { x: -160, y: -110, width: 320, height: 220, rx: 16, fill: 'rgba(16,32,63,.92)', stroke: OZ.law, 'stroke-width': 2 }, paper);
+    put(ozIcon(paper, 'doc', -100, -10, { s: .8, colr: OZ.law }), { o: 1 });
+    T(paper, '1974', { x: -30, y: -40, size: 40, fill: OZ.law, weight: 800 });
+    T(paper, 'Molina & Rowland', { x: -30, y: 0, size: 24, fill: OZ.ink, weight: 650 });
+    T(paper, 'a warning in', { x: -30, y: 34, size: 20, fill: OZ.dim, weight: 500 });
+    T(paper, 'the journal Nature', { x: -30, y: 60, size: 20, fill: OZ.dim, weight: 500 });
+    tw(paper, { o: 1 }, m('paper'), .5);
+    // the mechanism, small, in the middle
+    const band = ozoneBand(p, 170, 260, { x0: 560, x1: 1220, o: 0 }); show(band, m('paper', .4), .5);
+    lbl(p, 'stratosphere', 1230, 226, m('paper', .6), { size: 22, fill: OZ.ozone, weight: 600 });
+    mk('rect', { x: 560, y: 600, width: 660, height: 20, rx: 6, fill: OZ.ground }, p);
+    lbl(p, 'the ground', 570, 650, m('paper', .6), { size: 20, fill: OZ.dim, weight: 500 });
+    const o3 = O3(p, 1080, 214, { o: 0 }); put(o3, { s: .8 }); show(o3, m('paper', .6), .4);
+    const c = CFC(p, 820, 545, { o: 0, s: .8 }); show(c, m('rise', -.3), .4);
+    tw(c, { y: 285 }, m('rise'), 2.4, io);
+    const R = uvRay(p, 'C', 820, 60, 236, { label: false });
+    draw(R.ray, m('release', -.2), .5, lin); hide(R.ray, m('release', .7), .4);
+    hide(c.cl[0], m('release', .3), .05); hide(c.bonds[0], m('release', .3), .05);
+    const cl = atom(p, 'Cl', 820, 242, { o: 0, eyes: true, s: .8 });
+    tw(cl, { o: 1 }, m('release', .3), .05); tw(cl, { x: 1000, y: 220 }, m('release', .5), 1.4, io);
+    lbl(p, 'chlorine', 1000, 300, m('release', 1.6), { size: 22, fill: OZ.ods, anchor: 'middle' });
+    tag(p, 'prediction: ozone falls', 890, 120, OZ.ods, m('predict'), { size: 24 });
+    // measuring
+    const ch = ozIcon(p, 'chart', 1420, 470, { s: .9, colr: OZ.ozone }); tw(ch, { o: 1 }, m('measure'), .4);
+    lbl(p, 'countries start', 1420, 560, m('measure', .3), { size: 22, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    lbl(p, 'measuring ozone', 1420, 588, m('measure', .3), { size: 22, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    // Nobel
+    const md = ozIcon(p, 'medal', 160, 560, { s: 1, colr: OZ.law }); tw(md, { o: 1 }, m('nobel'), .5);
+    lbl(p, 'Nobel Prize in Chemistry, 1995', 230, 540, m('nobel', .3), { size: 26, fill: OZ.law, weight: 700 });
+    lbl(p, 'Paul Crutzen, Mario Molina,', 230, 576, m('nobel', .6), { size: 22, fill: OZ.ink, weight: 500 });
+    lbl(p, 'Sherwood Rowland', 230, 604, m('nobel', .6), { size: 22, fill: OZ.ink, weight: 500 });
+  }],
+
+  ['agenda', 'Ozone on the agenda', (m) => {
+    const p = panel(0);
+    const L = timeline(p, { x0: 200, x1: 1400, y: 140, from: 1973, to: 1978, ticks: 1, pins: [] });
+    draw(L.line, .2, .8); show(L.ticks, .4, .4);
+    const b1 = box(p, 300, 380, 400, 190, '1975 · WMO', ['meeting of scientists', 'first statement on ozone', 'funded by UNEP'], OZ.ozone);
+    const b2 = box(p, 800, 380, 400, 190, 'UNEP Governing Council', ['ozone made', 'a high priority'], OZ.law);
+    const b3 = box(p, 1300, 380, 400, 190, '1977', ['World Plan of Action', 'on the ozone layer'], OZ.good);
+    tw(b1, { o: 1 }, m('wmo'), .5);
+    const d1 = path(p, `M${L.xAt(1975)} 150V284`, { stroke: OZ.ozone, 'stroke-width': 2, 'stroke-dasharray': '4 8' }, { d: 0 }); draw(d1, m('wmo', .3), .5);
+    const a1 = arrowLine(p, 505, 380, 595, 380); draw(a1, m('unep', -.3), .4);
+    tw(b2, { o: 1 }, m('unep'), .5);
+    const a2 = arrowLine(p, 1005, 380, 1095, 380); draw(a2, m('plan', -.3), .4);
+    tw(b3, { o: 1 }, m('plan'), .5);
+    const d3 = path(p, `M${L.xAt(1977)} 150V284`, { stroke: OZ.good, 'stroke-width': 2, 'stroke-dasharray': '4 8' }, { d: 0 }); draw(d3, m('plan', .3), .5);
+    [b1, b2, b3].forEach((b, i) => ozBob(b, { amp: 3, per: 3.6 + i * .4, base: 380 }));
+    [['flask', 'research', 1210], ['chart', 'monitoring', 1390]].forEach(([ic, str, x], i) => {
+      const e = ozIcon(p, ic, x, 570, { s: .6, colr: OZ.good }); tw(e, { o: 1 }, m('research', i * .5), .4);
+      lbl(p, str, x, 640, m('research', i * .5 + .2), { size: 24, fill: OZ.ink, anchor: 'middle', weight: 600 });
+    });
+    tag(p, 'science  →  the political agenda', 800, 740, OZ.law, m('bridge'), { size: 30 });
+  }],
+
+  ['interests', 'Interests to reconcile', (m) => {
+    const p = panel(0);
+    const tb = roundTable(p, 800, 420, 120);
+    tw(tb, { o: 1 }, m('global'), .6); ozBob(tb, { amp: .03, per: 4, key: 's', base: 1 });
+    lbl(p, 'a global problem needs a global treaty', 800, 590, m('global', .4), { size: 26, fill: OZ.law, anchor: 'middle', weight: 650 });
+    GROUPS.forEach(({ key, name, concern, colr, x, y }) => {
+      const d = delegates(p, x, y - 40, colr); tw(d, { o: 1 }, m(key), .5); ozBob(d, { amp: 4, per: 2.8 + x / 1000, base: y - 40 });
+      lbl(p, name, x, y + 46, m(key, .2), { size: 24, fill: colr, anchor: 'middle', weight: 700 });
+      lbl(p, '“' + concern + '”', x, y + 80, m(key, .6), { size: 22, fill: OZ.ink, anchor: 'middle', weight: 500 });
+      const dx = 800 - x, dy = 420 - y, len = Math.hypot(dx, dy);
+      const ln = path(p, `M${x + dx / len * 200} ${y + dy / len * 120}L${800 - dx / len * 130} ${420 - dy / len * 130}`, { stroke: colr, 'stroke-width': 3, 'stroke-dasharray': '6 8' }, { d: 0 });
+      draw(ln, m('table', .2), .8);
+    });
+  }],
+
+  ['q1', 'Quick check', () => { panel(0); }, { ask: done => quiz(SCREEN, [{
+    id: 'c-interests', prompt: ['Who held each concern during the negotiations?'],
+    build: grid([
+      { parts: ['Limits could slow our industrial growth.'], ans: ['dev'], why: 'Developing countries feared controls would hold back their development.' },
+      { parts: ['Controls would cost our industries a lot.'], ans: ['ind'], why: 'Countries with industries relying on these chemicals, like those of the EU, worried about cost.' },
+      { parts: ['We already cut CFCs; others should too.'], ans: ['early'], why: 'The US, Canada, Sweden and Norway had already reduced CFCs.' },
+    ], [['dev', 'developing', OZ.good, 'd'], ['ind', 'ODS-reliant', OZ.ods, 'o'], ['early', 'early movers', OZ.ozone, 'e']], { multi: false, text: true }),
+  }], done) }],
+
+  ['adopted', 'Adopted and in force', (m) => {
+    const p = panel(0);
+    const L = timeline(p, { x0: 160, x1: 1440, y: 470, from: 1980, to: 2010, ticks: 5, pins: [
+      { year: 1982, label: 'negotiations begin', up: false },
+      { year: 1985, label: 'adopted', sub: '22 March, by consensus', up: true },
+      { year: 1988, label: 'enters into force', sub: '22 September', up: false },
+      { year: 2009, label: 'universal ratification', sub: 'every country', up: true },
+    ] });
+    draw(L.line, .2, 1); show(L.ticks, .5, .4);
+    tw(L.pins[0].g, { o: 1 }, .6, .5);
+    tw(L.pins[1].g, { o: 1 }, m('adopt'), .5); pulse(L.pins[1].g, m('adopt', .4), 1.15);
+    tw(L.pins[2].g, { o: 1 }, m('force'), .5);
+    tw(L.pins[3].g, { o: 1 }, m('universal'), .5);
+    const now = G(p, { x: L.xAt(1980), y: 470, o: 0 });
+    mk('circle', { r: 16, fill: OZ.law, opacity: .35 }, now); mk('circle', { r: 8, fill: OZ.law }, now);
+    tw(now, { o: 1 }, .4, .4);
+    tw(now, { x: L.xAt(1982) }, .5, 1.2, io);
+    tw(now, { x: L.xAt(1985) }, m('adopt', -.4), 1.2, io);
+    tw(now, { x: L.xAt(1988) }, m('force', -.4), 1.2, io);
+    tw(now, { x: L.xAt(2009) }, m('universal', -.4), 2, io);
+    ozBob(now, { amp: .15, per: 1.6, key: 's', base: 1 });
+    const gl = ozIcon(p, 'globe', 1290, 200, { s: 1.1, colr: OZ.good }); tw(gl, { o: 1 }, m('universal', .4), .5);
+    ozBob(gl, { amp: 4, per: 3.4, base: 200 });
+    tag(p, 'the first environmental treaty ratified by every country', 800, 760, OZ.good, m('first'), { size: 28 });
+  }],
+
+  ['stages', 'Four stages of a treaty', (m) => {
+    const p = panel(0);
+    const steps = [['1', 'Negotiation', ['mandate from a body', 'such as UNEP or UNGA']], ['2', 'Adoption', ['the text', 'is finalised']],
+      ['3', 'Ratification', ['a state agrees', 'to be bound']], ['4', 'Entry into force', ['on the terms', 'the treaty sets']]];
+    const X = i => 260 + i * 360, Y = i => 640 - i * 110;
+    steps.forEach(([n, title, lines], i) => {
+      const g = G(p, { o: 0 });
+      mk('rect', { x: X(i) - 160, y: Y(i), width: 320, height: 26, rx: 6, fill: OZ.law, opacity: .85 }, g);
+      mk('rect', { x: X(i) - 160, y: Y(i) + 26, width: 320, height: 860 - Y(i) - 26 > 0 ? 40 : 0, fill: OZ.law, opacity: .12 }, g);
+      T(g, n, { x: X(i) - 130, y: Y(i) + 72, size: 40, fill: OZ.law, weight: 800 });
+      T(g, title, { x: X(i) - 90, y: Y(i) + 64, size: 28, fill: OZ.ink, weight: 700 });
+      lines.forEach((ln, j) => T(g, ln, { x: X(i) - 90, y: Y(i) + 98 + j * 28, size: 21, fill: OZ.dim, weight: 500 }));
+      tw(g, { o: 1 }, m('s' + (i + 1)), .5);
+    });
+    // the document climbs the steps
+    const doc = G(p, { x: X(0), y: Y(0) - 70, o: 0 });
+    ozBob(put(ozIcon(doc, 'doc', 0, 0, { s: .9, colr: OZ.ink }), { o: 1 }), { amp: 5, per: 2.4 });
+    tw(doc, { o: 1 }, m('s1', .3), .4);
+    for (let i = 1; i < 4; i++) tw(doc, { x: X(i), y: Y(i) - 70 }, m('s' + (i + 1), -.2), .9, io);
+    const seal = G(doc, { x: 26, y: 34, o: 0, s: .3 });
+    mk('circle', { r: 22, fill: OZ.law }, seal); path(seal, 'M-9 0L-2 7L10 -7', { fill: 'none', stroke: '#0b1730', 'stroke-width': 4, 'stroke-linecap': 'round' });
+    pop(seal, m('s3', .9));
+    const glow = G(p, { x: X(3), y: Y(3) - 70, o: 0 }); mk('circle', { r: 80, fill: OZ.good, opacity: .2 }, glow);
+    tw(glow, { o: 1 }, m('s4', .9), .6);
+    // Vienna: 20 ratifications, then 90 days
+    const dots = G(p, { x: 150, y: 150, o: 0 });
+    for (let i = 0; i < 20; i++) mk('circle', { cx: (i % 10) * 34, cy: Math.floor(i / 10) * 34, r: 12, fill: OZ.law }, dots);
+    show(dots, m('vienna'), .4);
+    prog(q => { const k = Math.round(q * 20); [...dots.children].forEach((c, i) => c.setAttribute('opacity', i < k ? 1 : .2)); }, m('vienna'), 2.2, lin);
+    lbl(p, 'Vienna: 20 ratifications, then 90 days', 150, 110, m('vienna', .2), { size: 26, fill: OZ.law, weight: 700 });
+  }],
+
+  ['q2', 'Quick check', () => {
+    const p = panel(0);
+    ['Negotiation', 'Adoption', 'Ratification', 'Entry into force'].forEach((str, i) => {
+      const x = 140 + i * 170, y = 640 - i * 110;
+      mk('rect', { x, y, width: 160, height: 22, rx: 5, fill: OZ.law, opacity: .85 }, p);
+      T(p, String(i + 1), { x: x + 80, y: y + 64, size: 34, fill: OZ.law, anchor: 'middle', weight: 800 });
+      T(p, '?', { x: x + 80, y: y - 20, size: 30, fill: OZ.dim, anchor: 'middle', weight: 700 });
+    });
+  }, { ask: done => quiz({ x: 860, y: 150, w: 680, cls: 'side' }, [{
+    id: 'c-ratify', prompt: ['At which stage does a country formally agree to be bound by a treaty?'],
+    build: choice([['Negotiation'], ['Adoption'], ['Ratification'], ['Entry into force']], 2,
+      'Right. By ratifying (or accepting or approving) a treaty, a state gives its consent to be bound.',
+      ['Negotiation only works out the text; nobody is bound yet.', 'Adoption finalises the text, but each state still has to agree to be bound.', null,
+        'Entry into force is when the treaty starts to operate, once enough states have already agreed to be bound.']),
+  }], done) }],
+
+  ['framework', 'A framework convention', (m) => {
+    const p = panel(0);
+    const fr = G(p, { o: 0 });
+    mk('rect', { x: 230, y: 110, width: 940, height: 600, rx: 14, fill: 'none', stroke: OZ.law, 'stroke-width': 6 }, fr);
+    mk('rect', { x: 246, y: 126, width: 908, height: 568, rx: 8, fill: 'rgba(255,209,102,.04)', stroke: OZ.law, 'stroke-width': 1.5, 'stroke-opacity': .6 }, fr);
+    T(fr, 'Vienna Convention, 1985: a framework', { x: 700, y: 92, size: 28, fill: OZ.law, anchor: 'middle', weight: 750 });
+    tw(fr, { o: 1 }, m('frame'), .6);
+    // the empty slot: no specific controls
+    const slot = G(p, { o: 0 });
+    mk('rect', { x: 400, y: 560, width: 600, height: 100, rx: 14, fill: 'none', stroke: OZ.dim, 'stroke-width': 3, 'stroke-dasharray': '12 10' }, slot);
+    T(slot, 'specific limits on ozone-depleting substances', { x: 700, y: 604, size: 24, fill: OZ.dim, anchor: 'middle', weight: 600 });
+    T(slot, 'not in the Convention', { x: 700, y: 638, size: 22, fill: OZ.dim, anchor: 'middle', weight: 500 });
+    tw(slot, { o: 1 }, m('noctrl'), .5);
+    const ban = tag(p, 'a general duty to protect the ozone layer (Article 2)', 700, 200, OZ.ozone, m('general'), { size: 26 });
+    [['gavel', 'laws and', 'admin measures'], ['flask', 'research and', 'assessment'], ['info', 'sharing', 'information'], ['tech', 'technology:', 'develop, transfer']].forEach(([ic, a, b], i) => {
+      const x = 370 + i * 220, g = G(p, { o: 0 });
+      mk('rect', { x: x - 95, y: 280, width: 190, height: 230, rx: 16, fill: 'rgba(16,32,63,.9)', stroke: OZ.ozone, 'stroke-width': 2, 'stroke-opacity': .6 }, g);
+      put(ozIcon(g, ic, x, 360, { s: .7, colr: OZ.ozone }), { o: 1 });
+      T(g, a, { x, y: 450, size: 22, fill: OZ.ink, anchor: 'middle', weight: 650 });
+      T(g, b, { x, y: 478, size: 20, fill: OZ.dim, anchor: 'middle', weight: 500 });
+      tw(g, { o: 1 }, m('m' + (i + 1)), .5); ozBob(g, { amp: 3, per: 3.2 + i * .35 });
+    });
+    ozBob(fr, { amp: .004, per: 6, key: 's', base: 1 });
+    const ar = arrowLine(p, 1010, 610, 1290, 610, OZ.law); draw(ar, m('later'), .6);
+    const mp = ozIcon(p, 'doc', 1380, 600, { s: 1.1, colr: OZ.law }); tw(mp, { o: 1 }, m('later', .5), .5);
+    lbl(p, 'Montreal Protocol, 1987', 1380, 700, m('later', .7), { size: 24, fill: OZ.law, anchor: 'middle', weight: 700 });
+    lbl(p, 'Lesson 3', 1380, 730, m('later', .9), { size: 20, fill: OZ.dim, anchor: 'middle', weight: 500 });
+  }],
+
+  ['precaution', 'The precautionary approach', (m) => {
+    const p = panel(0);
+    lbl(p, 'act before there is firm proof of harm', 800, 120, m('before'), { size: 34, fill: OZ.ink, anchor: 'middle', weight: 700 });
+    // a balance: the beam turns about (800, 260); pans hang below its ends
+    const px = 800, py = 260, half = 320;
+    const post = G(p, { o: 0 });
+    path(post, `M${px} ${py}V600M${px - 90} 600H${px + 90}`, { stroke: OZ.dim, 'stroke-width': 8, 'stroke-linecap': 'round' });
+    mk('circle', { cx: px, cy: py, r: 12, fill: OZ.dim }, post);
+    const beam = G(p, { x: px, y: py, o: 0 });
+    path(beam, `M${-half} 0H${half}`, { stroke: OZ.ink, 'stroke-width': 8, 'stroke-linecap': 'round' });
+    const pan = (str1, str2, colr) => {
+      const g = G(p, { o: 0 });
+      path(g, 'M0 0L-90 130M0 0L90 130', { stroke: OZ.dim, 'stroke-width': 2.5 });
+      path(g, 'M-110 130H110L80 160H-80Z', { fill: colr, 'fill-opacity': .35, stroke: colr, 'stroke-width': 3 });
+      T(g, str1, { y: 200, size: 24, fill: colr, anchor: 'middle', weight: 700 });
+      T(g, str2, { y: 230, size: 22, fill: OZ.ink, anchor: 'middle', weight: 500 });
+      return g;
+    };
+    const L = pan('uncertain science', '“not proven yet”', OZ.dim), R = pan('risk of harm', 'serious, irreversible', OZ.ods);
+    const q1 = G(L, { x: 0, y: 100 }); T(q1, '?', { size: 60, fill: OZ.dim, anchor: 'middle', weight: 800 });
+    const tilt = a => { const r = a * Math.PI / 180; put(beam, { r: a }); put(L, { x: px - half * Math.cos(r), y: py - half * Math.sin(r) }); put(R, { x: px + half * Math.cos(r), y: py + half * Math.sin(r) }); };
+    tilt(0);
+    for (const e of [post, beam, L, R]) tw(e, { o: 1 }, m('scale', -.2), .6);
+    const tTip = m('tip');
+    clockRun(t => { const q = Math.min(1, Math.max(0, (t - tTip) / 1.4)), e = q * q * (3 - 2 * q); tilt(e * 12 + (2.2 - e * 1.4) * Math.sin(t * 1.9)); }, 0, { tail: true });
+    tag(p, 'the precautionary principle / approach', 800, 660, OZ.good, m('principle'), { size: 30 });
+    const quote = G(p, { o: 0 });
+    T(quote, 'Rio Declaration, Principle 15 (1992):', { x: 800, y: 730, size: 22, fill: OZ.law, anchor: 'middle', weight: 700 });
+    T(quote, '“lack of full scientific certainty shall not be used as a reason for postponing cost-effective measures”', { x: 800, y: 764, size: 22, fill: OZ.ink, anchor: 'middle', weight: 500 });
+    tw(quote, { o: 1 }, m('rio'), .6);
+  }],
+
+  ['institutions', 'Who runs the Convention', (m) => {
+    const p = panel(0);
+    const cop = box(p, 800, 160, 560, 170, 'Conference of the Parties (COP)', ['all parties · meets every three years', 'reviews implementation, sets policy and rules'], OZ.law);
+    tw(cop, { o: 1 }, m('cop'), .5);
+    const bur = box(p, 290, 470, 420, 170, 'Bureau', ['President, 3 Vice-Presidents', 'and a Rapporteur'], OZ.ink);
+    const orm = box(p, 800, 470, 420, 170, 'Ozone Research Managers', ['scientists and research managers', 'meet 6 months before each COP'], OZ.ozone);
+    const sec = box(p, 1310, 470, 420, 170, 'Ozone Secretariat', ['UNEP headquarters, Nairobi', 'organises meetings, shares information'], OZ.good);
+    const l1 = path(p, 'M600 245L360 385', { stroke: OZ.dim, 'stroke-width': 3 }, { d: 0 });
+    const l3 = path(p, 'M1000 245L1240 385', { stroke: OZ.dim, 'stroke-width': 3 }, { d: 0 });
+    tw(bur, { o: 1 }, m('bureau'), .5); draw(l1, m('bureau', -.2), .5);
+    tw(orm, { o: 1 }, m('orm'), .5);
+    const up = arrowLine(p, 800, 385, 800, 250, OZ.ozone); draw(up, m('orm', 2.5), .6);
+    lbl(p, 'recommendations', 820, 330, m('orm', 2.8), { size: 22, fill: OZ.ozone, weight: 650 });
+    tw(sec, { o: 1 }, m('sec'), .5); draw(l3, m('sec', -.2), .5);
+    tag(p, 'Vienna Convention', 1180, 650, OZ.law, m('both'), { size: 22 });
+    tag(p, 'Montreal Protocol', 1440, 650, OZ.law, m('both', .4), { size: 22 });
+    for (const [b, i] of [[cop, 0], [bur, 1], [orm, 2], [sec, 3]]) ozBob(b, { amp: 2.5, per: 4 + i * .3, base: i ? 470 : 160 });
+  }],
+
+  ['wrap', 'Summary', (m) => {
+    const p = panel(0);
+    T(p, 'Lesson 2 in four points', { x: 160, y: 140, size: 30, fill: OZ.dim, weight: 600 });
+    [['Science came first: the 1974 warning led to WMO and UNEP meetings and the 1977 World Plan of Action.', 'w1', OZ.ozone],
+     ['Adopted in 1985, in force in 1988, universal in 2009: the first environmental treaty joined by every country.', 'w2', OZ.law],
+     ['A framework: a general duty to protect the ozone layer, no specific controls, and action before full proof.', 'w3', OZ.good],
+     ['Its bodies: the Conference of the Parties, its Bureau, the Ozone Research Managers and the Secretariat in Nairobi.', 'w4', OZ.uvB]].forEach(([str, mark, colr], i) => {
+      const g = G(p, { x: -16, y: 250 + i * 130, o: 0 });
+      mk('circle', { cx: 190, cy: -10, r: 28, fill: colr }, g);
+      T(g, String(i + 1), { x: 190, y: 1, size: 30, fill: '#0b1730', weight: 800, anchor: 'middle' });
+      const words = str.split(' '), lines = ['']; for (const w of words) { if ((lines.at(-1) + ' ' + w).length > 62) lines.push(w); else lines[lines.length - 1] = (lines.at(-1) + ' ' + w).trim(); }
+      lines.forEach((ln, j) => T(g, ln, { x: 250, y: j * 40, size: 32, weight: 600 }));
+      tw(g, { o: 1, x: 0 }, m(mark), .6);
+      ozBob(g, { amp: 2.5, per: 4 + i * .4, base: 250 + i * 130 });
+    });
+  }],
+
+  ['final1', 'Chapter practice', () => { panel(0); }, { ask: done => quiz(SCREEN, [
+    { id: 'p-adopted', prompt: ['The Vienna Convention was adopted in …'],
+      build: choice([['1982'], ['1985'], ['1988']], 1, 'Right: adopted on 22 March 1985, by consensus.',
+        ['1982 is when the negotiations began.', null, '1988 is when it entered into force.']) },
+    { id: 'p-universal', prompt: ['The Vienna Convention reached universal ratification in …'],
+      build: choice([['1998'], ['2004'], ['2009']], 2, 'Right: in 2009, the first environmental treaty joined by every country.',
+        ['Not yet in 1998: some countries still had to join.', 'Not yet in 2004: some countries still had to join.', null]) },
+    { id: 'p-truefalse', prompt: ['True or false?'],
+      build: grid([
+        { parts: ['The Vienna Convention sets specific measures for phasing out controlled substances.'], ans: ['f'], why: 'False: it is a framework with a general duty; specific controls came with the Montreal Protocol.' },
+        { parts: ['The Vienna Convention marks the emergence of the precautionary principle.'], ans: ['t'], why: 'True: it called for action before firm proof of harm.' },
+      ], [['t', 'true', OZ.good, 't'], ['f', 'false', OZ.ods, 'f']], { multi: false, text: true }) },
+    { id: 'p-bodies', prompt: ['Match each function to its body.'],
+      build: grid([
+        { parts: ['Organises and services meetings'], ans: ['sec'], why: 'The Ozone Secretariat, in Nairobi, organises the meetings.' },
+        { parts: ['Serves as a scientific forum'], ans: ['orm'], why: 'The Ozone Research Managers bring government research managers and scientists together.' },
+        { parts: ['Reviews progress in implementing the Convention'], ans: ['cop'], why: 'The Conference of the Parties reviews implementation every three years.' },
+      ], [['cop', 'COP', OZ.law, 'c'], ['orm', 'Research Managers', OZ.ozone, 'r'], ['sec', 'Secretariat', OZ.good, 's']], { multi: false, text: true }) },
+  ], done, 'Chapter practice') }],
+
+  ['finish', 'Finished', () => { panel(0); }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run: (m, D) => { run(m, D); ozLive(); }, ...extra }));   // ozLive: the ambient drift (ozone.js)
+
+boot();
+</script>
+</body>
+</html>

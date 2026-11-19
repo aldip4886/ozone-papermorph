@@ -16,7 +16,8 @@
     "Art: flat infographic drawn in code; the molecules are the characters (an O3 trio, a CFC, a chlorine atom that breaks ozone apart); no licensing worries on the open web.",
     "Palette and voice: night-sky board (deep navy fading up to space), UV in violet, ozone in sky blue, ozone-depleting substances in warning orange, a clean sans-serif font, a calm US male voice (Andrew) at a slightly slow pace.",
     "Shared pieces: all five (atmosphere cross-section, UV rays, molecules, globe with polar hole, treaty timeline).",
-    "ch01 storyboard: approved as shown ('go ahead')."
+    "ch01 storyboard: approved as shown ('go ahead').",
+    "ch01: approved; continue with Lesson 2 in the same style (2026-11-20). The user writes in Indonesian; the book stays in English."
   ],
   "look": {
     "palette": {
@@ -118,5 +119,10 @@
       "drawn in code only (open web; no third-party images)"
     ]
   },
-  "approved": []
+  "approved": [
+    {
+      "chapter": "ch01",
+      "why": "user approved 2026-11-20 ('Ya, lanjutkan ke lesson 2'): molecules as characters, to-scale atmosphere, chain-reaction cycle, gentle ambient drift so no frame freezes"
+    }
+  ]
 }
