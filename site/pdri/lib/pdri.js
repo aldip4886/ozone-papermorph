@@ -68,9 +68,13 @@ function pdTag(p, str, x, y, col, { size = 26, solid = true, o = 0, weight = 800
 // a round badge with short letters (the levy icons)
 function badge(p, str, x, y, col, { r = 56, size, o = 0 } = {}) {
   const g = G(p, { x, y, o });
-  mk('circle', { r: r + 10, fill: tint(col, .78) }, g);
+  const halo = mk('circle', { r: r + 10, fill: tint(col, .78) }, g);
   mk('circle', { r, fill: col }, g);
   T(g, str, { y: (size || r * .5) * .36, size: size || r * .5, weight: 800, anchor: 'middle', fill: '#fff' });
+  // the halo breathes slowly while the badge is on screen (a pure function of the beat clock)
+  const ph = (x * 7 + y * 3) % 6.28;
+  put(halo, { s: 1 });
+  clockRun(t => put(halo, { s: 1 + .06 * Math.sin(t * 1.6 + ph) }), 0, { tail: true });
   return g;
 }
 // a short label on a line to the right of a point

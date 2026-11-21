@@ -40,3 +40,5 @@
 :root .cover { background: rgba(244, 247, 252, .6); }
 :root .help { background: rgba(31, 42, 68, .45); }
 :root .paused-mark div, :root .sound-note, :root .caption { background: rgba(255, 255, 255, .95); color: var(--chalk); box-shadow: 0 6px 20px rgba(40, 60, 110, .18); }
+/* flat infographic: headings in the same sans as the picture, not the engine's book serif */
+:root .cover-t, :root .fin .prompt { font-family: var(--ui); font-weight: 800; letter-spacing: -.01em; }

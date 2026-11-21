@@ -14,7 +14,7 @@
 <script src="audio/id/timings.js"></script>
 <script>
 'use strict';
-const CHAPTER = { number: 1, title: 'Hari Pertama di Pelabuhan', minutes: 7, language: 'id' };
+const CHAPTER = { number: 1, title: 'Hari Pertama di Pelabuhan', minutes: 6, language: 'id' };   // next: '../ch02/' once Bab 2 exists
 
 /* ---------- chapter data (Kasus 1, KB 1) ---------- */
 const K1 = { meter: 100000, cif: 60000, kurs: 18155, bm: .10, bmtpPerM: 3300 };
@@ -123,9 +123,9 @@ const BEATS = [
       show(r, m('price') + i * .15, .25);
       tw(r, { x: 1150 + Math.floor(i / 2) * 80 }, m('price') + i * .15, .7, out);
     }
-    const price = pdTag(p, 'Harga kain ≈ Rp1,09 miliar', 800, 150, PD.pabean, { size: 30 });
+    const price = pdTag(p, 'Harga kain ≈ Rp1,09 miliar', 400, 150, PD.pabean, { size: 30 });
     put(price, { s: .6 }); pop(price, m('price') + .3);
-    const bill = pdTag(p, 'Pungutan ≈ Rp645 juta', 800, 225, PD.bm, { size: 30 });
+    const bill = pdTag(p, 'Pungutan ≈ Rp645 juta', 400, 225, PD.bm, { size: 30 });
     put(bill, { s: .6 }); pop(bill, m('bill'));
     const desk = serviceDesk(p, { x: 1440, y: 640, o: 0 });
     put(desk, { s: .8 });

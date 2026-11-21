@@ -15,9 +15,8 @@
   const reset = s => { k = 0; return s; };
 
   window.UNIT_ART = [
-    // 1 An example: a number line with a dot hopping along it.
-    reset(P('M228 130H572') + Array.from({ length: 7 }, (_, i) => P(`M${250 + i * 50} 122v16`, 'a')).join('') +
-      `<circle class="t hop" r="8" fill="currentColor" stroke="none" style="--k:${k++};offset-path:path('M250 116Q275 84 300 116Q325 84 350 116Q375 84 400 116')"/>` +
-      Tx(250, 60, 'a sketch of this unit', 26) + C(530, 70, 24, 'a')),
+    // 1 Bagian I: a stacked bar (nilai impor) beside a container
+    reset(P('M228 150H572', 'a') + P('M260 150V70H420V150') + P('M280 80V140M300 80V140M320 80V140M340 80V140M360 80V140M380 80V140M400 80V140', 'faint') +
+      P('M470 150V60H530V150') + P('M470 85H530') + P('M470 75H530') + Tx(500, 46, 'nilai impor', 20, '', 'middle')),
   ];
 })();

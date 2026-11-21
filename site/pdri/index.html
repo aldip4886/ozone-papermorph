@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BOOK TITLE</title>
-<meta name="description" content="ONE SENTENCE ABOUT THE BOOK.">
+<title>Pajak dalam Rangka Impor</title>
+<meta name="description" content="Pelajaran animasi untuk pegawai baru DJBC: memahami dan menghitung PPN, PPnBM, dan PPh Pasal 22 Impor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d2b27'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='48' fill='%23f0b45a'%3E∞%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="lib/units.css">
 <link rel="stylesheet" href="lib/contents.css">
@@ -13,28 +13,28 @@
 <script src="unit-art.js"></script>
 <!-- <script src="refs.js"></script>  a book that cites works: its reference list, built by the skill's scripts/refs.py -->
 <link rel="expect" href="#ch01" blocking="render">
-<!-- The book's own look, if it differs from the chalkboard: override the tokens of lib/contents.css here. A light look
-     sets them all, since the chapter cards (--panel) and their text (--chalk, --dim) change together, and replaces the
-     chalkboard's dark vignette (body::before); the notebook books' cover (site/physics-notebook/) draws lined paper there:
 <style>
-:root { --page: #d9d3c4; --board: #fcfaf3; --panel: #fffdf8; --edge: #d4ccb8;
-  --chalk: #26241f; --dim: #6c665a; --faint: #a39b8a; --task: #c4327a; --quiz: #2a7dbb; --good: #2f8a54;
-  --top-bg: rgba(252, 250, 243, .9); --top-line: #ddd5c3; --lift: rgba(60, 50, 30, .18); color-scheme: light; }
+:root { --page: #e6ebf3; --board: #f4f7fc; --panel: #ffffff; --edge: #d5dcea;
+  --chalk: #1f2a44; --dim: #6b7a99; --faint: #b8c2d6; --task: #e2632b; --quiz: #2f80ed; --good: #27ae60;
+  --top-bg: rgba(244, 247, 252, .92); --top-line: #e3e8f1; --lift: rgba(40, 60, 110, .16); color-scheme: light; }
 body::before { background: none; }
-</style> -->
+:root { --ui: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif; --book: var(--ui); }
+h1, .top strong { font-weight: 800; letter-spacing: -.01em; }
+.chalk span { font-style: normal; font-weight: 700; }
+</style>
 </head>
 <body>
 <section id="cover">
   <div class="chalk" aria-hidden="true"><!-- a few faint formulas or phrases from the book, drawn in chalk -->
-    <span style="left:7%;top:13%;--d:1.6">PHRASE ONE</span>
-    <span style="right:8%;top:17%;--d:1.9">PHRASE TWO</span>
-    <span style="left:5%;bottom:20%;--d:2.2">PHRASE THREE</span>
-    <span style="right:6%;bottom:15%;--d:2.5">PHRASE FOUR</span>
+    <span style="left:7%;top:13%;--d:1.6">Nilai impor = NP + BM + BMTP</span>
+    <span style="right:8%;top:17%;--d:1.9">PPN 12% × 11/12</span>
+    <span style="left:5%;bottom:20%;--d:2.2">PPh Pasal 22: 2,5%</span>
+    <span style="right:6%;bottom:15%;--d:2.5">Rp18.155 / USD</span>
   </div>
   <svg class="mascot draw" id="guide" width="210" height="147" aria-hidden="true"></svg>
-  <h1>BOOK &amp; TITLE</h1>
-  <p class="kicker">An animated book</p>
-  <p class="lede">ONE OR TWO SENTENCES ABOUT WHAT THE READER WILL SEE AND DO.</p>
+  <h1>Pajak dalam Rangka Impor</h1>
+  <p class="kicker">Buku animasi · DJBC</p>
+  <p class="lede">Ikuti kain impor dari kapal sampai tagihan: nilai impor, PPN, PPnBM, PPh Pasal 22, fasilitas, dan barang kiriman, dihitung langkah demi langkah dengan kuis di setiap bab.</p>
   <div class="acts">
     <a class="btn go" href="#contents" data-t="open">Open the book<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
     <a class="btn quiet" id="resume" hidden></a>
@@ -44,7 +44,7 @@ body::before { background: none; }
 
 <main id="contents">
   <header class="top">
-    <a class="home" href="#book" aria-label="Back to the cover" data-t-label="toCover"><svg class="mascot" id="guideSmall" width="52" height="36" aria-hidden="true"></svg><strong>BOOK &amp; TITLE</strong></a>
+    <a class="home" href="#book" aria-label="Back to the cover" data-t-label="toCover"><svg class="mascot" id="guideSmall" width="52" height="36" aria-hidden="true"></svg><strong>Pajak dalam Rangka Impor</strong></a>
     <span class="prog" id="prog"></span>
   </header>
   <div id="units"></div>
@@ -69,9 +69,9 @@ body::before { background: none; }
 Contents.book({
   start: { unit: 1, chapter: 1 },
   units: [   // [unit title, [[chapter title, minutes], ...]]
-    ['First unit', [['First chapter', 8]]],
+    ['Memahami sambil mulai menghitung', [['Hari Pertama di Pelabuhan', 6]]],
   ],
-  hues: ['#f4a48c', '#86c9e8', '#f3c95c', '#e8a0c8', '#8fd6b0', '#bba8ee', '#f0b45a'],   // one colour per unit, cycling
+  hues: ['#2f80ed', '#27ae60'],   // one colour per unit, cycling
 });
 </script>
 </body>
