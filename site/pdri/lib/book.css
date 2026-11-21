@@ -14,16 +14,29 @@
    Style overrides go here too. They come before the engine's rules, so make each selector more specific than the
    engine's, e.g. ':root .card.band' for '.card.band'. */
 
-/* Pajak dalam Rangka Impor: dark navy board for isometric pictures (style.json look.palette) */
-:root {
-  --page: #07101f; --board: #0e1d33; --panel: #13284a; --edge: #2a4470;
-  --chalk: #eef3fb; --dim: #93a4c3; --faint: #4a5d82;
-  --task: #f5c84b; --quiz: #4da3ff; --good: #3fcf8e; --bad: #ff6b6b;
+/* Pajak dalam Rangka Impor: flat 2D infographic on a light board (style.json look.palette). ':root:root' outranks the
+   engine's ':root'; the engine's few fixed dark colours are set below, and lib/pdri.js sets the drawing palette COL. */
+:root:root {
+  --page: #e6ebf3; --board: #f4f7fc; --panel: #ffffff; --edge: #d5dcea;
+  --chalk: #1f2a44; --dim: #6b7a99; --faint: #b8c2d6;
+  --task: #e8b21f; --quiz: #2f80ed; --good: #27ae60; --bad: #e5486b;
   --ui: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --math-font: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --vignette: rgba(0, 0, 0, .38);
-  --rule: #1f3157; --track: #1d2d52; --track-ask: #1f4565;
-  --bar-edge: #1a2a4b; --hover: #1d2f55; --veil: #07101f;
+  --on-fill: #fff; --vignette: rgba(40, 60, 110, .05); color-scheme: light;
+  --rule: #e9edf4; --track: #e1e7f1; --track-ask: #cfe0f7;
+  --bar-edge: #e3e8f1; --hover: #eef2f8; --veil: #e6ebf3;
 }
-:root #stage { background: radial-gradient(75% 75% at 50% 45%, rgba(0,0,0,0) 60%, var(--vignette)), var(--grain, none),
-  linear-gradient(180deg, #0a1526 0%, #0e1d33 60%, #11244a 100%); }
+:root #stage { background: #f4f7fc; }
+:root #frame { box-shadow: 0 0 0 1px var(--edge), 0 30px 80px rgba(40, 60, 110, .18); }
+:root .card { background: rgba(255, 255, 255, .98); box-shadow: 0 10px 30px rgba(40, 60, 110, .16); }
+:root .opt[aria-pressed="true"] { color: #fff; }
+:root .btn.go { color: #fff; }
+:root .grid .row, :root .blanks .brow { border-bottom-color: #e9edf4; }
+:root .box { background: rgba(47, 128, 237, .07); }
+:root .grid .row.cur { background: rgba(47, 128, 237, .07); }
+:root #bar { background: #ffffff; border-top-color: #e3e8f1; }
+:root .seg { background: #dfe5ef; }
+:root .seg.ask { background: #cfe0f7; }
+:root .cover { background: rgba(244, 247, 252, .6); }
+:root .help { background: rgba(31, 42, 68, .45); }
+:root .paused-mark div, :root .sound-note, :root .caption { background: rgba(255, 255, 255, .95); color: var(--chalk); box-shadow: 0 6px 20px rgba(40, 60, 110, .18); }

@@ -1,225 +1,195 @@
-/* PDRI book library: isometric pieces drawn in code (style.json components). Loaded after engine.js.
-   Isometric axes: x runs right-down, y runs left-down, z up. Every piece is drawn around its own origin
-   (the centre of its footprint on the floor) and placed with put()/G({x, y}). No people: objects carry the story. */
+/* PDRI book library: flat 2D infographic pieces drawn in code (style.json components). Loaded after engine.js.
+   Light board, bright flat colours, rounded shapes, no outlines, no people. Every piece is drawn around its own
+   origin and placed with G({x, y}); bars stand on their origin (bottom centre). */
 'use strict';
 
 const PD = {
-  board: '#0e1d33', floor: '#16294a', floorEdge: '#22395f', ink: '#eef3fb', dim: '#93a4c3', faint: '#4a5d82',
-  pabean: '#4da3ff', bm: '#ff8a3d', bmtp: '#ff6f2c', ppn: '#3fcf8e', ppnbm: '#b07cff', pph: '#f5c84b',
-  assume: '#ff6b8a', steel: ['#5d7896', '#4f6d7a', '#6f7f99', '#3f5a78'], desk: '#5a6b88', paper: '#f4f1e8', water: '#123a5c',
+  bg: '#f4f7fc', card: '#ffffff', shadow: '#dde4f0', line: '#e3e8f1', ink: '#1f2a44', dim: '#6b7a99', faint: '#b8c2d6',
+  pabean: '#2f80ed', bm: '#f2994a', bmtp: '#e2632b', ppn: '#27ae60', ppnbm: '#9b51e0', pph: '#e8b21f',
+  assume: '#e5486b', good: '#27ae60', bad: '#e5486b',
+  sea: '#cfe3fb', seaLine: '#9cc4f2', quay: '#e2e8f2', steel: ['#5b7bb3', '#3fa7b5', '#7b8fb8', '#4c6fa8'], cloth: ['#fbe7c6', '#f7d6d0', '#d9ecf7', '#e6f2d9'],
 };
-const ISO_C = Math.cos(Math.PI / 6), ISO_S = 0.5;
-const iso = (x, y, z = 0) => [(x - y) * ISO_C, (x + y) * ISO_S - z];
-const isoPts = pts => pts.map(([x, y, z]) => iso(x, y, z).map(v => v.toFixed(1)).join(' ')).join(' ');
-const isoPoly = pts => 'M' + pts.map(([x, y, z]) => iso(x, y, z).map(v => v.toFixed(1)).join(' ')).join('L') + 'Z';
-const pdMix = (a, b, q) => mix(a, b, q);
-const pdLight = c => pdMix(c, '#ffffff', .28), pdDark = c => pdMix(c, '#000000', .32);
+// pale tints of the levy colours, for card headers and chips
+const tint = (c, q = .82) => mix(c, '#ffffff', q);
+const shade = (c, q = .22) => mix(c, '#000000', q);
+// the engine draws for a dark board: its drawing palette follows this book's light one (book.css does the CSS side)
+Object.assign(COL, { chalk: PD.ink, dim: PD.dim, faint: PD.faint, board: PD.bg, task: PD.pph, good: PD.good, bad: PD.bad });
 
 // Rupiah as written in Indonesia: Rp1.528.230.000
-function rp(n) {
-  const s = String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return (n < 0 ? '−' : '') + 'Rp' + s;
-}
-const idNum = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const idNum = n => String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const rp = n => (n < 0 ? '−' : '') + 'Rp' + idNum(n);
 
-/* isoBlock: a box w (along x) × d (along y) × h (up), three shaded faces. b.set(h) redraws its height;
-   b.top(h) is the screen y of the top face's centre. grow() tweens the height on the beat clock. */
-function isoBlock(p, { x = 0, y = 0, w = 100, d = 100, h = 40, col = PD.pabean, o = 1, line = true } = {}) {
+// a white card with a flat offset shadow (no SVG filter: it would repaint under motion)
+function pcard(p, x, y, w, h, { r = 22, fill = PD.card, o = 1, head, headCol, headH = 70 } = {}) {
+  const g = G(p, { o });
+  mk('rect', { x: x + 6, y: y + 10, width: w, height: h, rx: r, fill: PD.shadow }, g);
+  mk('rect', { x, y, width: w, height: h, rx: r, fill }, g);
+  if (head) {
+    path(g, `M${x} ${y + headH}V${y + r}a${r} ${r} 0 0 1 ${r} ${-r}H${x + w - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + headH}Z`, { fill: headCol });
+    T(g, head, { x: x + 32, y: y + headH / 2 + 11, size: 30, weight: 800, fill: '#fff' });
+  }
+  return g;
+}
+
+/* bar: a rounded flat bar standing on (x, y), width w. b.set(h) redraws its height; grow() tweens it. */
+function bar(p, { x = 0, y = 0, w = 200, h = 40, col = PD.pabean, o = 1, r = 6, label } = {}) {
   const g = G(p, { x, y, o });
-  const stroke = line ? { stroke: pdDark(pdDark(col)), 'stroke-width': 1.2, 'stroke-linejoin': 'round' } : {};
-  const L = mk('path', { fill: col, ...stroke }, g), R = mk('path', { fill: pdDark(col), ...stroke }, g),
-    Tp = mk('path', { fill: pdLight(col), ...stroke }, g);
-  const a = w / 2, b = d / 2;
-  const b0 = { g, L, R, Tp, w, d, h, col };
-  b0.set = hh => {
-    hh = Math.max(0, hh); b0.h = hh;
-    L.setAttribute('d', isoPoly([[-a, b, 0], [a, b, 0], [a, b, hh], [-a, b, hh]]));
-    R.setAttribute('d', isoPoly([[a, -b, 0], [a, b, 0], [a, b, hh], [a, -b, hh]]));
-    Tp.setAttribute('d', isoPoly([[-a, -b, hh], [a, -b, hh], [a, b, hh], [-a, b, hh]]));
-  };
-  b0.top = (hh = b0.h) => -hh;
-  b0.set(h);
-  return b0;
+  const R = mk('rect', { x: -w / 2, width: w, rx: r, fill: col }, g);
+  const hi = mk('rect', { x: -w / 2, width: w * .18, fill: '#ffffff', opacity: .14 }, g);
+  const b = { g, R, w, h, col };
+  b.set = hh => { hh = Math.max(0, hh); b.h = hh; R.setAttribute('y', -hh); R.setAttribute('height', hh); hi.setAttribute('y', -hh); hi.setAttribute('height', hh); };
+  b.set(h);
+  return b;
 }
 function grow(b, h0, h1, t0, dur = .8, ease = out) { b.set(h0); prog(q => b.set(h0 + (h1 - h0) * q), t0, dur, ease); }
 
-// a flat floor slab (a quay, a platform) with a soft shadow edge
-function isoFloor(p, { x = 0, y = 0, w = 600, d = 400, h = 14, col = PD.floor, o = 1 } = {}) {
-  const f = isoBlock(p, { x, y, w, d, h, col, o, line: false });
-  f.Tp.setAttribute('stroke', PD.floorEdge); f.Tp.setAttribute('stroke-width', 1.5);
-  return f;
+/* stack: bars on one footprint, bottom-up; vals in rupiah, k px per rupiah. Each layer keeps its base and full
+   height; a 3 px seam of board colour separates them. */
+function stackBars(p, x, y, w, vals, cols, k) {
+  let base = 0;
+  const layers = vals.map((v, i) => {
+    const hFull = v * k;
+    const b = bar(p, { x, y: y - base, w, h: 0, col: cols[i], o: 0, r: i ? 4 : 6 });
+    b.base = base; b.hFull = hFull; base += hFull;
+    return b;
+  });
+  return { layers, x, y, w, total: base };
 }
 
-// a pill label: text on a coloured or outlined capsule, centred on (x, y)
-function pdTag(p, str, x, y, col, { size = 24, solid = true, o = 0, weight = 700, ink } = {}) {
+// a pill: text on a solid colour (or outlined), centred on (x, y)
+function pdTag(p, str, x, y, col, { size = 26, solid = true, o = 0, weight = 800, ink } = {}) {
   const g = G(p, { x, y, o });
-  const w = textW(str, size) * 1.08 + size * 1.3, hh = size * 1.6;
-  mk('rect', { x: -w / 2, y: -hh / 2, width: w, height: hh, rx: hh / 2, fill: solid ? col : PD.board, stroke: col, 'stroke-width': 2.5 }, g);
-  T(g, str, { x: 0, y: size * .36, size, weight, anchor: 'middle', fill: ink || (solid ? '#0b1526' : col) });
+  const w = textW(str, size) * 1.06 + size * 1.4, hh = size * 1.7;
+  mk('rect', { x: -w / 2, y: -hh / 2, width: w, height: hh, rx: hh / 2, fill: solid ? col : '#fff', stroke: col, 'stroke-width': solid ? 0 : 3 }, g);
+  T(g, str, { x: 0, y: size * .36, size, weight, anchor: 'middle', fill: ink || (solid ? '#fff' : col) });
   g._w = w;
   return g;
 }
-
-// a label with a leader line from a point on a piece to the text (text starts at tx, ty)
-function pdCallout(p, str, fromX, fromY, tx, ty, col, { size = 26, sub, o = 0, weight = 700, anchor = 'start' } = {}) {
+// a round badge with short letters (the levy icons)
+function badge(p, str, x, y, col, { r = 56, size, o = 0 } = {}) {
+  const g = G(p, { x, y, o });
+  mk('circle', { r: r + 10, fill: tint(col, .78) }, g);
+  mk('circle', { r, fill: col }, g);
+  T(g, str, { y: (size || r * .5) * .36, size: size || r * .5, weight: 800, anchor: 'middle', fill: '#fff' });
+  return g;
+}
+// a short label on a line to the right of a point
+function sideLabel(p, str, x, y, col, { dx = 36, size = 26, sub, o = 0 } = {}) {
   const g = G(p, { o });
-  const ex = anchor === 'start' ? tx - 12 : tx + 12;
-  path(g, `M${fromX} ${fromY}L${ex} ${ty - size * .35}`, { stroke: col, 'stroke-width': 2, fill: 'none', 'stroke-dasharray': '4 5' });
-  mk('circle', { cx: fromX, cy: fromY, r: 5, fill: col }, g);
-  T(g, str, { x: tx, y: ty, size, weight, fill: col, anchor });
-  if (sub) T(g, sub, { x: tx, y: ty + size * 1.15, size: size * .72, weight: 500, fill: PD.dim, anchor });
+  mk('circle', { cx: x, cy: y, r: 5, fill: col }, g);
+  path(g, `M${x} ${y}H${x + dx - 10}`, { stroke: col, 'stroke-width': 2.5 });
+  T(g, str, { x: x + dx, y: y + size * .35, size, weight: 800, fill: col });
+  if (sub) T(g, sub, { x: x + dx, y: y + size * 1.4, size: size * .75, weight: 600, fill: PD.dim });
+  return g;
+}
+// a straight arrow drawn on at t0
+function arrowTo(p, x1, y1, x2, y2, col, t0, w = 4) {
+  const g = G(p);
+  const a = Math.atan2(y2 - y1, x2 - x1), k = 16;
+  draw(path(g, `M${x1} ${y1}L${x2} ${y2}`, { stroke: col, 'stroke-width': w, 'stroke-linecap': 'round' }, { d: 0 }), t0, .55);
+  show(path(g, `M${x2 - k * Math.cos(a - .5)} ${y2 - k * Math.sin(a - .5)}L${x2} ${y2}L${x2 - k * Math.cos(a + .5)} ${y2 - k * Math.sin(a + .5)}`,
+    { stroke: col, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none' }, { o: 0 }), t0 + .45, .15);
   return g;
 }
 
-/* container: long along x, doors on the +x end (the right face). c.doors fades to open it. */
-function container(p, { x = 0, y = 0, w = 200, d = 80, h = 80, col = PD.steel[0], o = 1, ribs = 9 } = {}) {
-  const c = isoBlock(p, { x, y, w, d, h, col, o });
-  const a = w / 2, b = d / 2;
-  let dl = '';
-  for (let i = 1; i <= ribs; i++) { const xx = -a + i * w / (ribs + 1); dl += isoPoly([[xx, b, 4], [xx, b, h - 4], [xx, b, h - 4], [xx, b, 4]]); }
-  path(c.g, dl, { stroke: pdDark(col), 'stroke-width': 2, fill: 'none' });
-  const doors = G(c.g);
-  mk('path', { d: isoPoly([[a, -b + 4, 4], [a, 0, 4], [a, 0, h - 4], [a, -b + 4, h - 4]]), fill: pdDark(pdDark(col)), stroke: pdDark(col) }, doors);
-  mk('path', { d: isoPoly([[a, 0, 4], [a, b - 4, 4], [a, b - 4, h - 4], [a, 0, h - 4]]), fill: pdDark(pdDark(col)), stroke: pdDark(col) }, doors);
-  const [hx, hy] = iso(a, -b / 2, h / 2), [hx2, hy2] = iso(a, b / 2, h / 2);
-  path(doors, `M${hx} ${hy - 18}V${hy + 18}M${hx2} ${hy2 - 18}V${hy2 + 18}`, { stroke: PD.dim, 'stroke-width': 3 });
-  const inside = mk('path', { d: isoPoly([[a, -b + 4, 4], [a, b - 4, 4], [a, b - 4, h - 4], [a, -b + 4, h - 4]]), fill: '#0a1322' }, c.g);
-  c.g.insertBefore(inside, doors);
-  c.doors = doors;
-  put(doors, { o: 1 });
-  return c;
-}
-
-/* fabric roll lying along x: length len, radius r, colour col. Drawn around its centre on the floor. */
-function fabricRoll(p, { x = 0, y = 0, len = 110, r = 18, col = '#e8e2d2', o = 1 } = {}) {
+/* container, side view, standing on its origin (bottom centre); the doors are on the right end (c.doors) */
+function container(p, { x = 0, y = 0, w = 240, h = 100, col = PD.steel[0], o = 1 } = {}) {
   const g = G(p, { x, y, o });
-  const end = (xx) => {
-    const pts = [];
-    for (let i = 0; i < 28; i++) { const t = i / 28 * Math.PI * 2; pts.push(iso(xx, Math.cos(t) * r, r + Math.sin(t) * r)); }
-    return pts;
-  };
-  const e0 = end(-len / 2), e1 = end(len / 2);
-  // body: hull of both ends (bottom-left to top-right silhouette)
-  const all = [...e0, ...e1];
-  const cx = all.reduce((s, q) => s + q[0], 0) / all.length, cy = all.reduce((s, q) => s + q[1], 0) / all.length;
-  all.sort((A, B) => Math.atan2(A[1] - cy, A[0] - cx) - Math.atan2(B[1] - cy, B[0] - cx));
-  const hull = [];
-  for (const q of all) {   // monotone chain on angle-sorted points is enough for this convex pair of ellipses
-    while (hull.length >= 2) { const [a1, a2] = [hull[hull.length - 2], hull[hull.length - 1]]; if ((a2[0] - a1[0]) * (q[1] - a1[1]) - (a2[1] - a1[1]) * (q[0] - a1[0]) <= 0) hull.pop(); else break; }
-    hull.push(q);
-  }
-  mk('path', { d: 'M' + hull.map(q => q.map(v => v.toFixed(1)).join(' ')).join('L') + 'Z', fill: pdDark(col) }, g);
-  mk('path', { d: 'M' + e1.map(q => q.map(v => v.toFixed(1)).join(' ')).join('L') + 'Z', fill: col, stroke: pdDark(col), 'stroke-width': 1 }, g);
-  const [c1x, c1y] = iso(len / 2, 0, r);
-  mk('ellipse', { cx: c1x, cy: c1y, rx: r * .32, ry: r * .38, fill: 'none', stroke: pdDark(col), 'stroke-width': 1.5, transform: `rotate(-30 ${c1x} ${c1y})` }, g);
-  return g;
-}
-
-/* ship: hull along x with stacked containers on deck */
-function ship(p, { x = 0, y = 0, len = 520, beam = 130, o = 1 } = {}) {
-  const g = G(p, { x, y, o });
-  const a = len / 2, b = beam / 2, hh = 46;
-  // hull: a box with a pointed bow at +x
-  mk('path', { d: isoPoly([[-a, b, 0], [a - 40, b, 0], [a + 30, 0, hh], [a - 40, b, hh], [-a, b, hh]]), fill: '#24344f' }, g);
-  mk('path', { d: isoPoly([[-a, b, 0], [a - 40, b, 0], [a - 40, b, hh], [-a, b, hh]]), fill: '#2c3e5c', stroke: '#1a2840' }, g);
-  mk('path', { d: isoPoly([[a - 40, b, 0], [a + 30, 0, hh], [a - 40, b, hh]]), fill: '#22324c' }, g);
-  mk('path', { d: isoPoly([[a - 40, -b, 0], [a + 30, 0, hh], [a - 40, b, 0]]), fill: '#1d2b44' }, g);
-  mk('path', { d: isoPoly([[-a, -b, hh], [a - 40, -b, hh], [a + 30, 0, hh], [a - 40, b, hh], [-a, b, hh]]), fill: '#3a4d6d', stroke: '#2c3e5c' }, g);
-  // red waterline stripe
-  mk('path', { d: isoPoly([[-a, b, 8], [a - 40, b, 8], [a - 40, b, 16], [-a, b, 16]]), fill: '#8e3b46' }, g);
-  // bridge at the stern
-  isoBlock(g, { x: iso(-a + 45, 0, 0)[0], y: iso(-a + 45, 0, 0)[1] - hh, w: 60, d: beam - 20, h: 70, col: '#d7dde8' });
-  // container stacks
-  const deck = G(g);
-  const cols = 5, rows = 2, cw = (len - 180) / cols;
-  for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) for (let k = 0; k < 2; k++) {
-    const cx = -a + 120 + cw * (i + .5), cy = -b / 2 + j * b;
-    const [sx, sy] = iso(cx, cy, hh + k * 34);
-    isoBlock(deck, { x: sx, y: sy, w: cw - 6, d: b - 6, h: 34, col: PD.steel[(i + j + k) % 4] });
-  }
-  g.deck = deck;
-  return g;
-}
-
-/* quay crane: legs on the floor, a boom out over the water, a trolley cable */
-function crane(p, { x = 0, y = 0, h = 260, o = 1, col = '#e0b84a' } = {}) {
-  const g = G(p, { x, y, o });
-  const leg = (xx, yy) => iso(xx, yy, 0), top = (xx, yy) => iso(xx, yy, h);
-  const P = (q) => q.map(v => v.toFixed(1)).join(' ');
-  const L = [[-30, -30], [30, -30], [30, 30], [-30, 30]];
+  mk('rect', { x: -w / 2, y: -h, width: w, height: h, rx: 6, fill: col }, g);
   let d = '';
-  for (const [xx, yy] of L) d += `M${P(leg(xx, yy))}L${P(top(xx, yy))}`;
-  d += `M${P(top(-30, -30))}L${P(top(-30, 30))}M${P(top(30, -30))}L${P(top(30, 30))}`;
-  // the boom runs along -y (out to the water on the left)
-  d += `M${P(top(-30, 40))}L${P(top(-30, -260))}M${P(top(30, 40))}L${P(top(30, -260))}`;
-  d += `M${P(iso(0, 30, h + 60))}L${P(top(0, -260))}M${P(iso(0, 30, h + 60))}L${P(top(0, 40))}`;
-  path(g, d, { stroke: col, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' });
-  g.hook = (yy) => iso(0, yy, h);   // where the trolley hangs, in the crane's own coordinates
+  for (let i = 1; i < 10; i++) d += `M${-w / 2 + i * w / 10} ${-h + 10}V-10`;
+  path(g, d, { stroke: shade(col, .18), 'stroke-width': 4 });
+  mk('rect', { x: -w / 2, y: -h, width: w, height: 10, rx: 4, fill: shade(col, .12) }, g);
+  const inside = mk('rect', { x: w / 2 - 6, y: -h + 6, width: 10, height: h - 12, fill: '#2a3550' }, g);
+  const doors = G(g, { x: w / 2 });
+  mk('rect', { x: -4, y: -h + 4, width: 12, height: h - 8, rx: 3, fill: shade(col, .3) }, doors);
+  put(doors, { o: 1 });
+  g.doors = doors; g.inside = inside;
   return g;
 }
-
-/* serviceDesk: a counter with a monitor, a document tray and a hanging sign. No people. */
+// a fabric roll seen end-on beside its length: a capsule with a spiral end, standing on its origin
+function fabricRoll(p, { x = 0, y = 0, len = 110, r = 20, col = PD.cloth[0], o = 1 } = {}) {
+  const g = G(p, { x, y, o });
+  mk('rect', { x: -len / 2, y: -2 * r, width: len, height: 2 * r, rx: 6, fill: col }, g);
+  path(g, `M${-len / 2 + 14} ${-2 * r + 6}V-6M${-len / 2 + 30} ${-2 * r + 6}V-6`, { stroke: shade(col, .08), 'stroke-width': 3 });
+  mk('circle', { cx: len / 2, cy: -r, r, fill: shade(col, .06) }, g);
+  path(g, `M${len / 2} ${-r}m-4 0a4 4 0 1 1 8 0a8 8 0 1 1 -16 0a12 12 0 1 1 24 0`, { stroke: shade(col, .25), 'stroke-width': 2.5, fill: 'none' });
+  return g;
+}
+/* ship, side view: hull, bridge at the stern, container rows on deck; standing on the waterline at its origin */
+function ship(p, { x = 0, y = 0, len = 560, o = 1 } = {}) {
+  const g = G(p, { x, y, o });
+  const a = len / 2;
+  path(g, `M${-a} -70H${a + 30}L${a - 20} 20H${-a + 30}Z`, { fill: '#2b3a67' });
+  path(g, `M${-a + 8} -6H${a + 6}L${a - 2} 20H${-a + 30}Z`, { fill: '#d64a4a' });
+  mk('rect', { x: -a + 20, y: -170, width: 80, height: 100, rx: 6, fill: '#eef2f8' }, g);
+  for (let i = 0; i < 3; i++) mk('rect', { x: -a + 32, y: -156 + i * 28, width: 56, height: 12, rx: 3, fill: '#9cc4f2' }, g);
+  mk('rect', { x: -a + 48, y: -200, width: 18, height: 34, rx: 3, fill: '#e2632b' }, g);
+  const n = Math.floor((len - 160) / 62);
+  for (let i = 0; i < n; i++) for (let j = 0; j < 2; j++) {
+    mk('rect', { x: -a + 120 + i * 62, y: -70 - (j + 1) * 38, width: 58, height: 35, rx: 3, fill: PD.steel[(i + j) % 4] }, g);
+  }
+  return g;
+}
+// quay crane, side view: two legs on the quay, a boom out to the left over the water; c.hookX is the trolley's x
+function crane(p, { x = 0, y = 0, h = 360, boom = 380, o = 1, col = '#f2b33d' } = {}) {
+  const g = G(p, { x, y, o });
+  path(g, `M-50 0L-30 ${-h}M50 0L30 ${-h}M-40 -120H40M-34 -260H34`, { stroke: col, 'stroke-width': 12, 'stroke-linecap': 'round' });
+  path(g, `M${-boom} ${-h}H120M0 ${-h - 70}L${-boom + 30} ${-h}M0 ${-h - 70}L110 ${-h}M0 ${-h - 70}V${-h}`, { stroke: col, 'stroke-width': 9, 'stroke-linecap': 'round' });
+  mk('rect', { x: -60, y: -h - 30, width: 70, height: 40, rx: 6, fill: shade(col, .15) }, g);
+  return g;
+}
+/* service desk, front view: counter, monitor, a tray with a PIB sheet, a hanging sign. No people. */
 function serviceDesk(p, { x = 0, y = 0, o = 1, sign = 'MEJA LAYANAN' } = {}) {
   const g = G(p, { x, y, o });
-  isoFloor(g, { w: 360, d: 260, h: 8, col: '#1b3155' });
-  const c = isoBlock(g, { x: iso(0, 30)[0], y: iso(0, 30)[1], w: 260, d: 70, h: 86, col: PD.desk });
-  // monitor on the counter
-  const [mx, my] = iso(-60, 20, 86);
-  isoBlock(g, { x: mx, y: my, w: 16, d: 16, h: 30, col: '#33435e' });
-  const scr = G(g, { x: mx, y: my - 30 });
-  mk('path', { d: isoPoly([[0, -46, 0], [0, 46, 0], [0, 46, 64], [0, -46, 64]]), fill: '#1f2d45', stroke: '#33435e', 'stroke-width': 3 }, scr);
-  mk('path', { d: isoPoly([[2, -40, 6], [2, 40, 6], [2, 40, 58], [2, -40, 58]]), fill: '#2f6db5', opacity: .85 }, scr);
-  // document tray with a sheet
-  const [tx, ty] = iso(70, 30, 86);
-  isoBlock(g, { x: tx, y: ty, w: 70, d: 52, h: 8, col: '#2a3a55' });
-  const sheet = G(g, { x: tx, y: ty - 9 });
-  mk('path', { d: isoPoly([[-30, -22, 0], [30, -22, 0], [30, 22, 0], [-30, 22, 0]]), fill: PD.paper }, sheet);
-  let lines = '';
-  for (let i = 0; i < 4; i++) lines += isoPoly([[-22 + i * 13, -16, .5], [-22 + i * 13 + 2, -16, .5], [-22 + i * 13 + 2, 16, .5], [-22 + i * 13, 16, .5]]);
-  path(sheet, lines, { fill: '#b9c2d3', stroke: 'none' });
-  // hanging sign
-  const [sx, sy] = iso(0, -40, 230);
-  const sg = G(g, { x: sx, y: sy });
-  path(sg, 'M-70 -60V-20M70 -60V-20', { stroke: PD.faint, 'stroke-width': 2 });
-  mk('rect', { x: -110, y: -22, width: 220, height: 44, rx: 8, fill: '#183059', stroke: PD.pabean, 'stroke-width': 2 }, sg);
-  T(sg, sign, { y: 9, size: 20, weight: 700, anchor: 'middle', fill: PD.ink });
-  g.sheet = sheet; g.counterTop = iso(0, 30, 86);
+  mk('rect', { x: -170, y: -110, width: 340, height: 110, rx: 10, fill: '#5b7bb3' }, g);
+  mk('rect', { x: -186, y: -126, width: 372, height: 22, rx: 8, fill: '#3d5a92' }, g);
+  mk('rect', { x: -120, y: -80, width: 240, height: 8, rx: 4, fill: '#ffffff', opacity: .25 }, g);
+  mk('rect', { x: -120, y: -216, width: 120, height: 80, rx: 8, fill: '#2b3a67' }, g);
+  mk('rect', { x: -110, y: -206, width: 100, height: 60, rx: 4, fill: '#9cc4f2' }, g);
+  mk('rect', { x: -70, y: -136, width: 20, height: 12, fill: '#2b3a67' }, g);
+  const sheet = G(g, { x: 80, y: -128 });
+  mk('rect', { x: -40, y: -66, width: 80, height: 66, rx: 4, fill: '#fff', stroke: PD.line, 'stroke-width': 2 }, sheet);
+  path(sheet, 'M-28 -50H28M-28 -36H28M-28 -22H12', { stroke: PD.faint, 'stroke-width': 4, 'stroke-linecap': 'round' });
+  T(sheet, 'PIB', { y: -6, size: 14, weight: 800, anchor: 'middle', fill: PD.pabean });
+  const sg = G(g, { y: -330 });
+  path(sg, 'M-80 -60V-24M80 -60V-24', { stroke: PD.faint, 'stroke-width': 3 });
+  mk('rect', { x: -130, y: -26, width: 260, height: 52, rx: 26, fill: PD.pabean }, sg);
+  T(sg, sign, { y: 9, size: 22, weight: 800, anchor: 'middle', fill: '#fff' });
   return g;
 }
-
-// a question card that rises from a point (the desk): a rounded card with a small tail, no speaker drawn
-function askCard(p, str, x, y, { w = 420, size = 30, col = PD.ink, o = 0, tailX = 0 } = {}) {
+// a question bubble with its tail pointing down at (x + tailX, y + h/2 + 26)
+function askCard(p, str, x, y, { size = 30, o = 0, tailX = 0 } = {}) {
+  const w = textW(str, size) * 1.06 + 60, hh = size * 2.3;
   const g = G(p, { x, y, o });
-  const hh = size * 2.4;
-  mk('path', { d: `M${-w / 2} ${-hh / 2}h${w}v${hh}H${tailX + 22}l-22 26l-6 -26H${-w / 2}Z`, fill: '#f4f6fb', stroke: '#c9d3e6', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
-  T(g, str, { y: size * .36, size, weight: 700, anchor: 'middle', fill: '#0e1d33' });
+  mk('path', { d: `M${-w / 2 + 6} ${-hh / 2 + 10}h${w}v${hh}H${tailX + 28}l-22 26l-6 -26H${-w / 2 + 6}Z`, fill: PD.shadow }, g);
+  mk('path', { d: `M${-w / 2} ${-hh / 2}h${w}v${hh}H${tailX + 22}l-22 26l-6 -26H${-w / 2}Z`, fill: '#fff', 'stroke-linejoin': 'round' }, g);
+  T(g, str, { y: size * .36, size, weight: 800, anchor: 'middle', fill: PD.ink });
   return g;
 }
-
 // the 'asumsi latihan' stamp for figures marked (cek) in the source
-function assumeStamp(p, x, y, { r = -8, s = 1, o = 0, str = 'ASUMSI LATIHAN' } = {}) {
+function assumeStamp(p, x, y, { r = -6, s = 1, o = 0, str = 'ASUMSI LATIHAN' } = {}) {
   const g = G(p, { x, y, r, s, o });
-  const w = textW(str, 18) * 1.2 + 26;
-  mk('rect', { x: -w / 2, y: -17, width: w, height: 34, rx: 5, fill: 'none', stroke: PD.assume, 'stroke-width': 3 }, g);
+  const w = textW(str, 18) * 1.15 + 28;
+  mk('rect', { x: -w / 2, y: -18, width: w, height: 36, rx: 18, fill: tint(PD.assume, .85), stroke: PD.assume, 'stroke-width': 2.5 }, g);
   T(g, str, { y: 7, size: 18, weight: 800, anchor: 'middle', fill: PD.assume });
   return g;
 }
-
-/* calcCard: the step calculator. rows: { label, formula, result, col }. Each row's parts appear on their own
-   times via c.row(i, tLabel, tResult): label and formula at tLabel, the result counts up at tResult. */
-function calcCard(p, x, y, w, rows, { title = 'Langkah hitung', rowH = 96, o = 0 } = {}) {
-  const g = G(p, { x, y, o });
-  const H = 70 + rows.length * rowH;
-  mk('rect', { x: 0, y: 0, width: w, height: H, rx: 16, fill: '#13284a', stroke: '#2a4470', 'stroke-width': 2 }, g);
-  T(g, title.toUpperCase(), { x: 28, y: 44, size: 20, weight: 700, fill: PD.dim });
+/* calcCard: the step calculator on a white card. rows: { label, formula, result, col }. c.row(i, tLabel, tResult)
+   shows a row's label and formula, then counts its result up. */
+function calcCard(p, x, y, w, rows, { title = 'Langkah hitung', rowH = 104, o = 0 } = {}) {
+  const H = 76 + rows.length * rowH;
+  const g = G(p, { o });
+  pcard(g, x, y, w, H);
+  T(g, title.toUpperCase(), { x: x + 32, y: y + 48, size: 20, weight: 800, fill: PD.dim });
   const els = rows.map((r, i) => {
-    const ry = 70 + i * rowH;
+    const ry = y + 70 + i * rowH;
     const rg = G(g, { o: 0 });
-    if (i) mk('rect', { x: 24, y: ry, width: w - 48, height: 1.5, fill: '#2a4470' }, rg);
-    mk('rect', { x: 24, y: ry + 22, width: 8, height: rowH - 40, rx: 4, fill: r.col }, rg);
-    T(rg, r.label, { x: 48, y: ry + 38, size: 22, weight: 600, fill: PD.dim });
-    T(rg, r.formula, { x: 48, y: ry + 74, size: 26, weight: 500, fill: PD.ink });
-    const res = T(g, '', { x: w - 28, y: ry + 74, size: 30, weight: 800, fill: r.col, anchor: 'end', o: 0 });
+    mk('rect', { x: x + 24, y: ry + 10, width: w - 48, height: rowH - 16, rx: 14, fill: tint(r.col, .9) }, rg);
+    mk('rect', { x: x + 24, y: ry + 10, width: 10, height: rowH - 16, rx: 5, fill: r.col }, rg);
+    T(rg, r.label, { x: x + 52, y: ry + 44, size: 22, weight: 700, fill: PD.dim });
+    T(rg, r.formula, { x: x + 52, y: ry + 78, size: 26, weight: 600, fill: PD.ink });
+    const res = T(g, '', { x: x + w - 44, y: ry + 70, size: 32, weight: 800, fill: r.col === PD.pph ? shade(PD.pph, .25) : r.col, anchor: 'end', o: 0 });
     return { rg, res, value: r.result };
   });
   g.row = (i, tLabel, tResult, count = .9) => {
@@ -229,23 +199,17 @@ function calcCard(p, x, y, w, rows, { title = 'Langkah hitung', rowH = 96, o = 0
     show(e.res, tResult, .2);
     prog(q => { e.res.textContent = rp(e.value * q); }, tResult, count, out);
   };
-  g.els = els; g.H = H;
+  g.H = H;
   return g;
 }
-
-// gentle continuous drift for water ripples and such, a pure function of the beat clock
-function ripples(p, { x0 = 0, y0 = 0, w = 600, n = 10, col = '#2e6a98', D = 30, o = .6 } = {}) {
-  const g = G(p, { o });
+// waves on the sea that drift, a pure function of the beat clock
+function waves(p, { x0 = 0, y0 = 0, w = 600, rows = 3, D = 30 } = {}) {
+  const g = G(p);
   const els = [];
-  for (let i = 0; i < n; i++) {
-    const e = path(g, 'M0 0h34', { stroke: col, 'stroke-width': 3, 'stroke-linecap': 'round' });
-    els.push({ e, bx: x0 + ((i * 197) % w), by: y0 + ((i * 61) % 120), ph: i * .7 });
+  for (let j = 0; j < rows; j++) for (let i = 0; i < 6; i++) {
+    const e = path(g, 'M0 0q15 -10 30 0t30 0', { stroke: PD.seaLine, 'stroke-width': 4, 'stroke-linecap': 'round', fill: 'none' });
+    els.push({ e, bx: x0 + i * (w / 6) + (j % 2) * 40, by: y0 + j * 60, ph: i + j * 2 });
   }
-  clockRun(t => {
-    for (const r of els) {
-      const k = ((t * 14 + r.ph * 20) % 60) - 30;
-      put(r.e, { x: r.bx + k * ISO_C, y: r.by + k * ISO_S, o: .35 + .35 * Math.sin(t * .9 + r.ph) });
-    }
-  }, D, { tail: true });
+  clockRun(t => { for (const r of els) put(r.e, { x: r.bx + 18 * Math.sin(t * .8 + r.ph), y: r.by, o: .55 + .35 * Math.sin(t * .9 + r.ph) }); }, D, { tail: true });
   return g;
 }
