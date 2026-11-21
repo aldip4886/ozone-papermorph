@@ -122,6 +122,41 @@ const TRANSLATIONS = {
     firstTryScore: '{name}：第一次就答对 {r} / {t}。', notAttempted: '{name}：未作答。',
     watchAgain: '再看一遍', nextChapter: '下一章',
   },
+  id: {
+    decimalSign: ',', groupSigns: '[ .]', stageLabel: 'Animasi pelajaran', stageLabelTitled: 'Animasi pelajaran: {title}',
+    shortcuts: 'Pintasan keyboard', lesson: 'Pelajaran', questions: 'Pertanyaan',
+    helpPlay: 'Putar atau jeda', helpStep: 'Langkah sebelumnya atau berikutnya', helpStepInQuestion: 'Pindah langkah saat menjawab', helpRestart: 'Mulai dari awal',
+    helpCaptions: 'Teks narasi aktif atau mati', helpSpeed: 'Lebih lambat atau lebih cepat', helpFullScreen: 'Layar penuh', helpList: 'Tampilkan daftar ini',
+    helpChoose: 'Pilih jawaban atau lingkaran', helpTrueFalse: 'Benar atau salah', helpRows: 'Pindah antarbaris',
+    helpNumberLine: 'Bergerak di garis bilangan, atau pilih angka untuk dikelompokkan', helpEnter: 'Periksa, lalu lanjutkan',
+    helpShowAnswer: 'Tampilkan jawaban', helpLeaveBox: 'Keluar dari kotak jawaban', helpClose: 'Tekan {key} untuk menutup.',
+    paused: 'Dijeda. Tekan spasi atau klik untuk melanjutkan.',
+    soundFailed: 'Suara tidak dapat diputar. Pelajaran berlanjut dengan teks di layar.',
+    startLesson: 'Mulai pelajaran', startFilm: 'Putar', aboutMinutesFilm: 'Sekitar {n} menit, dengan suara.', coverKeys: 'Tekan {space} untuk mulai, {help} untuk pintasan.', spaceKey: 'Spasi',
+    chapterNumber: 'Bab {n}', aboutMinutes: 'Sekitar {n} menit, dengan suara dan cek pemahaman.',
+    allChapters: 'Semua bab', playLabel: 'Putar atau jeda (spasi)', backLabel: 'Langkah sebelumnya (panah kiri)', restartLabel: 'Ulangi pelajaran',
+    checksInLesson: 'Cek pemahaman dan latihan ada di pelajaran interaktif.',
+    volumeLabel: 'Atur volume', volumeTitle: 'Volume (0 = senyap)', volumeSlider: 'Volume',
+    helpLabel: 'Pintasan keyboard (?)', speedLabel: 'Kecepatan putar (< dan >)', captionsLabel: 'Teks narasi (C)', fullScreenLabel: 'Layar penuh', goToStep: 'Ke langkah {n}: {title}',
+    quickCheck: 'Cek pemahaman', countOf: 'soal {k} dari {n}', check: 'Periksa', showAnswer: 'Lihat jawaban', nextQuestion: 'Soal berikutnya', continue: 'Lanjutkan',
+    correct: 'Benar. ', notQuite: 'Belum tepat. ', answerPrefix: 'Jawaban: ', keysPrefix: 'Tombol: ',
+    hintMove: ' pindah, ', hintChoose: ' pilih', hintChooseOrClickGrid: ' pilih, atau klik tabel', hintMoveAlongLine: ' bergerak di garis, ',
+    hintChooseOrClick: ' pilih, atau klik', hintRow: ' baris, ', hintTypeFraction: 'ketik angka seperti 3/4 atau −2 1/4, ', hintTypeNumber: 'ketik angkanya, ',
+    hintTypeDecimal: 'ketik angka seperti 0,75, ', hintNextBox: ' kotak berikutnya, ', hintCheck: ' periksa, ', hintLeaveBox: ' keluar dari kotak',
+    hintPickNumber: ' pilih angka, ', hintPickRing: ' pilih lingkarannya',
+    rowsRight: '{r} dari {n} benar. Perbaiki baris bertanda ✗ lalu periksa lagi.',
+    choicesShown: 'pilihan yang benar sudah ditandai.', numbersShown: 'angka yang benar sudah diisikan.',
+    notPlacedYet: '{x} belum ditempatkan.',
+    realRingIsEmpty: '{x}: setiap bilangan real adalah rasional atau irasional, jadi ruang itu tidak punya bilangan sendiri.',
+    ringsRight: '{r} dari {n} di lingkaran yang tepat.', ringsShown: 'setiap bilangan kini ada di lingkaran terkecilnya.',
+    chipPlaced: '{x}, ditempatkan di {ring}', chipNotPlaced: '{x}, belum ditempatkan', pointLabel: 'Titik {v}', answerBox: 'Jawaban',
+    stepsLeftOfZero: '{n} langkah di kiri 0',
+    natural: 'Asli', whole: 'Cacah', integers: 'Bulat', rational: 'Rasional', irrational: 'Irasional', real: 'Real', integerColumn: 'Bulat',
+    trueLabel: 'Benar', falseLabel: 'Salah',
+    chapterComplete: 'Bab {n} selesai', quickChecks: 'Cek pemahaman', chapterPractice: 'Latihan bab', sources: 'Sumber di bab ini', opensSource: '{label}, membuka sumber di tab baru',
+    firstTryScore: '{name}: {r} dari {t} benar pada percobaan pertama.', notAttempted: '{name}: belum dikerjakan.',
+    watchAgain: 'Tonton lagi', nextChapter: 'Bab berikutnya',
+  },
   ja: {
     decimalSign: '.', stageLabel: '授業アニメーション', stageLabelTitled: '授業アニメーション：{title}',
     shortcuts: 'キーボードショートカット', lesson: '授業', questions: '問題',
@@ -1412,7 +1447,8 @@ const grid = (items, cols, { multi = true, text = false } = {}) => (body, api) =
 // or, where the decimal sign is a point, by commas, and a decimal comma when DECIMAL_SIGN is ','. Never evaluates the text as code.
 function rat(str) {
   let t = String(str).trim().replace(/^[−–]/, '-').replace(/\s+/g, ' ').replace(/^(-?) ?\p{Sc} ?|(?<=\d) ?\p{Sc}$/gu, '$1');
-  const group = DECIMAL_SIGN === ',' ? ' ' : '[, ]';   // one kind of separator throughout: 1,000 000 is not a number
+  t = t.replace(/^(-?)Rp\.? ?(?=\d)/i, '$1');   // the rupiah's letters (Rp1.500), which \p{Sc} does not match
+  const group = TRANSLATIONS[LANGUAGE]?.groupSigns ?? (DECIMAL_SIGN === ',' ? ' ' : '[, ]');   // a book's language may add its own (Indonesian: 1.528.230.000)   // one kind of separator throughout: 1,000 000 is not a number
   t = t.replace(new RegExp(`^(-?\\d{1,3})(${group})(\\d{3}(?:\\2\\d{3})*)(?=$|[.,])`), (_, head, sep, rest) => head + rest.split(sep).join(''));
   if (DECIMAL_SIGN === ',') t = t.replace(/^(-?\d+),(\d+)$/, '$1.$2');   // 0,75 where the decimal sign is a comma
   let m = t.match(/^(-?)(\d+)(?:\.(\d+))?$/);

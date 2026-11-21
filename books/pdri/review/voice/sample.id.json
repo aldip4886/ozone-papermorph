@@ -1,0 +1,9 @@
+{
+  "voice": "id-ID-ArdiNeural",
+  "rate": "-4%",
+  "beats": {
+    "s1": "Hari pertama Anda bertugas di Tanjung Priok. Seorang staf PT Kain Prima Nusantara datang ke meja layanan dan bertanya, hitungan ini dari mana?",
+    "s2": "Nilai impor sama dengan nilai pabean, ditambah Bea Masuk, ditambah bea masuk tambahan seperti BMTP. Untuk kain ini, hasilnya satu koma lima tiga miliar rupiah.",
+    "s3": "Cek dulu sebelum hitung. Kesalahan pada nilai impor akan terbawa ke PPN, PPnBM, dan PPh Pasal dua puluh dua."
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "tier": "custom",
+  "book": {
+    "title": "Pajak dalam Rangka Impor",
+    "subtitle": "Memahami dan menghitung PDRI untuk pegawai baru DJBC",
+    "slug": "pdri",
+    "language": "id",
+    "readers": "pegawai baru DJBC yang akan bertugas di kantor pelayanan dan pelabuhan; sudah belajar kepabeanan dasar, Bea Masuk, nilai pabean dan kurs",
+    "pilot": "ch01",
+    "source": "Bahan Ajar Memahami dan Menghitung Pajak dalam Rangka Impor (PDRI), versi 1, 21 November 2026 (Markdown dari pengguna, books/pdri/source.md, privat)",
+    "use": "e-learning internal DJBC; paket SCORM ditawarkan bila masuk LMS"
+  },
+  "words": [
+    "Pilot: KB 1 (gunakan KB 1). Gaya campuran (diagram hitung yang bergerak dengan adegan sederhana). E-learning internal DJBC. Suara Ardi.",
+    "1 gunakan penjelasan bergaya isometric tanpa tokoh.",
+    "Disetujui sesuai usulan: warna tetap per pungutan (nilai pabean biru, Bea Masuk dan BMTP oranye, PPN hijau, PPnBM ungu, PPh 22 kuning emas), latar biru tua, cap 'asumsi latihan' pada angka (cek); lima komponen bersama (balok nilai impor, kalkulator langkah hitung, meja layanan, lembar PIB, kontainer dan gulungan kain), tanpa tokoh; model rekomendasi; Rupiah gaya Indonesia di layar, narasi membaca angka yang dibulatkan."
+  ],
+  "look": {
+    "style": "isometric flat illustration drawn in code (30° isometric, three shaded faces per block, soft long shadows), no people: objects, documents, blocks and arrows carry the explanation",
+    "palette": {
+      "board": "#0e1d33",
+      "boardTop": "#0a1526",
+      "ink": "#eef3fb",
+      "dim": "#93a4c3",
+      "floor": "#16294a"
+    },
+    "meaning": {
+      "pabean": "#4da3ff (blue: nilai pabean, CIF x kurs)",
+      "bm": "#ff8a3d (orange: Bea Masuk and bea masuk tambahan such as BMTP; customs levies)",
+      "ppn": "#3fcf8e (green: PPN Impor)",
+      "ppnbm": "#b07cff (purple: PPnBM Impor)",
+      "pph": "#f5c84b (gold: PPh Pasal 22 Impor)",
+      "nilai": "#e9eef7 outline (nilai impor, the whole stack)",
+      "assume": "#ff6b8a (pink stamp 'asumsi latihan' on figures marked (cek))"
+    },
+    "fonts": { "text": "system UI sans-serif", "math": "same sans-serif for numbers (--math-font)" },
+    "notation": "Rupiah written Rp1.528.230.000 (dot thousands, no space after Rp); percent 10%; multiplication ×. Narration reads rounded amounts in words ('satu koma lima tiga miliar rupiah'), the exact figure stays on screen. Typed answers accept dots or spaces as thousands separators and an optional Rp."
+  },
+  "voice": { "engine": "edge", "voice": "id-ID-ArdiNeural", "rate": "-4%" },
+  "pacing": {
+    "minutes": [6, 9],
+    "checks": "one or two quick checks inside the lesson, practice at the end built from the KB's Latihan"
+  },
+  "engine": { "source": "DozenTwelve/Papermorph", "ref": "engine-v2.12 + Indonesian interface block (id) and Rupiah answer parsing added in the local engine/" },
+  "models": { "extract": "haiku", "narration": "sonnet", "picture": "opus", "checks": "haiku", "review": "sonnet", "rework": "opus", "register": "haiku" },
+  "scenes": {
+    "art": "isometric scenes on the dark navy board: a port quay with a container ship and cranes, a container opening on fabric rolls, a customs service desk with a PIB sheet; no human figures",
+    "cast": [],
+    "storyboard": "the user reviews the layout sheet before motion in the pilot; later chapters self-check"
+  },
+  "components": [
+    { "name": "isoBlock", "file": "site/pdri/lib/pdri.js", "what": "isometric block (three shaded faces) in a levy colour; height = amount; stacks into the nilai impor column" },
+    { "name": "calcSteps", "file": "site/pdri/lib/pdri.js", "what": "step calculator card: writes formula then result line by line, rupiah formatted" },
+    { "name": "serviceDesk", "file": "site/pdri/lib/pdri.js", "what": "isometric customs service desk with a document tray, no people" },
+    { "name": "pibSheet", "file": "site/pdri/lib/pdri.js", "what": "short PIB form with fields that fill in" },
+    { "name": "container / fabricRoll", "file": "site/pdri/lib/pdri.js", "what": "isometric container that opens; fabric rolls" }
+  ],
+  "images": { "sources": ["drawn in code only"] }
+}

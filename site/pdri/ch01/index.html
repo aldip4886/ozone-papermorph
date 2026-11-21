@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bab 1 · Hari Pertama di Pelabuhan</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M16 3L29 10.5V21.5L16 29L3 21.5V10.5Z%27 fill=%27%234da3ff%27/%3E%3C/svg%3E">
+<link rel="expect" href="#bar" blocking="render"><!-- hold the first frame until the player exists, so the page transition can run -->
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/pdri.js"></script>
+<script src="audio/id/timings.js"></script>
+<script>
+'use strict';
+const CHAPTER = { number: 1, title: 'Hari Pertama di Pelabuhan', minutes: 7, language: 'id' };
+
+/* ---------- chapter data (Kasus 1, KB 1) ---------- */
+const K1 = { meter: 100000, cif: 60000, kurs: 18155, bm: .10, bmtpPerM: 3300 };
+K1.np = K1.cif * K1.kurs;                 // 1.089.300.000
+K1.bmRp = Math.round(K1.np * K1.bm);      // 108.930.000
+K1.bmtp = K1.meter * K1.bmtpPerM;         // 330.000.000
+K1.ni = K1.np + K1.bmRp + K1.bmtp;        // 1.528.230.000
+const L1 = { meter: 50000, cif: 30000 };  // Latihan 1
+L1.np = L1.cif * K1.kurs; L1.bmRp = Math.round(L1.np * K1.bm); L1.bmtp = L1.meter * K1.bmtpPerM; L1.ni = L1.np + L1.bmRp + L1.bmtp;
+const PXJ = .2;                           // stack height: px per juta rupiah (to scale within a beat)
+const hJ = v => v / 1e6 * PXJ;
+
+/* ---------- chapter drawing helpers ---------- */
+const txt = (p, str, x, y, t0, { size = 30, fill = PD.ink, anchor = 'start', weight = 500 } = {}) => {
+  const e = T(p, str, { x, y, size, fill, anchor, weight, o: 0 }); show(e, t0); return e;
+};
+const kicker = (p, str, t0, x = 800, y = 96, anchor = 'middle') => txt(p, str.toUpperCase(), x, y, t0, { size: 22, fill: PD.dim, anchor, weight: 700 });
+// a block that rises out of the floor on its word
+function riseBlock(p, x, y, w, d, h, col, t0, dur = .8) {
+  const b = isoBlock(p, { x, y, w, d, h: 0, col, o: 0 });
+  show(b.g, t0, .25); grow(b, 0, h, t0, dur);
+  return b;
+}
+// the nilai impor stack: three layers on one footprint; returns the layers and the screen y of each layer's middle
+function niStack(p, x, y, { w = 220, d = 220, vals = [K1.np, K1.bmRp, K1.bmtp], cols = [PD.pabean, PD.bm, PD.bmtp] } = {}) {
+  const hs = vals.map(hJ);
+  let base = 0;
+  const layers = hs.map((h, i) => {
+    const b = isoBlock(p, { x, y: y - base, w, d, h: 0, col: cols[i], o: 0 });
+    b.base = base; b.hFull = h; base += h;
+    return b;
+  });
+  return { layers, x, y, w, d, total: base, right: x + (w / 2) * ISO_C, left: x - (d / 2) * ISO_C };
+}
+// a label at the middle of a stack layer, on the stack's right edge, with a short leader
+function layerLabel(p, s, i, str, col, t0, { dx = 40, size = 26, dy = 0 } = {}) {
+  const b = s.layers[i], ex = s.x + s.w * ISO_C, ey = s.y - b.base - b.hFull / 2;
+  const g = G(p, { o: 0 });
+  path(g, `M${ex + 6} ${ey}L${ex + dx - 8} ${ey + dy}`, { stroke: col, 'stroke-width': 2, fill: 'none' });
+  T(g, str, { x: ex + dx, y: ey + dy + size * .35, size, weight: 800, fill: col });
+  show(g, t0, .4);
+  return g;
+}
+// a vertical brace beside the stack with a label
+function brace(p, x, yTop, yBot, str, col, t0, { size = 28, sub, side = 1 } = {}) {
+  const g = G(p, { o: 0 });
+  path(g, `M${x} ${yTop}h${14 * side}V${yBot}h${-14 * side}`, { stroke: col, 'stroke-width': 3, fill: 'none' });
+  const tx = x + 30 * side, anchor = side > 0 ? 'start' : 'end';
+  T(g, str, { x: tx, y: (yTop + yBot) / 2 + size * .35, size, weight: 800, fill: col, anchor });
+  if (sub) T(g, sub, { x: tx, y: (yTop + yBot) / 2 + size * 1.5, size: size * .78, weight: 700, fill: col, anchor });
+  show(g, t0, .5);
+  return g;
+}
+const arrowTo = (p, x1, y1, x2, y2, col, t0, w = 3) => {
+  const g = G(p);
+  const a = Math.atan2(y2 - y1, x2 - x1), hx = x2 - 16 * Math.cos(a - .45), hy = y2 - 16 * Math.sin(a - .45), kx = x2 - 16 * Math.cos(a + .45), ky = y2 - 16 * Math.sin(a + .45);
+  draw(path(g, `M${x1} ${y1}L${x2} ${y2}`, { stroke: col, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round' }, { d: 0 }), t0, .6);
+  show(path(g, `M${hx} ${hy}L${x2} ${y2}L${kx} ${ky}`, { stroke: col, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, { o: 0 }), t0 + .5, .2);
+  return g;
+};
+// the two platforms of levies (groups, q1)
+function levyPlatforms(p, xL, xR, y, t = { L: .2, R: .2, items: .2, pdri: .2 }, { titles = true } = {}) {
+  const left = G(p, { o: 0 }), right = G(p, { o: 0 });
+  isoFloor(left, { x: xL, y, w: 300, d: 300, h: 16, col: '#1d3358' });
+  isoFloor(right, { x: xR, y, w: 300, d: 300, h: 16, col: '#1d3358' });
+  show(left, t.L); show(right, t.R);
+  const at = (x0, ix, iy) => { const [sx, sy] = iso(ix, iy); return [x0 + sx, y - 16 + sy]; };
+  let q = at(xL, -55, -45);
+  const bm = riseBlock(p, q[0], q[1], 120, 120, 100, PD.bm, t.items);
+  const tb = [];
+  [-95, -20, 55].forEach((iy, i) => { const [sx, sy] = at(xL, 85, iy); tb.push(riseBlock(p, sx, sy, 50, 50, 30, PD.bmtp, t.items + 1.1 + i * .3, .5)); });
+  // PDRI: three blocks waiting on the right platform
+  const pd = [[PD.ppn, -60, -60], [PD.ppnbm, 70, -60], [PD.pph, 5, 65]].map(([c, ix, iy], i) => {
+    const [sx, sy] = at(xR, ix, iy);
+    const b = riseBlock(p, sx, sy, 95, 95, 80, c, t.pdri + i * .25, .6); return b;
+  });
+  if (titles) {
+    const tl = G(p, { o: 0 }), tr = G(p, { o: 0 });
+    T(tl, 'Pungutan kepabeanan', { x: xL, y: y - 290, size: 34, weight: 800, anchor: 'middle', fill: PD.bm });
+    T(tl, 'Bea Masuk + bea masuk tambahan', { x: xL, y: y - 252, size: 24, weight: 500, anchor: 'middle', fill: PD.dim });
+    T(tr, 'Pajak dalam rangka impor', { x: xR, y: y - 290, size: 34, weight: 800, anchor: 'middle', fill: PD.ppn });
+    T(tr, 'PDRI, dipungut DJBC saat impor', { x: xR, y: y - 252, size: 24, weight: 500, anchor: 'middle', fill: PD.dim });
+    show(tl, t.L); show(tr, t.pdri);
+  }
+  return { bm, tb, pd };
+}
+
+/* ---------- beats: [id, title, run(m, D), { ask }?] ---------- */
+const BEATS = [
+  ['intro', 'Hari pertama di pelabuhan', (m, D) => {
+    const p = panel(0);
+    // a small isometric quay: the stack of the day's figure beside a container
+    const quay = G(p, { o: 0, y: 30 });
+    isoFloor(quay, { x: 800, y: 770, w: 520, d: 300, h: 18 });
+    tw(quay, { o: 1, y: 0 }, .1, 1.1, out);
+    const c = container(p, { x: 690, y: 730, w: 220, d: 90, h: 90, col: PD.steel[1], o: 0 });
+    tw(c.g, { o: 1 }, .4, .6);
+    const s = niStack(p, 940, 760, { w: 130, d: 130, vals: [K1.np * .55, K1.bmRp * .55, K1.bmtp * .55] });
+    s.layers.forEach((b, i) => { show(b.g, .7 + i * .35, .2); grow(b, 0, b.hFull, .7 + i * .35, .6); });
+    const g = G(p, { o: 0, y: 20 });
+    T(g, 'BAB 1 · KEGIATAN BELAJAR 1', { x: 800, y: 210, size: 26, fill: PD.dim, anchor: 'middle', weight: 700 });
+    T(g, 'Hari Pertama di Pelabuhan', { x: 800, y: 300, size: 80, weight: 800, anchor: 'middle' });
+    tw(g, { o: 1, y: 0 }, .2, 1.1, out);
+    txt(p, 'komponen pungutan impor · nilai impor', 800, 370, m('sub'), { size: 32, fill: PD.pabean, anchor: 'middle', weight: 600 });
+  }],
+
+  ['port', 'Tanjung Priok', (m, D) => {
+    const p = panel(0);
+    // water on the left, the quay on the right
+    const sea = G(p, { o: 0 });
+    mk('path', { d: 'M0 260L700 664L700 900L0 900Z', fill: PD.water, opacity: .8 }, sea);
+    mk('path', { d: 'M0 260L700 664', stroke: '#2e6a98', 'stroke-width': 3 }, sea);
+    show(sea, .1, .6);
+    ripples(sea, { x0: 40, y0: 520, w: 520, n: 9, D });
+    const quay = G(p, { o: 0 });
+    mk('path', { d: 'M0 260L520 -40L1600 584L1600 900L700 900L700 664Z', fill: '#16294a' }, quay);
+    mk('path', { d: 'M700 664L700 690L0 286L0 260Z', fill: '#0f1f3a' }, quay);
+    show(quay, .1, .6);
+    const sh = ship(p, { x: 250, y: 470, len: 460, beam: 120, o: 0 });
+    tw(sh, { o: 1, x: 300, y: 500 }, .2, 1.4, out);
+    const cr = crane(p, { x: 620, y: 500, h: 300, o: 0 });
+    show(cr, .4, .6);
+    // a container lowered from the crane onto the quay, then opened on fabric rolls
+    const c = container(p, { x: 760, y: 230, w: 200, d: 80, h: 80, col: PD.steel[0], o: 0 });
+    show(c.g, m('ship'), .4);
+    tw(c.g, { x: 860, y: 560 }, m('ship') + .2, 2.2, io);
+    hide(c.doors, m('price') - .2, .4);
+    const rolls = [];
+    for (let i = 0; i < 5; i++) {
+      const r = fabricRoll(p, { x: 960, y: 560 + 0, len: 100, r: 16, col: ['#efe9da', '#d9e4ef', '#efe9da', '#e3d9c6', '#d9e4ef'][i], o: 0 });
+      const [dx, dy] = iso(120 + i * 0, -60 + i * 30, 0);
+      show(r, m('price') + .1 + i * .12, .3);
+      tw(r, { x: 960 + dx + i * 4, y: 560 + dy }, m('price') + .1 + i * .12, .7, out);
+      rolls.push(r);
+    }
+    const price = pdTag(p, 'Harga kain ≈ Rp1,09 miliar', 900, 330, PD.pabean, { size: 28 });
+    pop(price, m('price') + .3); put(price, { s: .6 });
+    const bill = pdTag(p, 'Pungutan ≈ Rp645 juta', 900, 400, PD.bm, { size: 28 });
+    put(bill, { s: .6 }); pop(bill, m('bill'));
+    // the service desk, and the question rising from it
+    const desk = serviceDesk(p, { x: 1330, y: 700, o: 0 });
+    tw(desk, { o: 1 }, m('ask') - .6, .6);
+    const q = askCard(p, 'Hitungan ini dari mana?', 1340, 350, { w: 440, size: 30, tailX: 0 });
+    put(q, { s: .7, y: 380 }); tw(q, { o: 1, s: 1, y: 350 }, m('ask') + 1.6, .5, back);
+  }],
+
+  ['groups', 'Dua kelompok pungutan', (m) => {
+    const p = panel(0);
+    txt(p, 'Saat barang masuk ke daerah pabean, importir membayar:', 800, 110, .3, { size: 30, anchor: 'middle', fill: PD.dim, weight: 600 });
+    const L = levyPlatforms(p, 460, 1140, 600, { L: m('cust'), R: m('pdri') - .3, items: m('bm'), pdri: m('pdri') + .4 });
+    // names on the customs blocks
+    const bmL = pdTag(p, 'Bea Masuk', 290, 470, PD.bm, { size: 26 });
+    put(bmL, { s: .6 }); pop(bmL, m('bm') + .5);
+    const bt = pdCallout(p, 'Bea masuk tambahan', 600, 650, 560, 790, PD.bmtp, { size: 26, sub: 'BMTP · antidumping · imbalan' });
+    show(bt, m('bmt') + 1.2);
+    // the right platform starts empty: dashed slots wait for the three taxes
+    const slots = G(p, { o: 0 });
+    mk('path', { d: isoPoly([[-130, -130, 0], [130, -130, 0], [130, 130, 0], [-130, 130, 0]]), transform: 'translate(1140 584)', fill: 'none', stroke: PD.faint, 'stroke-width': 2, 'stroke-dasharray': '8 8' }, slots);
+    T(slots, '?', { x: 1140, y: 600, size: 60, weight: 800, anchor: 'middle', fill: PD.faint });
+    show(slots, m('cust') + .3); hide(slots, m('pdri') + .2, .3);
+  }],
+
+  ['pdri', 'Tiga jenis PDRI', (m) => {
+    const p = panel(0);
+    kicker(p, 'Pajak dalam rangka impor (PDRI)', .2, 800, 110);
+    const items = [
+      ['ppn', PD.ppn, 'PPN Impor', 'UU PPN · PMK 131/2024', ['atas impor Barang Kena Pajak', 'oleh siapa pun']],
+      ['ppnbm', PD.ppnbm, 'PPnBM Impor', 'UU PPN · PMK 141/PMK.010/2021', ['hanya atas barang', 'yang tergolong mewah']],
+      ['pph', PD.pph, 'PPh Pasal 22 Impor', 'UU PPh · PMK 51/2025', ['pembayaran di muka', 'atas PPh importir']],
+    ];
+    items.forEach(([mark, col, name, law, note], i) => {
+      const x = 330 + i * 470, t0 = m(mark);
+      const fl = isoFloor(p, { x, y: 440, w: 220, d: 220, h: 10, col: '#1b3155', o: 0 });
+      show(fl.g, i ? t0 - .3 : .3, .4);
+      riseBlock(p, x, 430, 150, 150, 150, col, t0, .9);
+      const card = G(p, { o: 0, y: 16 });
+      T(card, name, { x, y: 640, size: 38, weight: 800, anchor: 'middle', fill: col });
+      T(card, law, { x, y: 682, size: 22, weight: 600, anchor: 'middle', fill: PD.dim });
+      note.forEach((s, j) => T(card, s, { x, y: 730 + j * 34, size: 27, weight: 500, anchor: 'middle', fill: PD.ink }));
+      tw(card, { o: 1, y: 0 }, t0 + .3, .6, out);
+    });
+    const ck = pdTag(p, 'Cukai → modul tersendiri', 1360, 180, '#8a97ad', { size: 22, solid: false });
+    show(ck, m('cukai'), .5);
+  }],
+
+  ['q1', 'Cek pemahaman', () => {
+    const p = panel(0);
+    const g = G(p, { s: .62, y: 120 });
+    levyPlatforms(g, 460, 1140, 600, { L: .1, R: .1, items: .1, pdri: .1 }, { titles: true });
+  }, { ask: done => quiz({ x: 900, y: 120, w: 640, cls: 'side' }, [{
+    id: 'c-kelompok', prompt: ['Masukkan setiap pungutan ke kelompoknya.'],
+    build: grid([
+      { parts: ['Bea Masuk'], ans: ['k'], why: 'Bea Masuk adalah pungutan kepabeanan (UU Kepabeanan).' },
+      { parts: ['PPN Impor'], ans: ['p'], why: 'PPN Impor adalah pajak yang dipungut DJBC saat impor.' },
+      { parts: ['BMTP'], ans: ['k'], why: 'BMTP adalah bea masuk tambahan, jadi termasuk pungutan kepabeanan.' },
+      { parts: ['PPh Pasal 22 Impor'], ans: ['p'], why: 'PPh Pasal 22 Impor termasuk PDRI: pembayaran di muka atas PPh importir.' },
+      { parts: ['Bea masuk antidumping'], ans: ['k'], why: 'Bea masuk antidumping juga bea masuk tambahan.' },
+      { parts: ['PPnBM Impor'], ans: ['p'], why: 'PPnBM Impor termasuk PDRI, hanya untuk barang mewah.' },
+    ], [['k', 'Kepabeanan', PD.bm, 'k'], ['p', 'PDRI', PD.ppn, 'p']], { multi: false, text: true }),
+  }], done) }],
+
+  ['nilai', 'Nilai impor', (m) => {
+    const p = panel(0);
+    kicker(p, 'Dasar perhitungan semua PDRI', .2, 120, 110, 'start');
+    const title = txt(p, 'Nilai impor', 120, 170, m('def'), { size: 56, weight: 800 });
+    const s = niStack(p, 560, 760, { w: 200, d: 200 });
+    s.layers.forEach((b, i) => { const t0 = m(['np', 'bm', 'bmt'][i]); show(b.g, t0, .2); grow(b, 0, b.hFull, t0, .8); });
+    // names beside each layer, on the right edge
+    layerLabel(p, s, 0, 'Nilai pabean (CIF × kurs)', PD.pabean, m('np') + .5);
+    layerLabel(p, s, 1, '+ Bea Masuk', PD.bm, m('bm') + .4, { dy: 4 });
+    layerLabel(p, s, 2, '+ BMTP', PD.bmtp, m('bmt') + .5, { dy: -14 });
+    brace(p, s.x - s.w * ISO_C - 24, s.y - s.total - s.w * ISO_S, s.y + s.w * ISO_S, 'Nilai impor', PD.ink, m('bmt') + 2.2, { size: 32, side: -1 });
+    // not included: PPN and PPnBM
+    const no = G(p, { o: 0 });
+    isoBlock(no, { x: 1140, y: 300, w: 80, d: 80, h: 50, col: PD.ppn, o: .45 });
+    isoBlock(no, { x: 1250, y: 300, w: 80, d: 80, h: 50, col: PD.ppnbm, o: .45 });
+    path(no, 'M1100 210L1300 340M1300 210L1100 340', { stroke: PD.assume, 'stroke-width': 6, 'stroke-linecap': 'round' });
+    T(no, 'PPN dan PPnBM tidak termasuk', { x: 1200, y: 400, size: 26, weight: 700, anchor: 'middle', fill: PD.assume });
+    show(no, m('not'), .5); hide(no, m('feed') - .3, .4);
+    // one figure feeds the three taxes
+    const fy = s.y - s.total / 2 - 60;
+    [[PD.ppn, 'PPN Impor', 360], [PD.ppnbm, 'PPnBM Impor', 520], [PD.pph, 'PPh Pasal 22 Impor', 680]].forEach(([c, n, y], i) => {
+      const t0 = m('feed') + .3 + i * .45;
+      arrowTo(p, 1000, fy, 1200, y - 40, c, t0);
+      riseBlock(p, 1260, y, 70, 70, 44, c, t0 + .5, .5);
+      txt(p, n, 1345, y - 22, t0 + .6, { size: 26, weight: 800, fill: c });
+    });
+    txt(p, 'UU PPN · PMK 51 Tahun 2025: dasar PPN, PPnBM, dan PPh Pasal 22', 120, 215, m('law'), { size: 22, fill: PD.dim, weight: 600 });
+  }],
+
+  ['case', 'Kasus 1: kain tenunan kapas', (m) => {
+    const p = panel(0);
+    kicker(p, 'Kasus 1 · PT Kain Prima Nusantara (API-U, PKP)', .2, 120, 110, 'start');
+    const fl = isoFloor(p, { x: 380, y: 600, w: 420, d: 300, h: 14, o: 0 });
+    show(fl.g, .3, .5);
+    const c = container(p, { x: 330, y: 560, w: 240, d: 96, h: 96, col: PD.steel[3], o: 0 });
+    show(c.g, .4, .5); put(c.doors, { o: 0 });
+    for (let i = 0; i < 6; i++) {
+      const [dx, dy] = iso(150 + (i % 3) * 0, -60 + (i % 3) * 42, Math.floor(i / 3) * 30);
+      const r = fabricRoll(p, { x: 330 + dx, y: 560 + dy, len: 100, r: 15, col: i % 2 ? '#e3d9c6' : '#efe9da', o: 0 });
+      show(r, m('qty') - .2 + i * .1, .3);
+    }
+    const qt = pdTag(p, '100.000 meter', 330, 330, PD.ink, { size: 28, solid: false });
+    pop(qt, m('qty') + .2); put(qt, { s: .6 });
+    // the case data as a sheet on the right
+    const sheet = G(p, { o: 0, x: 20 });
+    mk('rect', { x: 780, y: 160, width: 720, height: 560, rx: 16, fill: '#13284a', stroke: '#2a4470', 'stroke-width': 2 }, sheet);
+    T(sheet, 'DATA KASUS', { x: 812, y: 206, size: 20, weight: 700, fill: PD.dim });
+    tw(sheet, { o: 1, x: 0 }, m('qty'), .6, out);
+    const rows = [
+      ['qty', 'Barang', 'Kain tenunan kapas, pos 5208.21.00', PD.ink],
+      ['cif', 'Nilai CIF', 'USD 60.000', PD.pabean],
+      ['kurs', 'Kurs pajak (KMK 55/MK/EF.2/2026)', 'Rp18.155 per USD', PD.pabean],
+      ['tarif', 'Tarif Bea Masuk (MFN)', '10%', PD.bm],
+      ['bmtp', 'BMTP tahun pertama (PMK 98/2025)', 'Rp3.300 per meter', PD.bmtp],
+    ];
+    rows.forEach(([mark, lab, val, col], i) => {
+      const g = G(p, { o: 0, x: 16 });
+      const y = 270 + i * 92;
+      T(g, lab, { x: 812, y, size: 22, weight: 600, fill: PD.dim });
+      T(g, val, { x: 812, y: y + 40, size: 34, weight: 800, fill: col });
+      if (i) mk('rect', { x: 812, y: y - 40, width: 656, height: 1.5, fill: '#2a4470' }, g);
+      tw(g, { o: 1, x: 0 }, m(mark) + .1, .45, out);
+    });
+    const stp = assumeStamp(p, 1060, 556, { r: -8 });
+    put(stp, { s: 1.6 }); tw(stp, { s: 1, o: 1 }, m('tarif') + 2.2, .35, out);
+  }],
+
+  ['step1', 'Langkah 1: nilai pabean', (m) => {
+    const p = panel(0);
+    kicker(p, 'Kasus 1 · nilai impor', .2, 120, 110, 'start');
+    const fl = isoFloor(p, { x: 370, y: 760, w: 280, d: 280, h: 12, col: '#1b3155', o: 0 });
+    show(fl.g, .2, .4);
+    const s = niStack(p, 370, 748, { w: 200, d: 200 });
+    S.stack = s;
+    const C = calcCard(p, 790, 150, 740, [
+      { label: '1 · Nilai pabean', formula: 'USD 60.000 × Rp18.155', result: K1.np, col: PD.pabean },
+      { label: '2 · Bea Masuk (10%, asumsi latihan)', formula: '10% × Rp1.089.300.000', result: K1.bmRp, col: PD.bm },
+      { label: '3 · BMTP', formula: '100.000 m × Rp3.300', result: K1.bmtp, col: PD.bmtp },
+      { label: '4 · Nilai impor', formula: 'NP + BM + BMTP', result: K1.ni, col: PD.ink },
+    ], { rowH: 112 });
+    S.calc = C;
+    show(C, .3, .5);
+    C.row(0, m('mul') - .3, m('res'), 1.2);
+    const b = s.layers[0];
+    show(b.g, m('block'), .2); grow(b, 0, b.hFull, m('block'), 1);
+    layerLabel(p, s, 0, 'Nilai pabean', PD.pabean, m('block') + .8);
+  }],
+
+  ['step2', 'Langkah 2 dan 3: BM dan BMTP', (m) => {
+    const s = S.stack, C = S.calc;
+    C.row(1, m('bm') - .3, m('bmres'), 1);
+    const b1 = s.layers[1], b2 = s.layers[2];
+    show(b1.g, m('bmres') + .2, .2); grow(b1, 0, b1.hFull, m('bmres') + .2, .6);
+    layerLabel(p_(), s, 1, 'Bea Masuk', PD.bm, m('bmres') + .6, { dy: 6 });
+    C.row(2, m('bmtp') - .3, m('bmtpres'), 1);
+    show(b2.g, m('bmtpres') + .2, .2); grow(b2, 0, b2.hFull, m('bmtpres') + .2, .8);
+    layerLabel(p_(), s, 2, 'BMTP', PD.bmtp, m('bmtpres') + .8, { dy: -12 });
+    // per metre, not a percentage: the metre count is what multiplies
+    const note = pdTag(p_(), 'BMTP: tarif per meter, bukan persen', 1160, 800, PD.bmtp, { size: 24, solid: false });
+    show(note, m('note'), .5);
+    S.note = note;
+  }, { lead: false }],
+
+  ['step3', 'Langkah 4: nilai impor', (m) => {
+    const s = S.stack, C = S.calc;
+    hide(S.note, .2, .4);
+    C.row(3, m('sum') - .3, m('res'), 1.3);
+    const tot = pdTag(p_(), 'Nilai impor = Rp1.528.230.000', s.x, s.y - s.total - s.w * ISO_S * 2 - 40, PD.ink, { size: 26, solid: false });
+    put(tot, { s: .6 }); pop(tot, m('res') + .3);
+    s.layers.forEach((b, i) => pulse(b.g, m('sum') + i * .35, 1.06));
+    const base = G(p_(), { o: 0 });
+    T(base, 'dasar PPN Impor (Bab 4) dan PPh Pasal 22 Impor (Bab 5)', { x: 1160, y: 800, size: 24, weight: 700, anchor: 'middle', fill: PD.pph });
+    show(base, m('base'), .5);
+  }, { lead: false }],
+
+  ['q2', 'Cek pemahaman', () => {
+    const p = panel(0);
+    const fl = isoFloor(p, { x: 370, y: 760, w: 280, d: 280, h: 12, col: '#1b3155' });
+    const s = niStack(p, 370, 748, { w: 200, d: 200 });
+    s.layers.forEach((b, i) => { put(b.g, { o: i === 2 ? .35 : 1 }); b.set(b.hFull); });
+    put(s.layers[2].g, { y: s.y - s.layers[2].base - 130, x: 440 });
+    const lost = G(p, { o: 0 });
+    T(lost, 'BMTP terlupa', { x: 600, y: s.y - s.total - 150, size: 28, weight: 800, fill: PD.assume });
+    show(lost, .4);
+  }, { ask: done => quiz({ x: 860, y: 150, w: 680, cls: 'side' }, [{
+    id: 'c-lupa-bmtp', prompt: ['Petugas lupa memasukkan BMTP Rp330.000.000. Berapa nilai impor yang ia tulis?'],
+    build: blanks([{ parts: ['Nilai impor = ', { box: '1.198.230.000' }, ' rupiah'],
+      why: 'Rp1.089.300.000 + Rp108.930.000 = Rp1.198.230.000. Nilai ini kurang Rp330.000.000 dari nilai impor yang benar.',
+      hint: 'Jumlahkan hanya nilai pabean dan Bea Masuk: Rp1.089.300.000 + Rp108.930.000.' }]),
+  }], done) }],
+
+  ['check', 'Cek dulu sebelum hitung', (m) => {
+    const p = panel(0);
+    kicker(p, 'Cek dulu sebelum hitung', .2, 120, 110, 'start');
+    const board = G(p, { o: 0 });
+    mk('rect', { x: 110, y: 160, width: 700, height: 440, rx: 18, fill: '#13284a', stroke: '#2a4470', 'stroke-width': 2 }, board);
+    show(board, .3, .5);
+    [['api', 'Status importir', 'punya API atau tidak, PKP atau tidak'], ['lux', 'Jenis barang', 'tergolong mewah atau tidak'], ['rule', 'Aturan dan kurs', 'masih berlaku, kurs minggu berjalan']].forEach(([mark, a, b], i) => {
+      const y = 250 + i * 120, g = G(p, { o: 0 });
+      mk('rect', { x: 150, y: y - 32, width: 44, height: 44, rx: 8, fill: 'none', stroke: PD.ink, 'stroke-width': 3 }, g);
+      T(g, a, { x: 220, y: y - 2, size: 32, weight: 800 });
+      T(g, b, { x: 220, y: y + 34, size: 24, weight: 500, fill: PD.dim });
+      show(g, m(mark) - .2, .4);
+      const tick = path(p, `M158 ${y - 10}l12 14l22 -28`, { stroke: PD.ppn, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, { d: 0 });
+      draw(tick, m(mark) + 1, .4);
+    });
+    // one wrong figure at the base runs into every tax below it
+    const s = niStack(p, 1180, 520, { w: 180, d: 180, vals: [K1.np * .7, K1.bmRp * .7, K1.bmtp * .7] });
+    s.layers.forEach(b => { show(b.g, m('wrong') - .4, .3); b.set(b.hFull); });
+    const x = G(p, { o: 0 });
+    path(x, `M1120 ${520 - 40}l120 -70M1120 ${520 - 110}l120 70`, { stroke: PD.assume, 'stroke-width': 7, 'stroke-linecap': 'round' });
+    show(x, m('wrong') + .3, .3);
+    [[PD.ppn, 'PPN', 1000], [PD.ppnbm, 'PPnBM', 1180], [PD.pph, 'PPh 22', 1360]].forEach(([c, n, xx], i) => {
+      const t0 = m('wrong') + 1 + i * .3;
+      arrowTo(p, 1180, 560, xx, 690, PD.assume, t0);
+      const t = pdTag(p, n + ' ✗', xx, 730, c, { size: 24 });
+      show(t, t0 + .5, .3);
+    });
+  }],
+
+  ['wrap', 'Rangkuman', (m) => {
+    const p = panel(0);
+    kicker(p, 'Rangkuman', .2, 160, 130, 'start');
+    [['PDRI = PPN Impor, PPnBM Impor, dan PPh Pasal 22 Impor.', 'w1', PD.ppn],
+     ['Bea Masuk dan bea masuk tambahan adalah pungutan kepabeanan,|dan menjadi bagian dari nilai impor.', 'w2', PD.bm],
+     ['Semua PDRI dihitung dari nilai impor: periksa angka ini lebih dahulu.', 'w3', PD.pabean]].forEach(([str, mark, col], i) => {
+      const g = G(p, { x: -16, y: 260 + i * 150, o: 0 });
+      const b = isoBlock(g, { x: 200, y: 6, w: 44, d: 44, h: 30, col });
+      T(g, String(i + 1), { x: 200, y: -14, size: 24, fill: '#0b1526', weight: 800, anchor: 'middle' });
+      str.split('|').forEach((ln, j) => T(g, ln, { x: 270, y: j * 44, size: 34, weight: 600 }));
+      tw(g, { o: 1, x: 0 }, m(mark), .6);
+    });
+  }],
+
+  ['final1', 'Latihan bab', () => { panel(0); }, { ask: done => quiz(SCREEN, [{
+    id: 'p-latihan1', prompt: ['PT Kain Prima Nusantara hanya mengimpor 50.000 meter kain yang sama, nilai CIF USD 30.000. Kurs Rp18.155, Bea Masuk 10% (asumsi latihan), BMTP Rp3.300 per meter. Isi setiap langkah.'],
+    build: blanks([
+      { parts: ['1. Nilai pabean = ', { box: idNum(L1.np) }, ' rupiah'], why: 'USD 30.000 × Rp18.155 = Rp544.650.000.', hint: 'Kalikan nilai CIF dalam USD dengan kurs pajak.' },
+      { parts: ['2. Bea Masuk = ', { box: idNum(L1.bmRp) }, ' rupiah'], why: '10% × Rp544.650.000 = Rp54.465.000.', hint: 'Bea Masuk = 10% dari nilai pabean, bukan dari jumlah meter.' },
+      { parts: ['3. BMTP = ', { box: idNum(L1.bmtp) }, ' rupiah'], why: '50.000 m × Rp3.300 = Rp165.000.000.', hint: 'BMTP dihitung per meter: jumlah meter × Rp3.300.' },
+      { parts: ['4. Nilai impor = ', { box: idNum(L1.ni) }, ' rupiah'], why: 'Rp544.650.000 + Rp54.465.000 + Rp165.000.000 = Rp764.115.000.', hint: 'Jumlahkan nilai pabean, Bea Masuk, dan BMTP.' },
+    ]),
+  }, {
+    id: 'p-tidak-termasuk', prompt: ['Mana yang tidak termasuk dalam nilai impor?'],
+    build: choice([['PPN Impor'], ['BMTP'], ['Bea Masuk'], ['Nilai pabean']], 0,
+      'Nilai impor = nilai pabean + Bea Masuk + bea masuk tambahan. PPN dan PPnBM justru dihitung dari nilai impor.',
+      [null, 'BMTP adalah bea masuk tambahan, jadi termasuk nilai impor.', 'Bea Masuk termasuk nilai impor.', 'Nilai pabean adalah dasar nilai impor.']),
+  }], done, 'Latihan bab') }],
+
+  ['finish', 'Selesai', () => { panel(0); }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
+
+// the current panel, for beats that build on the previous beat's picture
+function p_() { return S.panel; }
+
+boot();
+</script>
+</body>
+</html>
