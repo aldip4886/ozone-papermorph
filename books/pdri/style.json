@@ -15,30 +15,35 @@
     "Pilot: KB 1 (gunakan KB 1). Gaya campuran (diagram hitung yang bergerak dengan adegan sederhana). E-learning internal DJBC. Suara Ardi.",
     "1 gunakan penjelasan bergaya isometric tanpa tokoh.",
     "Disetujui sesuai usulan: warna tetap per pungutan (nilai pabean biru, Bea Masuk dan BMTP oranye, PPN hijau, PPnBM ungu, PPh 22 kuning emas), latar biru tua, cap 'asumsi latihan' pada angka (cek); lima komponen bersama (balok nilai impor, kalkulator langkah hitung, meja layanan, lembar PIB, kontainer dan gulungan kain), tanpa tokoh; model rekomendasi; Rupiah gaya Indonesia di layar, narasi membaca angka yang dibulatkan.",
-    "Setelah melihat storyboard isometrik: 'Ganti gaya visual.' Pilihan: 'nomor 3' = infografis datar 2D (ikon dan bentuk sederhana, warna cerah, seperti slide presentasi modern)."
+    "Setelah melihat storyboard isometrik: 'Ganti gaya visual.' Pilihan: 'nomor 3' = infografis datar 2D (ikon dan bentuk sederhana, warna cerah, seperti slide presentasi modern).",
+    "Bangun ulang bab menggunakan Template Media Lite ini sebagai template rujukan utama visual. Gunakan juga font Poppins untuk seluruh tampilan. (2026-11-21, dengan Template_Media_Lite.pdf, 36 halaman)"
   ],
   "look": {
-    "style": "flat 2D infographic drawn in code: light board, white cards with flat offset shadows, rounded bars and pills, round levy badges, side-view icons (ship, crane, container, fabric rolls, service desk), no outlines, no people",
+    "style": "Template Media Lite (DJBC): blue low-poly textured board, navy bands and cards, light-grey info cards, yellow accent; slide title in white beside a yellow tab top left; white pill with the Kemenkeu, Bea Cukai and PBC logos top right on every beat; chapter divider = blue-tinted port photo, navy band, yellow rounded number; numbered white discs (01, 02, 03) for lists; flat code-drawn port pieces, no people",
+    "reference": "user's Template_Media_Lite.pdf (private); assets taken from it into site/pdri/lib/img: logos.png, bg-tekstur.jpg (slide background), kapal.jpg (cover photo)",
     "palette": {
-      "board": "#f4f7fc",
-      "card": "#ffffff",
-      "ink": "#1f2a44",
-      "dim": "#6b7a99",
-      "quay": "#e2e8f2",
-      "sea": "#cfe3fb"
+      "board": "#1565b5",
+      "navy": "#0b3358",
+      "navy2": "#0f4777",
+      "light card": "#eef1f5",
+      "yellow": "#ffcc29",
+      "sky": "#3fa0e0",
+      "text on board": "#ffffff",
+      "dim on board": "#c4daf2",
+      "text on light": "#0b3358"
     },
     "meaning": {
-      "pabean": "#2f80ed (blue: nilai pabean)",
-      "bm": "#f2994a (orange: Bea Masuk)",
-      "bmtp": "#e2632b (deep orange: BMTP and other bea masuk tambahan)",
-      "ppn": "#27ae60 (green: PPN Impor)",
-      "ppnbm": "#9b51e0 (purple: PPnBM Impor)",
-      "pph": "#e8b21f (gold: PPh Pasal 22 Impor; text in a darker shade)",
-      "assume": "#e5486b (pink: 'asumsi latihan' stamp, errors)"
+      "pabean": "#3fa0e0 (light blue)",
+      "bm": "#f7941d (orange)",
+      "bmtp": "#e8612c (deep orange)",
+      "ppn": "#2ecc71 (green)",
+      "ppnbm": "#a66cf0 (purple)",
+      "pph": "#ffcc29 (yellow; navy text on it)",
+      "assume": "#ff5a7a (pink stamp, errors)"
     },
     "fonts": {
-      "text": "system UI sans-serif",
-      "math": "same sans-serif for numbers (--math-font)"
+      "text": "Poppins 400-800, bundled woff2 latin subset in site/pdri/lib/fonts (SIL OFL)",
+      "math": "Poppins (--math-font)"
     },
     "notation": "Rupiah written Rp1.528.230.000 (dot thousands, no space after Rp); percent 10%; multiplication ×. Narration reads rounded amounts in words ('satu koma lima tiga miliar rupiah'), the exact figure stays on screen. Typed answers accept dots or spaces as thousands separators and an optional Rp."
   },
@@ -68,7 +73,7 @@
     "register": "haiku"
   },
   "scenes": {
-    "art": "flat 2D side-view scenes on a light board: sea and quay strips, a container ship, a quay crane, a container that opens on fabric rolls, a customs service desk with a PIB sheet; no human figures",
+    "art": "flat code-drawn side-view port pieces on the blue template board: sea, navy quay with yellow edge, container ship, yellow quay crane, container opening on fabric rolls, service desk with PIB sheet; no human figures",
     "cast": [],
     "storyboard": "the user reviews the layout sheet before motion in the pilot; later chapters self-check"
   },
@@ -101,7 +106,8 @@
   ],
   "images": {
     "sources": [
-      "drawn in code only"
+      "drawn in code",
+      "template assets from the user's Template Media Lite PDF (logos, background texture, ship photo)"
     ]
   }
 }

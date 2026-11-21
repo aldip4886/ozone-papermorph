@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pajak dalam Rangka Impor</title>
 <meta name="description" content="Pelajaran animasi untuk pegawai baru DJBC: memahami dan menghitung PPN, PPnBM, dan PPh Pasal 22 Impor.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d2b27'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='48' fill='%23f0b45a'%3E∞%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231565b5'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='40' font-family='Arial' font-weight='700' fill='%23ffcc29'%3EP%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="lib/units.css">
 <link rel="stylesheet" href="lib/contents.css">
 <script src="lib/units.js"></script>
@@ -14,16 +14,28 @@
 <!-- <script src="refs.js"></script>  a book that cites works: its reference list, built by the skill's scripts/refs.py -->
 <link rel="expect" href="#ch01" blocking="render">
 <style>
-:root { --page: #e6ebf3; --board: #f4f7fc; --panel: #ffffff; --edge: #d5dcea;
-  --chalk: #1f2a44; --dim: #6b7a99; --faint: #b8c2d6; --task: #e2632b; --quiz: #2f80ed; --good: #27ae60;
-  --top-bg: rgba(244, 247, 252, .92); --top-line: #e3e8f1; --lift: rgba(40, 60, 110, .16); color-scheme: light; }
-body::before { background: none; }
-:root { --ui: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif; --book: var(--ui); }
-h1, .top strong { font-weight: 800; letter-spacing: -.01em; }
-.chalk span { font-style: normal; font-weight: 700; }
+/* Template Media Lite: DJBC blue with the template's texture, navy, yellow accent, Poppins everywhere */
+@font-face { font-family: "Poppins"; font-weight: 400; font-display: block; src: url("lib/fonts/Poppins-400.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 500; font-display: block; src: url("lib/fonts/Poppins-500.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 600; font-display: block; src: url("lib/fonts/Poppins-600.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 700; font-display: block; src: url("lib/fonts/Poppins-700.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 800; font-display: block; src: url("lib/fonts/Poppins-800.woff2") format("woff2"); }
+:root { --page: #1565b5; --board: #1565b5; --panel: #0b3358; --edge: #1f5b97;
+  --chalk: #ffffff; --dim: #c4daf2; --faint: #5f8fc4; --task: #ffcc29; --quiz: #ffcc29; --good: #2ecc71;
+  --top-bg: rgba(11, 51, 88, .92); --top-line: #0a2f50; --lift: rgba(0, 0, 0, .3); color-scheme: dark;
+  --ui: "Poppins", "Segoe UI", Arial, sans-serif; --book: var(--ui); }
+body::before { background: url("lib/img/bg-tekstur.jpg") center / cover, #1565b5; }
+h1, .top strong { font-weight: 700; letter-spacing: 0; }
+.kicker { color: #ffcc29; }
+.chalk span { font-style: normal; font-weight: 600; }
+.btn.go { color: #0b3358; }
+.logos { position: fixed; top: 22px; right: 26px; z-index: 5; background: #fff; border-radius: 40px; padding: 8px 26px; display: flex; }
+.logos img { height: 52px; width: auto; display: block; }
+#guide { display: none; }
 </style>
 </head>
 <body>
+<div class="logos" aria-hidden="true"><img src="lib/img/logos.png" alt=""></div>
 <section id="cover">
   <div class="chalk" aria-hidden="true"><!-- a few faint formulas or phrases from the book, drawn in chalk -->
     <span style="left:7%;top:13%;--d:1.6">Nilai impor = NP + BM + BMTP</span>
@@ -71,7 +83,7 @@ Contents.book({
   units: [   // [unit title, [[chapter title, minutes], ...]]
     ['Memahami sambil mulai menghitung', [['Hari Pertama di Pelabuhan', 6]]],
   ],
-  hues: ['#2f80ed', '#27ae60'],   // one colour per unit, cycling
+  hues: ['#ffcc29', '#3fa0e0'],   // one colour per unit, cycling
 });
 </script>
 </body>

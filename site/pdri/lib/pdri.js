@@ -3,30 +3,76 @@
    origin and placed with G({x, y}); bars stand on their origin (bottom centre). */
 'use strict';
 
+/* PDRI book library, Template Media Lite look (style.json): DJBC blue board with the template's texture (book.css),
+   navy bands and cards, yellow accent, light-grey info cards, white titles beside a yellow tab, the three-logo pill
+   top right, Poppins everywhere. Pieces drawn in code, flat, no outlines, no people. Every piece is drawn around its
+   own origin and placed with G({x, y}); bars stand on their origin (bottom centre). Loaded after engine.js. */
+'use strict';
+
 const PD = {
-  bg: '#f4f7fc', card: '#ffffff', shadow: '#dde4f0', line: '#e3e8f1', ink: '#1f2a44', dim: '#6b7a99', faint: '#b8c2d6',
-  pabean: '#2f80ed', bm: '#f2994a', bmtp: '#e2632b', ppn: '#27ae60', ppnbm: '#9b51e0', pph: '#e8b21f',
-  assume: '#e5486b', good: '#27ae60', bad: '#e5486b',
-  sea: '#cfe3fb', seaLine: '#9cc4f2', quay: '#e2e8f2', steel: ['#5b7bb3', '#3fa7b5', '#7b8fb8', '#4c6fa8'], cloth: ['#fbe7c6', '#f7d6d0', '#d9ecf7', '#e6f2d9'],
+  bg: '#1565b5', navy: '#0b3358', navy2: '#0f4777', light: '#eef1f5', yellow: '#ffcc29', sky: '#3fa0e0',
+  card: '#0b3358', shadow: '#0a2c4d', line: '#d9dfe8', ink: '#ffffff', dim: '#c4daf2', faint: '#5f8fc4',
+  text: '#0b3358', textDim: '#5a6b85',   // ink and dim text on the light cards
+  pabean: '#3fa0e0', bm: '#f7941d', bmtp: '#e8612c', ppn: '#2ecc71', ppnbm: '#a66cf0', pph: '#ffcc29',
+  assume: '#ff5a7a', good: '#2ecc71', bad: '#ff5a7a',
+  sea: '#0e4c8a', seaLine: '#3fa0e0', quay: '#0b3358', steel: ['#3fa0e0', '#e8612c', '#ffcc29', '#2ecc71'], cloth: ['#fbe7c6', '#f7d6d0', '#d9ecf7', '#e6f2d9'],
 };
-// pale tints of the levy colours, for card headers and chips
 const tint = (c, q = .82) => mix(c, '#ffffff', q);
 const shade = (c, q = .22) => mix(c, '#000000', q);
-// the engine draws for a dark board: its drawing palette follows this book's light one (book.css does the CSS side)
-Object.assign(COL, { chalk: PD.ink, dim: PD.dim, faint: PD.faint, board: PD.bg, task: PD.pph, good: PD.good, bad: PD.bad });
+// a levy colour made dark enough to read on a light card
+const onLight = c => ({ [PD.pabean]: '#1673c0', [PD.ppn]: '#1b9a52', [PD.pph]: '#a87b00', [PD.bm]: '#c96a00', [PD.ppnbm]: '#7b3fc9' })[c] || c;
+// the engine's drawing palette follows this book's blue board (book.css does the CSS side)
+Object.assign(COL, { chalk: PD.ink, dim: PD.dim, faint: PD.faint, board: PD.bg, task: PD.yellow, good: PD.good, bad: PD.bad });
 
 // Rupiah as written in Indonesia: Rp1.528.230.000
 const idNum = n => String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const rp = n => (n < 0 ? '−' : '') + 'Rp' + idNum(n);
+const IMG = '../lib/img/';
+const pic = (p, href, x, y, w, h, extra = {}) => mk('image', { href: IMG + href, x, y, width: w, height: h, preserveAspectRatio: 'xMidYMid slice', ...extra }, p);
 
-// a white card with a flat offset shadow (no SVG filter: it would repaint under motion)
-function pcard(p, x, y, w, h, { r = 22, fill = PD.card, o = 1, head, headCol, headH = 70 } = {}) {
+/* The template's fixed chrome: the white pill with the Kemenkeu, Bea Cukai and PBC logos, top right, over every beat.
+   It sits on the stage above the scene, so it stays put while the panels change. */
+(() => {
+  const st = document.getElementById('stage');
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('id', 'chrome'); g.setAttribute('aria-hidden', 'true');
+  st.appendChild(g);
+  mk('rect', { x: 1158, y: 36, width: 356, height: 110, rx: 55, fill: '#ffffff' }, g);
+  mk('image', { href: IMG + 'logos.png', x: 1190, y: 52, width: 274, height: 78, preserveAspectRatio: 'xMidYMid meet' }, g);
+})();
+
+/* slideHead: the template's slide title. A yellow tab bleeding off the top left, the title in white beside it, and an
+   optional subtitle (the regulation) under it. */
+function slideHead(p, title, { sub, t0 = .1, size = 46 } = {}) {
+  const g = G(p, { o: 0 });
+  mk('rect', { x: 30, y: -40, width: 50, height: 150, rx: 25, fill: PD.yellow }, g);
+  T(g, title, { x: 118, y: sub ? 80 : 92, size, weight: 700, fill: '#fff' });
+  if (sub) T(g, sub, { x: 118, y: 122, size: 24, weight: 600, fill: '#fff' });
+  show(g, t0, .4);
+  return g;
+}
+// a navy band right across the slide (template: the content band under the title)
+const navyBand = (p, y, h, o = .94) => mk('rect', { x: 0, y, width: SW, height: h, fill: PD.navy, 'fill-opacity': o }, p);
+// the template's step number: a white circle with a bold blue number
+function numDisc(p, n, x, y, { r = 44, o = 0 } = {}) {
+  const g = G(p, { x, y, o });
+  mk('circle', { r, fill: '#fff' }, g);
+  T(g, n, { y: r * .36, size: r * .95, weight: 800, anchor: 'middle', fill: '#1565b5' });
+  return g;
+}
+// Poppins must be in before the first measure (textW, uiW) and the first frame: boot once the faces are loaded
+function pdBoot() {
+  const faces = ['400', '600', '700', '800'].map(w => document.fonts.load(`${w} 30px Poppins`));
+  Promise.all(faces).catch(() => {}).finally(boot);
+}
+
+// a flat card (template: navy, or light grey with fill PD.light), optional coloured header band
+function pcard(p, x, y, w, h, { r = 22, fill = PD.card, o = 1, head, headCol, headH = 70, headInk = '#fff' } = {}) {
   const g = G(p, { o });
-  mk('rect', { x: x + 6, y: y + 10, width: w, height: h, rx: r, fill: PD.shadow }, g);
   mk('rect', { x, y, width: w, height: h, rx: r, fill }, g);
   if (head) {
     path(g, `M${x} ${y + headH}V${y + r}a${r} ${r} 0 0 1 ${r} ${-r}H${x + w - r}a${r} ${r} 0 0 1 ${r} ${r}V${y + headH}Z`, { fill: headCol });
-    T(g, head, { x: x + 32, y: y + headH / 2 + 11, size: 30, weight: 800, fill: '#fff' });
+    T(g, head, { x: x + 32, y: y + headH / 2 + 11, size: 30, weight: 700, fill: headInk });
   }
   return g;
 }
@@ -35,7 +81,7 @@ function pcard(p, x, y, w, h, { r = 22, fill = PD.card, o = 1, head, headCol, he
 function bar(p, { x = 0, y = 0, w = 200, h = 40, col = PD.pabean, o = 1, r = 6, label } = {}) {
   const g = G(p, { x, y, o });
   const R = mk('rect', { x: -w / 2, width: w, rx: r, fill: col }, g);
-  const hi = mk('rect', { x: -w / 2, width: w * .18, fill: '#ffffff', opacity: .14 }, g);
+  const hi = mk('rect', { x: -w / 2, width: w * .18, fill: '#ffffff', 'fill-opacity': .14 }, g);
   const b = { g, R, w, h, col };
   b.set = hh => { hh = Math.max(0, hh); b.h = hh; R.setAttribute('y', -hh); R.setAttribute('height', hh); hi.setAttribute('y', -hh); hi.setAttribute('height', hh); };
   b.set(h);
@@ -60,21 +106,21 @@ function stackBars(p, x, y, w, vals, cols, k) {
 function pdTag(p, str, x, y, col, { size = 26, solid = true, o = 0, weight = 800, ink } = {}) {
   const g = G(p, { x, y, o });
   const w = textW(str, size) * 1.06 + size * 1.4, hh = size * 1.7;
-  mk('rect', { x: -w / 2, y: -hh / 2, width: w, height: hh, rx: hh / 2, fill: solid ? col : '#fff', stroke: col, 'stroke-width': solid ? 0 : 3 }, g);
-  T(g, str, { x: 0, y: size * .36, size, weight, anchor: 'middle', fill: ink || (solid ? '#fff' : col) });
+  mk('rect', { x: -w / 2, y: -hh / 2, width: w, height: hh, rx: hh / 2, fill: solid ? col : 'none', stroke: col, 'stroke-width': solid ? 0 : 3 }, g);
+  T(g, str, { x: 0, y: size * .36, size, weight, anchor: 'middle', fill: ink || (solid ? ([PD.pph, PD.yellow, PD.ppn, PD.pabean, '#ffffff'].includes(col) ? PD.navy : '#fff') : col) });
   g._w = w;
   return g;
 }
 // a round badge with short letters (the levy icons)
 function badge(p, str, x, y, col, { r = 56, size, o = 0 } = {}) {
   const g = G(p, { x, y, o });
-  const halo = mk('circle', { r: r + 10, fill: tint(col, .78) }, g);
+  const halo = mk('circle', { r: r + 10, fill: col }, g);
   mk('circle', { r, fill: col }, g);
-  T(g, str, { y: (size || r * .5) * .36, size: size || r * .5, weight: 800, anchor: 'middle', fill: '#fff' });
+  T(g, str, { y: (size || r * .5) * .36, size: size || r * .5, weight: 800, anchor: 'middle', fill: [PD.pph, PD.ppn, PD.pabean].includes(col) ? PD.navy : '#fff' });
   // the halo breathes slowly while the badge is on screen (a pure function of the beat clock)
   const ph = (x * 7 + y * 3) % 6.28;
-  put(halo, { s: 1 });
-  clockRun(t => put(halo, { s: 1 + .06 * Math.sin(t * 1.6 + ph) }), 0, { tail: true });
+  put(halo, { s: 1, o: .3 });
+  clockRun(t => put(halo, { s: 1 + .06 * Math.sin(t * 1.6 + ph), o: .3 }), 0, { tail: true });
   return g;
 }
 // a short label on a line to the right of a point
@@ -124,7 +170,7 @@ function fabricRoll(p, { x = 0, y = 0, len = 110, r = 20, col = PD.cloth[0], o =
 function ship(p, { x = 0, y = 0, len = 560, o = 1 } = {}) {
   const g = G(p, { x, y, o });
   const a = len / 2;
-  path(g, `M${-a} -70H${a + 30}L${a - 20} 20H${-a + 30}Z`, { fill: '#2b3a67' });
+  path(g, `M${-a} -70H${a + 30}L${a - 20} 20H${-a + 30}Z`, { fill: '#082640' });
   path(g, `M${-a + 8} -6H${a + 6}L${a - 2} 20H${-a + 30}Z`, { fill: '#d64a4a' });
   mk('rect', { x: -a + 20, y: -170, width: 80, height: 100, rx: 6, fill: '#eef2f8' }, g);
   for (let i = 0; i < 3; i++) mk('rect', { x: -a + 32, y: -156 + i * 28, width: 56, height: 12, rx: 3, fill: '#9cc4f2' }, g);
@@ -136,7 +182,7 @@ function ship(p, { x = 0, y = 0, len = 560, o = 1 } = {}) {
   return g;
 }
 // quay crane, side view: two legs on the quay, a boom out to the left over the water; c.hookX is the trolley's x
-function crane(p, { x = 0, y = 0, h = 360, boom = 380, o = 1, col = '#f2b33d' } = {}) {
+function crane(p, { x = 0, y = 0, h = 360, boom = 380, o = 1, col = '#ffcc29' } = {}) {
   const g = G(p, { x, y, o });
   path(g, `M-50 0L-30 ${-h}M50 0L30 ${-h}M-40 -120H40M-34 -260H34`, { stroke: col, 'stroke-width': 12, 'stroke-linecap': 'round' });
   path(g, `M${-boom} ${-h}H120M0 ${-h - 70}L${-boom + 30} ${-h}M0 ${-h - 70}L110 ${-h}M0 ${-h - 70}V${-h}`, { stroke: col, 'stroke-width': 9, 'stroke-linecap': 'round' });
@@ -146,29 +192,28 @@ function crane(p, { x = 0, y = 0, h = 360, boom = 380, o = 1, col = '#f2b33d' } 
 /* service desk, front view: counter, monitor, a tray with a PIB sheet, a hanging sign. No people. */
 function serviceDesk(p, { x = 0, y = 0, o = 1, sign = 'MEJA LAYANAN' } = {}) {
   const g = G(p, { x, y, o });
-  mk('rect', { x: -170, y: -110, width: 340, height: 110, rx: 10, fill: '#5b7bb3' }, g);
-  mk('rect', { x: -186, y: -126, width: 372, height: 22, rx: 8, fill: '#3d5a92' }, g);
-  mk('rect', { x: -120, y: -80, width: 240, height: 8, rx: 4, fill: '#ffffff', opacity: .25 }, g);
-  mk('rect', { x: -120, y: -216, width: 120, height: 80, rx: 8, fill: '#2b3a67' }, g);
+  mk('rect', { x: -170, y: -110, width: 340, height: 110, rx: 10, fill: PD.sky }, g);
+  mk('rect', { x: -186, y: -126, width: 372, height: 22, rx: 8, fill: '#eef1f5' }, g);
+  mk('rect', { x: -120, y: -80, width: 240, height: 8, rx: 4, fill: '#ffffff', 'fill-opacity': .25 }, g);
+  mk('rect', { x: -120, y: -216, width: 120, height: 80, rx: 8, fill: PD.navy }, g);
   mk('rect', { x: -110, y: -206, width: 100, height: 60, rx: 4, fill: '#9cc4f2' }, g);
-  mk('rect', { x: -70, y: -136, width: 20, height: 12, fill: '#2b3a67' }, g);
+  mk('rect', { x: -70, y: -136, width: 20, height: 12, fill: PD.navy }, g);
   const sheet = G(g, { x: 80, y: -128 });
   mk('rect', { x: -40, y: -66, width: 80, height: 66, rx: 4, fill: '#fff', stroke: PD.line, 'stroke-width': 2 }, sheet);
   path(sheet, 'M-28 -50H28M-28 -36H28M-28 -22H12', { stroke: PD.faint, 'stroke-width': 4, 'stroke-linecap': 'round' });
-  T(sheet, 'PIB', { y: -6, size: 14, weight: 800, anchor: 'middle', fill: PD.pabean });
+  T(sheet, 'PIB', { y: -6, size: 14, weight: 800, anchor: 'middle', fill: '#1673c0' });
   const sg = G(g, { y: -330 });
-  path(sg, 'M-80 -60V-24M80 -60V-24', { stroke: PD.faint, 'stroke-width': 3 });
-  mk('rect', { x: -130, y: -26, width: 260, height: 52, rx: 26, fill: PD.pabean }, sg);
-  T(sg, sign, { y: 9, size: 22, weight: 800, anchor: 'middle', fill: '#fff' });
+  path(sg, 'M-80 -60V-24M80 -60V-24', { stroke: PD.dim, 'stroke-width': 3 });
+  mk('rect', { x: -130, y: -26, width: 260, height: 52, rx: 26, fill: PD.yellow }, sg);
+  T(sg, sign, { y: 8, size: 20, weight: 700, anchor: 'middle', fill: PD.navy });
   return g;
 }
 // a question bubble with its tail pointing down at (x + tailX, y + h/2 + 26)
 function askCard(p, str, x, y, { size = 30, o = 0, tailX = 0 } = {}) {
   const w = textW(str, size) * 1.06 + 60, hh = size * 2.3;
   const g = G(p, { x, y, o });
-  mk('path', { d: `M${-w / 2 + 6} ${-hh / 2 + 10}h${w}v${hh}H${tailX + 28}l-22 26l-6 -26H${-w / 2 + 6}Z`, fill: PD.shadow }, g);
-  mk('path', { d: `M${-w / 2} ${-hh / 2}h${w}v${hh}H${tailX + 22}l-22 26l-6 -26H${-w / 2}Z`, fill: '#fff', 'stroke-linejoin': 'round' }, g);
-  T(g, str, { y: size * .36, size, weight: 800, anchor: 'middle', fill: PD.ink });
+    mk('path', { d: `M${-w / 2} ${-hh / 2}h${w}v${hh}H${tailX + 22}l-22 26l-6 -26H${-w / 2}Z`, fill: '#fff', 'stroke-linejoin': 'round' }, g);
+  T(g, str, { y: size * .36, size, weight: 700, anchor: 'middle', fill: PD.text });
   return g;
 }
 // the 'asumsi latihan' stamp for figures marked (cek) in the source
@@ -179,21 +224,21 @@ function assumeStamp(p, x, y, { r = -6, s = 1, o = 0, str = 'ASUMSI LATIHAN' } =
   T(g, str, { y: 7, size: 18, weight: 800, anchor: 'middle', fill: PD.assume });
   return g;
 }
-/* calcCard: the step calculator on a white card. rows: { label, formula, result, col }. c.row(i, tLabel, tResult)
+/* calcCard: the step calculator on a light-grey card (template info card). rows: { label, formula, result, col }. c.row(i, tLabel, tResult)
    shows a row's label and formula, then counts its result up. */
 function calcCard(p, x, y, w, rows, { title = 'Langkah hitung', rowH = 104, o = 0 } = {}) {
   const H = 76 + rows.length * rowH;
   const g = G(p, { o });
-  pcard(g, x, y, w, H);
-  T(g, title.toUpperCase(), { x: x + 32, y: y + 48, size: 20, weight: 800, fill: PD.dim });
+  pcard(g, x, y, w, H, { fill: PD.light });
+  T(g, title.toUpperCase(), { x: x + 32, y: y + 48, size: 20, weight: 700, fill: PD.textDim });
   const els = rows.map((r, i) => {
     const ry = y + 70 + i * rowH;
     const rg = G(g, { o: 0 });
-    mk('rect', { x: x + 24, y: ry + 10, width: w - 48, height: rowH - 16, rx: 14, fill: tint(r.col, .9) }, rg);
+    mk('rect', { x: x + 24, y: ry + 10, width: w - 48, height: rowH - 16, rx: 14, fill: tint(r.col, .86) }, rg);
     mk('rect', { x: x + 24, y: ry + 10, width: 10, height: rowH - 16, rx: 5, fill: r.col }, rg);
-    T(rg, r.label, { x: x + 52, y: ry + 44, size: 22, weight: 700, fill: PD.dim });
-    T(rg, r.formula, { x: x + 52, y: ry + 78, size: 26, weight: 600, fill: PD.ink });
-    const res = T(g, '', { x: x + w - 44, y: ry + 70, size: 32, weight: 800, fill: r.col === PD.pph ? shade(PD.pph, .25) : r.col, anchor: 'end', o: 0 });
+    T(rg, r.label, { x: x + 52, y: ry + 44, size: 21, weight: 600, fill: PD.textDim });
+    T(rg, r.formula, { x: x + 52, y: ry + 78, size: 24, weight: 600, fill: PD.text });
+    const res = T(g, '', { x: x + w - 44, y: ry + 72, size: 30, weight: 800, fill: onLight(r.col), anchor: 'end', o: 0 });
     return { rg, res, value: r.result };
   });
   g.row = (i, tLabel, tResult, count = .9) => {
