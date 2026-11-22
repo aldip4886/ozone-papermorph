@@ -85,7 +85,7 @@ const BEATS = [
     tile(amt, 'wallet', 175, 500, { size: 96, v: 'blue' });
     T(amt, 'PPN IMPOR DIBAYAR DI PELABUHAN', { x: 245, y: 482, size: 15, weight: 700, fill: MK.dim });
     T(amt, rp(PPN), { x: 245, y: 530, size: 40, weight: 800, fill: MK.navy });
-    T(amt, 'Kasus 1, kain poliester 100.000 meter', { x: 122, y: 650, size: 19, weight: 600, fill: MK.navy });
+    T(amt, 'Kasus 1, kain tenunan kapas 100.000 meter', { x: 122, y: 650, size: 19, weight: 600, fill: MK.navy });
     slideUp(amt, m('ask') + .2);
     // the answer
     const a = G(p);
@@ -193,7 +193,7 @@ const BEATS = [
     const p = panel(0);
     paper(p);
     actionTitle(p, 'Cek pemahaman: berapa beban efektif|PPN Impor atas kain kita?', { tag: 'CEK PEMAHAMAN', t0: .1 });
-    [['fabric', 'gold', 'Kain poliester', 'bukan barang mewah'], ['user', 'blue', 'Importir', 'berstatus PKP'], ['percent', 'sky', 'Tarif PPN', '12% menurut UU HPP']].forEach(([gl, v, n, sub], i) => {
+    [['fabric', 'gold', 'Kain kapas', 'bukan barang mewah'], ['user', 'blue', 'Importir', 'berstatus PKP'], ['percent', 'sky', 'Tarif PPN', '12% menurut UU HPP']].forEach(([gl, v, n, sub], i) => {
       const c = G(p), y = 250 + i * 150;
       mcard(c, 92, y, 640, 126);
       tile(c, gl, 155, y + 62, { size: 76, v });
