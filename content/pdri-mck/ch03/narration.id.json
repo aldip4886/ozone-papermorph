@@ -1,0 +1,21 @@
+{
+ "voice": "id-ID-ArdiNeural",
+ "rate": "-4%",
+ "note": "Draf suara Ardi untuk storyboard; diganti rekaman Google AI Studio dari John setelah disetujui.",
+ "beats": {
+  "intro": "Mari kita lanjutkan, ya. [[sub]]Pada materi ketiga ini, kita akan melihat siapa yang memungut pajak, dan dengan cara apa.",
+  "ask": "Staf PT Kain Prima Nusantara kini bertanya, siapa sebenarnya yang memungut, dan dengan cara apa? [[pib]]Jawabannya bertemu dalam satu dokumen, yaitu Pemberitahuan Impor Barang, atau PIB. [[roles]]Di balik satu PIB itu, ada enam pihak [[sys]]dan tiga sistem pemungutan yang bekerja bersama.",
+  "sistem": "Kita mulai dari tiga sistem pemungutan pajak. [[s1]]Pertama, official assessment: petugas pajak, atau fiskus, yang menentukan besarnya pajak. Dalam Kasus 1, pejabat DJBC meneliti PIB dan dapat menetapkan kekurangan pembayaran. [[s2]]Kedua, self assessment: wajib pajak menentukan sendiri. Importir menghitung sendiri Bea Masuk dan PDRI dalam PIB. [[s3]]Ketiga, withholding: pihak ketiga yang ditunjuk undang-undang memungut pajaknya. DJBC memungut PPh Pasal 22 Impor atas penghasilan importir.",
+  "alur": "Sistem utama di Indonesia adalah self assessment. [[flow]]Tetapi dalam impor, ketiganya berjalan bersama. [[f1]]Importir menghitung, [[f2]]DJBC meneliti, [[f3]]dan DJBC juga memungut PPh Pasal 22.",
+  "q1": "Sekarang, mari kita cek pemahaman kamu. Sistem apa yang bekerja di setiap langkah ini, ya?",
+  "jenis": "Pajak juga dapat dibagi menurut tiga dasar. [[j1]]Menurut lembaga pemungutnya, ada pajak pusat, seperti PPN, PPnBM, PPh, dan Bea Meterai, dan ada pajak daerah, seperti pajak kendaraan bermotor dan pajak hotel. [[j2]]Menurut pihak yang menanggung, PPh adalah pajak langsung, sedangkan PPN dan PPnBM adalah pajak tidak langsung. [[j3]]Menurut sifatnya, PPh adalah pajak subjektif, karena memperhatikan keadaan wajib pajak, sedangkan PPN adalah pajak objektif, karena memperhatikan objeknya.",
+  "hukum": "Lalu, aturan mana yang menjadi pegangan? [[kup]]UU KUP, UU PPh, dan UU PPN berasal dari tahun 1983, dan terakhir diubah dengan UU 6 Tahun 2023 tentang Cipta Kerja. [[hpp]]UU Harmonisasi Peraturan Perpajakan menetapkan tarif PPN 12 persen, paling lambat 1 Januari 2025. [[kep]]Untuk kepabeanan, pegangannya UU 10 Tahun 1995, yang diubah dengan UU 17 Tahun 2006.",
+  "hierarki": "Dalam pekerjaan, Anda akan menemui peraturan dengan urutan ini. [[h1]]Undang-undang, [[h2]]Peraturan Pemerintah, [[h3]]Peraturan Menteri Keuangan atau PMK, [[h4]]lalu Peraturan Direktur Jenderal. [[rule]]Ingat, peraturan yang lebih rendah tidak boleh bertentangan dengan peraturan yang lebih tinggi.",
+  "peran": "Sekarang, siapa melakukan apa? [[r1]]Importir menghitung dan membayar Bea Masuk dan PDRI, serta mengisi PIB. [[r2]]PPJK mengurus kewajiban kepabeanan atas kuasa importir. [[r3]]DJBC meneliti PIB, memungut PDRI, dan menetapkan kekurangan pembayaran. [[r4]]Bank persepsi atau bank devisa menerima pembayarannya. [[r5]]DJP mengadministrasikan pengkreditan PPN dan PPh Pasal 22 dalam SPT importir. [[r6]]Dan konsumen akhir menanggung PPN di ujung rantai penjualan.",
+  "identitas": "Saat melayani, Anda akan sering memeriksa identitas importir. [[npwp]]NPWP atau NIK, [[api]]Angka Pengenal Importir, API-U atau API-P, [[pkp]]dan status Pengusaha Kena Pajak, atau PKP. [[core]]Data ini terhubung dengan Coretax, sistem administrasi perpajakan DJP.",
+  "q2": "Sekarang, kita cek pemahaman lagi, ya. Siapa yang menjalankan setiap peran ini?",
+  "wrap": "Jadi, ini rangkumannya. [[w1]]Dalam impor, self assessment, official assessment, dan withholding berjalan bersama. [[w2]]DJBC memungut PDRI di pelabuhan, sedangkan DJP mengadministrasikan pengkreditannya. [[w3]]Dan sebelum melayani, periksa dulu identitas importir: NPWP, API, dan status PKP.",
+  "final1": "Nah, sekarang kita latihan, ya. Coba kamu jawab latihan berikut ini.",
+  "finish": "Bagus, materi ketiga selesai. Berikutnya, kita bahas PPN Impor, dan mengapa PPN yang sudah dibayar importir tidak hilang begitu saja."
+ }
+}
