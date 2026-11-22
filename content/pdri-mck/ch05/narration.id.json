@@ -1,0 +1,22 @@
+{
+ "voice": "id-ID-ArdiNeural",
+ "rate": "-4%",
+ "note": "Draf suara Ardi untuk storyboard; diganti rekaman Google AI Studio dari John setelah disetujui.",
+ "beats": {
+  "intro": "Mari kita lanjutkan, ya, sobat. [[sub]]Pada materi kelima ini, kita masuk ke bagian kedua: menghitung, memeriksa, dan menjelaskan. Kita mulai dari PPh Pasal 22 Impor.",
+  "ask": "Staf PT Kain Prima Nusantara punya pertanyaan terakhir. [[ask]]Kain kami belum terjual. Mengapa PPh sudah dipungut di pelabuhan? [[ans]]Jawaban singkatnya: PPh Pasal 22 Impor bukan pajak tambahan, melainkan cicilan di muka atas PPh perusahaan tahun ini.",
+  "lunas": "Menurut UU PPh, wajib pajak dapat melunasi sebagian PPh-nya sebelum tahun pajak berakhir. [[p21]]Lewat PPh Pasal 21, yang dipotong pemberi kerja atas gaji pegawai. [[p22]]Lewat PPh Pasal 22, yang dipungut pihak tertentu, termasuk atas impor. [[p23]]Lewat PPh Pasal 23, yang dipotong atas dividen, bunga, royalti, sewa, dan jasa tertentu. [[p25]]Dan lewat PPh Pasal 25, angsuran bulanan oleh wajib pajak sendiri. [[wh]]Pemotongan dan pemungutan, keduanya termasuk withholding.",
+  "ketentuan": "Ketentuan terbarunya ada di PMK 51 Tahun 2025, yang berlaku sejak 1 Agustus 2025. [[k1]]Pemungutnya DJBC dan bank devisa. [[k2]]Dasar pemungutannya nilai impor. [[k3]]PPh ini terutang bersamaan dengan pembayaran Bea Masuk. [[k4]]Dan sifatnya tidak final. Importir memperhitungkannya sebagai kredit pajak dalam SPT Tahunan PPh.",
+  "tarif": "Tarifnya bergantung pada barang dan importirnya. [[t1]]Importir yang memiliki API dikenai 2,5 persen dari nilai impor. Tanpa API, 7,5 persen. [[t2]]Kedelai, gandum, dan tepung terigu yang diimpor importir ber-API dikenai 0,5 persen. Emas batangan 0,25 persen. [[t3]]Barang tertentu yang tercantum dalam lampiran PMK 51 dikenai 10 persen atau 7,5 persen, sesuai lampirannya. [[t4]]Dan barang yang tidak dikuasai dikenai 7,5 persen dari harga jual lelang.",
+  "urutan": "Supaya tidak salah pilih, periksa dengan urutan ini. [[d1]]Pertama, apakah barangnya tercantum di lampiran PMK 51? Kalau ya, pakai tarif lampiran. [[d2]]Kalau tidak, apakah barangnya kedelai, gandum, terigu, atau emas batangan? Kalau ya, pakai tarif khusus. [[d3]]Kalau tidak juga, baru lihat status API importir: 2,5 persen kalau punya API, 7,5 persen kalau tidak.",
+  "q1": "Sekarang, mari kita cek pemahaman kamu. Coba pilih tarif yang tepat untuk setiap importir ini, ya.",
+  "hitung": "Sekarang kita hitung PPh Pasal 22 Impor untuk Kasus 1. [[cek]]Cek dulu: kain kapas pos 52 tidak tercantum dalam daftar tarif 10 persen di lampiran PMK 51, dan importirnya memiliki API-U. Jadi tarifnya 2,5 persen. [[ni]]Nilai impornya tetap 1,528 miliar rupiah. [[res]]PPh Pasal 22 Impor sama dengan 2,5 persen dikali nilai impor, hasilnya 38.205.750 rupiah.",
+  "alur": "Lalu, ke mana uang ini mengalir? [[f1]]Importir mengajukan PIB, [[f2]]lalu membayar PDRI bersama Bea Masuk. [[f3]]Dananya masuk ke kas negara. [[f4]]DJBC melaporkan hasil pemungutannya, [[f5]]dan importir mengkreditkan PPh Pasal 22 itu dalam SPT Tahunan.",
+  "kas": "Lalu, apa bedanya punya API atau tidak? [[api]]Dengan API, PPh Pasal 22 Impor Kasus 1 sebesar 38,2 juta rupiah. [[nonapi]]Tanpa API, tarifnya 7,5 persen, jadi 114,6 juta rupiah. [[kredit]]Keduanya tetap bisa dikreditkan dalam SPT Tahunan. Jadi, dampak tarif yang lebih tinggi terutama pada arus kas: lebih banyak uang tertahan di muka.",
+  "q2": "Sekarang, kita cek pemahaman lagi, ya. Apa sifat PPh Pasal 22 Impor?",
+  "jawab": "Jadi, apa jawaban untuk staf importir tadi? [[a1]]PPh Pasal 22 Impor adalah pembayaran di muka atas PPh perusahaan tahun ini, bukan pajak tambahan. [[a2]]PPh 38,2 juta rupiah itu dikreditkan dalam SPT Tahunan PPh. [[a3]]Jadi, meskipun kainnya belum terjual, yang terasa hanyalah arus kasnya, bukan beban pajak baru.",
+  "wrap": "Jadi, ini rangkumannya. [[w1]]PPh Pasal 22 Impor adalah pembayaran di muka atas PPh importir, dan tidak bersifat final. [[w2]]Untuk memilih tarif, periksa lampiran PMK 51 lebih dulu, lalu jenis barang khusus, lalu status API. [[w3]]Tarif tanpa API lebih tinggi, tetapi tetap dapat dikreditkan, jadi dampaknya terutama pada arus kas.",
+  "final1": "Nah, sekarang kita latihan, ya. Coba kamu pilih tarif untuk setiap skenario berikut ini.",
+  "finish": "Bagus, materi kelima selesai. Berikutnya, kita bahas barang mewah dan fasilitas, lewat sepeda motor besar yang diimpor CV Roda Jaya."
+ }
+}
