@@ -1,323 +1,352 @@
+// No voice yet: the narration shows on screen as subtitles (forced cues). Timings from the draft Ardi voice stretched x1.12 for reading; every beat silent.
 window.TIMINGS = {
  "intro": {
-  "dur": 8.76,
+  "dur": 9.811,
   "marks": {
-   "sub": 2.878
+   "sub": 3.223
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Mari kita lanjutkan, ya."
    ],
    [
-    2.878,
+    3.223,
     "Pada materi ketiga ini, kita akan melihat siapa yang memungut pajak, dan dengan cara apa."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "ask": {
-  "dur": 18.456,
+  "dur": 20.671,
   "marks": {
-   "pib": 6.497,
-   "roles": 12.695,
-   "sys": 15.208
+   "pib": 7.277,
+   "roles": 14.218,
+   "sys": 17.033
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Staf PT Kain Prima Nusantara kini bertanya, siapa sebenarnya yang memungut, dan dengan cara apa?"
    ],
    [
-    6.497,
+    7.277,
     "Jawabannya bertemu dalam satu dokumen, yaitu Pemberitahuan Impor Barang, atau PIB."
    ],
    [
-    12.695,
+    14.218,
     "Di balik satu PIB itu, ada enam pihak dan tiga sistem pemungutan yang bekerja bersama."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "sistem": {
-  "dur": 36.936,
+  "dur": 41.368,
   "marks": {
-   "s1": 3.49,
-   "s2": 17.069,
-   "s3": 26.288
+   "s1": 3.909,
+   "s2": 19.117,
+   "s3": 29.443
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Kita mulai dari tiga sistem pemungutan pajak."
    ],
    [
-    3.49,
+    3.909,
     "Pertama, official assessment: petugas pajak, atau fiskus, yang menentukan besarnya pajak."
    ],
    [
-    10.716,
+    12.002,
     "Dalam Kasus 1, pejabat DJBC meneliti PIB dan dapat menetapkan kekurangan pembayaran."
    ],
    [
-    17.069,
+    19.117,
     "Kedua, self assessment: wajib pajak menentukan sendiri."
    ],
    [
-    21.913,
+    24.543,
     "Importir menghitung sendiri Bea Masuk dan PDRI dalam PIB."
    ],
    [
-    26.288,
+    29.443,
     "Ketiga, withholding: pihak ketiga yang ditunjuk undang-undang memungut pajaknya."
    ],
    [
-    31.926,
+    35.757,
     "DJBC memungut PPh Pasal 22 Impor atas penghasilan importir."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "alur": {
-  "dur": 14.568,
+  "dur": 16.316,
   "marks": {
-   "flow": 3.711,
-   "f1": 7.643,
-   "f2": 9.089,
-   "f3": 10.664
+   "flow": 4.156,
+   "f1": 8.56,
+   "f2": 10.18,
+   "f3": 11.944
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Sistem utama di Indonesia adalah self assessment."
    ],
    [
-    3.711,
+    4.156,
     "Tetapi dalam impor, ketiganya berjalan bersama."
    ],
    [
-    7.643,
+    8.56,
     "Importir menghitung, DJBC meneliti, dan DJBC juga memungut PPh Pasal 22."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "q1": {
-  "dur": 7.296,
+  "dur": 8.172,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.113,
     "Sekarang, mari kita cek pemahaman kamu."
    ],
    [
-    3.528,
+    3.951,
     "Sistem apa yang bekerja di setiap langkah ini, ya?"
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "jenis": {
-  "dur": 34.2,
+  "dur": 38.304,
   "marks": {
-   "j1": 3.49,
-   "j2": 15.964,
-   "j3": 23.529
+   "j1": 3.909,
+   "j2": 17.88,
+   "j3": 26.352
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Pajak juga dapat dibagi menurut tiga dasar."
    ],
    [
-    3.49,
+    3.909,
     "Menurut lembaga pemungutnya, ada pajak pusat, seperti PPN, PPnBM, PPh, dan Bea Meterai, dan ada pajak daerah, seperti pajak kendaraan bermotor dan pajak hotel."
    ],
    [
-    15.964,
+    17.88,
     "Menurut pihak yang menanggung, PPh adalah pajak langsung, sedangkan PPN dan PPnBM adalah pajak tidak langsung."
    ],
    [
-    23.529,
+    26.352,
     "Menurut sifatnya, PPh adalah pajak subjektif, karena memperhatikan keadaan wajib pajak, sedangkan PPN adalah pajak objektif, karena memperhatikan objeknya."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "hukum": {
-  "dur": 30.24,
+  "dur": 33.869,
   "marks": {
-   "kup": 3.516,
-   "hpp": 14.544,
-   "kep": 21.966
+   "kup": 3.938,
+   "hpp": 16.289,
+   "kep": 24.602
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Lalu, aturan mana yang menjadi pegangan?"
    ],
    [
-    3.516,
+    3.938,
     "UU KUP, UU PPh, dan UU PPN berasal dari tahun 1983, dan terakhir diubah dengan UU 6 Tahun 2023 tentang Cipta Kerja."
    ],
    [
-    14.544,
+    16.289,
     "UU Harmonisasi Peraturan Perpajakan menetapkan tarif PPN 12 persen, paling lambat 1 Januari 2025."
    ],
    [
-    21.966,
+    24.602,
     "Untuk kepabeanan, pegangannya UU 10 Tahun 1995, yang diubah dengan UU 17 Tahun 2006."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "hierarki": {
-  "dur": 17.424,
+  "dur": 19.515,
   "marks": {
-   "h1": 4.609,
-   "h2": 5.69,
-   "h3": 7.07,
-   "h4": 9.453,
-   "rule": 12.095
+   "h1": 5.162,
+   "h2": 6.373,
+   "h3": 7.918,
+   "h4": 10.587,
+   "rule": 13.546
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Dalam pekerjaan, Anda akan menemui peraturan dengan urutan ini."
    ],
    [
-    4.609,
+    5.162,
     "Undang-undang, Peraturan Pemerintah, Peraturan Menteri Keuangan atau PMK, lalu Peraturan Direktur Jenderal."
    ],
    [
-    12.095,
+    13.546,
     "Ingat, peraturan yang lebih rendah tidak boleh bertentangan dengan peraturan yang lebih tinggi."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "peran": {
-  "dur": 33.36,
+  "dur": 37.363,
   "marks": {
-   "r1": 3.203,
-   "r2": 8.58,
-   "r3": 12.839,
-   "r4": 18.97,
-   "r5": 22.785,
-   "r6": 29.101
+   "r1": 3.587,
+   "r2": 9.61,
+   "r3": 14.38,
+   "r4": 21.246,
+   "r5": 25.519,
+   "r6": 32.593
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Sekarang, siapa melakukan apa?"
    ],
    [
-    3.203,
+    3.587,
     "Importir menghitung dan membayar Bea Masuk dan PDRI, serta mengisi PIB."
    ],
    [
-    8.58,
+    9.61,
     "PPJK mengurus kewajiban kepabeanan atas kuasa importir."
    ],
    [
-    12.839,
+    14.38,
     "DJBC meneliti PIB, memungut PDRI, dan menetapkan kekurangan pembayaran."
    ],
    [
-    18.97,
+    21.246,
     "Bank persepsi atau bank devisa menerima pembayarannya."
    ],
    [
-    22.785,
+    25.519,
     "DJP mengadministrasikan pengkreditan PPN dan PPh Pasal 22 dalam SPT importir."
    ],
    [
-    29.101,
+    32.593,
     "Dan konsumen akhir menanggung PPN di ujung rantai penjualan."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "identitas": {
-  "dur": 18.6,
+  "dur": 20.832,
   "marks": {
-   "npwp": 4.727,
-   "api": 6.185,
-   "pkp": 9.297,
-   "core": 13.151
+   "npwp": 5.294,
+   "api": 6.927,
+   "pkp": 10.413,
+   "core": 14.729
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Saat melayani, Anda akan sering memeriksa identitas importir."
    ],
    [
-    4.727,
+    5.294,
     "NPWP atau NIK, Angka Pengenal Importir, API-U atau API-P, dan status Pengusaha Kena Pajak, atau PKP."
    ],
    [
-    13.151,
+    14.729,
     "Data ini terhubung dengan Coretax, sistem administrasi perpajakan DJP."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "q2": {
-  "dur": 6.96,
+  "dur": 7.795,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.113,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    3.996,
+    4.476,
     "Siapa yang menjalankan setiap peran ini?"
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "wrap": {
-  "dur": 23.376,
+  "dur": 26.181,
   "marks": {
-   "w1": 3.099,
-   "w2": 9.387,
-   "w3": 15.664
+   "w1": 3.471,
+   "w2": 10.513,
+   "w3": 17.544
   },
   "cues": [
    [
-    0.101,
+    0.113,
     "Jadi, ini rangkumannya."
    ],
    [
-    3.099,
+    3.471,
     "Dalam impor, self assessment, official assessment, dan withholding berjalan bersama."
    ],
    [
-    9.387,
+    10.513,
     "DJBC memungut PDRI di pelabuhan, sedangkan DJP mengadministrasikan pengkreditannya."
    ],
    [
-    15.664,
+    17.544,
     "Dan sebelum melayani, periksa dulu identitas importir: NPWP, API, dan status PKP."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "final1": {
-  "dur": 6.552,
+  "dur": 7.338,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.112,
     "Nah, sekarang kita latihan, ya."
    ],
    [
-    3.645,
+    4.082,
     "Coba kamu jawab latihan berikut ini."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  },
  "finish": {
-  "dur": 10.44,
+  "dur": 11.693,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.113,
     "Bagus, materi ketiga selesai."
    ],
    [
-    3.372,
+    3.777,
     "Berikutnya, kita bahas PPN Impor, dan mengapa PPN yang sudah dibayar importir tidak hilang begitu saja."
    ]
-  ]
+  ],
+  "silent": true,
+  "forced": true
  }
 };
