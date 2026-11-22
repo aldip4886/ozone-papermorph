@@ -1,396 +1,425 @@
+// Voice: rekaman Google AI Studio dari John (2026-11-22). Marks dan cues diselaraskan dari transkrip Whisper per kata.
 window.TIMINGS = {
  "intro": {
-  "dur": 9.336,
+  "dur": 8.45,
   "marks": {
-   "sub": 2.878
+   "sub": 1.56
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Mari kita lanjutkan, ya."
    ],
    [
-    2.878,
-    "Pada materi kedua ini, kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang."
+    1.51,
+    "Pada materi kedua ini, kita akan membahas mengapa negara boleh memungut pajak,"
+   ],
+   [
+    6.37,
+    "dari lima sudut pandang."
    ]
   ]
  },
  "ask": {
-  "dur": 24.288,
+  "dur": 22.29,
   "marks": {
-   "ask": 9.309,
-   "lens": 14.635,
-   "l1": 17.826,
-   "l2": 18.672,
-   "l3": 19.596,
-   "l4": 20.846,
-   "l5": 22.109
+   "ask": 8.9,
+   "lens": 12.8,
+   "l1": 16.02,
+   "l2": 16.96,
+   "l3": 17.9,
+   "l4": 19.22,
+   "l5": 20.68
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Di materi pertama, staf PT Kain Prima Nusantara bertanya dari mana angka tagihannya."
    ],
    [
-    5.871,
+    6.09,
     "Kali ini, pertanyaannya lebih mendasar."
    ],
    [
-    9.309,
+    8.85,
     "Kenapa kami harus bayar?"
    ],
    [
-    11.614,
+    10.25,
     "Kami kan tidak mendapat imbalan langsung."
    ],
    [
-    14.635,
-    "Untuk menjawabnya, kita pakai lima sudut pandang: hukum, fungsi, teori pembenaran, asas pemungutan, dan pembeda pungutan."
+    12.75,
+    "Untuk menjawabnya, kita pakai lima sudut pandang:"
+   ],
+   [
+    15.97,
+    "hukum, fungsi, teori pembenaran, asas pemungutan, dan pembeda pungutan."
    ]
   ]
  },
  "hukum": {
-  "dur": 21.456,
+  "dur": 20.69,
   "marks": {
-   "uud": 2.969,
-   "dpr": 12.512,
-   "force": 17.148
+   "uud": 2.4,
+   "dpr": 13.06,
+   "force": 16.96
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Kita mulai dari sudut pandang hukum."
    ],
    [
-    2.969,
-    "Pasal 23A UUD 1945 menyatakan, pajak dan pungutan lain yang bersifat memaksa untuk keperluan negara diatur dengan undang-undang."
+    2.35,
+    "Pasal 23A UUD 1945 menyatakan,"
    ],
    [
-    12.512,
+    7.19,
+    "pajak dan pungutan lain yang bersifat memaksa untuk keperluan negara diatur dengan undang-undang."
+   ],
+   [
+    13.01,
     "DPR dan Presiden menetapkan kewajiban pajak dalam undang-undang."
    ],
    [
-    17.148,
+    16.91,
     "Karena itu, negara berwenang memaksa importir membayar."
    ]
   ]
  },
  "unsur": {
-  "dur": 30.72,
+  "dur": 29.05,
   "marks": {
-   "kup": 3.372,
-   "u1": 9.439,
-   "u2": 13.215,
-   "u3": 17.069,
-   "u4": 21.327,
-   "u5": 24.766
+   "kup": 3.02,
+   "u1": 10.54,
+   "u2": 13.6,
+   "u3": 17.12,
+   "u4": 20.52,
+   "u5": 23.72
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Lalu, apa sebenarnya pajak itu?"
    ],
    [
-    3.372,
+    2.97,
     "Pasal 1 angka 1 UU KUP memberi definisinya, dan dari situ kita dapat lima unsur pajak."
    ],
    [
-    9.439,
+    10.49,
     "Pertama, kontribusi wajib kepada negara."
    ],
    [
-    13.215,
+    13.55,
     "Kedua, terutang oleh orang pribadi atau badan."
    ],
    [
-    17.069,
+    17.07,
     "Ketiga, bersifat memaksa berdasarkan undang-undang."
    ],
    [
-    21.327,
+    20.47,
     "Keempat, tanpa imbalan secara langsung."
    ],
    [
-    24.766,
+    23.67,
     "Kelima, digunakan untuk keperluan negara, bagi sebesar-besarnya kemakmuran rakyat."
    ]
   ]
  },
  "q1": {
-  "dur": 6.6,
+  "dur": 6.25,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.05,
     "Sekarang, mari kita cek pemahaman kamu."
    ],
    [
-    3.54,
-    "Mana yang bukan unsur pajak, ya?"
+    2.61,
+    "Menurut kamu, mana yang bukan unsur pajak, ya?"
    ]
   ]
  },
  "fungsi": {
-  "dur": 38.064,
+  "dur": 31.81,
   "marks": {
-   "bud": 3.476,
-   "reg": 13.996,
-   "bmtp": 22.095,
-   "api": 25.69,
-   "push": 34.114
+   "bud": 3.0,
+   "reg": 12.3,
+   "bmtp": 18.36,
+   "api": 21.56,
+   "push": 28.26
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Sudut pandang kedua, fungsi pajak."
    ],
    [
-    3.476,
+    2.95,
     "Pertama, fungsi budgetair, atau penerimaan."
    ],
    [
-    7.838,
+    5.91,
     "PPN dan PPh Pasal 22 atas kain tadi masuk ke kas negara untuk membiayai belanja negara."
    ],
    [
-    13.996,
+    12.25,
     "Kedua, fungsi regulerend, atau mengatur."
    ],
    [
-    18.085,
+    15.21,
     "Pemerintah memakai pungutan untuk mengatur kegiatan ekonomi."
    ],
    [
-    22.095,
+    18.31,
     "BMTP melindungi industri tekstil dalam negeri."
    ],
    [
-    25.69,
+    21.51,
     "Tarif PPh Pasal 22 tanpa API, 7,5 persen, juga lebih tinggi daripada dengan API, 2,5 persen."
    ],
    [
-    34.114,
+    28.21,
     "Jadi, importir terdorong untuk memiliki API."
    ]
   ]
  },
  "teori": {
-  "dur": 43.464,
+  "dur": 43.05,
   "marks": {
-   "t1": 7.93,
-   "t2": 16.628,
-   "t3": 24.857,
-   "t4": 31.211,
-   "t5": 36.159
+   "t1": 7.5,
+   "t2": 16.36,
+   "t3": 23.82,
+   "t4": 30.82,
+   "t5": 35.68
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Sudut pandang ketiga, teori pembenaran."
    ],
    [
-    3.619,
+    3.01,
     "Ada lima teori yang menjelaskan mengapa negara berhak memungut pajak."
    ],
    [
-    7.93,
-    "Teori asuransi: negara melindungi rakyat, dan pajak menjadi semacam premi, misalnya untuk menjaga jalur perdagangan dan pelabuhan."
+    7.45,
+    "Teori asuransi: negara melindungi rakyat, dan pajak menjadi semacam premi,"
    ],
    [
-    16.628,
-    "Teori kepentingan: importir memakai pelabuhan, jalan, dan layanan kepabeanan, jadi ikut menanggung bebannya."
+    12.23,
+    "misalnya untuk menjaga jalur perdagangan dan pelabuhan."
    ],
    [
-    24.857,
+    16.31,
+    "Teori kepentingan: importir memakai pelabuhan, jalan,"
+   ],
+   [
+    20.05,
+    "dan layanan kepabeanan, jadi ikut menanggung bebannya."
+   ],
+   [
+    23.77,
     "Teori daya pikul: importir yang sanggup membeli kain 1 miliar rupiah dianggap mampu memikul pajaknya."
    ],
    [
-    31.211,
+    30.77,
     "Teori bakti: membayar pajak adalah wujud bakti warga kepada negara."
    ],
    [
-    36.159,
-    "Dan teori daya beli: PPN atas kain akhirnya ditanggung pembeli kemeja, lalu kembali dalam bentuk layanan publik."
+    35.63,
+    "Dan teori daya beli: PPN atas kain akhirnya ditanggung pembeli kemeja,"
+   ],
+   [
+    40.45,
+    "lalu kembali dalam bentuk layanan publik."
    ]
   ]
  },
  "asas": {
-  "dur": 41.856,
+  "dur": 39.89,
   "marks": {
-   "a1": 8.529,
-   "a2": 15.676,
-   "a3": 24.686,
-   "a4": 32.539
+   "a1": 8.02,
+   "a2": 15.2,
+   "a3": 24.28,
+   "a4": 31.34
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Sudut pandang keempat, asas pemungutan."
    ],
    [
-    3.581,
+    3.39,
     "Adam Smith, dalam The Wealth of Nations, mengajukan empat asas."
    ],
    [
-    8.529,
-    "Equality: pajak adil sesuai kemampuan, misalnya tarif yang sama untuk importir dengan kondisi yang sama."
+    7.97,
+    "Equality: pajak adil sesuai kemampuan,"
    ],
    [
-    15.676,
+    10.83,
+    "misalnya tarif yang sama untuk importir dengan kondisi yang sama."
+   ],
+   [
+    15.15,
     "Certainty: pajak harus pasti."
    ],
    [
-    18.931,
+    17.87,
     "Tarif PPh Pasal 22 tercantum dalam PMK 51 Tahun 2025."
    ],
    [
-    24.686,
+    24.23,
     "Convenience: pajak dipungut pada saat yang paling memudahkan."
    ],
    [
-    29.14,
+    27.95,
     "PDRI dibayar bersamaan dengan Bea Masuk."
    ],
    [
-    32.539,
+    31.29,
     "Economy: biaya pemungutan harus lebih kecil daripada penerimaan."
    ],
    [
-    37.33,
+    35.33,
     "DJBC memungut PDRI dalam satu dokumen dan satu pembayaran."
    ]
   ]
  },
  "wilayah": {
-  "dur": 23.352,
+  "dur": 21.13,
   "marks": {
-   "dom": 4.883,
-   "src": 11.615,
-   "nat": 17.956
+   "dom": 4.44,
+   "src": 10.34,
+   "nat": 16.18
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Ada juga asas yang mengaitkan pajak dengan wilayah dan kewarganegaraan."
    ],
    [
-    4.883,
+    4.39,
     "Asas domisili: negara memajaki penduduknya atas seluruh penghasilan, dari dalam maupun luar negeri."
    ],
    [
-    11.615,
+    10.29,
     "Asas sumber: negara memajaki penghasilan yang bersumber di wilayahnya, siapa pun penerimanya."
    ],
    [
-    17.956,
+    16.13,
     "Dan asas kebangsaan, yang mengaitkan pengenaan pajak dengan kewarganegaraan."
    ]
   ]
  },
  "pembeda": {
-  "dur": 36.384,
+  "dur": 30.17,
   "marks": {
-   "pajak": 6.784,
-   "retri": 13.125,
-   "pnbp": 19.87,
-   "bm": 25.234,
-   "cukai": 31.172
+   "pajak": 4.92,
+   "retri": 9.94,
+   "pnbp": 16.02,
+   "bm": 20.82,
+   "cukai": 25.32
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Sudut pandang kelima, pembeda pungutan."
    ],
    [
-    3.606,
+    2.63,
     "Tidak semua pungutan negara adalah pajak."
    ],
    [
-    6.784,
+    4.87,
     "Pajak, seperti PPN dan PPh, tidak memberi imbalan langsung dan berdasar undang-undang."
    ],
    [
-    13.125,
+    9.89,
     "Retribusi memberi imbalan langsung atas jasa, berdasar peraturan daerah, misalnya retribusi parkir."
    ],
    [
-    19.87,
+    15.97,
     "PNBP juga memberi imbalan langsung atas layanan, misalnya biaya paspor."
    ],
    [
-    25.234,
+    20.77,
     "Bea Masuk sama seperti pajak: tanpa imbalan langsung, berdasar UU Kepabeanan."
    ],
    [
-    31.172,
+    25.27,
     "Cukai juga pungutan berdasar undang-undang, dan dibahas di modul tersendiri."
    ]
   ]
  },
  "q2": {
-  "dur": 6.696,
+  "dur": 4.85,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.05,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    4.022,
+    2.35,
     "Kelompokkan setiap pungutan ini."
    ]
   ]
  },
  "wrap": {
-  "dur": 20.184,
+  "dur": 19.45,
   "marks": {
-   "w1": 3.085,
-   "w2": 10.051,
-   "w3": 13.606
+   "w1": 2.4,
+   "w2": 9.12,
+   "w3": 12.42
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Jadi, ini rangkumannya."
    ],
    [
-    3.085,
+    2.35,
     "Pasal 23A UUD 1945 dan UU KUP menjadi dasar hukum pemungutan pajak."
    ],
    [
-    10.051,
+    9.07,
     "Pajak memiliki fungsi budgetair dan regulerend."
    ],
    [
-    13.606,
+    12.37,
     "Teori pembenaran dan asas pemungutan membantu Anda menjelaskan kepada pengguna jasa mengapa suatu pungutan adil."
    ]
   ]
  },
  "final1": {
-  "dur": 6.552,
+  "dur": 4.81,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Nah, sekarang kita latihan, ya."
    ],
    [
-    3.645,
+    2.33,
     "Coba kamu jawab latihan berikut ini."
    ]
   ]
  },
  "finish": {
-  "dur": 9.432,
+  "dur": 7.93,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.05,
     "Bagus, materi kedua selesai."
    ],
    [
-    3.307,
+    2.53,
     "Berikutnya, kita bahas siapa saja yang terlibat, dan bagaimana sistem pemungutan pajaknya."
    ]
   ]
