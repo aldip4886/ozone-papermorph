@@ -3,7 +3,7 @@
  "rate": "-4%",
  "note": "Draf suara Ardi untuk storyboard; diganti rekaman Google AI Studio dari John setelah disetujui.",
  "beats": {
-  "intro": "Materi kedua. [[sub]]Kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang.",
+  "intro": "Mari kita lanjutkan, ya. [[sub]]Pada materi kedua ini, kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang.",
   "ask": "Di materi pertama, staf PT Kain Prima Nusantara bertanya dari mana angka tagihannya. Kali ini, pertanyaannya lebih mendasar. [[ask]]Kenapa kami harus bayar? Kami kan tidak mendapat imbalan langsung. [[lens]]Untuk menjawabnya, kita pakai lima sudut pandang: [[l1]]hukum, [[l2]]fungsi, [[l3]]teori pembenaran, [[l4]]asas pemungutan, [[l5]]dan pembeda pungutan.",
   "hukum": "Kita mulai dari sudut pandang hukum. [[uud]]Pasal 23A UUD 1945 menyatakan, pajak dan pungutan lain yang bersifat memaksa untuk keperluan negara diatur dengan undang-undang. [[dpr]]DPR dan Presiden menetapkan kewajiban pajak dalam undang-undang. [[force]]Karena itu, negara berwenang memaksa importir membayar.",
   "unsur": "Lalu, apa sebenarnya pajak itu? [[kup]]Pasal 1 angka 1 UU KUP memberi definisinya, dan dari situ kita dapat lima unsur pajak. [[u1]]Pertama, kontribusi wajib kepada negara. [[u2]]Kedua, terutang oleh orang pribadi atau badan. [[u3]]Ketiga, bersifat memaksa berdasarkan undang-undang. [[u4]]Keempat, tanpa imbalan secara langsung. [[u5]]Kelima, digunakan untuk keperluan negara, bagi sebesar-besarnya kemakmuran rakyat.",
@@ -14,7 +14,6 @@
   "wilayah": "Ada juga asas yang mengaitkan pajak dengan wilayah dan kewarganegaraan. [[dom]]Asas domisili: negara memajaki penduduknya atas seluruh penghasilan, dari dalam maupun luar negeri. [[src]]Asas sumber: negara memajaki penghasilan yang bersumber di wilayahnya, siapa pun penerimanya. [[nat]]Dan asas kebangsaan, yang mengaitkan pengenaan pajak dengan kewarganegaraan.",
   "pembeda": "Sudut pandang kelima, pembeda pungutan. Tidak semua pungutan negara adalah pajak. [[pajak]]Pajak, seperti PPN dan PPh, tidak memberi imbalan langsung dan berdasar undang-undang. [[retri]]Retribusi memberi imbalan langsung atas jasa, berdasar peraturan daerah, misalnya retribusi parkir. [[pnbp]]PNBP juga memberi imbalan langsung atas layanan, misalnya biaya paspor. [[bm]]Bea Masuk sama seperti pajak: tanpa imbalan langsung, berdasar UU Kepabeanan. [[cukai]]Cukai juga pungutan berdasar undang-undang, dan dibahas di modul tersendiri.",
   "q2": "Sekarang, kita cek pemahaman lagi, ya. Kelompokkan setiap pungutan ini.",
-  "debat": "Coba bayangkan debat lima menit di kelas. [[a]]Kubu A mendukung BMTP dan PPN atas kain impor. [[b]]Kubu B menolaknya. [[rule]]Setiap kubu wajib memakai minimal satu sudut pandang dari materi ini. [[you]]Kamu ada di kubu mana, dan sudut pandang apa yang kamu pakai?",
   "wrap": "Jadi, ini rangkumannya. [[w1]]Pasal 23A UUD 1945 dan UU KUP menjadi dasar hukum pemungutan pajak. [[w2]]Pajak memiliki fungsi budgetair dan regulerend. [[w3]]Teori pembenaran dan asas pemungutan membantu Anda menjelaskan kepada pengguna jasa mengapa suatu pungutan adil.",
   "final1": "Nah, sekarang kita latihan, ya. Coba kamu jawab latihan berikut ini.",
   "finish": "Bagus, materi kedua selesai. Berikutnya, kita bahas siapa saja yang terlibat, dan bagaimana sistem pemungutan pajaknya."

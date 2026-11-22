@@ -1,76 +1,100 @@
 {
  "intro": {
-  "key": "6280dd30ea7280fa1b4551b8227e27f103a36a24",
-  "dur": 7.176,
+  "key": "110d21aaa34418e05f2372794c0bfe71b6363d16",
+  "dur": 9.336,
   "words": [
    [
-    0.1,
-    "Materi"
+    0.100541,
+    "Mari"
    ],
    [
-    0.607833,
+    0.4,
+    "kita"
+   ],
+   [
+    0.595333,
+    "lanjutkan"
+   ],
+   [
+    1.519791,
+    "ya"
+   ],
+   [
+    2.877625,
+    "Pada"
+   ],
+   [
+    3.085958,
+    "materi"
+   ],
+   [
+    3.372416,
     "kedua"
    ],
    [
-    2.122416,
-    "Kita"
+    3.619791,
+    "ini"
    ],
    [
-    2.356791,
+    4.401041,
+    "kita"
+   ],
+   [
+    4.609375,
     "akan"
    ],
    [
-    2.552083,
+    4.791666,
     "membahas"
    ],
    [
-    2.981791,
+    5.182291,
     "mengapa"
    ],
    [
-    3.26825,
+    5.442708,
     "negara"
    ],
    [
-    3.567708,
+    5.742208,
     "boleh"
    ],
    [
-    3.815125,
+    5.989583,
     "memungut"
    ],
    [
-    4.140625,
+    6.302083,
     "pajak"
    ],
    [
-    4.960958,
+    7.096375,
     "dari"
    ],
    [
-    5.208333,
+    7.356791,
     "lima"
    ],
    [
-    5.429708,
+    7.578125,
     "sudut"
    ],
    [
-    5.716166,
+    7.864583,
     "pandang"
    ]
   ],
   "marks": {
-   "sub": 2.122
+   "sub": 2.878
   },
   "cues": [
    [
-    0.1,
-    "Materi kedua."
+    0.101,
+    "Mari kita lanjutkan, ya."
    ],
    [
-    2.122,
-    "Kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang."
+    2.878,
+    "Pada materi kedua ini, kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang."
    ]
   ]
  },
@@ -2407,208 +2431,6 @@
    [
     4.022,
     "Kelompokkan setiap pungutan ini."
-   ]
-  ]
- },
- "debat": {
-  "key": "3eac6adbf16e0d6a6fbe37b7a33df3ccd4927650",
-  "dur": 17.976,
-  "words": [
-   [
-    0.101041,
-    "Coba"
-   ],
-   [
-    0.413541,
-    "bayangkan"
-   ],
-   [
-    0.921375,
-    "debat"
-   ],
-   [
-    1.181791,
-    "lima"
-   ],
-   [
-    1.390125,
-    "menit"
-   ],
-   [
-    1.6375,
-    "di"
-   ],
-   [
-    1.741666,
-    "kelas"
-   ],
-   [
-    3.15,
-    "Kubu"
-   ],
-   [
-    3.436458,
-    "A"
-   ],
-   [
-    3.579708,
-    "mendukung"
-   ],
-   [
-    3.983333,
-    "BMTP"
-   ],
-   [
-    4.569291,
-    "dan"
-   ],
-   [
-    4.764583,
-    "PPN"
-   ],
-   [
-    5.220333,
-    "atas"
-   ],
-   [
-    5.49375,
-    "kain"
-   ],
-   [
-    5.702083,
-    "impor"
-   ],
-   [
-    7.146875,
-    "Kubu"
-   ],
-   [
-    7.485416,
-    "B"
-   ],
-   [
-    7.69375,
-    "menolaknya"
-   ],
-   [
-    9.360958,
-    "Setiap"
-   ],
-   [
-    9.790625,
-    "kubu"
-   ],
-   [
-    9.998958,
-    "wajib"
-   ],
-   [
-    10.363541,
-    "memakai"
-   ],
-   [
-    10.702083,
-    "minimal"
-   ],
-   [
-    11.079708,
-    "satu"
-   ],
-   [
-    11.340125,
-    "sudut"
-   ],
-   [
-    11.613541,
-    "pandang"
-   ],
-   [
-    11.978125,
-    "dari"
-   ],
-   [
-    12.134375,
-    "materi"
-   ],
-   [
-    12.420833,
-    "ini"
-   ],
-   [
-    13.735958,
-    "Kamu"
-   ],
-   [
-    14.022416,
-    "ada"
-   ],
-   [
-    14.204708,
-    "di"
-   ],
-   [
-    14.282833,
-    "kubu"
-   ],
-   [
-    14.491166,
-    "mana"
-   ],
-   [
-    15.298458,
-    "dan"
-   ],
-   [
-    15.506791,
-    "sudut"
-   ],
-   [
-    15.780208,
-    "pandang"
-   ],
-   [
-    16.066666,
-    "apa"
-   ],
-   [
-    16.235958,
-    "yang"
-   ],
-   [
-    16.366166,
-    "kamu"
-   ],
-   [
-    16.548458,
-    "pakai"
-   ]
-  ],
-  "marks": {
-   "a": 3.15,
-   "b": 7.147,
-   "rule": 9.361,
-   "you": 13.736
-  },
-  "cues": [
-   [
-    0.101,
-    "Coba bayangkan debat lima menit di kelas."
-   ],
-   [
-    3.15,
-    "Kubu A mendukung BMTP dan PPN atas kain impor."
-   ],
-   [
-    7.147,
-    "Kubu B menolaknya."
-   ],
-   [
-    9.361,
-    "Setiap kubu wajib memakai minimal satu sudut pandang dari materi ini."
-   ],
-   [
-    13.736,
-    "Kamu ada di kubu mana, dan sudut pandang apa yang kamu pakai?"
    ]
   ]
  },

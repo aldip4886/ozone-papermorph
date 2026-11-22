@@ -359,39 +359,6 @@ const BEATS = [
     ], [['l', 'Langsung', MK.blue, 'l'], ['t', 'Tidak langsung', MK.goldDark, 't']], { multi: false, text: true }),
   }], done) }],
 
-  ['debat', 'Debat lima menit', (m, D) => {
-    const p = panel(0);
-    navy(p, 17, D);
-    actionTitle(p, 'Debat lima menit: setiap argumen wajib|memakai satu sudut pandang', { tag: 'AKTIVITAS KELAS', dark: true });
-    const side = (x, t0, v, head, sub, args) => {
-      const c = G(p);
-      mcard(c, x, 240, 620, 430, { dark: true });
-      mk('rect', { x, y: 240, width: 620, height: 12, rx: 6, fill: v === 'gold' ? MK.gold : MK.sky }, c);
-      tile(c, 'users', x + 75, 320, { size: 84, v });
-      T(c, head, { x: x + 135, y: 315, size: 32, weight: 700, fill: MK.navy });
-      T(c, sub, { x: x + 135, y: 347, size: 19, weight: 500, fill: MK.dim });
-      T(c, 'CONTOH ARGUMEN', { x: x + 30, y: 410, size: 15, weight: 700, fill: MK.goldDark });
-      args.forEach(([lens, str], i) => {
-        const y = 440 + i * 110;
-        mk('rect', { x: x + 30, y, width: 560, height: 92, rx: 12, fill: '#F2F5FA' }, c);
-        pill(c, lens, x + 50, y + 26, { size: 15, anchor: 'start', bg: MK.navy, ink: '#fff' });
-        lines(c, str, x + 50, y + 64, { size: 19, weight: 600, lh: 1.2 });
-      });
-      slideUp(c, t0);
-    };
-    side(92, m('a') - .3, 'gold', 'Kubu A', 'mendukung BMTP dan PPN atas kain impor',
-      [['Fungsi regulerend', 'BMTP melindungi industri tekstil dalam negeri'], ['Asas certainty', 'Tarif BMTP tercantum dalam PMK 98 Tahun 2025']]);
-    side(888, m('b') - .3, 'sky', 'Kubu B', 'menolak BMTP dan PPN atas kain impor',
-      [['Teori daya beli', 'PPN kain akhirnya ditanggung pembeli kemeja'], ['Teori kepentingan', 'Garmen pemakai kain ikut menanggung BMTP']]);
-    const vs = G(p, { x: 800, y: 455 });
-    mk('circle', { r: 46, fill: MK.gold }, vs);
-    T(vs, 'VS', { y: 11, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
-    popIn(vs, m('b') + .6);
-    const you = pill(p, 'Kamu di kubu mana, dan sudut pandang apa yang kamu pakai?', 800, 702, { size: 20, bg: MK.gold, ink: MK.navy });
-    popIn(you, m('you'));
-    source(p, 'Bahan Ajar PDRI KB 2.6; contoh argumen untuk diskusi', m('rule'), true);
-  }],
-
   ['wrap', 'Rangkuman', (m, D) => {
     const p = panel(0);
     navy(p, 5, D);
@@ -463,7 +430,7 @@ const BEATS = [
 
 // paper and navy alternate: a slide whose ground changes opens with the gold and navy wipe
 {
-  const NAVY = new Set(['intro', 'hukum', 'asas', 'debat', 'wrap']);
+  const NAVY = new Set(['intro', 'hukum', 'asas', 'wrap']);
   BEATS.forEach((b, i) => {
     if (!i || b.lead === false) return;
     const prev = BEATS[i - 1];

@@ -1,17 +1,17 @@
 window.TIMINGS = {
  "intro": {
-  "dur": 7.176,
+  "dur": 9.336,
   "marks": {
-   "sub": 2.122
+   "sub": 2.878
   },
   "cues": [
    [
-    0.1,
-    "Materi kedua."
+    0.101,
+    "Mari kita lanjutkan, ya."
    ],
    [
-    2.122,
-    "Kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang."
+    2.878,
+    "Pada materi kedua ini, kita akan membahas mengapa negara boleh memungut pajak, dari lima sudut pandang."
    ]
   ]
  },
@@ -338,37 +338,6 @@ window.TIMINGS = {
    [
     4.022,
     "Kelompokkan setiap pungutan ini."
-   ]
-  ]
- },
- "debat": {
-  "dur": 17.976,
-  "marks": {
-   "a": 3.15,
-   "b": 7.147,
-   "rule": 9.361,
-   "you": 13.736
-  },
-  "cues": [
-   [
-    0.101,
-    "Coba bayangkan debat lima menit di kelas."
-   ],
-   [
-    3.15,
-    "Kubu A mendukung BMTP dan PPN atas kain impor."
-   ],
-   [
-    7.147,
-    "Kubu B menolaknya."
-   ],
-   [
-    9.361,
-    "Setiap kubu wajib memakai minimal satu sudut pandang dari materi ini."
-   ],
-   [
-    13.736,
-    "Kamu ada di kubu mana, dan sudut pandang apa yang kamu pakai?"
    ]
   ]
  },
