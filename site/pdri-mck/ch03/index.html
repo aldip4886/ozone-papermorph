@@ -31,19 +31,20 @@ const BEATS = [
   ['intro', 'Pihak dan sistem pemungutan', (m, D) => {
     const p = panel(0);
     navy(p, 21, D);
-    // the PIB in the middle, the six parties on a ring
-    const ring = G(p, { x: 1130, y: 470 });
-    mk('circle', { r: 250, fill: 'none', stroke: MK.sky, 'stroke-width': 3, 'stroke-opacity': .6, 'stroke-dasharray': '6 10' }, ring);
-    path(ring, 'M-270 0A270 270 0 0 1 0 -270', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
-    path(ring, 'M270 0A270 270 0 0 1 0 270', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
-    clockRun(t => ring.setAttribute('transform', `translate(1130 470) rotate(${t * 6})`), D, { tail: true });
-    const mid = G(p, { x: 1130, y: 470 });
-    mk('circle', { r: 150, fill: '#fff' }, mid);
-    tile(mid, 'doc', 0, -18, { size: 150, v: 'gold' });
-    T(mid, 'PIB', { y: 92, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
-    popIn(mid, .3);
+    // the cover photo in a circle, framed like Bab 1 (design.md 7); the six parties on a ring around it
+    const ph = G(p, { x: 1130, y: 470 });
+    const ring = G(ph);
+    mk('circle', { r: 262, fill: 'none', stroke: MK.sky, 'stroke-width': 4, 'stroke-opacity': .8 }, ring);
+    path(ring, 'M-285 0A285 285 0 0 1 0 -285', { stroke: MK.gold, 'stroke-width': 16, 'stroke-linecap': 'round', fill: 'none' });
+    path(ring, 'M285 0A285 285 0 0 1 0 285', { stroke: MK.gold, 'stroke-width': 16, 'stroke-linecap': 'round', fill: 'none' });
+    clockRun(t => ring.setAttribute('transform', `rotate(${t * 6})`), D, { tail: true });
+    mk('circle', { r: 240, fill: '#fff' }, ph);
+    const photo = G(ph); photo.setAttribute('clip-path', 'url(#mkPhoto)');
+    const im = mk('image', { href: IMG + 'kapal.jpg', x: -420, y: -236, width: 840, height: 472, preserveAspectRatio: 'xMidYMid slice' }, photo);
+    prog(q => im.setAttribute('transform', `scale(${1 + .06 * q})`), 0, D - .2, lin);
+    popIn(ph, .3);
     ROLE.forEach(([gl, v, n], k) => {
-      const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 250 * Math.cos(a), y = 470 + 250 * Math.sin(a);
+      const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 270 * Math.cos(a), y = 470 + 270 * Math.sin(a);
       const g = G(p);
       tile(g, gl, x, y, { size: 84, v, floor: false });
       pill(g, n, x, y + 60, { size: 16, bg: '#fff', ink: MK.navy });
