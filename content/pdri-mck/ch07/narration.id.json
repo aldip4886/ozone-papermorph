@@ -1,0 +1,22 @@
+{
+ "voice": "id-ID-ArdiNeural",
+ "rate": "-4%",
+ "note": "Draf suara Ardi untuk storyboard; diganti rekaman Google AI Studio dari John setelah disetujui.",
+ "beats": {
+  "intro": "Mari kita lanjutkan, ya, sobat. [[sub]]Pada materi ketujuh ini, kita membahas barang kiriman: paket belanja daring yang datang lewat jasa titipan atau pos.",
+  "ask": "Kali ini kita pakai Kasus 3. [[kasus]]Dita, mahasiswi di Bekasi, menerima dua paket lewat Perusahaan Jasa Titipan: earbuds dengan nilai FOB 30 dolar, dan sepatu sneakers dengan nilai FOB 80 dolar. [[q]]Lalu Dita bertanya, saya beli sepatu sekitar 1,7 juta rupiah, mengapa tagihannya hampir 780 ribu?",
+  "hukum": "Barang kiriman punya aturan sendiri. [[pmk]]Dasarnya PMK 96 Tahun 2023, yang sudah beberapa kali diubah, terakhir dengan PMK 4 Tahun 2025. [[ubah]]Perubahan terakhir itu antara lain melonggarkan ketentuan untuk barang kiriman jemaah haji, serta hadiah perlombaan atau penghargaan internasional.",
+  "ambang": "Pungutannya ditentukan oleh nilai FOB per kiriman. [[l1]]Sampai 3 dolar, Bea Masuk dibebaskan dan PPh dikecualikan. Yang dibayar hanya PPN, dengan beban efektif 11 persen. [[l2]]Di atas 3 dolar sampai 1.500 dolar, Bea Masuknya 7,5 persen, PPh tetap dikecualikan, dan PPN-nya sama. [[l3]]Di atas 1.500 dolar, berlaku tarif umum, seperti impor biasa.",
+  "komoditas": "Tapi ada pengecualian. [[k8]]Delapan kelompok komoditas dikenai tarif yang berbeda dari 7,5 persen, antara lain tas, produk tekstil, alas kaki, sepeda, jam tangan, kosmetik, besi dan baja, serta buku. [[shoe]]Untuk latihan ini, alas kaki kita hitung dengan Bea Masuk 25 persen dan PPh 5 persen. Angka ini perlu dicocokkan dengan tabel resmi DJBC.",
+  "q1": "Sekarang, mari kita cek pemahaman kamu. Ketentuan mana yang berlaku untuk setiap paket ini, ya?",
+  "beda": "Apa bedanya dengan impor umum? [[d1]]Dokumennya bukan PIB, melainkan Consignment Note, atau PIBK. [[d2]]Yang mengurus adalah Perusahaan Jasa Titipan atau penyelenggara pos, bukan importir atau PPJK. [[d3]]Bea Masuknya tarif tunggal 7,5 persen, bukan tarif BTKI. [[d4]]Dan PPh Pasal 22 dikecualikan sampai 1.500 dolar, kecuali untuk komoditas tertentu.",
+  "paketA": "Sekarang kita hitung paket A, earbuds. [[np]]Nilai pabeannya CIF 40 dolar dikali kurs 18.155 rupiah, yaitu 726.200 rupiah. [[bm]]Bea Masuk 7,5 persen, 54.465 rupiah. [[ppn]]Nilai impornya 780.665 rupiah, dan PPN dengan beban efektif 11 persen sebesar 85.873 rupiah. PPh dikecualikan. [[tot]]Total pungutannya 140.338 rupiah.",
+  "paketB": "Lalu paket B, sepatu sneakers. [[np]]Nilai pabeannya CIF 95 dolar, yaitu 1.724.725 rupiah. [[bm]]Karena alas kaki, Bea Masuknya 25 persen, 431.181 rupiah. [[ppn]]Nilai impornya 2.155.906 rupiah, dan PPN-nya 237.150 rupiah. [[pph]]Ditambah PPh 5 persen, 107.795 rupiah. [[tot]]Total pungutannya 776.126 rupiah. Angka ini belum dibulatkan; pembulatannya mengikuti ketentuan pengisian dokumen.",
+  "banding": "Bandingkan keduanya. [[a]]Pungutan earbuds sekitar 19 persen dari nilai pabeannya. [[b]]Pungutan sepatu sekitar 45 persen. [[why]]Bedanya ada pada tarif khusus alas kaki, yaitu Bea Masuk 25 persen ditambah PPh, untuk melindungi industri alas kaki dalam negeri.",
+  "q2": "Sekarang, kita cek pemahaman lagi, ya. Pungutan apa saja yang dikenakan pada paket sepatu Dita?",
+  "jawab": "Jadi, apa jawaban untuk Dita? [[a1]]Sepatu termasuk komoditas dengan tarif khusus, untuk melindungi industri alas kaki dalam negeri. [[a2]]Bea Masuknya 25 persen dari nilai pabean, ditambah PPN dan PPh. [[a3]]Pungutan earbuds lebih kecil, karena earbuds memakai tarif umum barang kiriman 7,5 persen, tanpa PPh.",
+  "wrap": "Jadi, ini rangkumannya. [[w1]]Barang kiriman memakai ketentuan khusus, berdasarkan nilai FOB dan jenis komoditas. [[w2]]Untuk FOB di atas 3 sampai 1.500 dolar, Bea Masuknya 7,5 persen dan PPh dikecualikan, kecuali komoditas tertentu. [[w3]]PPN tetap dipungut, dengan beban efektif 11 persen.",
+  "final1": "Nah, sekarang kita latihan, ya. Coba kamu jawab latihan berikut ini.",
+  "finish": "Bagus, materi ketujuh selesai. Di materi terakhir, kita kembali ke staf PT Kain Prima Nusantara, dan menyusun jawaban lengkap untuk tagihannya."
+ }
+}
