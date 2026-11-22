@@ -1,425 +1,415 @@
-// No voice: the narration script is shown on screen as subtitles (forced cues). Timings from the voiced version stretched x1.12 for reading; every beat silent.
+// Voice: rekaman Google AI Studio dari John (2026-11-22). Marks dan cues diselaraskan dari transkrip Whisper per kata.
 window.TIMINGS = {
  "intro": {
-  "dur": 10.134,
+  "dur": 6.85,
   "marks": {
-   "sub": 4.958
+   "sub": 2.02
   },
   "cues": [
    [
-    0.112,
-    "Bab satu."
-   ],
-   [
-    2.171,
+    0.05,
     "Hari pertama di pelabuhan."
    ],
    [
-    4.958,
-    "Kita mengenal komponen pungutan impor, lalu menghitung nilai impor."
+    1.97,
+    "Kita akan mengenal komponen pungutan impor, lalu menghitung nilai impor."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "port": {
-  "dur": 29.219,
+  "dur": 24.45,
   "marks": {
-   "ship": 4.024,
-   "price": 9.769,
-   "bill": 14.217,
-   "ask": 19.439
+   "ship": 3.2,
+   "price": 8.64,
+   "bill": 12.58,
+   "ask": 16.94
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Hari ini Anda mulai bertugas di Tanjung Priok."
    ],
    [
-    4.024,
+    3.15,
     "Sebuah kapal membawa kontainer berisi kain kapas milik PT Kain Prima Nusantara."
    ],
    [
-    9.769,
-    "Harga kainnya sekitar satu koma nol sembilan miliar rupiah."
+    8.59,
+    "Harga kainnya sekitar 1,09 miliar rupiah,"
    ],
    [
-    14.217,
-    "Tetapi tagihan pungutannya sekitar enam ratus empat puluh lima juta rupiah."
+    12.53,
+    "tetapi tagihan pungutannya sekitar 645 juta rupiah."
    ],
    [
-    19.439,
+    16.89,
     "Staf perusahaan datang ke meja layanan dan bertanya, hitungan ini dari mana?"
    ],
    [
-    25.053,
+    21.43,
     "Di bab ini, kita mulai menyusun jawabannya."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "groups": {
-  "dur": 32.014,
+  "dur": 30.37,
   "marks": {
-   "cust": 5.906,
-   "bm": 8.662,
-   "bmt": 9.713,
-   "pdri": 23.435
+   "cust": 5.18,
+   "bm": 8.36,
+   "bmt": 8.88,
+   "pdri": 22.08
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Saat barang masuk ke daerah pabean, importir membayar dua kelompok pungutan."
    ],
    [
-    5.906,
-    "Kelompok pertama adalah pungutan kepabeanan: Bea Masuk, dan bea masuk tambahan, seperti bea masuk tindakan pengamanan atau BMTP, bea masuk antidumping, dan bea masuk imbalan."
+    5.13,
+    "Kelompok pertama adalah pungutan kepabeanan."
    ],
    [
-    19.103,
+    8.31,
+    "Bea Masuk dan bea masuk tambahan, seperti bea masuk tindakan pengamanan atau BMTP,"
+   ],
+   [
+    14.87,
+    "bea masuk antidumping, dan bea masuk imbalan."
+   ],
+   [
+    18.51,
     "Angka-angka ini sudah Anda pelajari di materi kepabeanan."
    ],
    [
-    23.435,
-    "Kelompok kedua adalah pajak dalam rangka impor, atau PDRI, yaitu pajak yang dipungut Bea dan Cukai pada saat impor."
+    22.03,
+    "Kelompok kedua adalah pajak dalam rangka impor atau PDRI,"
+   ],
+   [
+    26.07,
+    "yaitu pajak yang dipungut Bea dan Cukai pada saat impor."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "pdri": {
-  "dur": 33.277,
+  "dur": 28.01,
   "marks": {
-   "ppn": 3.47,
-   "ppnbm": 12.658,
-   "pph": 19.046,
-   "cukai": 26.848
+   "ppn": 2.56,
+   "ppnbm": 9.94,
+   "pph": 15.42,
+   "cukai": 22.66
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "PDRI terdiri atas tiga jenis."
    ],
    [
-    3.47,
+    2.51,
     "Pertama, PPN Impor."
    ],
    [
-    6.811,
-    "Pajak ini dikenakan atas impor barang kena pajak, oleh siapa pun yang mengimpor."
+    4.75,
+    "Pajak ini dikenakan atas impor barang kena pajak oleh siapa pun yang mengimpor."
    ],
    [
-    12.658,
+    9.89,
     "Kedua, PPnBM Impor, yang hanya dikenakan atas barang yang tergolong mewah."
    ],
    [
-    19.046,
-    "Ketiga, PPh Pasal dua puluh dua Impor, yaitu pembayaran di muka atas pajak penghasilan importir."
+    15.37,
+    "Ketiga, PPh Pasal 22 Impor, yaitu pembayaran di muka atas pajak penghasilan importir."
    ],
    [
-    26.848,
+    22.61,
     "Barang kena cukai juga dapat menimbulkan cukai, tetapi itu dibahas di modul tersendiri."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "q1": {
-  "dur": 5.08,
+  "dur": 5.09,
   "marks": {},
   "cues": [
    [
-    0.112,
-    "Cek pemahaman."
+    0.05,
+    "Sekarang mari kita cek pemahaman kamu."
    ],
    [
-    2.288,
-    "Kelompokkan setiap pungutan."
+    3.05,
+    "Kelompokkan setiap pungutan ini, ya."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "nilai": {
-  "dur": 35.025,
+  "dur": 31.09,
   "marks": {
-   "def": 5.686,
-   "np": 7.802,
-   "bm": 10.894,
-   "bmt": 12.382,
-   "not": 16.886,
-   "feed": 20.971,
-   "law": 28.437
+   "def": 4.68,
+   "np": 6.2,
+   "bm": 10.18,
+   "bmt": 11.58,
+   "not": 15.2,
+   "feed": 18.9,
+   "law": 24.38
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Lalu, dari angka apa semua pajak ini dihitung?"
    ],
    [
-    4.301,
-    "Jawabannya: nilai impor."
+    3.35,
+    "Jawabannya, nilai impor."
    ],
    [
-    7.802,
-    "Nilai impor sama dengan nilai pabean dalam rupiah, ditambah Bea Masuk, ditambah bea masuk tambahan, misalnya BMTP."
+    6.15,
+    "Nilai impor sama dengan nilai pabean dalam rupiah,"
    ],
    [
-    16.886,
+    10.13,
+    "ditambah Bea Masuk, ditambah bea masuk tambahan, misalnya BMTP."
+   ],
+   [
+    15.15,
     "PPN dan PPnBM tidak termasuk di dalamnya."
    ],
    [
-    20.971,
-    "Dari satu angka ini, PPN, PPnBM, dan PPh Pasal dua puluh dua dihitung."
+    18.85,
+    "Dari satu angka ini, PPN, PPnBM, dan PPh Pasal 22 dihitung."
    ],
    [
-    28.437,
-    "Undang-undang PPN dan PMK lima puluh satu tahun dua ribu dua puluh lima memakai dasar yang sama."
+    24.33,
+    "Undang-Undang PPN dan PMK 51 Tahun 2025 memakai dasar yang sama."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "case": {
-  "dur": 30.428,
+  "dur": 26.37,
   "marks": {
-   "qty": 3.544,
-   "cif": 7.146,
-   "kurs": 10.732,
-   "tarif": 16.084,
-   "bmtp": 25.213
+   "qty": 3.02,
+   "cif": 6.74,
+   "kurs": 10.04,
+   "tarif": 14.6,
+   "bmtp": 21.16
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Sekarang kita hitung untuk kasus kain tadi."
    ],
    [
-    3.544,
-    "Importir memasukkan seratus ribu meter kain tenunan kapas, dengan nilai CIF enam puluh ribu dolar Amerika."
+    2.97,
+    "Importir memasukkan 100 ribu meter kain tenunan kapas,"
    ],
    [
-    10.732,
-    "Kurs pajak minggu ini delapan belas ribu seratus lima puluh lima rupiah per dolar."
+    6.69,
+    "dengan nilai CIF 60 ribu dolar Amerika."
    ],
    [
-    16.084,
-    "Tarif Bea Masuknya kita anggap sepuluh persen."
+    9.99,
+    "Kurs pajak minggu ini 18.155 rupiah per dolar."
    ],
    [
-    19.862,
+    14.55,
+    "Tarif Bea Masuknya kita anggap 10 persen."
+   ],
+   [
+    17.51,
     "Angka ini masih asumsi latihan, jadi cocokkan dulu dengan BTKI."
    ],
    [
-    25.213,
-    "Kain ini juga dikenai BMTP tiga ribu tiga ratus rupiah per meter."
+    21.11,
+    "Kain ini juga dikenai BMTP 3.300 rupiah per meter."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "step1": {
-  "dur": 14.999,
+  "dur": 13.29,
   "marks": {
-   "mul": 4.417,
-   "res": 7.494,
-   "block": 11.768
+   "mul": 3.52,
+   "res": 6.08,
+   "block": 9.92
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Langkah pertama, nilai pabean dalam rupiah."
    ],
    [
-    4.417,
-    "Enam puluh ribu dolar dikali kurs."
+    3.47,
+    "60 ribu dolar dikali kurs, hasilnya 1,089 miliar rupiah."
    ],
    [
-    7.494,
-    "Hasilnya satu koma nol delapan sembilan miliar rupiah."
-   ],
-   [
-    11.768,
+    9.87,
     "Inilah balok dasar nilai impor."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "step2": {
-  "dur": 25.402,
+  "dur": 23.05,
   "marks": {
-   "bm": 3.325,
-   "bmres": 5.585,
-   "bmtp": 9.055,
-   "bmtpres": 15.969,
-   "note": 19.469
+   "bm": 2.68,
+   "bmres": 4.78,
+   "bmtp": 7.92,
+   "bmtpres": 14.52,
+   "note": 18.06
   },
   "cues": [
    [
-    0.113,
-    "Langkah kedua, Bea Masuk."
+    0.05,
+    "Langkah kedua, Bea Masuk, 10% dari nilai pabean,"
    ],
    [
-    3.325,
-    "Sepuluh persen dari nilai pabean, yaitu sekitar seratus sembilan juta rupiah."
+    4.73,
+    "yaitu sekitar 109 juta rupiah."
    ],
    [
-    9.055,
-    "Langkah ketiga, BMTP."
+    7.87,
+    "Langkah ketiga, BMTP, 100 ribu meter dikali 3.300 rupiah,"
    ],
    [
-    12.513,
-    "Seratus ribu meter dikali tiga ribu tiga ratus rupiah, hasilnya tiga ratus tiga puluh juta rupiah."
+    14.47,
+    "hasilnya 330 juta rupiah."
    ],
    [
-    19.469,
+    18.01,
     "Perhatikan, BMTP dihitung per meter, bukan dari persentase harga."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "step3": {
-  "dur": 20.187,
+  "dur": 16.81,
   "marks": {
-   "sum": 3.893,
-   "res": 9.186,
-   "base": 13.503
+   "sum": 2.72,
+   "res": 6.84,
+   "base": 10.86
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Langkah keempat, jumlahkan ketiganya."
    ],
    [
-    3.893,
+    2.67,
     "Nilai pabean, ditambah Bea Masuk, ditambah BMTP."
    ],
    [
-    9.186,
-    "Nilai impornya satu koma lima dua delapan miliar rupiah."
+    6.79,
+    "Nilai impornya 1,528 miliar rupiah."
    ],
    [
-    13.503,
-    "Angka inilah yang akan menjadi dasar PPN Impor dan PPh Pasal dua puluh dua di bab-bab berikutnya."
+    10.81,
+    "Angka inilah yang akan menjadi dasar PPN Impor dan PPh Pasal 22 di bab-bab berikutnya."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "q2": {
-  "dur": 6.021,
+  "dur": 7.37,
   "marks": {},
   "cues": [
    [
-    0.112,
-    "Cek pemahaman."
+    0.05,
+    "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    2.288,
+    3.21,
     "Seorang petugas lupa memasukkan BMTP."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "check": {
-  "dur": 27.525,
+  "dur": 19.81,
   "marks": {
-   "api": 4.286,
-   "lux": 10.732,
-   "rule": 15.677,
-   "wrong": 22.282
+   "api": 3.18,
+   "lux": 8.06,
+   "rule": 10.94,
+   "wrong": 15.34
   },
   "cues": [
    [
-    0.113,
+    0.05,
     "Karena itu, biasakan cek dulu sebelum hitung."
    ],
    [
-    4.286,
-    "Pertama, status importir: punya API atau tidak, PKP atau tidak."
+    3.13,
+    "Pertama, status importir."
    ],
    [
-    10.732,
-    "Kedua, jenis barang: tergolong mewah atau tidak."
+    4.95,
+    "Punya API atau tidak, PKP atau tidak."
    ],
    [
-    15.677,
-    "Ketiga, aturan dan kurs: masih berlaku, dan sesuai minggu berjalan."
+    8.01,
+    "Kedua, jenis barang."
    ],
    [
-    22.282,
+    9.33,
+    "Tergolong mewah atau tidak."
+   ],
+   [
+    10.89,
+    "Ketiga, aturan dan kurs."
+   ],
+   [
+    12.91,
+    "Masih berlaku dan sesuai minggu berjalan."
+   ],
+   [
+    15.29,
     "Satu kesalahan pada nilai impor akan terbawa ke semua pajak di bawahnya."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "wrap": {
-  "dur": 22.66,
+  "dur": 19.89,
   "marks": {
-   "w1": 2.158,
-   "w2": 9.625,
-   "w3": 16.669
+   "w1": 1.74,
+   "w2": 8.46,
+   "w3": 15.18
   },
   "cues": [
    [
-    0.112,
-    "Rangkuman."
+    0.05,
+    "Jadi, ini rangkumannya."
    ],
    [
-    2.158,
-    "PDRI terdiri atas PPN Impor, PPnBM Impor, dan PPh Pasal dua puluh dua Impor."
+    1.69,
+    "PDRI terdiri atas PPN Impor, PPnBM Impor, dan PPh Pasal 22 Impor."
    ],
    [
-    9.625,
-    "Bea Masuk dan bea masuk tambahan adalah pungutan kepabeanan, dan menjadi bagian dari nilai impor."
+    8.41,
+    "Bea Masuk dan bea masuk tambahan adalah pungutan kepabeanan dan menjadi bagian dari nilai impor."
    ],
    [
-    16.669,
+    15.13,
     "Semua PDRI dihitung dari nilai impor, jadi periksa angka ini lebih dahulu."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "final1": {
-  "dur": 6.075,
+  "dur": 7.17,
   "marks": {},
   "cues": [
    [
-    0.112,
-    "Latihan bab."
+    0.05,
+    "Nah, sekarang kita latihan, ya."
    ],
    [
-    2.274,
-    "Hitung nilai impor untuk pesanan yang lebih kecil."
+    2.49,
+    "Coba kamu hitung nilai impor untuk pesanan yang lebih kecil berikut ini."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  },
  "finish": {
-  "dur": 9.005,
+  "dur": 6.37,
   "marks": {},
   "cues": [
    [
-    0.112,
-    "Bagus."
+    0.05,
+    "Bagus, materi pertama selesai."
    ],
    [
-    2.01,
-    "Bab satu selesai."
-   ],
-   [
-    4.432,
-    "Berikutnya, kita bahas dasar negara memungut pajak."
+    2.23,
+    "Berikutnya, kita diskusikan mengapa negara boleh memungut pajak."
    ]
-  ],
-  "silent": true,
-  "forced": true
+  ]
  }
 };

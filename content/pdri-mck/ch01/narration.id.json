@@ -1,0 +1,20 @@
+{
+ "voice": "Rekaman Google AI Studio (John), 2026-11-22",
+ "beats": {
+  "intro": "Hari pertama di pelabuhan. [[sub]]Kita akan mengenal komponen pungutan impor, lalu menghitung nilai impor.",
+  "port": "Hari ini Anda mulai bertugas di Tanjung Priok. [[ship]]Sebuah kapal membawa kontainer berisi kain kapas milik PT Kain Prima Nusantara. [[price]]Harga kainnya sekitar 1,09 miliar rupiah, [[bill]]tetapi tagihan pungutannya sekitar 645 juta rupiah. [[ask]]Staf perusahaan datang ke meja layanan dan bertanya, hitungan ini dari mana? Di bab ini, kita mulai menyusun jawabannya.",
+  "groups": "Saat barang masuk ke daerah pabean, importir membayar dua kelompok pungutan. [[cust]]Kelompok pertama adalah pungutan kepabeanan. [[bm]]Bea Masuk [[bmt]]dan bea masuk tambahan, seperti bea masuk tindakan pengamanan atau BMTP, bea masuk antidumping, dan bea masuk imbalan. Angka-angka ini sudah Anda pelajari di materi kepabeanan. [[pdri]]Kelompok kedua adalah pajak dalam rangka impor atau PDRI, yaitu pajak yang dipungut Bea dan Cukai pada saat impor.",
+  "pdri": "PDRI terdiri atas tiga jenis. [[ppn]]Pertama, PPN Impor. Pajak ini dikenakan atas impor barang kena pajak oleh siapa pun yang mengimpor. [[ppnbm]]Kedua, PPnBM Impor, yang hanya dikenakan atas barang yang tergolong mewah. [[pph]]Ketiga, PPh Pasal 22 Impor, yaitu pembayaran di muka atas pajak penghasilan importir. [[cukai]]Barang kena cukai juga dapat menimbulkan cukai, tetapi itu dibahas di modul tersendiri.",
+  "q1": "Sekarang mari kita cek pemahaman kamu. Kelompokkan setiap pungutan ini, ya.",
+  "nilai": "Lalu, dari angka apa semua pajak ini dihitung? Jawabannya, [[def]]nilai impor. [[np]]Nilai impor sama dengan nilai pabean dalam rupiah, [[bm]]ditambah Bea Masuk, [[bmt]]ditambah bea masuk tambahan, misalnya BMTP. [[not]]PPN dan PPnBM tidak termasuk di dalamnya. [[feed]]Dari satu angka ini, PPN, PPnBM, dan PPh Pasal 22 dihitung. [[law]]Undang-Undang PPN dan PMK 51 Tahun 2025 memakai dasar yang sama.",
+  "case": "Sekarang kita hitung untuk kasus kain tadi. [[qty]]Importir memasukkan 100 ribu meter kain tenunan kapas, [[cif]]dengan nilai CIF 60 ribu dolar Amerika. [[kurs]]Kurs pajak minggu ini 18.155 rupiah per dolar. [[tarif]]Tarif Bea Masuknya kita anggap 10 persen. Angka ini masih asumsi latihan, jadi cocokkan dulu dengan BTKI. [[bmtp]]Kain ini juga dikenai BMTP 3.300 rupiah per meter.",
+  "step1": "Langkah pertama, nilai pabean dalam rupiah. [[mul]]60 ribu dolar dikali kurs, [[res]]hasilnya 1,089 miliar rupiah. [[block]]Inilah balok dasar nilai impor.",
+  "step2": "Langkah kedua, Bea Masuk, [[bm]]10% dari nilai pabean, [[bmres]]yaitu sekitar 109 juta rupiah. [[bmtp]]Langkah ketiga, BMTP, 100 ribu meter dikali 3.300 rupiah, [[bmtpres]]hasilnya 330 juta rupiah. [[note]]Perhatikan, BMTP dihitung per meter, bukan dari persentase harga.",
+  "step3": "Langkah keempat, jumlahkan ketiganya. [[sum]]Nilai pabean, ditambah Bea Masuk, ditambah BMTP. [[res]]Nilai impornya 1,528 miliar rupiah. [[base]]Angka inilah yang akan menjadi dasar PPN Impor dan PPh Pasal 22 di bab-bab berikutnya.",
+  "q2": "Sekarang, kita cek pemahaman lagi, ya. Seorang petugas lupa memasukkan BMTP.",
+  "check": "Karena itu, biasakan cek dulu sebelum hitung. [[api]]Pertama, status importir. Punya API atau tidak, PKP atau tidak. [[lux]]Kedua, jenis barang. Tergolong mewah atau tidak. [[rule]]Ketiga, aturan dan kurs. Masih berlaku dan sesuai minggu berjalan. [[wrong]]Satu kesalahan pada nilai impor akan terbawa ke semua pajak di bawahnya.",
+  "wrap": "Jadi, ini rangkumannya. [[w1]]PDRI terdiri atas PPN Impor, PPnBM Impor, dan PPh Pasal 22 Impor. [[w2]]Bea Masuk dan bea masuk tambahan adalah pungutan kepabeanan dan menjadi bagian dari nilai impor. [[w3]]Semua PDRI dihitung dari nilai impor, jadi periksa angka ini lebih dahulu.",
+  "final1": "Nah, sekarang kita latihan, ya. Coba kamu hitung nilai impor untuk pesanan yang lebih kecil berikut ini.",
+  "finish": "Bagus, materi pertama selesai. Berikutnya, kita diskusikan mengapa negara boleh memungut pajak."
+ }
+}

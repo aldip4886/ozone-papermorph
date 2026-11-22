@@ -1,8 +1,8 @@
-/* PDRI, version without voice: a McKinsey-style exhibit deck in the INSW e-learning design (design.md from the user).
+/* PDRI, McKinsey version: a McKinsey-style exhibit deck in the INSW e-learning design (design.md from the user).
    Paper slides carry the exhibits (action title = the slide's conclusion, a gold tag above it, a source line under
    the exhibit); navy aurora slides open, divide and close. Poppins throughout, gold accent, 3D-flat icon tiles,
    the Kemenkeu, DJBC and PBC logo pill top right. The narration script shows on screen as the subtitle pill
-   (timings.js marks every cue forced). Stage 1600x900 = design.md's 1920x1080 at 5/6. Loaded after engine.js. */
+   (voice: John’s Google AI Studio recording; captions follow the CC toggle). Stage 1600x900 = design.md's 1920x1080 at 5/6. Loaded after engine.js. */
 'use strict';
 
 const MK = {
