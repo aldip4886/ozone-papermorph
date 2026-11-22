@@ -1,0 +1,47 @@
+/* This book's own settings, imported by engine.css. The engine files next to this one are the same in every book
+   and are replaced when the engine is updated; this file is not.
+   Settings (uncomment to use):
+:root {
+  --math-font: "Avenir Next", Arial, sans-serif;   face for numbers and formulas (default: a serif, see engine.js)
+  --progress-key: "progress";                      localStorage key shared with the cover (default: one per book folder)
+  --page: #e9e5d8; --board: #fbfaf5; --panel: #fff; --edge: #d8d2c0;      a light board: the palette at the top of
+  --chalk: #1d1d1f; --dim: #6a6a6e; --faint: #c4bfae;                       engine.css, redefined; the stage, cards,
+  --task: #e2589b; --quiz: #1f6fc5; --good: #3f8a1d; --bad: #d9473a;        bar and COL follow (#rrggbb for the ink
+  --on-fill: #fff; --vignette: rgba(90, 70, 30, .08); color-scheme: light;  and board colours COL reads)
+  --rule: #ece8e0; --track: #e6e2d5; --track-ask: #cfdeeb;                   and the shades between them
+  --bar-edge: #eae6da; --hover: #efede6; --veil: #e9e5d8;
+}
+   Style overrides go here too. They come before the engine's rules, so make each selector more specific than the
+   engine's, e.g. ':root .card.band' for '.card.band'. */
+
+/* Pajak dalam Rangka Impor, Template Media Lite look: DJBC blue board with the template's texture, navy cards and
+   panels, yellow accent, light-blue quiz accent, Poppins for every word (bundled, SIL Open Font License, latin subset).
+   ':root:root' outranks the engine's ':root'; lib/pdri.js sets the drawing palette COL to match. */
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; font-display: block; src: url("fonts/Poppins-400.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; font-display: block; src: url("fonts/Poppins-500.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 600; font-display: block; src: url("fonts/Poppins-600.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: block; src: url("fonts/Poppins-700.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 800; font-display: block; src: url("fonts/Poppins-800.woff2") format("woff2"); }
+:root:root {
+  --page: #0a3f78; --board: #1565b5; --panel: #0b3358; --edge: #1f5b97;
+  --chalk: #ffffff; --dim: #c4daf2; --faint: #5f8fc4;
+  --task: #ffcc29; --quiz: #ffcc29; --on-fill: #0b3358; --good: #2ecc71; --bad: #ff5a7a;
+  --ui: "Poppins", "Segoe UI", Arial, sans-serif;
+  --math-font: "Poppins", "Segoe UI", Arial, sans-serif;
+  --vignette: rgba(4, 30, 60, .22); color-scheme: dark;
+  --rule: #1d4b7a; --track: #1f5b97; --track-ask: #3a7fc4;
+  --bar-edge: #123f6b; --hover: #164a7e; --veil: #072746;
+}
+/* the template's background: the blue low-poly texture with its dot screen */
+:root #stage { background: radial-gradient(75% 75% at 50% 45%, rgba(0,0,0,0) 60%, var(--vignette)), url("img/bg-tekstur.jpg") center / cover, var(--board); }
+:root .card { border-inline-start-color: var(--task); border-color: #1f5b97; border-radius: 22px; }
+:root .card .btn.go, :root .btn.go { color: #0b3358; background: var(--task); }
+:root .opt[aria-pressed="true"] { color: #0b3358; }
+:root #bar { background: #0b3358; }
+:root .cover { background: rgba(10, 47, 88, .55); }
+:root .cover-k { color: var(--task); font-weight: 700; }
+:root .cover-t, :root .fin .prompt { font-family: var(--ui); font-weight: 700; letter-spacing: 0; }
+:root body, :root button, :root input { font-family: var(--ui); }
+/* a full-screen question uses the whole stage: the logo pill steps aside while it is open */
+:root #chrome { transition: opacity .3s; }
+:root body:has(#ui > .card.screen) #chrome { opacity: 0; }

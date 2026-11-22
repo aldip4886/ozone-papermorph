@@ -55,6 +55,16 @@ const Contents = (() => {
       refsLead: '授業で引用したすべての著作です。リンクは著作の DOI または図書館の記録を新しいタブで開きます。信頼できるオンライン記録のない著作はリンクなしで載せています。',
       refsCount: '授業で引用した著作 {n} 件', refsAllLinked: '、すべて出典へのリンクつき', refsSomeLinked: '、うち {n} 件は出典へのリンクつき',
     },
+    id: {
+      open: 'Buka buku', toCover: 'Kembali ke sampul', resume: 'Lanjutkan · Bab {n}', unit: 'Bagian {n}', minutes: '{n} menit',
+      meta: '{chapters}{samples}, {units}, dengan suara', metaChapters: '{n} bab', metaUnits: '{n} bagian',
+      metaSamples: ' + {n} contoh', samples: 'Bab contoh, gaya lain',
+      chapterCount: '{n} bab', finished: '{done} dari {n} selesai',
+      doneMark: '✓ Selesai · ', lastMark: ' · Terakhir dibuka',
+      references: 'Referensi', viewAll: 'Lihat semua →', backToContents: '← Daftar isi',
+      refsLead: 'Semua sumber yang dikutip dalam pelajaran. Setiap tautan membuka sumbernya di tab baru; sumber tanpa catatan daring yang andal dicantumkan tanpa tautan.',
+      refsCount: '{n} sumber dikutip dalam pelajaran', refsAllLinked: ', semuanya bertautan ke sumber', refsSomeLinked: ', {n} bertautan ke sumber',
+    },
     // Arabic plurals: one 1, two 2, few 3–10, many 11–99, other 100+. Arrows point the way the page reads (right to left).
     ar: {
       open: 'افتح الكتاب', toCover: 'العودة إلى الغلاف', resume: 'تابع · الفصل {n}', unit: 'الوحدة {n}',

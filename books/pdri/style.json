@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "tier": "custom",
+  "book": {
+    "title": "Pajak dalam Rangka Impor",
+    "subtitle": "Memahami dan menghitung PDRI untuk pegawai baru DJBC",
+    "slug": "pdri",
+    "language": "id",
+    "readers": "pegawai baru DJBC yang akan bertugas di kantor pelayanan dan pelabuhan; sudah belajar kepabeanan dasar, Bea Masuk, nilai pabean dan kurs",
+    "pilot": "ch01",
+    "source": "Bahan Ajar Memahami dan Menghitung Pajak dalam Rangka Impor (PDRI), versi 1, 21 November 2026 (Markdown dari pengguna, books/pdri/source.md, privat)",
+    "use": "e-learning internal DJBC; paket SCORM ditawarkan bila masuk LMS"
+  },
+  "words": [
+    "Pilot: KB 1 (gunakan KB 1). Gaya campuran (diagram hitung yang bergerak dengan adegan sederhana). E-learning internal DJBC. Suara Ardi.",
+    "1 gunakan penjelasan bergaya isometric tanpa tokoh.",
+    "Disetujui sesuai usulan: warna tetap per pungutan (nilai pabean biru, Bea Masuk dan BMTP oranye, PPN hijau, PPnBM ungu, PPh 22 kuning emas), latar biru tua, cap 'asumsi latihan' pada angka (cek); lima komponen bersama (balok nilai impor, kalkulator langkah hitung, meja layanan, lembar PIB, kontainer dan gulungan kain), tanpa tokoh; model rekomendasi; Rupiah gaya Indonesia di layar, narasi membaca angka yang dibulatkan.",
+    "Setelah melihat storyboard isometrik: 'Ganti gaya visual.' Pilihan: 'nomor 3' = infografis datar 2D (ikon dan bentuk sederhana, warna cerah, seperti slide presentasi modern).",
+    "Bangun ulang bab menggunakan Template Media Lite ini sebagai template rujukan utama visual. Gunakan juga font Poppins untuk seluruh tampilan. (2026-11-21, dengan Template_Media_Lite.pdf, 36 halaman)"
+  ],
+  "look": {
+    "style": "Template Media Lite (DJBC): blue low-poly textured board, navy bands and cards, light-grey info cards, yellow accent; slide title in white beside a yellow tab top left; white pill with the Kemenkeu, Bea Cukai and PBC logos top right on every beat; chapter divider = blue-tinted port photo, navy band, yellow rounded number; numbered white discs (01, 02, 03) for lists; flat code-drawn port pieces, no people",
+    "reference": "user's Template_Media_Lite.pdf (private); assets taken from it into site/pdri/lib/img: logos.png, bg-tekstur.jpg (slide background), kapal.jpg (cover photo)",
+    "palette": {
+      "board": "#1565b5",
+      "navy": "#0b3358",
+      "navy2": "#0f4777",
+      "light card": "#eef1f5",
+      "yellow": "#ffcc29",
+      "sky": "#3fa0e0",
+      "text on board": "#ffffff",
+      "dim on board": "#c4daf2",
+      "text on light": "#0b3358"
+    },
+    "meaning": {
+      "pabean": "#3fa0e0 (light blue)",
+      "bm": "#f7941d (orange)",
+      "bmtp": "#e8612c (deep orange)",
+      "ppn": "#2ecc71 (green)",
+      "ppnbm": "#a66cf0 (purple)",
+      "pph": "#ffcc29 (yellow; navy text on it)",
+      "assume": "#ff5a7a (pink stamp, errors)"
+    },
+    "fonts": {
+      "text": "Poppins 400-800, bundled woff2 latin subset in site/pdri/lib/fonts (SIL OFL)",
+      "math": "Poppins (--math-font)"
+    },
+    "notation": "Rupiah written Rp1.528.230.000 (dot thousands, no space after Rp); percent 10%; multiplication ×. Narration reads rounded amounts in words ('satu koma lima tiga miliar rupiah'), the exact figure stays on screen. Typed answers accept dots or spaces as thousands separators and an optional Rp."
+  },
+  "voice": {
+    "engine": "edge",
+    "voice": "id-ID-ArdiNeural",
+    "rate": "-4%"
+  },
+  "pacing": {
+    "minutes": [
+      6,
+      9
+    ],
+    "checks": "one or two quick checks inside the lesson, practice at the end built from the KB's Latihan"
+  },
+  "engine": {
+    "source": "DozenTwelve/Papermorph",
+    "ref": "engine-v2.12 + Indonesian interface block (id) and Rupiah answer parsing added in the local engine/"
+  },
+  "models": {
+    "extract": "haiku",
+    "narration": "sonnet",
+    "picture": "opus",
+    "checks": "haiku",
+    "review": "sonnet",
+    "rework": "opus",
+    "register": "haiku"
+  },
+  "scenes": {
+    "art": "flat code-drawn side-view port pieces on the blue template board: sea, navy quay with yellow edge, container ship, yellow quay crane, container opening on fabric rolls, service desk with PIB sheet; no human figures",
+    "cast": [],
+    "storyboard": "the user reviews the layout sheet before motion in the pilot; later chapters self-check"
+  },
+  "components": [
+    {
+      "name": "stackBars / bar",
+      "file": "site/pdri/lib/pdri.js",
+      "what": "rounded flat bars in levy colours, stacked bottom-up to scale (0,3 px per juta in a beat); the nilai impor column"
+    },
+    {
+      "name": "calcCard",
+      "file": "site/pdri/lib/pdri.js",
+      "what": "white step-calculator card: label, formula, result counting up in rupiah"
+    },
+    {
+      "name": "serviceDesk / askCard",
+      "file": "site/pdri/lib/pdri.js",
+      "what": "front-view customs desk with monitor, PIB sheet and sign; question bubble rising above it"
+    },
+    {
+      "name": "pcard / pdTag / badge / sideLabel / assumeStamp",
+      "file": "site/pdri/lib/pdri.js",
+      "what": "cards with a coloured header, pills, round levy badges, labels with a leader, the ASUMSI LATIHAN stamp"
+    },
+    {
+      "name": "ship / crane / container / fabricRoll / waves",
+      "file": "site/pdri/lib/pdri.js",
+      "what": "side-view port pieces; container doors open; waves drift on the beat clock"
+    }
+  ],
+  "images": {
+    "sources": [
+      "drawn in code",
+      "template assets from the user's Template Media Lite PDF (logos, background texture, ship photo)"
+    ]
+  }
+}
