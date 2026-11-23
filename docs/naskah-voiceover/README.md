@@ -9,6 +9,6 @@ Naskah per adegan dan prompt gaya Google AI Studio untuk setiap bab buku *Pajak 
 | 3 | Pihak dan Sistem Pemungutan | [bab3-naskah-voiceover.md](bab3-naskah-voiceover.md) | Belum direkam (tanpa suara) |
 | 4 | PPN Impor | [bab4-naskah-voiceover.md](bab4-naskah-voiceover.md) | Draf suara Ardi |
 | 5 | PPh Pasal 22 Impor | [bab5-naskah-voiceover.md](bab5-naskah-voiceover.md) | Draf suara Ardi |
-| 6 | Barang Mewah dan Fasilitas | [bab6-naskah-voiceover.md](bab6-naskah-voiceover.md) | Draf suara Ardi |
-| 7 | Barang Kiriman | [bab7-naskah-voiceover.md](bab7-naskah-voiceover.md) | Draf suara Ardi |
-| 8 | Menjawab Staf Importir | [bab8-naskah-voiceover.md](bab8-naskah-voiceover.md) | Draf suara Ardi |
+| 6 | Barang Mewah dan Fasilitas | [bab6-naskah-voiceover.md](bab6-naskah-voiceover.md) | Belum direkam; pelajaran tanpa suara, waktu animasi diperkirakan dari naskah |
+| 7 | Barang Kiriman | [bab7-naskah-voiceover.md](bab7-naskah-voiceover.md) | Belum direkam; pelajaran tanpa suara, waktu animasi diperkirakan dari naskah |
+| 8 | Menjawab Staf Importir | [bab8-naskah-voiceover.md](bab8-naskah-voiceover.md) | Belum direkam; pelajaran tanpa suara, waktu animasi diperkirakan dari naskah |

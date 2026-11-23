@@ -1,50 +1,53 @@
 window.TIMINGS = {
  "intro": {
-  "dur": 11.592,
+  "dur": 11.821,
   "marks": {
-   "sub": 3.724
+   "sub": 3.011
   },
   "cues": [
    [
-    0.101,
+    0.1,
     "Mari kita lanjutkan, ya, sobat."
    ],
    [
-    3.724,
+    3.011,
     "Pada materi keenam ini, kita menghitung PDRI atas barang mewah, dan melihat bagaimana fasilitas mengubah jumlah yang dibayar."
    ]
-  ]
+  ],
+  "silent": true
  },
  "ask": {
-  "dur": 20.592,
+  "dur": 22.274,
   "marks": {
-   "kasus": 2.865,
-   "q": 13.059
+   "ask": 0.1,
+   "ans": 14.157
   },
   "cues": [
    [
-    0.101,
-    "Kali ini kita pakai Kasus 2."
+    0.1,
+    "Kali ini kita pakai Kasus dua."
    ],
    [
-    2.865,
-    "CV Roda Jaya, importir dengan API-U dan berstatus PKP, mengimpor satu unit sepeda motor CBU 1.000 cc, dengan nilai CIF 20.000 dolar Amerika."
+    2.929,
+    "CV Roda Jaya, importir dengan API-U dan berstatus PKP, mengimpor satu unit sepeda motor CBU seribu cc, dengan nilai CIF dua puluh ribu dolar Amerika."
    ],
    [
-    13.059,
+    14.157,
     "Nanti kita akan lihat, total pungutannya lebih dari dua kali nilai pabeannya."
    ],
    [
-    18.136,
+    19.77,
     "Mengapa bisa sebesar itu?"
    ]
-  ]
+  ],
+  "silent": true
  },
  "mewah": {
-  "dur": 22.584,
+  "dur": 25.82,
   "marks": {
-   "non": 2.383,
-   "lux": 9.725
+   "kain": 0.1,
+   "motor": 10.447,
+   "dasar": 18.966
   },
   "cues": [
    [
@@ -52,180 +55,190 @@ window.TIMINGS = {
     "Mulai dari PPN."
    ],
    [
-    2.383,
-    "Di materi keempat, kain kita memakai dasar pengenaan 11/12 dari nilai impor, jadi bebannya 11 persen."
+    1.746,
+    "Di materi keempat, kain kita memakai dasar pengenaan sebelas per dua belas dari nilai impor, jadi bebannya sebelas persen."
    ],
    [
-    9.725,
+    10.447,
     "Barang yang tergolong mewah berbeda."
    ],
    [
-    12.552,
-    "PPN-nya 12 persen dari nilai impor penuh, tanpa 11/12."
+    13.023,
+    "PPN-nya dua belas persen dari nilai impor penuh, tanpa sebelas per dua belas."
    ],
    [
-    17.538,
-    "Ini juga diatur dalam PMK 131 Tahun 2024."
+    18.966,
+    "Ini juga diatur dalam PMK seratus tiga puluh satu Tahun dua ribu dua puluh empat."
    ]
-  ]
+  ],
+  "silent": true
  },
  "ppnbm": {
-  "dur": 23.784,
+  "dur": 23.19,
   "marks": {
-   "b1": 6.445,
-   "b2": 13.047,
-   "b3": 19.062
-  },
-  "cues": [
-   [
-    0.115,
-    "Selain PPN, barang mewah dikenai PPnBM, atau Pajak Penjualan atas Barang Mewah."
-   ],
-   [
-    6.445,
-    "UU PPN mengenakan PPnBM atas penyerahan dan impor barang yang tergolong mewah, di samping PPN."
-   ],
-   [
-    13.047,
-    "PPnBM dikenakan satu kali saja, yaitu saat impor atau saat penyerahan oleh pabrikan."
-   ],
-   [
-    19.062,
-    "Dan berbeda dengan PPN, PPnBM tidak dapat dikreditkan."
-   ]
-  ]
- },
- "tarifbm": {
-  "dur": 24.624,
-  "marks": {
-   "m1": 13.593,
-   "m2": 19.999
-  },
-  "cues": [
-   [
-    0.101,
-    "Tarif dan kelompok barangnya diatur dalam peraturan pelaksanaan."
-   ],
-   [
-    4.271,
-    "Untuk kendaraan bermotor, berlaku PMK 141 Tahun 2021, yang diubah dengan PMK 42 Tahun 2022."
-   ],
-   [
-    13.593,
-    "Sepeda motor 250 sampai 500 cc dikenai PPnBM 60 persen dari nilai impor."
-   ],
-   [
-    19.999,
-    "Sepeda motor di atas 500 cc dikenai 95 persen."
-   ]
-  ]
- },
- "q1": {
-  "dur": 7.872,
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, mari kita cek pemahaman kamu."
-   ],
-   [
-    3.541,
-    "Berapa tarif PPnBM untuk motor CV Roda Jaya, ya?"
-   ]
-  ]
- },
- "hitung": {
-  "dur": 41.712,
-  "marks": {
-   "np": 2.695,
-   "bm": 11.263,
-   "ni": 16.679,
-   "pdri": 20.781,
-   "tot": 34.531
+   "c1": 0.1,
+   "c2": 12.76,
+   "c3": 18.793
   },
   "cues": [
    [
     0.1,
-    "Mari kita hitung Kasus 2."
+    "Selain PPN, barang mewah dikenai PPnBM, atau Pajak Penjualan atas Barang Mewah."
    ],
    [
-    2.695,
-    "Nilai pabeannya 20.000 dolar dikali kurs 18.155 rupiah, yaitu 363,1 juta rupiah."
+    5.939,
+    "UU PPN mengenakan PPnBM atas penyerahan dan impor barang yang tergolong mewah, di samping PPN."
    ],
    [
-    11.263,
-    "Bea Masuknya 40 persen, jadi 145,24 juta."
+    12.76,
+    "PPnBM dikenakan satu kali saja, yaitu saat impor atau saat penyerahan oleh pabrikan."
    ],
    [
-    16.679,
-    "Nilai impornya 508,34 juta rupiah."
-   ],
-   [
-    20.781,
-    "Dari nilai impor itu, PPN 12 persen sebesar 61 juta, PPnBM 95 persen sebesar 482,9 juta, dan PPh Pasal 22 10 persen sebesar 50,8 juta."
-   ],
-   [
-    34.531,
-    "Total PDRI-nya 594,8 juta, dan total pungutannya 740 juta rupiah."
+    18.793,
+    "Dan berbeda dengan PPN, PPnBM tidak dapat dikreditkan."
    ]
-  ]
+  ],
+  "silent": true
  },
- "regul": {
-  "dur": 18.072,
+ "tarifbm": {
+  "dur": 29.674,
   "marks": {
-   "reg": 5.651,
-   "pikul": 12.188
+   "t60": 16.211,
+   "t95": 23.951
   },
   "cues": [
    [
-    0.101,
-    "Total pungutan 740 juta rupiah itu lebih dari dua kali nilai pabean motornya."
+    0.1,
+    "Tarif dan kelompok barangnya diatur dalam peraturan pelaksanaan."
    ],
    [
-    5.651,
+    4.026,
+    "Untuk kendaraan bermotor, berlaku PMK seratus empat puluh satu Tahun dua ribu dua puluh satu, yang diubah dengan PMK empat puluh dua Tahun dua ribu dua puluh dua."
+   ],
+   [
+    16.211,
+    "Sepeda motor dua ratus lima puluh sampai lima ratus cc dikenai PPnBM enam puluh persen dari nilai impor."
+   ],
+   [
+    23.951,
+    "Sepeda motor di atas lima ratus cc dikenai sembilan puluh lima persen."
+   ]
+  ],
+  "silent": true
+ },
+ "q1": {
+  "dur": 7.894,
+  "marks": {},
+  "cues": [
+   [
+    0.1,
+    "Sekarang, mari kita cek pemahaman kamu."
+   ],
+   [
+    3.244,
+    "Berapa tarif PPnBM untuk motor CV Roda Jaya, ya?"
+   ]
+  ],
+  "silent": true
+ },
+ "hitung": {
+  "dur": 51.363,
+  "marks": {
+   "np": 0.1,
+   "bm": 13.796,
+   "ni": 20.146,
+   "ppn": 24.706,
+   "ppnbm": 30.334,
+   "pph": 36.706,
+   "tot": 42.436
+  },
+  "cues": [
+   [
+    0.1,
+    "Mari kita hitung Kasus dua."
+   ],
+   [
+    2.56,
+    "Nilai pabeannya dua puluh ribu dolar dikali kurs delapan belas ribu seratus lima puluh lima rupiah, yaitu tiga ratus enam puluh tiga koma satu juta rupiah."
+   ],
+   [
+    13.796,
+    "Bea Masuknya empat puluh persen, jadi seratus empat puluh lima koma dua empat juta."
+   ],
+   [
+    20.146,
+    "Nilai impornya lima ratus delapan koma tiga empat juta rupiah."
+   ],
+   [
+    24.706,
+    "Dari nilai impor itu, PPN dua belas persen sebesar enam puluh satu juta, PPnBM sembilan puluh lima persen sebesar empat ratus delapan puluh dua koma sembilan juta, dan PPh Pasal dua puluh dua sepuluh persen sebesar lima puluh koma delapan juta."
+   ],
+   [
+    42.436,
+    "Total PDRI-nya lima ratus sembilan puluh empat koma delapan juta, dan total pungutannya tujuh ratus empat puluh juta rupiah."
+   ]
+  ],
+  "silent": true
+ },
+ "regul": {
+  "dur": 20.407,
+  "marks": {
+   "bar": 0.1,
+   "reg": 7.09,
+   "daya": 13.173
+  },
+  "cues": [
+   [
+    0.1,
+    "Total pungutan tujuh ratus empat puluh juta rupiah itu lebih dari dua kali nilai pabean motornya."
+   ],
+   [
+    7.09,
     "Untuk menjelaskannya, ingat fungsi regulerend: pajak dipakai untuk mengatur konsumsi barang mewah."
    ],
    [
-    12.188,
+    13.173,
     "Dan teori daya pikul: pembeli motor besar dianggap mampu memikul beban pajak yang lebih tinggi."
    ]
-  ]
+  ],
+  "silent": true
  },
  "fasilitas": {
-  "dur": 33.6,
+  "dur": 33.64,
   "marks": {
-   "s1": 8.255,
-   "s2": 19.857,
-   "s3": 27.227
+   "f1": 6.71,
+   "f2": 20.064,
+   "f3": 27.46
   },
   "cues": [
    [
-    0.101,
+    0.1,
     "Sekarang, fasilitas."
    ],
    [
-    2.917,
+    1.68,
     "Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumennya sebelum menghitung."
    ],
    [
-    8.255,
-    "Surat Keterangan Bebas, atau SKB, PPh Pasal 22 dari DJP membuat PPh Pasal 22 tidak dipungut, misalnya karena wajib pajak mengalami kerugian fiskal atau lebih bayar."
+    6.71,
+    "Surat Keterangan Bebas, atau SKB, PPh Pasal dua puluh dua dari DJP membuat PPh Pasal dua puluh dua tidak dipungut, misalnya karena wajib pajak mengalami kerugian fiskal atau lebih bayar."
    ],
    [
-    19.857,
+    20.064,
     "PPN tidak dipungut berarti PPN tetap terutang tetapi tidak dibayar, dan pajak masukannya tetap dapat dikreditkan."
    ],
    [
-    27.227,
+    27.46,
     "PPN dibebaskan berarti PPN tidak dibayar, tetapi pajak masukannya tidak dapat dikreditkan."
    ]
-  ]
+  ],
+  "silent": true
  },
  "skb": {
-  "dur": 21.672,
+  "dur": 23.834,
   "marks": {
-   "before": 2.24,
-   "after": 11.237
+   "tanpa": 0.1,
+   "dengan": 11.579
   },
   "cues": [
    [
@@ -233,83 +246,87 @@ window.TIMINGS = {
     "Contohnya begini."
    ],
    [
-    2.24,
-    "Tanpa fasilitas, PDRI Kasus 1 terdiri atas PPN Impor dan PPh Pasal 22, totalnya 206,3 juta rupiah."
+    1.441,
+    "Tanpa fasilitas, PDRI Kasus satu terdiri atas PPN Impor dan PPh Pasal dua puluh dua, totalnya dua ratus enam koma tiga juta rupiah."
    ],
    [
-    11.237,
-    "Kalau PT Kain Prima Nusantara memiliki SKB PPh Pasal 22 yang berlaku, PDRI-nya hanya PPN Impor, yaitu 168,1 juta rupiah."
+    11.579,
+    "Kalau PT Kain Prima Nusantara memiliki SKB PPh Pasal dua puluh dua yang berlaku, PDRI-nya hanya PPN Impor, yaitu seratus enam puluh delapan koma satu juta rupiah."
    ]
-  ]
+  ],
+  "silent": true
  },
  "q2": {
-  "dur": 7.32,
+  "dur": 7.221,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.1,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    4.009,
+    3.431,
     "Pajak masukan mana yang masih dapat dikreditkan?"
    ]
-  ]
+  ],
+  "silent": true
  },
  "jawab": {
-  "dur": 21.624,
+  "dur": 21.411,
   "marks": {
-   "a1": 3.919,
-   "a2": 10.951,
-   "a3": 15.819
+   "a1": 3.664,
+   "a2": 11.157,
+   "a3": 15.257
   },
   "cues": [
    [
-    0.101,
+    0.1,
     "Jadi, mengapa pungutan motor ini begitu besar?"
    ],
    [
-    3.919,
-    "Karena motor ini barang mewah: PPN-nya 12 persen penuh, ditambah PPnBM 95 persen."
+    3.664,
+    "Karena motor ini barang mewah: PPN-nya dua belas persen penuh, ditambah PPnBM sembilan puluh lima persen."
    ],
    [
-    10.951,
+    11.157,
     "PPnBM tidak dapat dikreditkan, jadi benar-benar menjadi beban."
    ],
    [
-    15.819,
+    15.257,
     "Tujuannya mengatur konsumsi barang mewah, sesuai fungsi regulerend dan teori daya pikul."
    ]
-  ]
+  ],
+  "silent": true
  },
  "wrap": {
-  "dur": 18.72,
+  "dur": 16.784,
   "marks": {
-   "w1": 3.099,
-   "w2": 9.934,
-   "w3": 12.982
+   "w1": 2.049,
+   "w2": 8.766,
+   "w3": 10.934
   },
   "cues": [
    [
-    0.101,
+    0.1,
     "Jadi, ini rangkumannya."
    ],
    [
-    3.099,
-    "Untuk barang mewah, PPN-nya 12 persen dikali nilai impor, ditambah PPnBM sesuai tarifnya."
+    2.049,
+    "Untuk barang mewah, PPN-nya dua belas persen dikali nilai impor, ditambah PPnBM sesuai tarifnya."
    ],
    [
-    9.934,
+    8.766,
     "PPnBM tidak dapat dikreditkan."
    ],
    [
-    12.982,
+    10.934,
     "Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumen fasilitas sebelum menghitung."
    ]
-  ]
+  ],
+  "silent": true
  },
  "final1": {
-  "dur": 7.368,
+  "dur": 7.221,
   "marks": {},
   "cues": [
    [
@@ -317,23 +334,25 @@ window.TIMINGS = {
     "Nah, sekarang kita latihan, ya."
    ],
    [
-    3.671,
+    3.011,
     "Coba kamu temukan kesalahan dalam hitungan berikut ini."
    ]
-  ]
+  ],
+  "silent": true
  },
  "finish": {
-  "dur": 9.096,
+  "dur": 8.72,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.1,
     "Bagus, materi keenam selesai."
    ],
    [
-    3.332,
+    2.456,
     "Berikutnya, kita bahas barang kiriman, lewat dua paket belanja daring milik Dita."
    ]
-  ]
+  ],
+  "silent": true
  }
 };

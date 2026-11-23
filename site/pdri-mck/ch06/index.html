@@ -13,9 +13,15 @@
 <script src="audio/id/timings.js"></script>
 <script>
 'use strict';
-/* Bab 6 (KB 6): luxury goods and facilities. Full-base PPN for luxury goods, PPnBM and its motorcycle rates, the Kasus 2 calculation, why the total is so large, and how SKB and PPN facilities change the bill. McKinsey-style exhibits in the INSW design. */
+/* Bab 6 (KB 6): Barang Mewah dan Fasilitas. Kasus 2 (CV Roda Jaya, motor 1.000 cc): PPN 12% penuh, PPnBM, total pungutan,
+   dan tiga fasilitas yang mengubah jumlah yang dibayar. McKinsey-style exhibits in the INSW design. */
 const CHAPTER = { number: 6, title: 'Barang Mewah dan Fasilitas', minutes: 5, language: 'id' };
 
+Object.assign(GLYPH, {
+  bike: 'M6 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M18 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M6 16l4-7h5l3 7 M9 9l-1-2H6 M13 9l-1-3h3',
+  gift: 'M3 9h18v4H3z M5 13v8h14v-8 M12 9v12 M12 9C9 9 8 5 10 4s3 2 2 5z M12 9c3 0 4-4 2-5s-3 2-2 5z',
+  warn: 'M12 3L2 20h20z M12 10v5 M12 18h.01',
+});
 const paper = p => bgPaper(p);
 const navy = (p, seed, D) => bgNavy(p, seed, D);
 const cap = (p, str, x, y, { size = 21, weight = 600, fill = MK.navy, anchor = 'middle' } = {}) => T(p, str, { x, y, size, weight, fill, anchor });
@@ -25,16 +31,17 @@ const okTick = (p, x, y, r = 20, col = MK.green) => {
   path(ok, `M${-r * .45} ${r * .05}l${r * .3} ${r * .3}l${r * .6} ${-r * .6}`, { stroke: '#fff', 'stroke-width': r * .22, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
   return ok;
 };
-// Kasus 2 (KB 6.3) and Kasus 1 for the SKB example (KB 6.4)
-const KURS = 18155, NP = 20000 * KURS, BM = NP * .4, NI = NP + BM;   // 363.100.000, 145.240.000, 508.340.000
-const PPN = NI * .12, PPNBM = NI * .95, PPH = NI * .1, PDRI = PPN + PPNBM + PPH, TOT = BM + PDRI;
-const PPN_SALAH = NI * .11;                                            // 55.917.400 (11/12 by mistake)
+// Kasus 2 numbers (KB 6.3)
+const NP = 20000 * 18155, BM = NP * .4, NI = NP + BM;            // 363.100.000 + 145.240.000 = 508.340.000
+const PPN = NI * .12, PPNBM = NI * .95, PPH = NI * .10;          // 61.000.800 · 482.923.000 · 50.834.000
+const PDRI = PPN + PPNBM + PPH, TOT = BM + PDRI;                  // 594.757.800 · 739.997.800
+const SALAH = NI * .12 * 11 / 12;                                 // 55.917.400 (hitungan petugas yang keliru)
+// Kasus 1 (KB 6.4)
 const K1_PPN = 168105300, K1_PPH = 38205750;
-const jt = n => (n / 1e6).toFixed(1).replace('.', ',') + ' jt';
 
 /* ---------- beats ---------- */
 const BEATS = [
-  ['intro', 'Barang mewah dan fasilitas', (m, D) => {
+  ['intro', 'Barang Mewah dan Fasilitas', (m, D) => {
     const p = panel(0);
     navy(p, 61, D);
     const ring = G(p, { x: 1130, y: 470 });
@@ -44,16 +51,18 @@ const BEATS = [
     clockRun(t => ring.setAttribute('transform', `translate(1130 470) rotate(${t * 6})`), D, { tail: true });
     const mid = G(p, { x: 1130, y: 470 });
     mk('circle', { r: 150, fill: '#fff' }, mid);
-    tile(mid, 'gem', 0, -18, { size: 150, v: 'gold' });
+    tile(mid, 'gem', 0, -18, { size: 150, v: 'blue' });
     T(mid, 'PPnBM', { y: 92, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
     popIn(mid, .3);
-    [['motor', 'gold', 'Motor besar'], ['percent', 'blue', 'PPN 12%'], ['cross', 'sky', 'Tak dikreditkan'], ['idcard', 'gold', 'SKB'], ['shield', 'blue', 'DJBC'], ['coins', 'sky', 'Kas negara']].forEach(([gl, v, n], k) => {
+    [['bike', 'gold', 'Motor besar'], ['doc', 'blue', 'SKB'], ['hand', 'sky', 'Tidak dipungut'], ['gift', 'gold', 'Dibebaskan'], ['coins', 'blue', 'Total pungutan'], ['percent', 'sky', 'Tarif 95%']].forEach(([gl, v, n], k) => {
       const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 250 * Math.cos(a), y = 470 + 250 * Math.sin(a);
       const g = G(p);
       tile(g, gl, x, y, { size: 84, v, floor: false });
       pill(g, n, x, y + 60, { size: 16, bg: '#fff', ink: MK.navy });
       popIn(g, m('sub') + .3 + k * .22);
     });
+    const part = pill(p, 'BAGIAN II · MENGHITUNG, MEMERIKSA, MENJELASKAN', 92, 240, { size: 16, anchor: 'start', bg: MK.navy2, ink: '#D5E2F5' });
+    slideUp(part, m('sub'));
     const tg = pill(p, 'BAB 6 · KEGIATAN BELAJAR 6', 92, 290, { size: 20, anchor: 'start' });
     slideUp(tg, .5);
     const t1 = T(p, 'Barang Mewah', { x: 92, y: 392, size: 70, weight: 700, fill: '#fff' });
@@ -62,265 +71,284 @@ const BEATS = [
     const rule = mk('rect', { x: 92, y: 512, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
     prog(q => rule.setAttribute('width', 120 * q), 1.2, .5, out);
     const sub = G(p);
-    lines(sub, 'PPN, PPnBM, dan fasilitas|yang mengubah tagihan', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
-    slideUp(sub, m('sub'));
+    lines(sub, 'PDRI atas barang mewah dan|fasilitas yang mengubah tagihan', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
+    slideUp(sub, 1.3);
   }],
 
-  ['ask', 'Kasus 2: motor besar', (m, D) => {
+  ['ask', 'Kasus 2: motor 1.000 cc', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Pungutan motor besar Kasus 2 lebih dari|dua kali nilai pabeannya', { tag: 'KASUS 2' });
-    const c = G(p);
-    mcard(c, 92, 230, 660, 470);
-    tile(c, 'motor', 185, 320, { size: 110, v: 'gold' });
-    T(c, 'IMPORTIR', { x: 265, y: 300, size: 16, weight: 700, fill: MK.dim });
-    T(c, 'CV Roda Jaya', { x: 265, y: 342, size: 34, weight: 700, fill: MK.navy });
-    [['Barang', 'Sepeda motor CBU 1.000 cc, 1 unit'], ['Nilai CIF', 'USD 20.000'], ['Status', 'API-U, PKP']].forEach(([a, b], i) => {
-      const y = 450 + i * 80;
-      mk('rect', { x: 122, y: y - 45, width: 600, height: 1.5, fill: MK.line }, c);
-      T(c, a, { x: 132, y, size: 19, weight: 600, fill: MK.dim });
-      T(c, b, { x: 300, y, size: 24, weight: 700, fill: MK.navy });
+    actionTitle(p, 'Kasus 2: satu motor 1.000 cc dikenai pungutan|lebih dari dua kali nilai pabeannya', { tag: 'KASUS 2 · CV RODA JAYA' });
+    const q = G(p);
+    mcard(q, 92, 230, 700, 470);
+    tile(q, 'bike', 175, 310, { size: 96, v: 'gold' });
+    T(q, 'IMPORTIR', { x: 245, y: 295, size: 16, weight: 700, fill: MK.dim });
+    T(q, 'CV Roda Jaya', { x: 245, y: 335, size: 32, weight: 800, fill: MK.navy });
+    [['Barang', '1 unit sepeda motor CBU 1.000 cc'], ['Status', 'API-U dan PKP'], ['CIF', 'USD 20.000'], ['Kurs', 'Rp18.155 per USD']].forEach(([k, v], i) => {
+      T(q, k, { x: 132, y: 428 + i * 62, size: 19, weight: 600, fill: MK.dim });
+      T(q, v, { x: 290, y: 428 + i * 62, size: 24, weight: 700, fill: MK.navy });
     });
-    slideUp(c, m('kasus') - .2);
+    slideUp(q, .4);
     const a = G(p);
-    mcard(a, 800, 230, 708, 470, { fill: MK.navy });
-    T(a, 'Total pungutan', { x: 850, y: 310, size: 24, weight: 600, fill: '#D5E2F5' });
-    T(a, '> 2×', { x: 850, y: 430, size: 110, weight: 800, fill: MK.gold });
-    T(a, 'nilai pabeannya', { x: 850, y: 490, size: 28, weight: 600, fill: '#fff' });
-    mk('rect', { x: 850, y: 540, width: 608, height: 2, fill: MK.navy2 }, a);
-    T(a, 'Mengapa sebesar itu?', { x: 850, y: 610, size: 32, weight: 700, fill: '#fff' });
-    tile(a, 'question', 1420, 600, { size: 80, v: 'gold', floor: false });
-    show(a, m('q') - .2, .4);
-    source(p, 'Bahan Ajar PDRI, Kasus yang Dipakai dan KB 6', m('kasus'));
+    mcard(a, 840, 230, 668, 470, { fill: MK.navy });
+    T(a, 'Total pungutan dibanding nilai pabean', { x: 880, y: 300, size: 22, weight: 600, fill: '#D5E2F5' });
+    T(a, 'lebih dari 2×', { x: 880, y: 400, size: 76, weight: 800, fill: MK.gold });
+    lines(a, 'Mengapa pungutan atas satu motor|bisa sebesar itu?', 880, 480, { size: 28, weight: 600, fill: '#fff' });
+    tile(a, 'question', 1410, 620, { size: 96, v: 'gold' });
+    show(a, m('ans') - .2, .4);
+    source(p, 'Bahan Ajar PDRI, Kasus yang Dipakai dan KB 6.3', m('ask') + 1);
   }],
 
   ['mewah', 'PPN barang mewah', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Barang mewah memakai PPN 12% dari nilai|impor penuh, tanpa DPP 11/12', { tag: 'PPN IMPOR BARANG MEWAH · PMK 131/2024' });
-    [['non', 'fabric', 'gold', 'Kain', 'Kasus 1 · tidak mewah', '12% × 11/12 × nilai impor', 11, MK.blue],
-     ['lux', 'motor', 'sky', 'Motor besar', 'Kasus 2 · barang mewah', '12% × nilai impor', 12, MK.goldDark]].forEach(([mark, gl, v, n, sub, f, eff, col], i) => {
-      const x = 92 + i * 726, c = G(p);
-      mcard(c, x, 240, 690, 420);
-      mk('rect', { x, y: 240, width: 690, height: 12, rx: 6, fill: col }, c);
-      tile(c, gl, x + 80, 335, { size: 88, v });
-      T(c, n, { x: x + 145, y: 330, size: 30, weight: 700, fill: MK.navy });
-      T(c, sub, { x: x + 145, y: 364, size: 18, weight: 500, fill: MK.dim });
-      T(c, 'RUMUS PPN', { x: x + 40, y: 440, size: 14, weight: 700, fill: MK.dim });
-      T(c, f, { x: x + 40, y: 482, size: 30, weight: 700, fill: MK.navy });
-      T(c, 'BEBAN EFEKTIF', { x: x + 40, y: 550, size: 14, weight: 700, fill: MK.dim });
-      mk('rect', { x: x + 40, y: 570, width: 480, height: 44, rx: 8, fill: '#EEF2F8' }, c);
-      const bar = mk('rect', { x: x + 40, y: 570, width: 0, height: 44, rx: 8, fill: col }, c);
-      const lab = T(c, eff + '%', { x: x + 540, y: 605, size: 40, weight: 800, fill: col });
+    actionTitle(p, 'Barang mewah menanggung PPN 12% penuh,|bukan 11% seperti kain', { tag: 'PPN BARANG MEWAH' });
+    [['kain', 'fabric', 'sky', 'KAIN KAPAS (BAB 4)', 'Dasar pengenaan: 11/12 × nilai impor', '11%', 'beban PPN efektif', MK.sky, 92],
+     ['motor', 'bike', 'gold', 'MOTOR (BARANG MEWAH)', 'Dasar pengenaan: nilai impor penuh', '12%', 'beban PPN', MK.goldDark, 812]].forEach(([mark, gl, v, lab, dpp, big, sub, col, x]) => {
+      const c = G(p), hot = mark === 'motor';
+      mcard(c, x, 235, 696, 400, { fill: hot ? '#FFF7E3' : '#fff' });
+      if (hot) mk('rect', { x, y: 235, width: 696, height: 400, rx: 15, fill: 'none', stroke: MK.gold, 'stroke-width': 3 }, c);
+      tile(c, gl, x + 95, 325, { size: 100, v });
+      T(c, lab, { x: x + 180, y: 310, size: 16, weight: 700, fill: MK.dim });
+      T(c, dpp, { x: x + 180, y: 352, size: 22, weight: 700, fill: MK.navy });
+      T(c, big, { x: x + 60, y: 540, size: 120, weight: 800, fill: col });
+      T(c, sub, { x: x + 330, y: 530, size: 26, weight: 600, fill: MK.dim });
       slideUp(c, m(mark) - .2, .5);
-      put(lab, { o: 0 }); show(lab, m(mark) + 1.2, .3);
-      prog(q => bar.setAttribute('width', 480 * eff / 12 * q), m(mark) + .5, .9, out);
     });
-    source(p, 'Bahan Ajar PDRI KB 4.3 dan 6.1', m('non'));
+    const dpp = pill(p, 'PMK 131 Tahun 2024', 92, 690, { size: 18, anchor: 'start', bg: MK.navy, ink: '#fff' });
+    popIn(dpp, m('dasar'));
+    source(p, 'Bahan Ajar PDRI KB 6.1; PMK 131 Tahun 2024', m('kain'));
   }],
 
-  ['ppnbm', 'Pajak Penjualan atas Barang Mewah', (m, D) => {
+  ['ppnbm', 'Tiga ciri PPnBM', (m, D) => {
     const p = panel(0);
     navy(p, 63, D);
-    actionTitle(p, 'PPnBM dikenakan sekali di samping PPN,|dan tidak dapat dikreditkan', { tag: 'PAJAK PENJUALAN ATAS BARANG MEWAH', dark: true });
-    [['b1', 'gem', 'gold', 'Di samping PPN', 'Atas penyerahan dan|impor barang yang|tergolong mewah'],
-     ['b2', 'flag', 'blue', 'Dikenakan sekali', 'Saat impor, atau saat|penyerahan oleh|pabrikan'],
-     ['b3', 'cross', 'sky', 'Tidak dikreditkan', 'Berbeda dengan PPN,|PPnBM menjadi beban|pembeli']].forEach(([mark, gl, v, head, ex], i) => {
+    actionTitle(p, 'PPnBM dikenakan di samping PPN, satu kali,|dan tidak dapat dikreditkan', { tag: 'PPNBM · PAJAK ATAS BARANG MEWAH', dark: true });
+    [['c1', 'gem', 'blue', 'Di samping PPN', 'atas impor dan penyerahan|barang yang tergolong mewah'],
+     ['c2', 'tag', 'gold', 'Satu kali saja', 'saat impor atau saat|penyerahan oleh pabrikan'],
+     ['c3', 'hand', 'sky', 'Tidak dapat dikreditkan', 'berbeda dengan PPN,|menjadi beban sebenarnya']].forEach(([mark, gl, v, n, sub], i) => {
       const x = 92 + i * 482, c = G(p);
-      mcard(c, x, 240, 450, 470, { dark: true });
-      mk('rect', { x, y: 240, width: 450, height: 12, rx: 6, fill: [MK.gold, MK.blue, MK.sky][i] }, c);
-      tile(c, gl, x + 225, 340, { size: 104, v });
-      T(c, '0' + (i + 1), { x: x + 410, y: 300, size: 34, weight: 700, fill: MK.line, anchor: 'end' });
-      T(c, head, { x: x + 225, y: 450, size: 30, weight: 700, fill: MK.navy, anchor: 'middle' });
-      mk('rect', { x: x + 40, y: 480, width: 370, height: 2, fill: MK.line }, c);
-      lines(c, ex, x + 40, 530, { size: 22, weight: 600, lh: 1.35 });
+      mcard(c, x, 250, 450, 430, { dark: true });
+      if (i === 2) mk('rect', { x, y: 250, width: 450, height: 12, rx: 6, fill: MK.gold }, c);
+      tile(c, gl, x + 90, 345, { size: 100, v });
+      T(c, '0' + (i + 1), { x: x + 410, y: 320, size: 34, weight: 700, fill: MK.line, anchor: 'end' });
+      T(c, n, { x: x + 36, y: 470, size: 29, weight: 700, fill: MK.navy });
+      lines(c, sub, x + 36, 520, { size: 21, weight: 500, fill: MK.dim, lh: 1.35 });
       popIn(c, m(mark) - .1);
     });
-    source(p, 'Bahan Ajar PDRI KB 6.2', .8, true);
+    source(p, 'Bahan Ajar PDRI KB 6.2; UU PPN', .8, true);
   }],
 
-  ['tarifbm', 'Tarif PPnBM kendaraan', (m, D) => {
+  ['tarifbm', 'Tarif PPnBM motor', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Motor di atas 500 cc dikenai PPnBM 95%|dari nilai impor', { tag: 'TARIF PPNBM SEPEDA MOTOR' });
-    const law = pill(p, 'PMK 141/PMK.010/2021, diubah PMK 42/PMK.010/2022', 92, 250, { size: 18, anchor: 'start', bg: MK.navy, ink: '#fff' });
-    slideUp(law, .6);
-    const x0 = 560, S = 9;
-    [['m1', 'Sepeda motor', '250 cc sampai 500 cc', 60, MK.sky, 360], ['m2', 'Sepeda motor', 'lebih dari 500 cc', 95, MK.goldDark, 540]].forEach(([mark, n, cc, v, col, y]) => {
-      const g = G(p), t0 = m(mark) - .2;
-      mcard(g, 92, y - 70, 1416, 140);
-      tile(g, 'motor', 160, y, { size: 80, v: mark === 'm2' ? 'gold' : 'sky', floor: false });
-      T(g, n, { x: 220, y: y - 6, size: 20, weight: 600, fill: MK.dim });
-      T(g, cc, { x: 220, y: y + 28, size: 26, weight: 700, fill: MK.navy });
+    actionTitle(p, 'Tarif PPnBM motor naik menurut kapasitas mesin:|60% untuk 250 sampai 500 cc, 95% di atasnya', { tag: 'TARIF PPNBM KENDARAAN BERMOTOR' });
+    const x0 = 640, S = 8;   // 1% = 8 px
+    const H = G(p);
+    T(H, 'KAPASITAS MESIN', { x: 92, y: 250, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'TARIF PPNBM', { x: x0, y: 250, size: 15, weight: 700, fill: MK.dim });
+    mk('rect', { x: 92, y: 264, width: 1416, height: 3, fill: MK.navy }, H);
+    show(H, .4, .4);
+    [['t60', 'Sepeda motor 250 sampai 500 cc', 60, '60%', MK.blue, 'bike', 'sky'], ['t95', 'Sepeda motor di atas 500 cc', 95, '95%', MK.goldDark, 'bike', 'gold']].forEach(([mark, n, v, lab, col, gl, tv], i) => {
+      const y = 340 + i * 130, g = G(p), t0 = m(mark) - .2;
+      if (i) mk('rect', { x: 92, y: y - 62, width: 1416, height: 1.5, fill: MK.line }, g);
+      tile(g, gl, 130, y + 4, { size: 64, v: tv, floor: false });
+      T(g, n, { x: 180, y: y + 12, size: 24, weight: 700, fill: MK.navy });
       const bar = mk('rect', { x: x0, y: y - 22, width: 0, height: 44, rx: 8, fill: col }, g);
-      const l = T(g, v + '%', { x: x0 + v * S + 16, y: y + 14, size: 36, weight: 800, fill: col });
+      const l = T(g, lab, { x: x0 + v * S + 16, y: y + 14, size: 34, weight: 800, fill: col });
       slideUp(g, t0, .4);
-      prog(q => bar.setAttribute('width', v * S * q), t0 + .3, .9, out);
-      put(l, { o: 0 }); show(l, t0 + 1.1, .3);
+      prog(q => bar.setAttribute('width', v * S * q), t0 + .2, .8, out);
+      put(l, { o: 0 }); show(l, t0 + 1, .3);
     });
-    const k = pill(p, 'Motor Kasus 2: 1.000 cc', 92 + 1416 - 300, 650, { size: 18, anchor: 'start', bg: MK.gold });
-    popIn(k, m('m2') + 1.4);
-    T(p, 'dasar: nilai impor', { x: 1508, y: 256, size: 17, weight: 500, fill: MK.dim, anchor: 'end' });
-    source(p, 'Bahan Ajar PDRI KB 6.2', m('m1'));
+    const k = G(p);
+    mcard(k, 92, 560, 1416, 130, { fill: '#FFF7E3' });
+    tile(k, 'bike', 165, 625, { size: 76, v: 'gold', floor: false });
+    T(k, 'Motor Kasus 2 (1.000 cc) masuk kelompok 95%', { x: 220, y: 618, size: 26, weight: 700, fill: MK.navy });
+    T(k, 'PMK 141/PMK.010/2021 sebagaimana diubah dengan PMK 42/PMK.010/2022', { x: 220, y: 656, size: 19, weight: 500, fill: MK.dim });
+    popIn(k, m('t95') + 1.5);
+    source(p, 'Bahan Ajar PDRI KB 6.2; PMK 141/PMK.010/2021 jo. PMK 42/PMK.010/2022', m('t60'));
   }],
 
   ['q1', 'Cek pemahaman', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Cek pemahaman: berapa tarif PPnBM|motor Kasus 2?', { tag: 'CEK PEMAHAMAN', t0: .1 });
-    [['motor', 'gold', 'Sepeda motor CBU', '1.000 cc, 1 unit'], ['idcard', 'blue', 'CV Roda Jaya', 'API-U, PKP'], ['gem', 'sky', 'Barang mewah', 'dikenai PPnBM']].forEach(([gl, v, n, sub], i) => {
+    actionTitle(p, 'Cek pemahaman: berapa tarif PPnBM|untuk motor CV Roda Jaya?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['bike', 'gold', 'Motor 1.000 cc', 'CBU, pos 8711.50'], ['gem', 'blue', 'Barang mewah', 'kena PPN 12% dan PPnBM'], ['percent', 'sky', 'Tarif PPnBM', '?']].forEach(([gl, v, n, sub], i) => {
       const c = G(p), y = 250 + i * 150;
-      mcard(c, 92, y, 640, 126);
+      mcard(c, 92, y, 440, 126);
       tile(c, gl, 155, y + 62, { size: 76, v });
-      T(c, n, { x: 210, y: y + 58, size: 28, weight: 700, fill: MK.navy });
-      T(c, sub, { x: 210, y: y + 92, size: 20, weight: 500, fill: MK.dim });
+      T(c, n, { x: 210, y: y + 58, size: 26, weight: 700, fill: MK.navy });
+      T(c, sub, { x: 210, y: y + 92, size: 18, weight: 500, fill: MK.dim });
       slideUp(c, .2 + i * .15);
     });
-  }, { ask: done => quiz({ x: 790, y: 220, w: 730, cls: 'side' }, [{
-    id: 'c-ppnbm', prompt: ['Berapa tarif PPnBM untuk motor 1.000 cc CV Roda Jaya?'],
-    build: choice([['95% dari nilai impor'], ['60% dari nilai impor'], ['12% dari nilai impor'], ['0%, karena sudah dikenai PPN']], 0,
+  }, { ask: done => quiz({ x: 570, y: 220, w: 950, cls: 'side' }, [{
+    id: 'c-tarif-ppnbm', prompt: ['Berapa tarif PPnBM untuk sepeda motor 1.000 cc milik CV Roda Jaya?'],
+    build: choice([['60%'], ['95%'], ['12%'], ['40%']], 1,
       'Motor di atas 500 cc dikenai PPnBM 95% dari nilai impor.',
-      [null, '60% untuk motor 250 sampai 500 cc. Motor ini 1.000 cc.', '12% adalah tarif PPN, bukan PPnBM.', 'PPnBM dikenakan di samping PPN, bukan sebagai pengganti.']),
+      ['60% berlaku untuk motor 250 sampai 500 cc. Motor ini 1.000 cc.', null, '12% adalah tarif PPN, bukan PPnBM.', '40% adalah asumsi tarif Bea Masuk dalam latihan ini.']),
   }], done) }],
 
   ['hitung', 'Menghitung Kasus 2', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, `Total pungutan Kasus 2 mencapai ${rp(TOT)}`, { tag: 'MENGHITUNG PDRI · KASUS 2' });
+    actionTitle(p, `Total pungutan motor Kasus 2 sebesar ${rp(TOT)}`, { tag: 'MENGHITUNG KASUS 2 · BARANG MEWAH' });
+    const rows = [
+      ['np', 'Nilai pabean', 'USD 20.000 × Rp18.155', NP, false],
+      ['bm', 'Bea Masuk', '40% × nilai pabean', BM, false],
+      ['ni', 'Nilai impor', 'nilai pabean + Bea Masuk', NI, true],
+      ['ppn', 'PPN Impor', '12% × nilai impor', PPN, false],
+      ['ppnbm', 'PPnBM', '95% × nilai impor', PPNBM, false],
+      ['pph', 'PPh Pasal 22', '10% × nilai impor', PPH, false],
+      ['tot', 'Total pungutan', 'BM + PPN + PPnBM + PPh 22', TOT, true],
+    ];
     const H = G(p);
-    T(H, 'KOMPONEN', { x: 92, y: 236, size: 15, weight: 700, fill: MK.dim });
-    T(H, 'PERHITUNGAN', { x: 600, y: 236, size: 15, weight: 700, fill: MK.dim });
-    T(H, 'HASIL', { x: 1508, y: 236, size: 15, weight: 700, fill: MK.dim, anchor: 'end' });
-    mk('rect', { x: 92, y: 250, width: 1416, height: 3, fill: MK.navy }, H);
+    T(H, 'KOMPONEN', { x: 92, y: 246, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'CARA HITUNG', { x: 560, y: 246, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'RUPIAH', { x: 1508, y: 246, size: 15, weight: 700, fill: MK.dim, anchor: 'end' });
+    mk('rect', { x: 92, y: 258, width: 1416, height: 3, fill: MK.navy }, H);
     show(H, .4, .4);
-    const R = [['np', 'Nilai pabean', '', 'USD 20.000 × Rp18.155', NP], ['bm', 'Bea Masuk', 'cek', '40% × nilai pabean', BM], ['ni', 'Nilai impor', '', 'nilai pabean + Bea Masuk', NI, 1],
-      ['pdri', 'PPN Impor', '', '12% × nilai impor', PPN], ['pdri', 'PPnBM Impor', '', '95% × nilai impor', PPNBM], ['pdri', 'PPh Pasal 22', 'cek', '10% × nilai impor', PPH],
-      ['tot', 'Total PDRI', '', 'PPN + PPnBM + PPh 22', PDRI, 1], ['tot', 'Total pungutan', '', 'Bea Masuk + PDRI', TOT, 2]];
-    let k = 0;
-    R.forEach(([mark, n, cek, f, v, hot], i) => {
-      const y = 285 + i * 56, g = G(p);
-      const t0 = m(mark) - .2 + (R[i - 1] && R[i - 1][0] === mark ? (k += 1.3) : (k = 0));
-      if (hot === 2) mk('rect', { x: 92, y: y - 30, width: 1416, height: 52, rx: 10, fill: MK.navy }, g);
-      else if (hot) mk('rect', { x: 92, y: y - 30, width: 1416, height: 52, rx: 10, fill: '#FFF7E3' }, g);
-      else if (i) mk('rect', { x: 92, y: y - 28, width: 1416, height: 1.5, fill: MK.line }, g);
-      const ink = hot === 2 ? '#fff' : MK.navy;
-      T(g, n, { x: 112, y: y + 3, size: 22, weight: 700, fill: ink });
-      if (cek) pill(g, 'cek', 112 + textW(n, 22, 700) + 30, y - 4, { size: 13, bg: '#EEF2F8', ink: MK.dim });
-      T(g, f, { x: 600, y: y + 3, size: 20, weight: 500, fill: hot === 2 ? '#D5E2F5' : MK.dim });
-      T(g, rp(v), { x: 1488, y: y + 4, size: 24, weight: 800, fill: hot === 2 ? MK.gold : ink, anchor: 'end' });
-      slideUp(g, t0, .4);
+    rows.forEach(([mark, n, how, v, hot], i) => {
+      const y = 280 + i * 58, g = G(p), t0 = m(mark) - .2;
+      if (hot) mk('rect', { x: 84, y, width: 1432, height: 52, rx: 10, fill: i === rows.length - 1 ? MK.navy : '#EAF2FB' }, g);
+      const dark = i === rows.length - 1;
+      T(g, n, { x: 104, y: y + 35, size: 24, weight: 700, fill: dark ? '#fff' : MK.navy });
+      T(g, how, { x: 560, y: y + 36, size: 21, weight: 500, fill: dark ? '#D5E2F5' : MK.dim });
+      T(g, rp(v), { x: 1496, y: y + 38, size: dark ? 32 : 26, weight: 800, fill: dark ? MK.gold : (mark === 'ppnbm' ? MK.goldDark : MK.navy), anchor: 'end' });
+      slideUp(g, t0, .45);
     });
-    source(p, 'Bahan Ajar PDRI KB 6.3; kurs KMK 55/MK/EF.2/2026', m('np'));
+    const note = G(p);
+    T(note, 'BM 40% dan PPh Pasal 22 10% adalah asumsi latihan (cek BTKI dan PMK 51/2025). PDRI = ' + rp(PDRI) + '.', { x: 92, y: 716, size: 17, weight: 500, fill: MK.dim });
+    show(note, m('tot') + 1, .4);
+    source(p, 'Bahan Ajar PDRI KB 6.3; KMK 55/MK/EF.2/2026', m('np'));
   }],
 
   ['regul', 'Mengapa sebesar itu', (m, D) => {
     const p = panel(0);
-    navy(p, 65, D);
-    actionTitle(p, 'Pungutan dua kali nilai pabean dijelaskan|fungsi regulerend dan teori daya pikul', { tag: 'MEMBACA ANGKA KASUS 2', dark: true });
-    const base = 640, K = 330 / TOT;
-    mk('rect', { x: 110, y: base, width: 620, height: 3, fill: '#D5E2F5' }, p);
-    [['Nilai pabean', NP, MK.sky, 260, .4], ['Total pungutan', TOT, MK.gold, 560, 1]].forEach(([n, v, col, x, t0]) => {
-      const g = G(p), h = v * K;
-      const bar = mk('rect', { x: x - 100, y: base, width: 200, height: 0, fill: col }, g);
-      prog(q => { bar.setAttribute('y', base - h * q); bar.setAttribute('height', h * q); }, t0, .8, out);
-      T(g, n, { x, y: base + 40, size: 22, weight: 700, fill: '#fff', anchor: 'middle' });
-      const l = T(g, jt(v), { x, y: base - h - 18, size: 26, weight: 800, fill: col, anchor: 'middle' });
-      put(l, { o: 0 }); show(l, t0 + .8, .3);
-    });
-    const x2 = pill(p, '2,04×', 410, 330, { size: 24, bg: MK.gold });
-    popIn(x2, 2);
-    [['reg', 'layers', 'gold', 'Fungsi regulerend', 'Pajak dipakai untuk mengatur|konsumsi barang mewah'], ['pikul', 'wallet', 'sky', 'Teori daya pikul', 'Pembeli motor besar dianggap|mampu memikul beban lebih tinggi']].forEach(([mark, gl, v, n, sub], i) => {
-      const c = G(p), y = 260 + i * 230;
-      mcard(c, 820, y, 688, 200, { dark: true });
-      tile(c, gl, 905, y + 100, { size: 96, v });
-      T(c, n, { x: 980, y: y + 85, size: 30, weight: 700, fill: MK.navy });
-      lines(c, sub, 980, y + 125, { size: 20, weight: 500, fill: MK.dim });
-      popIn(c, m(mark) - .1);
-    });
-    source(p, 'Bahan Ajar PDRI KB 2 dan 6.3', .8, true);
-  }],
-
-  ['fasilitas', 'Fasilitas dan pengecualian', (m, D) => {
-    const p = panel(0);
     paper(p);
-    actionTitle(p, 'Fasilitas mengubah tagihan, jadi periksa|dokumennya sebelum menghitung', { tag: 'FASILITAS DAN PENGECUALIAN' });
-    [['s1', 'idcard', 'gold', 'SKB PPh Pasal 22', 'Dari DJP, misalnya karena|kerugian fiskal atau|lebih bayar', 'PPh Pasal 22 tidak dipungut', MK.navy],
-     ['s2', 'doc', 'blue', 'PPN tidak dipungut', 'PPN tetap terutang,|tetapi tidak dibayar', 'Pajak masukan tetap|dapat dikreditkan', MK.green],
-     ['s3', 'shield', 'sky', 'PPN dibebaskan', 'Impor dibebaskan dari|pengenaan PPN', 'Pajak masukan tidak|dapat dikreditkan', MK.red]].forEach(([mark, gl, v, n, ex, res, col], i) => {
-      const x = 92 + i * 482, c = G(p);
-      mcard(c, x, 235, 450, 470);
-      tile(c, gl, x + 72, 310, { size: 84, v });
-      lines(c, n, x + 132, 320, { size: 26, weight: 700 });
-      T(c, 'PENGERTIAN', { x: x + 36, y: 400, size: 14, weight: 700, fill: MK.dim });
-      lines(c, ex, x + 36, 435, { size: 21, weight: 600, lh: 1.3 });
-      mk('rect', { x: x + 24, y: 565, width: 402, height: 116, rx: 12, fill: col, 'fill-opacity': .1 }, c);
-      mk('rect', { x: x + 24, y: 565, width: 8, height: 116, rx: 4, fill: col }, c);
-      T(c, 'AKIBAT DALAM PIB', { x: x + 50, y: 595, size: 14, weight: 700, fill: MK.dim });
-      lines(c, res, x + 50, 630, { size: 21, weight: 700, fill: col === MK.navy ? MK.navy : col, lh: 1.25 });
+    actionTitle(p, 'Pungutan melebihi dua kali nilai pabean:|fungsi regulerend dan daya pikul menjelaskannya', { tag: 'MEMBACA ANGKANYA · KASUS 2' });
+    const base = 690, K = 380 / TOT;
+    const ax = G(p);
+    mk('rect', { x: 100, y: base, width: 700, height: 3, fill: MK.navy }, ax);
+    show(ax, .4, .3);
+    const b1 = G(p), h1 = NP * K, t1 = m('bar');
+    const r1 = mk('rect', { x: 150, y: base, width: 190, height: 0, fill: MK.line }, b1);
+    prog(q => { r1.setAttribute('y', base - h1 * q); r1.setAttribute('height', h1 * q); }, t1, .8, out);
+    T(b1, 'Nilai pabean', { x: 245, y: base + 36, size: 21, weight: 700, fill: MK.navy, anchor: 'middle' });
+    const l1 = T(b1, 'Rp363,1 juta', { x: 245, y: base - h1 - 16, size: 22, weight: 800, fill: MK.dim, anchor: 'middle' });
+    put(l1, { o: 0 }); show(l1, t1 + .8, .3);
+    const b2 = G(p), t2 = m('bar') + 1.2;
+    let yy = base;
+    [[BM, MK.sky, 'BM'], [PPN, MK.blue, 'PPN'], [PPNBM, MK.gold, 'PPnBM'], [PPH, MK.goldDark, 'PPh']].forEach(([v, col, n], i) => {
+      const h = v * K, yb = yy, y1 = yb - h, r = mk('rect', { x: 470, y: yb, width: 190, height: 0, fill: col }, b2);
+      yy = y1;
+      prog(q => { r.setAttribute('y', yb - h * q); r.setAttribute('height', h * q); }, t2 + i * .35, .5, out);
+      if (h > 26) T(b2, n, { x: 565, y: y1 + h / 2 + 7, size: 18, weight: 700, fill: col === MK.gold ? MK.navy : '#fff', anchor: 'middle' });
+    });
+    T(b2, 'Total pungutan', { x: 565, y: base + 36, size: 21, weight: 700, fill: MK.navy, anchor: 'middle' });
+    const l2 = T(b2, 'Rp740,0 juta', { x: 565, y: yy - 16, size: 22, weight: 800, fill: MK.navy, anchor: 'middle' });
+    put(l2, { o: 0 }); show(l2, t2 + 2, .3);
+    const badge = pill(p, '2,04×', 690, 440, { size: 30, bg: MK.gold });
+    popIn(badge, t2 + 2.2);
+    [['reg', 'law', 'blue', 'Fungsi regulerend', 'pajak mengatur konsumsi|barang mewah', 860, 240],
+     ['daya', 'users', 'gold', 'Teori daya pikul', 'pembeli motor besar dianggap|mampu memikul beban lebih tinggi', 860, 470]].forEach(([mark, gl, v, n, sub, x, y]) => {
+      const c = G(p);
+      mcard(c, x, y, 648, 200);
+      tile(c, gl, x + 85, y + 100, { size: 96, v });
+      T(c, n, { x: x + 160, y: y + 90, size: 30, weight: 700, fill: MK.navy });
+      lines(c, sub, x + 160, y + 130, { size: 20, weight: 500, fill: MK.dim });
       slideUp(c, m(mark) - .2, .5);
     });
-    source(p, 'Bahan Ajar PDRI KB 6.4', m('s1'));
+    source(p, 'Bahan Ajar PDRI KB 6.3; KMK 55/MK/EF.2/2026', m('bar'));
   }],
 
-  ['skb', 'Contoh SKB', (m, D) => {
+  ['fasilitas', 'Tiga fasilitas', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Dengan SKB PPh Pasal 22, PDRI Kasus 1|tinggal PPN Impor saja', { tag: 'CONTOH FASILITAS · KASUS 1' });
-    const x0 = 420, W = 1000 / (K1_PPN + K1_PPH);
-    [['before', 'Tanpa fasilitas', 330, false], ['after', 'Dengan SKB PPh 22', 530, true]].forEach(([mark, n, y, skb]) => {
-      const g = G(p), t0 = m(mark) - .2;
-      T(g, n, { x: 92, y: y + 8, size: 24, weight: 700, fill: MK.navy });
-      const b1 = mk('rect', { x: x0, y: y - 32, width: 0, height: 64, fill: MK.blue }, g);
-      prog(q => b1.setAttribute('width', K1_PPN * W * q), t0 + .2, .7, out);
-      T(g, 'PPN ' + rp(K1_PPN), { x: x0 + 20, y: y + 8, size: 20, weight: 700, fill: '#fff' });
-      if (!skb) {
-        const b2 = mk('rect', { x: x0 + K1_PPN * W, y: y - 32, width: 0, height: 64, fill: MK.gold }, g);
-        prog(q => b2.setAttribute('width', K1_PPH * W * q), t0 + .9, .4, out);
-      } else {
-        mk('rect', { x: x0 + K1_PPN * W + 2, y: y - 30, width: K1_PPH * W - 4, height: 60, fill: 'none', stroke: MK.faint, 'stroke-width': 2, 'stroke-dasharray': '6 6' }, g);
-        T(g, 'tidak dipungut', { x: x0 + K1_PPN * W + K1_PPH * W / 2, y: y + 7, size: 15, weight: 700, fill: MK.dim, anchor: 'middle' });
-      }
-      T(g, 'PDRI ' + rp(skb ? K1_PPN : K1_PPN + K1_PPH), { x: x0, y: y + 70, size: 22, weight: 800, fill: skb ? MK.goldDark : MK.navy });
-      if (!skb) T(g, 'PPh 22 ' + rp(K1_PPH), { x: x0 + 1000, y: y - 44, size: 17, weight: 700, fill: MK.goldDark, anchor: 'end' });
-      slideUp(g, t0, .4);
+    actionTitle(p, 'Fasilitas mengubah jumlah yang dibayar,|jadi periksa dokumennya sebelum menghitung', { tag: 'FASILITAS PAJAK DALAM RANGKA IMPOR' });
+    [['f1', 'doc', 'gold', 'SKB PPh Pasal 22', 'dari DJP: PPh Pasal 22|tidak dipungut, misalnya karena|rugi fiskal atau lebih bayar', 'PPh 22 Rp0', MK.goldDark],
+     ['f2', 'hand', 'blue', 'PPN tidak dipungut', 'PPN tetap terutang tetapi|tidak dibayar saat impor', 'Pajak masukan dapat dikreditkan', MK.green],
+     ['f3', 'gift', 'sky', 'PPN dibebaskan', 'PPN tidak dibayar dan|tidak terutang', 'Pajak masukan tidak dapat dikreditkan', MK.red]].forEach(([mark, gl, v, n, sub, tag, col], i) => {
+      const x = 92 + i * 482, c = G(p);
+      mcard(c, x, 235, 450, 460);
+      tile(c, gl, x + 90, 320, { size: 96, v });
+      T(c, '0' + (i + 1), { x: x + 410, y: 300, size: 34, weight: 700, fill: MK.line, anchor: 'end' });
+      T(c, n, { x: x + 36, y: 440, size: 28, weight: 700, fill: MK.navy });
+      lines(c, sub, x + 36, 486, { size: 20, weight: 500, fill: MK.dim, lh: 1.35 });
+      const pl = pill(c, tag, x + 36, 628, { size: 16, anchor: 'start', bg: col, ink: '#fff' });
+      slideUp(c, m(mark) - .2, .5);
     });
-    source(p, 'Bahan Ajar PDRI KB 6.4', m('before'));
+    source(p, 'Bahan Ajar PDRI KB 6.4', m('f1'));
+  }],
+
+  ['skb', 'Efek SKB pada Kasus 1', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Dengan SKB PPh Pasal 22, PDRI Kasus 1 turun|dari Rp206,3 juta menjadi Rp168,1 juta', { tag: 'VARIAN KASUS 1 · SKB PPH PASAL 22' });
+    const base = 690, K = 340 / (K1_PPN + K1_PPH);
+    const ax = G(p);
+    mk('rect', { x: 100, y: base, width: 760, height: 3, fill: MK.navy }, ax);
+    show(ax, .4, .3);
+    [['tanpa', 'Tanpa fasilitas', [[K1_PPN, MK.blue, 'PPN'], [K1_PPH, MK.gold, 'PPh 22']], 250],
+     ['dengan', 'Dengan SKB', [[K1_PPN, MK.blue, 'PPN']], 620]].forEach(([mark, n, segs, x]) => {
+      const g = G(p), t0 = m(mark) - .1;
+      let y = base, tot = 0;
+      segs.forEach(([v, col, lab], i) => {
+        const h = v * K, yb = y, y1 = yb - h, r = mk('rect', { x: x - 95, y: yb, width: 190, height: 0, fill: col }, g);
+        prog(q => { r.setAttribute('y', yb - h * q); r.setAttribute('height', h * q); }, t0 + i * .5, .6, out);
+        T(g, lab, { x, y: y1 + h / 2 + 7, size: 19, weight: 700, fill: col === MK.gold ? MK.navy : '#fff', anchor: 'middle' });
+        y = y1; tot += v;
+      });
+      T(g, n, { x, y: base + 38, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+      const l = T(g, rp(tot), { x, y: y - 16, size: 24, weight: 800, fill: MK.navy, anchor: 'middle' });
+      put(l, { o: 0 }); show(l, t0 + 1.2, .3);
+    });
+    const c = G(p);
+    mcard(c, 930, 240, 578, 220);
+    tile(c, 'doc', 1015, 350, { size: 96, v: 'gold' });
+    T(c, 'PPh Pasal 22 tidak dipungut', { x: 1090, y: 330, size: 24, weight: 700, fill: MK.navy });
+    T(c, rp(K1_PPH), { x: 1090, y: 380, size: 34, weight: 800, fill: MK.goldDark });
+    popIn(c, m('dengan') + 1);
+    const d = G(p);
+    mcard(d, 930, 490, 578, 200, { fill: MK.navy });
+    T(d, 'YANG TETAP DIBAYAR', { x: 970, y: 540, size: 15, weight: 700, fill: '#D5E2F5' });
+    T(d, 'PPN Impor', { x: 970, y: 600, size: 26, weight: 600, fill: '#fff' });
+    T(d, rp(K1_PPN), { x: 970, y: 655, size: 40, weight: 800, fill: MK.gold });
+    popIn(d, m('dengan') + 2.2);
+    source(p, 'Bahan Ajar PDRI KB 6.4; KMK 55/MK/EF.2/2026', m('tanpa'));
   }],
 
   ['q2', 'Cek pemahaman', (m, D) => {
     const p = panel(0);
     paper(p);
     actionTitle(p, 'Cek pemahaman: pajak masukan mana yang|masih dapat dikreditkan?', { tag: 'CEK PEMAHAMAN', t0: .1 });
-    [['doc', 'blue', 'PPN tidak dipungut'], ['shield', 'sky', 'PPN dibebaskan'], ['gem', 'gold', 'PPnBM']].forEach(([gl, v, n], i) => {
+    [['doc', 'gold', 'SKB PPh 22', 'PPh tidak dipungut'], ['hand', 'blue', 'PPN tidak dipungut', 'tetap terutang'], ['gift', 'sky', 'PPN dibebaskan', 'tidak terutang']].forEach(([gl, v, n, sub], i) => {
       const c = G(p), y = 250 + i * 150;
-      mcard(c, 92, y, 400, 126);
+      mcard(c, 92, y, 560, 126);
       tile(c, gl, 155, y + 62, { size: 76, v });
-      T(c, n, { x: 210, y: y + 72, size: 24, weight: 700, fill: MK.navy });
+      T(c, n, { x: 210, y: y + 58, size: 26, weight: 700, fill: MK.navy });
+      T(c, sub, { x: 210, y: y + 92, size: 19, weight: 500, fill: MK.dim });
       slideUp(c, .2 + i * .15);
     });
-  }, { ask: done => quiz({ x: 530, y: 200, w: 990, cls: 'side' }, [{
-    id: 'c-kredit', prompt: ['Apakah pajak masukan terkait dapat dikreditkan?'],
-    build: grid([
-      { parts: ['Impor dengan fasilitas PPN tidak dipungut'], ans: ['y'], why: 'PPN tidak dipungut: pajak masukan terkait tetap dapat dikreditkan.' },
-      { parts: ['Impor dengan fasilitas PPN dibebaskan'], ans: ['n'], why: 'PPN dibebaskan: pajak masukan terkait tidak dapat dikreditkan.' },
-      { parts: ['PPnBM atas motor Kasus 2'], ans: ['n'], why: 'PPnBM tidak dapat dikreditkan.' },
-      { parts: ['PPN Impor kain yang dibayar importir PKP'], ans: ['y'], why: 'PPN Impor dikreditkan sebagai pajak masukan (materi keempat).' },
-    ], [['y', 'Dapat', MK.blue, 'y'], ['n', 'Tidak dapat', MK.goldDark, 'n']], { multi: false, text: true }),
+  }, { ask: done => quiz({ x: 700, y: 220, w: 820, cls: 'side' }, [{
+    id: 'c-kredit', prompt: ['Pajak masukan mana yang masih dapat dikreditkan?'],
+    build: choice([['PPN yang tidak dipungut'], ['PPN yang dibebaskan'], ['PPnBM atas barang mewah'], ['PPN barang mewah yang dibebaskan']], 0,
+      'Pada PPN tidak dipungut, PPN tetap terutang, jadi pajak masukannya masih dapat dikreditkan.',
+      [null, 'Pada PPN dibebaskan, pajak masukannya tidak dapat dikreditkan.', 'PPnBM tidak dapat dikreditkan.', 'PPN yang dibebaskan, termasuk atas barang mewah, tidak dapat dikreditkan.']),
   }], done) }],
 
-  ['jawab', 'Jawaban Kasus 2', (m, D) => {
+  ['jawab', 'Jawaban untuk Kasus 2', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Motor besar menanggung PPN penuh dan PPnBM|yang tidak dapat dikreditkan', { tag: 'MENJAWAB PERTANYAAN KASUS 2' });
+    actionTitle(p, 'Jawaban: motor ini barang mewah, dan PPnBM|tidak dapat dikreditkan', { tag: 'MENJAWAB PERTANYAAN KASUS 2' });
     const q = G(p);
     mcard(q, 92, 230, 500, 470);
-    tile(q, 'chat', 175, 310, { size: 96, v: 'gold' });
+    tile(q, 'question', 175, 310, { size: 96, v: 'gold' });
     T(q, 'PERTANYAAN', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
-    lines(q, '“Mengapa pungutan|motor ini lebih dari|dua kali nilai|pabeannya?”', 132, 420, { size: 28, weight: 700, lh: 1.3 });
+    lines(q, 'Mengapa pungutan|satu motor bisa|lebih dari dua kali|nilai pabeannya?', 132, 420, { size: 28, weight: 700, lh: 1.3 });
     slideUp(q, .4);
-    [['a1', 'gem', 'gold', 'PPN 12% penuh + PPnBM 95%', 'karena motor besar tergolong barang mewah'],
-     ['a2', 'cross', 'blue', 'PPnBM tidak dapat dikreditkan', 'jadi benar-benar menjadi beban'],
-     ['a3', 'layers', 'sky', 'Mengatur konsumsi barang mewah', 'fungsi regulerend dan teori daya pikul']].forEach(([mark, gl, v, n, sub], i) => {
+    [['a1', 'gem', 'blue', 'PPN 12% penuh + PPnBM 95%', 'barang mewah: tanpa 11/12|dan ditambah PPnBM'],
+     ['a2', 'hand', 'gold', `${rp(PPNBM)} tidak dikreditkan`, 'PPnBM benar-benar|menjadi beban'],
+     ['a3', 'law', 'sky', 'Mengatur konsumsi barang mewah', 'fungsi regulerend dan|teori daya pikul']].forEach(([mark, gl, v, n, sub], i) => {
       const y = 230 + i * 160, g = G(p);
       mcard(g, 640, y, 868, 140);
       tile(g, gl, 715, y + 70, { size: 80, v, floor: false });
@@ -334,11 +362,11 @@ const BEATS = [
 
   ['wrap', 'Rangkuman', (m, D) => {
     const p = panel(0);
-    navy(p, 11, D);
-    actionTitle(p, 'Rangkuman: PPN penuh plus PPnBM, dan|periksa fasilitas sebelum menghitung', { tag: 'RANGKUMAN BAB 6', dark: true });
-    [['w1', 'gem', 'gold', 'Barang mewah:|PPN 12% × NI,|ditambah PPnBM|sesuai tarifnya'],
-     ['w2', 'cross', 'blue', 'PPnBM tidak|dapat|dikreditkan'],
-     ['w3', 'idcard', 'sky', 'Periksa dokumen|fasilitas sebelum|menghitung']].forEach(([mark, gl, v, str], i) => {
+    navy(p, 9, D);
+    actionTitle(p, 'Rangkuman: PPN 12% penuh ditambah PPnBM,|dan fasilitas mengubah tagihan', { tag: 'RANGKUMAN BAB 6', dark: true });
+    [['w1', 'gem', 'blue', 'PPN barang mewah|12% × nilai impor,|ditambah PPnBM|sesuai tarifnya'],
+     ['w2', 'hand', 'gold', 'PPnBM tidak dapat|dikreditkan:|menjadi beban|importir'],
+     ['w3', 'doc', 'sky', 'Fasilitas mengubah|jumlah yang dibayar:|periksa dokumen|sebelum menghitung']].forEach(([mark, gl, v, str], i) => {
       const x = 92 + i * 482, c = G(p);
       mcard(c, x, 250, 450, 450, { dark: true });
       const strip = mk('rect', { x, y: 250, width: 450, height: 12, rx: 6, fill: MK.gold, 'fill-opacity': 0 }, c);
@@ -349,23 +377,21 @@ const BEATS = [
       tw(c, { o: 1 }, m(mark), .4); pulse(c, m(mark), 1.03);
       prog(q => strip.setAttribute('fill-opacity', q), m(mark), .4, out);
     });
-    source(p, 'NI = nilai impor', .8, true);
   }],
 
   ['final1', 'Latihan bab', (m) => { const p = panel(0); paper(p); }, { ask: done => quiz(SCREEN, [{
-    id: 'p-salah', prompt: [`Latihan 6.1. Temukan kesalahan. Seorang petugas menghitung PPN motor Kasus 2: 12% × 11/12 × ${rp(NI)} = ${rp(PPN_SALAH)}. Di mana kesalahannya?`],
-    build: choice([['Motor tergolong barang mewah, jadi DPP-nya nilai impor penuh, tanpa 11/12'], ['Tarif PPN seharusnya 11%'], ['DPP seharusnya nilai pabean, bukan nilai impor'], ['Tidak ada yang salah']], 0,
-      `Barang mewah memakai PPN 12% × nilai impor. PPN yang benar ${rp(PPN)}.`,
-      [null, 'Tarif PPN 12%. Beban 11% hanya muncul dari DPP 11/12 untuk barang tidak mewah.', 'DPP PPN Impor memakai nilai impor, yaitu nilai pabean ditambah Bea Masuk.', 'Ada: DPP 11/12 tidak berlaku untuk barang mewah.']),
+    id: 'p-temukan-salah', prompt: [`Latihan 6.1. Seorang petugas menghitung PPN motor Kasus 2: 12% × 11/12 × ${rp(NI)} = ${rp(SALAH)}. Motor ini barang mewah. Berapa PPN yang benar?`],
+    build: blanks([{ parts: ['12% × ' + rp(NI) + ' = Rp', { box: idNum(PPN) }],
+      why: `Barang mewah memakai nilai impor penuh: 12% × ${rp(NI)} = ${rp(PPN)}.`, hint: 'Barang mewah tidak memakai 11/12.' }]),
   }, {
-    id: 'p-selisih', prompt: ['Latihan 6.2. Berapa selisih kurang pungut akibat kesalahan itu?'],
-    build: blanks([{ parts: [rp(PPN) + ' − ' + rp(PPN_SALAH) + ' = Rp', { box: idNum(PPN - PPN_SALAH) }],
-      why: `${rp(PPN)} − ${rp(PPN_SALAH)} = ${rp(PPN - PPN_SALAH)}.`, hint: 'Kurangkan PPN yang salah dari PPN yang benar.' }]),
+    id: 'p-selisih', prompt: [`Latihan 6.2. Berapa selisih kurang pungut akibat kesalahan itu?`],
+    build: blanks([{ parts: [rp(PPN) + ' − ' + rp(SALAH) + ' = Rp', { box: idNum(PPN - SALAH) }],
+      why: `${rp(PPN)} − ${rp(SALAH)} = ${rp(PPN - SALAH)}.`, hint: 'Kurangkan PPN yang benar dengan hitungan petugas.' }]),
   }, {
-    id: 'p-skb', prompt: ['Latihan 6.3. PT Kain Prima Nusantara memiliki SKB PPh Pasal 22 yang berlaku. Berapa PDRI Kasus 1?'],
-    build: choice([[rp(K1_PPN) + ', yaitu PPN Impor saja'], [rp(K1_PPN + K1_PPH)], [rp(K1_PPH)], ['Rp0']], 0,
-      `Dengan SKB, PPh Pasal 22 tidak dipungut. PDRI tinggal PPN Impor ${rp(K1_PPN)}.`,
-      [null, 'Itu PDRI tanpa fasilitas. SKB menghapus PPh Pasal 22 dari pungutan.', 'Itu justru PPh Pasal 22 yang tidak dipungut.', 'SKB hanya membebaskan PPh Pasal 22. PPN Impor tetap dipungut.']),
+    id: 'p-efek-skb', prompt: ['Latihan 6.3. Seandainya PT Kain Prima Nusantara memiliki SKB PPh Pasal 22 yang berlaku, berapa PDRI Kasus 1?'],
+    build: choice([[`${rp(K1_PPN)}: hanya PPN Impor`], [`${rp(K1_PPN + K1_PPH)}: PPN dan PPh Pasal 22`], [`${rp(K1_PPH)}: hanya PPh Pasal 22`], ['Rp0: seluruh PDRI tidak dipungut']], 0,
+      `SKB membuat PPh Pasal 22 tidak dipungut. Yang dibayar tinggal PPN Impor: ${rp(K1_PPN)}.`,
+      [null, 'SKB PPh Pasal 22 menghapus PPh yang dipungut, jadi PPh tidak ikut dibayar.', 'SKB berlaku untuk PPh Pasal 22, bukan untuk PPN.', 'SKB tidak membebaskan PPN Impor.']),
   }], done, 'Latihan bab') }],
 
   ['finish', 'Selesai', (m, D) => {
@@ -381,7 +407,7 @@ const BEATS = [
     clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
     tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
     popIn(md, .3);
-    const orb = [['motor', 'blue'], ['gem', 'sky'], ['idcard', 'gold']].map(([gl, v], i) => {
+    const orb = [['gem', 'blue'], ['bike', 'sky'], ['doc', 'gold']].map(([gl, v], i) => {
       const e = tile(p, gl, 0, 0, { size: 64, v, floor: false });
       return { e, a: i * 2.094 };
     });
@@ -393,7 +419,7 @@ const BEATS = [
 ].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
 
 {
-  const NAVY = new Set(['intro', 'ppnbm', 'regul', 'wrap']);
+  const NAVY = new Set(['intro', 'ppnbm', 'wrap']);
   BEATS.forEach((b, i) => {
     if (!i || b.lead === false) return;
     const prev = BEATS[i - 1];

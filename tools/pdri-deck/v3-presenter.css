@@ -1,0 +1,74 @@
+/* ---- v3: panggung 16:9 seragam (seperti PowerPoint), toolbar melayang, mode presentasi ---- */
+.stage{flex:none;align-self:center;margin:auto 0;width:min(calc(100% - 28px),calc((100dvh - 150px)*16/9));aspect-ratio:16/9;height:auto}
+@media (max-width:700px){.stage{width:min(calc(100% - 12px),calc((100dvh - 132px)*16/9))}}
+@media (max-height:500px){.stage{width:min(calc(100% - 16px),calc((100dvh - 80px)*16/9))}}
+.slide.scn>.sc{padding:0;display:block;overflow:hidden}
+.scnw{position:absolute;inset:0;flex:none}
+.scnf{border-radius:0;box-shadow:none;background:transparent}
+.stage:has(.slide.scn):before{opacity:0}
+.cap{position:absolute;right:14px;bottom:14px;z-index:6;display:flex;gap:6px;padding:6px;border-radius:16px;background:rgba(7,30,69,.82);backdrop-filter:blur(6px);box-shadow:0 10px 26px rgba(0,0,0,.3);opacity:0;transition:opacity .35s;flex-wrap:nowrap}
+.stage:hover .cap,.cap:focus-within{opacity:1}
+@media (hover:none){.cap{opacity:.9}}
+.cap .btn.ghost.sm{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.25);color:#fff}
+.cap .btn.ghost.sm:hover{background:rgba(255,255,255,.2);box-shadow:none}
+.cap .btn.tg[aria-pressed=true]{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.hintp{display:none!important}
+.btn.sm#btnProject,#btnProject{padding:9px 16px;font-size:13px;border-radius:14px;white-space:nowrap}
+#btnProject svg{width:18px;height:18px}
+.pmenu{position:fixed;right:14px;top:64px;z-index:150;width:min(340px,calc(100vw - 28px));background:#fff;border:2px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 24px 60px rgba(7,30,69,.35);display:none;gap:12px}
+.pmenu.on{display:grid;animation:fadeIn .25s}
+.pmenu h4{font-size:14px}
+.pmenu label{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.4;cursor:pointer;padding:8px 10px;border-radius:12px;border:2px solid var(--line)}
+.pmenu label:has(input:checked){border-color:var(--gold);background:#FFF8E6}
+.pmenu input{accent-color:var(--navy);margin-top:3px}
+.pmenu small{font-size:11.5px;color:#5b7197;line-height:1.5;display:block}
+.pctl{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:120;display:none;align-items:center;gap:8px;padding:8px 10px;border-radius:99px;background:rgba(7,30,69,.88);backdrop-filter:blur(8px);color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.4);opacity:0;transition:opacity .3s}
+.pctl button{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.12)}
+.pctl button:hover{background:var(--gold)}
+.pctl button:hover svg{stroke:var(--navy)}
+.pctl svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pctl span{font-weight:600;font-size:13px;min-width:64px;text-align:center}
+.zone{position:fixed;top:12%;bottom:12%;width:7%;z-index:110;display:none;cursor:pointer}
+#zL{left:0}#zR{right:0}
+#blk{position:fixed;inset:0;background:#000;z-index:200;display:none;cursor:none}
+#blk.on{display:block}
+html.present body,html.present .app,html.present .main{background:#000}
+html.present .top,html.present .bar,html.present .side,html.present .scrim{display:none!important}
+html.present .app,html.present .app.collapsed{grid-template-columns:minmax(0,1fr)}
+html.present .main{justify-content:center;align-items:center}
+html.present .stage{margin:0;border:0;border-radius:0;box-shadow:none;flex:none;align-self:center;width:min(100vw,calc(100dvh*16/9));height:auto;aspect-ratio:16/9}
+html.present .pctl,html.present .zone{display:flex}
+html.present .pctl{opacity:0;pointer-events:none}
+html.present.awake .pctl{opacity:1;pointer-events:auto}
+html.present .zone{display:block}
+html.present.idle,html.present.idle *{cursor:none}
+html.present .cap{opacity:0}
+html.present.awake .stage:hover .cap{opacity:1}
+html.present .notes{display:none}
+/* jendela presenter */
+html.pv,html.pv body{overflow:auto;background:#0b1f44}
+html.pv .app,html.pv .modal,html.pv .pmenu,html.pv .pctl,html.pv .zone,html.pv #blk{display:none!important}
+#pv{min-height:100dvh;color:#fff;display:flex;flex-direction:column;font-family:'Poppins',system-ui,sans-serif}
+#pv header{display:flex;align-items:center;gap:14px;padding:12px 20px;background:var(--navy-deep);border-bottom:3px solid var(--gold)}
+#pv header b{font-size:15px}.pvt{font-size:22px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
+#pvClock{font-size:14px;color:#a9c2e2}
+#pv main{flex:1;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:18px;padding:18px;min-height:0}
+.pvcur{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.14);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.pvcur small{color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+.pvcur h1{font-size:clamp(20px,2.4vw,30px);line-height:1.25}
+.pvnotes{flex:1;overflow:auto;line-height:1.7;color:#dbe8fa;white-space:pre-wrap;border-top:1px solid rgba(255,255,255,.14);padding-top:12px}
+#pv aside{display:flex;flex-direction:column;gap:12px;min-height:0}
+.pvnext{background:linear-gradient(160deg,#fff,#e8f2fd);color:var(--navy);border-radius:20px;padding:16px}
+.pvnext small{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.pvnext b{display:block;margin-top:4px;font-size:17px;line-height:1.35}
+.pvctl{display:flex;gap:8px;flex-wrap:wrap}.pvctl .btn{flex:1}
+#pv .btn.ghost{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
+#pv .btn.on{background:var(--gold);color:var(--navy)}
+.pvcount{font-size:12.5px;color:#a9c2e2;font-weight:600}
+.pvlist{flex:1;overflow:auto;display:grid;gap:4px;align-content:start;min-height:160px;max-height:46dvh;padding-right:4px}
+.pvlist button{display:flex;gap:8px;text-align:left;padding:7px 10px;border-radius:10px;font-size:12.5px;line-height:1.35;color:#cfe0f5}
+.pvlist button span{flex:none;min-width:34px;font-weight:700;color:var(--gold)}
+.pvlist button:hover{background:rgba(255,255,255,.1)}
+.pvlist button.on{background:var(--gold);color:var(--navy)}.pvlist button.on span{color:var(--navy)}
+@media (max-width:800px){#pv main{grid-template-columns:1fr}}
+@media (max-width:700px){.plbl{display:none}#btnProject{padding:9px 11px;border-radius:12px}}

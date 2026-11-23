@@ -128,9 +128,10 @@ const BEATS = [
     T(c, 'PASAL 23A UUD 1945', { x: 240, y: 315, size: 22, weight: 700, fill: MK.goldDark });
     T(c, 'konstitusi', { x: 240, y: 345, size: 19, weight: 500, fill: MK.dim });
     mk('rect', { x: 132, y: 392, width: 780, height: 2, fill: MK.line }, c);
-    lines(c, '“Pajak dan pungutan lain yang bersifat|memaksa untuk keperluan negara diatur|dengan undang-undang.”', 132, 450, { size: 31, weight: 600, lh: 1.4 });
+    lines(c, '“Pajak dan pungutan lain yang bersifat|memaksa untuk keperluan negara diatur', 132, 450, { size: 31, weight: 600, lh: 1.4 });
+    const em = T(c, 'dengan undang-undang.”', { x: 132, y: 450 + 2 * 31 * 1.4, size: 31, weight: 600, fill: MK.navy });
     slideUp(c, m('uud') - .3);
-    const mk2 = marker(p, 132 + 0, 512, 250, m('uud') + 4.5, 34);
+    prog(q => em.setAttribute('fill', q > 0 ? MK.goldDark : MK.navy), m('uud') + 4.5, .3, out);   // penekanan: huruf gold, bukan highlight
     // who sets it, and what follows
     const steps = [['users', 'gold', 'DPR dan Presiden', 'menetapkan', 290, m('dpr')], ['doc', 'blue', 'Undang-undang', 'kewajiban pajak', 470, m('dpr') + 1.6], ['shield', 'sky', 'Wewenang memaksa', 'importir wajib membayar', 650, m('force')]];
     steps.forEach(([gl, v, a, b, y, t0], i) => {

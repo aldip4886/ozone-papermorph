@@ -2872,11 +2872,6 @@ const GLYPH = {
   server: 'M4 4h16v6H4z M4 14h16v6H4z M8 7h.01 M8 17h.01 M12 7h5 M12 17h5',
   hand: 'M7 11V5a1.5 1.5 0 0 1 3 0v5 M10 10V3.5a1.5 1.5 0 0 1 3 0V10 M13 10V5a1.5 1.5 0 0 1 3 0v6 M16 9a1.5 1.5 0 0 1 3 0v4c0 4.5-3 8-7.5 8S5 18 4 15l-1.5-3.5a1.5 1.5 0 0 1 2.7-1.3L7 13',
   map: 'M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z M9 3v15 M15 6v15',
-  motor: 'M5.5 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M18.5 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M5.5 16h5.5l3-5.5h3l1.5 5.5 M14 10.5l-1.5-3.5h-2.5 M16.5 7h2.5',
-  box: 'M3 7.5l9-4.5 9 4.5v9l-9 4.5-9-4.5z M3 7.5l9 4.5 9-4.5 M12 12v9 M7.5 5.25l9 4.5',
-  shoe: 'M3 17v-6l4-1 3 3h4l5.5 1.8a2.5 2.5 0 0 1 1.5 2.3V17z M3 20h18 M9 13l1.5-1.5 M12 13l1.5-1.5',
-  headphones: 'M4 15v-3a8 8 0 0 1 16 0v3 M4 15h3v5H4z M17 15h3v5h-3z',
-  watch: 'M12 17a5 5 0 1 0 0-10a5 5 0 1 0 0 10z M12 10v2l1.5 1.5 M9 7.5L9.5 3h5l.5 4.5 M9 16.5l.5 4.5h5l.5-4.5',
 };
 const LEDGE = { gold: '#C8901A', blue: '#003A73', sky: '#1F6FAE' };
 /* tile: centred on (x, y), `size` px wide (design: 90-110 in cards, 56-72 in small flows -> 75-92 / 47-60) */
@@ -3481,9 +3476,10 @@ const BEATS = [
     T(c, 'PASAL 23A UUD 1945', { x: 240, y: 315, size: 22, weight: 700, fill: MK.goldDark });
     T(c, 'konstitusi', { x: 240, y: 345, size: 19, weight: 500, fill: MK.dim });
     mk('rect', { x: 132, y: 392, width: 780, height: 2, fill: MK.line }, c);
-    lines(c, '“Pajak dan pungutan lain yang bersifat|memaksa untuk keperluan negara diatur|dengan undang-undang.”', 132, 450, { size: 31, weight: 600, lh: 1.4 });
+    lines(c, '“Pajak dan pungutan lain yang bersifat|memaksa untuk keperluan negara diatur', 132, 450, { size: 31, weight: 600, lh: 1.4 });
+    const em = T(c, 'dengan undang-undang.”', { x: 132, y: 450 + 2 * 31 * 1.4, size: 31, weight: 600, fill: MK.navy });
     slideUp(c, m('uud') - .3);
-    const mk2 = marker(p, 132 + 0, 512, 250, m('uud') + 4.5, 34);
+    prog(q => em.setAttribute('fill', q > 0 ? MK.goldDark : MK.navy), m('uud') + 4.5, .3, out);   // penekanan: huruf gold, bukan highlight
     // who sets it, and what follows
     const steps = [['users', 'gold', 'DPR dan Presiden', 'menetapkan', 290, m('dpr')], ['doc', 'blue', 'Undang-undang', 'kewajiban pajak', 470, m('dpr') + 1.6], ['shield', 'sky', 'Wewenang memaksa', 'importir wajib membayar', 650, m('force')]];
     steps.forEach(([gl, v, a, b, y, t0], i) => {

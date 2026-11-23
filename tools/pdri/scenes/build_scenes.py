@@ -21,7 +21,7 @@ head, body = html.split('<script>\n', 1)
 script = body.rsplit('</script>', 1)[0]
 for im in set(re.findall(r"IMG \+ '([\w.-]+)'", script)):
     script = script.replace(f"IMG + '{im}'", repr(b64(L/'img'/im, 'image/png' if im.endswith('png') else 'image/jpeg')))
-ids = re.findall(r"^  \['([a-z0-9]+)', '([^']*)'", script, re.M)
+ids = re.findall(r"^  \['([A-Za-z0-9]+)', '([^']*)'", script, re.M)
 oldc = re.search(r"^const CHAPTER = \{.*\};$", script, re.M).group(0)
 esc = lambda s: s.replace('</script', '<\\/script')
 names = [f'{k+1:02d}-{bid}.html' for k, (bid, _) in enumerate(ids)]

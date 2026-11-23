@@ -1,0 +1,13 @@
+{
+ "intro": [["sub", "Pada materi keenam"]],
+ "ask": [["ask", "Kali ini kita pakai"], ["ans", "Nanti kita akan lihat"]],
+ "mewah": [["kain", "Mulai dari PPN"], ["motor", "Barang yang tergolong mewah berbeda"], ["dasar", "Ini juga diatur"]],
+ "ppnbm": [["c1", "Selain PPN"], ["c2", "PPnBM dikenakan satu kali"], ["c3", "Dan berbeda dengan PPN"]],
+ "tarifbm": [["t60", "Sepeda motor dua ratus lima puluh"], ["t95", "Sepeda motor di atas lima ratus"]],
+ "hitung": [["np", "Mari kita hitung"], ["bm", "Bea Masuknya"], ["ni", "Nilai impornya"], ["ppn", "Dari nilai impor itu"], ["ppnbm", "PPnBM sembilan puluh lima"], ["pph", "PPh Pasal dua puluh dua sepuluh"], ["tot", "Total PDRI-nya"]],
+ "regul": [["bar", "Total pungutan tujuh ratus"], ["reg", "Untuk menjelaskannya"], ["daya", "Dan teori daya pikul"]],
+ "fasilitas": [["f1", "Surat Keterangan Bebas"], ["f2", "PPN tidak dipungut berarti"], ["f3", "PPN dibebaskan berarti"]],
+ "skb": [["tanpa", "Contohnya begini"], ["dengan", "Kalau PT Kain Prima"]],
+ "jawab": [["a1", "Karena motor ini"], ["a2", "PPnBM tidak dapat dikreditkan, jadi"], ["a3", "Tujuannya"]],
+ "wrap": [["w1", "Untuk barang mewah"], ["w2", "PPnBM tidak dapat dikreditkan."], ["w3", "Fasilitas mengubah"]]
+}

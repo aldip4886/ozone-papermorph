@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bab 7 · Barang Kiriman</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/mck.js"></script>
+<script src="audio/id/timings.js"></script>
+<script>
+'use strict';
+/* Bab 7 (KB 7): Barang Kiriman. Kasus 3 (Dita, dua paket belanja daring): ambang nilai FOB, komoditas bertarif khusus,
+   perbedaan dengan impor umum, dan hitungan paket earbuds dan sepatu. McKinsey-style exhibits in the INSW design. */
+const CHAPTER = { number: 7, title: 'Barang Kiriman', minutes: 5, language: 'id' };
+
+Object.assign(GLYPH, {
+  pack: 'M3 7l9-4 9 4v10l-9 4-9-4z M3 7l9 4 9-4 M12 11v10',
+  shoe: 'M2 17v-3l5-1 3-4 3 3h4c2 0 4 1 4 3v2z M2 17h20 M10 9l1.5 1.5',
+  phones: 'M4 15v-3a8 8 0 0 1 16 0v3 M4 15h3v5H4z M17 15h3v5h-3z',
+  watch: 'M12 17a5 5 0 1 0 0-10a5 5 0 1 0 0 10z M12 10v2.5l1.5 1 M9 7l.5-4h5l.5 4 M9 17l.5 4h5l.5-4',
+  bag: 'M5 8h14l1 13H4z M9 8V6a3 3 0 0 1 6 0v2',
+  bike: 'M6 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M18 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M6 16l4-7h5l3 7 M9 9l-1-2H6 M13 9l-1-3h3',
+});
+const paper = p => bgPaper(p);
+const okTick = (p, x, y, r = 20, col = MK.green) => {
+  const ok = G(p, { x, y });
+  mk('circle', { r, fill: col }, ok);
+  path(ok, `M${-r * .45} ${r * .05}l${r * .3} ${r * .3}l${r * .6} ${-r * .6}`, { stroke: '#fff', 'stroke-width': r * .22, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  return ok;
+};
+const navy = (p, seed, D) => bgNavy(p, seed, D);
+// Kasus 3 numbers (KB 7.4 dan 7.5), dibulatkan ke rupiah per komponen
+const KURS = 18155, r0 = Math.round;
+const A = { cif: 40, np: 40 * KURS }; A.bm = r0(A.np * .075); A.ni = A.np + A.bm; A.ppn = r0(A.ni * .11); A.tot = A.bm + A.ppn;          // 726.200 · 54.465 · 780.665 · 85.873 · 140.338
+const B = { cif: 95, np: 95 * KURS }; B.bm = r0(B.np * .25); B.ni = r0(B.np + B.np * .25); B.ppn = r0(B.ni * .11); B.pph = r0(B.ni * .05); B.tot = B.bm + B.ppn + B.pph;   // 1.724.725 · 431.181 · 2.155.906 · 237.150 · 107.795 · 776.126
+const pct = v => String(v).replace('.', ',') + '%';
+// tabel hitung: baris [tanda, nama, cara, nilai, sorot]
+function calcTable(p, m, rows) {
+  const H = G(p);
+  T(H, 'KOMPONEN', { x: 92, y: 246, size: 15, weight: 700, fill: MK.dim });
+  T(H, 'CARA HITUNG', { x: 560, y: 246, size: 15, weight: 700, fill: MK.dim });
+  T(H, 'RUPIAH', { x: 1508, y: 246, size: 15, weight: 700, fill: MK.dim, anchor: 'end' });
+  mk('rect', { x: 92, y: 258, width: 1416, height: 3, fill: MK.navy }, H);
+  show(H, .4, .4);
+  rows.forEach(([mark, n, how, v, hot], i) => {
+    const y = 280 + i * 62, g = G(p), t0 = m(mark) - .2, last = i === rows.length - 1;
+    if (hot) mk('rect', { x: 84, y, width: 1432, height: 54, rx: 10, fill: last ? MK.navy : '#EAF2FB' }, g);
+    T(g, n, { x: 104, y: y + 36, size: 24, weight: 700, fill: last ? '#fff' : MK.navy });
+    T(g, how, { x: 560, y: y + 36, size: 21, weight: 500, fill: last ? '#D5E2F5' : MK.dim });
+    T(g, typeof v === 'number' ? rp(v) : v, { x: 1496, y: y + 38, size: last ? 32 : 26, weight: 800, fill: last ? MK.gold : MK.navy, anchor: 'end' });
+    slideUp(g, t0, .45);
+  });
+}
+
+/* ---------- beats ---------- */
+const BEATS = [
+  ['intro', 'Barang Kiriman', (m, D) => {
+    const p = panel(0);
+    navy(p, 71, D);
+    const ring = G(p, { x: 1130, y: 470 });
+    mk('circle', { r: 250, fill: 'none', stroke: MK.sky, 'stroke-width': 3, 'stroke-opacity': .6, 'stroke-dasharray': '6 10' }, ring);
+    path(ring, 'M-270 0A270 270 0 0 1 0 -270', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
+    path(ring, 'M270 0A270 270 0 0 1 0 270', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
+    clockRun(t => ring.setAttribute('transform', `translate(1130 470) rotate(${t * 6})`), D, { tail: true });
+    const mid = G(p, { x: 1130, y: 470 });
+    mk('circle', { r: 150, fill: '#fff' }, mid);
+    tile(mid, 'pack', 0, -18, { size: 150, v: 'sky' });
+    T(mid, 'Paket', { y: 92, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
+    popIn(mid, .3);
+    [['user', 'gold', 'Dita'], ['phones', 'blue', 'Earbuds'], ['shoe', 'sky', 'Sneakers'], ['cart', 'gold', 'Belanja daring'], ['globe', 'blue', 'Luar negeri'], ['doc', 'sky', 'CN atau PIBK']].forEach(([gl, v, n], k) => {
+      const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 250 * Math.cos(a), y = 470 + 250 * Math.sin(a);
+      const g = G(p);
+      tile(g, gl, x, y, { size: 84, v, floor: false });
+      pill(g, n, x, y + 60, { size: 16, bg: '#fff', ink: MK.navy });
+      popIn(g, m('sub') + .3 + k * .22);
+    });
+    const part = pill(p, 'BAGIAN II · MENGHITUNG, MEMERIKSA, MENJELASKAN', 92, 240, { size: 16, anchor: 'start', bg: MK.navy2, ink: '#D5E2F5' });
+    slideUp(part, m('sub'));
+    const tg = pill(p, 'BAB 7 · KEGIATAN BELAJAR 7', 92, 290, { size: 20, anchor: 'start' });
+    slideUp(tg, .5);
+    const t1 = T(p, 'Barang', { x: 92, y: 392, size: 70, weight: 700, fill: '#fff' });
+    const t2 = T(p, 'Kiriman', { x: 92, y: 474, size: 70, weight: 700, fill: MK.gold });
+    slideUp(t1, .7); slideUp(t2, .85);
+    const rule = mk('rect', { x: 92, y: 512, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
+    prog(q => rule.setAttribute('width', 120 * q), 1.2, .5, out);
+    const sub = G(p);
+    lines(sub, 'Paket belanja daring lewat|jasa titipan atau pos', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
+    slideUp(sub, 1.3);
+  }],
+
+  ['ask', 'Kasus 3: dua paket Dita', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Kasus 3: dua paket belanja daring Dita|dikenai pungutan yang berbeda jauh', { tag: 'KASUS 3 · DITA, BEKASI' });
+    [['phones', 'sky', 'PAKET A · EARBUDS', 'FOB USD 30', 'CIF USD 40', 92], ['shoe', 'gold', 'PAKET B · SEPATU SNEAKERS', 'FOB USD 80', 'CIF USD 95', 442]].forEach(([gl, v, lab, fob, cif, x], i) => {
+      const c = G(p);
+      mcard(c, x, 230, 330, 330);
+      tile(c, gl, x + 165, 330, { size: 110, v });
+      T(c, lab, { x: x + 165, y: 430, size: 15, weight: 700, fill: MK.dim, anchor: 'middle' });
+      T(c, fob, { x: x + 165, y: 480, size: 32, weight: 800, fill: MK.navy, anchor: 'middle' });
+      T(c, cif, { x: x + 165, y: 520, size: 21, weight: 600, fill: MK.dim, anchor: 'middle' });
+      slideUp(c, .4 + i * .3, .5);
+    });
+    const via = G(p);
+    mcard(via, 92, 590, 680, 110, { fill: '#EAF2FB' });
+    tile(via, 'office', 160, 645, { size: 70, v: 'blue', floor: false });
+    T(via, 'Dikirim lewat Perusahaan Jasa Titipan (PJT)', { x: 215, y: 655, size: 22, weight: 700, fill: MK.navy });
+    slideUp(via, m('ask') + 3.5);
+    const a = G(p);
+    mcard(a, 820, 230, 688, 470, { fill: MK.navy });
+    tile(a, 'chat', 905, 320, { size: 90, v: 'gold' });
+    T(a, 'PERTANYAAN DITA', { x: 975, y: 315, size: 16, weight: 700, fill: '#D5E2F5' });
+    lines(a, '“Saya beli sepatu sekitar|Rp1,7 juta. Mengapa|tagihannya hampir|Rp780 ribu?”', 870, 420, { size: 34, weight: 700, fill: '#fff', lh: 1.3 });
+    show(a, m('ans') - .2, .4);
+    source(p, 'Bahan Ajar PDRI, Kasus yang Dipakai dan KB 7', m('ask') + 1);
+  }],
+
+  ['hukum', 'Dasar hukum barang kiriman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Barang kiriman punya aturan sendiri:|PMK 96/2023, terakhir diubah PMK 4/2025', { tag: 'DASAR HUKUM BARANG KIRIMAN' });
+    [['p96', 'law', 'blue', 'PMK 96 Tahun 2023', 'ketentuan barang kiriman', 92], ['p4', 'doc', 'gold', 'PMK 4 Tahun 2025', 'perubahan terakhir', 842]].forEach(([mark, gl, v, n, sub, x], i) => {
+      const c = G(p);
+      mcard(c, x, 250, 666 - (i ? 0 : 0), 190, { fill: i ? '#FFF7E3' : '#fff' });
+      tile(c, gl, x + 85, 345, { size: 96, v });
+      T(c, n, { x: x + 160, y: 335, size: 31, weight: 800, fill: MK.navy });
+      T(c, sub, { x: x + 160, y: 378, size: 21, weight: 500, fill: MK.dim });
+      slideUp(c, m(mark) - .2, .5);
+    });
+    const ar = G(p);
+    flow(ar, 'M760 345H830', MK.gold, m('p4') - .3, .3, 5);
+    mkHead(ar, 836, 345, 0, MK.gold, m('p4'), 14);
+    show(ar, m('p4') - .3, .2);
+    [['Jemaah haji', 'pelonggaran untuk barang kiriman jemaah haji', 'users', 'sky'], ['Hadiah internasional', 'pelonggaran untuk hadiah perlombaan atau penghargaan internasional', 'medal', 'gold']].forEach(([n, sub, gl, v], i) => {
+      const c = G(p), x = 92 + i * 750;
+      mcard(c, x, 480, 716, 190);
+      tile(c, gl, x + 85, 575, { size: 90, v, floor: false });
+      pill(c, 'KELONGGARAN ' + (i + 1), x + 160, 530, { size: 14, anchor: 'start', bg: MK.navy, ink: '#fff' });
+      T(c, n, { x: x + 160, y: 580, size: 28, weight: 700, fill: MK.navy });
+      lines(c, sub.replace(' untuk ', ' untuk|'), x + 160, 616, { size: 18, weight: 500, fill: MK.dim });
+      slideUp(c, m('lon') - .2 + i * .8, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 7.1; PMK 96 Tahun 2023 s.d. PMK 4 Tahun 2025', m('p96'));
+  }],
+
+  ['ambang', 'Tiga batas nilai FOB', (m, D) => {
+    const p = panel(0);
+    navy(p, 73, D);
+    actionTitle(p, 'Pungutan ditentukan nilai FOB per kiriman:|tiga batas, makin tinggi makin penuh', { tag: 'BATAS NILAI FOB', dark: true });
+    [['s1', 'Sampai USD 3', 250, 'BM dibebaskan', 'PPh dikecualikan', 'PPN efektif 11%', 'sky'],
+     ['s2', 'USD 3 sampai USD 1.500', 340, 'BM 7,5%', 'PPh dikecualikan', 'PPN efektif 11%', 'blue'],
+     ['s3', 'Di atas USD 1.500', 430, 'Tarif umum', 'seperti impor biasa', 'PIB dan PPh Pasal 22', 'gold']].forEach(([mark, n, h, l1, l2, l3, v], i) => {
+      const x = 92 + i * 482, y = 690 - h, c = G(p);
+      mcard(c, x, y, 450, h, { dark: true });
+      if (i === 2) mk('rect', { x, y, width: 450, height: 12, rx: 6, fill: MK.gold }, c);
+      T(c, n, { x: x + 30, y: y + 52, size: 25, weight: 800, fill: MK.navy });
+      [l1, l2, l3].forEach((l, k) => {
+        okTick(c, x + 44, y + 100 + k * 50, 14, k === 0 ? MK.goldDark : MK.green);
+        T(c, l, { x: x + 76, y: y + 108 + k * 50, size: 22, weight: 600, fill: MK.navy });
+      });
+      popIn(c, m(mark) - .1);
+    });
+    source(p, 'Bahan Ajar PDRI KB 7.2; PMK 96 Tahun 2023', .8, true);
+  }],
+
+  ['komoditas', 'Komoditas bertarif khusus', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Delapan kelompok komoditas dikenai tarif yang|berbeda dari tarif tunggal 7,5%', { tag: 'KOMODITAS TERTENTU' });
+    [['bag', 'gold', 'Tas'], ['shirt', 'blue', 'Produk tekstil'], ['shoe', 'gold', 'Alas kaki'], ['bike', 'sky', 'Sepeda'],
+     ['watch', 'blue', 'Jam tangan'], ['heart', 'sky', 'Kosmetik'], ['layers', 'gold', 'Besi dan baja'], ['book', 'blue', 'Buku']].forEach(([gl, v, n], i) => {
+      const x = 92 + (i % 4) * 215, y = 235 + Math.floor(i / 4) * 185, c = G(p), hot = n === 'Alas kaki';
+      mcard(c, x, y, 195, 165, { fill: hot ? '#FFF7E3' : '#fff' });
+      if (hot) mk('rect', { x, y, width: 195, height: 165, rx: 15, fill: 'none', stroke: MK.gold, 'stroke-width': 3 }, c);
+      tile(c, gl, x + 97, y + 62, { size: 76, v });
+      T(c, n, { x: x + 97, y: y + 132, size: 19, weight: 700, fill: MK.navy, anchor: 'middle' });
+      popIn(c, m('k8') + i * .12);
+    });
+    const k = G(p);
+    mcard(k, 980, 235, 528, 350, { fill: MK.navy });
+    tile(k, 'shoe', 1070, 335, { size: 100, v: 'gold' });
+    T(k, 'UNTUK LATIHAN: ALAS KAKI', { x: 1140, y: 320, size: 15, weight: 700, fill: '#D5E2F5' });
+    T(k, 'BM 25%', { x: 1020, y: 460, size: 62, weight: 800, fill: MK.gold });
+    T(k, 'PPh 5%', { x: 1020, y: 540, size: 62, weight: 800, fill: '#fff' });
+    popIn(k, m('kaki'));
+    const n = G(p);
+    lines(n, 'Angka ini untuk latihan; cocokkan dengan|tabel resmi DJBC sebelum kelas.', 92, 650, { size: 21, weight: 500, fill: MK.dim });
+    show(n, m('kaki') + 3, .4);
+    source(p, 'Bahan Ajar PDRI KB 7.2; PMK 96 Tahun 2023 dan perubahannya', m('k8'));
+  }],
+
+  ['q1', 'Cek pemahaman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cek pemahaman: ketentuan mana yang berlaku|untuk paket berikut?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['phones', 'sky', 'Paket earbuds', 'FOB USD 100'], ['pack', 'gold', 'Lewat PJT', 'bukan impor umum'], ['percent', 'blue', 'Ketentuan', '?']].forEach(([gl, v, n, sub], i) => {
+      const c = G(p), y = 250 + i * 150;
+      mcard(c, 92, y, 440, 126);
+      tile(c, gl, 155, y + 62, { size: 76, v });
+      T(c, n, { x: 210, y: y + 58, size: 26, weight: 700, fill: MK.navy });
+      T(c, sub, { x: 210, y: y + 92, size: 19, weight: 500, fill: MK.dim });
+      slideUp(c, .2 + i * .15);
+    });
+  }, { ask: done => quiz({ x: 570, y: 220, w: 950, cls: 'side' }, [{
+    id: 'c-ambang', prompt: ['Sebuah paket earbuds bernilai FOB USD 100 dikirim lewat PJT. Ketentuan mana yang berlaku?'],
+    build: choice([['Bea Masuk 7,5%, PPh dikecualikan, PPN efektif 11%'], ['Bea Masuk dibebaskan, hanya PPN efektif 11%'], ['Tarif umum seperti impor biasa dengan PIB'], ['Bea Masuk 25% dan PPh 5%']], 0,
+      'FOB di atas USD 3 sampai USD 1.500: Bea Masuk 7,5%, PPh dikecualikan, PPN efektif 11%.',
+      [null, 'Pembebasan Bea Masuk hanya untuk FOB sampai USD 3.', 'Tarif umum berlaku untuk FOB di atas USD 1.500.', 'Tarif 25% dan 5% untuk komoditas alas kaki, bukan earbuds.']),
+  }], done) }],
+
+  ['beda', 'Barang kiriman dan impor umum', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Barang kiriman memakai dokumen, pengurus, dan tarif|yang berbeda dari impor umum', { tag: 'BANDINGAN' });
+    const H = G(p);
+    T(H, 'IMPOR UMUM', { x: 600, y: 250, size: 17, weight: 800, fill: MK.dim, anchor: 'middle' });
+    T(H, 'BARANG KIRIMAN', { x: 1210, y: 250, size: 17, weight: 800, fill: MK.goldDark, anchor: 'middle' });
+    mk('rect', { x: 92, y: 266, width: 1416, height: 3, fill: MK.navy }, H);
+    show(H, .4, .4);
+    [['r1', 'doc', 'blue', 'Dokumen', 'PIB', 'Consignment Note (CN) atau PIBK'],
+     ['r2', 'users', 'sky', 'Yang mengurus', 'Importir atau PPJK', 'PJT atau penyelenggara pos'],
+     ['r3', 'percent', 'gold', 'Bea Masuk', 'Tarif BTKI', 'Tarif tunggal 7,5%'],
+     ['r4', 'coins', 'blue', 'PPh Pasal 22', 'Tarif PMK 51/2025', 'Dikecualikan sampai USD 1.500']].forEach(([mark, gl, v, n, a, b], i) => {
+      const y = 290 + i * 100, g = G(p);
+      if (i) mk('rect', { x: 92, y: y - 6, width: 1416, height: 1.5, fill: MK.line }, g);
+      tile(g, gl, 135, y + 44, { size: 64, v, floor: false });
+      T(g, n, { x: 185, y: y + 54, size: 25, weight: 700, fill: MK.navy });
+      T(g, a, { x: 600, y: y + 54, size: 24, weight: 600, fill: MK.dim, anchor: 'middle' });
+      mk('rect', { x: 880, y: y + 8, width: 660 - 32, height: 72, rx: 14, fill: '#FFF7E3' }, g);
+      T(g, b, { x: 1210, y: y + 54, size: 24, weight: 700, fill: MK.navy, anchor: 'middle' });
+      slideUp(g, m(mark) - .2, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 7.3', m('r1'));
+  }],
+
+  ['paketA', 'Hitung paket A: earbuds', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, `Paket A, earbuds: total pungutan ${rp(A.tot)}`, { tag: 'MENGHITUNG PAKET A · KASUS 3' });
+    calcTable(p, m, [
+      ['np', 'Nilai pabean (CIF)', 'USD 40 × Rp18.155', A.np, false],
+      ['bm', 'Bea Masuk', '7,5% × nilai pabean', A.bm, false],
+      ['ni', 'Nilai impor', 'nilai pabean + Bea Masuk', A.ni, true],
+      ['ppn', 'PPN', 'beban efektif 11% × nilai impor', A.ppn, false],
+      ['pph', 'PPh Pasal 22', 'dikecualikan (FOB sampai USD 1.500)', 'Rp0', false],
+      ['tot', 'Total pungutan', 'Bea Masuk + PPN', A.tot, true],
+    ]);
+    source(p, 'Bahan Ajar PDRI KB 7.4; KMK 55/MK/EF.2/2026', m('np'));
+  }],
+
+  ['paketB', 'Hitung paket B: sepatu', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, `Paket B, sepatu: total pungutan ${rp(B.tot)}`, { tag: 'MENGHITUNG PAKET B · KASUS 3' });
+    calcTable(p, m, [
+      ['np', 'Nilai pabean (CIF)', 'USD 95 × Rp18.155', B.np, false],
+      ['bm', 'Bea Masuk alas kaki', '25% × nilai pabean', B.bm, false],
+      ['ni', 'Nilai impor', 'nilai pabean + Bea Masuk', B.ni, true],
+      ['ppn', 'PPN', 'beban efektif 11% × nilai impor', B.ppn, false],
+      ['pph', 'PPh Pasal 22', '5% × nilai impor', B.pph, false],
+      ['tot', 'Total pungutan', 'BM + PPN + PPh 22', B.tot, true],
+    ]);
+    const note = G(p);
+    T(note, 'Angka belum dibulatkan; pembulatan mengikuti ketentuan pengisian dokumen. BM 25% dan PPh 5% adalah asumsi latihan.', { x: 92, y: 716, size: 17, weight: 500, fill: MK.dim });
+    show(note, m('tot') + 1, .4);
+    source(p, 'Bahan Ajar PDRI KB 7.4; KMK 55/MK/EF.2/2026', m('np'));
+  }],
+
+  ['banding', 'Membandingkan dua paket', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Pungutan earbuds sekitar 19% dari nilai pabean,|pungutan sepatu sekitar 45%', { tag: 'MEMBACA ANGKANYA · KASUS 3' });
+    const base = 640, K = 330 / B.np;
+    const ax = G(p);
+    mk('rect', { x: 100, y: base, width: 780, height: 3, fill: MK.navy }, ax);
+    show(ax, .4, .3);
+    [['a', 'Earbuds', A, 220, [[A.bm, MK.sky, 'BM'], [A.ppn, MK.blue, 'PPN']], '19%'],
+     ['b', 'Sepatu', B, 640, [[B.bm, MK.sky, 'BM'], [B.ppn, MK.blue, 'PPN'], [B.pph, MK.gold, 'PPh']], '45%']].forEach(([mark, n, d, cx, segs, pc], i) => {
+      const t0 = m(mark) - .1, g = G(p);
+      const hp = d.np * K, r1 = mk('rect', { x: cx - 120, y: base, width: 100, height: 0, fill: MK.line }, g);
+      prog(q => { r1.setAttribute('y', base - hp * q); r1.setAttribute('height', hp * q); }, t0, .7, out);
+      let yy = base;
+      segs.forEach(([v, col, lab], k) => {
+        const h = Math.max(v * K, 2), yb = yy, r = mk('rect', { x: cx - 10, y: yb, width: 100, height: 0, fill: col }, g);
+        yy = yb - h;
+        prog(q => { r.setAttribute('y', yb - h * q); r.setAttribute('height', h * q); }, t0 + .6 + k * .3, .4, out);
+      });
+      T(g, n, { x: cx, y: base + 36, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+      T(g, 'pabean | pungutan'.replace('|', '·'), { x: cx, y: base + 62, size: 15, weight: 500, fill: MK.dim, anchor: 'middle' });
+      const l1 = T(g, rp(d.np), { x: cx - 70, y: base - hp - 14, size: 17, weight: 700, fill: MK.dim, anchor: 'middle' });
+      const l2 = T(g, rp(d.tot), { x: cx + 40, y: yy - 14, size: 17, weight: 800, fill: MK.navy, anchor: 'middle' });
+      put(l1, { o: 0 }); put(l2, { o: 0 }); show(l1, t0 + .7, .3); show(l2, t0 + 1.5, .3);
+      const b = pill(g, pc, cx + 40, yy - 52, { size: 24, bg: i ? MK.gold : MK.sky, ink: MK.navy });
+      popIn(b, t0 + 1.7);
+    });
+    const c = G(p);
+    mcard(c, 930, 240, 578, 450, { fill: MK.navy });
+    tile(c, 'shoe', 1015, 335, { size: 96, v: 'gold' });
+    T(c, 'PENYEBABNYA', { x: 1085, y: 320, size: 15, weight: 700, fill: '#D5E2F5' });
+    lines(c, 'Tarif khusus alas kaki', 1085, 362, { size: 26, weight: 700, fill: '#fff' });
+    lines(c, 'Bea Masuk 25% ditambah PPh,|untuk melindungi industri|alas kaki dalam negeri.', 970, 470, { size: 24, weight: 600, fill: '#fff', lh: 1.4 });
+    popIn(c, m('why'));
+    source(p, 'Bahan Ajar PDRI KB 7.4; KMK 55/MK/EF.2/2026', m('a'));
+  }],
+
+  ['q2', 'Cek pemahaman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cek pemahaman: pungutan apa saja pada|paket sepatu Dita?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['shoe', 'gold', 'Paket B', 'sepatu sneakers'], ['tag', 'blue', 'Komoditas', 'alas kaki'], ['coins', 'sky', 'Pungutan', '?']].forEach(([gl, v, n, sub], i) => {
+      const c = G(p), y = 250 + i * 150;
+      mcard(c, 92, y, 500, 126);
+      tile(c, gl, 155, y + 62, { size: 76, v });
+      T(c, n, { x: 210, y: y + 58, size: 26, weight: 700, fill: MK.navy });
+      T(c, sub, { x: 210, y: y + 92, size: 19, weight: 500, fill: MK.dim });
+      slideUp(c, .2 + i * .15);
+    });
+  }, { ask: done => quiz({ x: 640, y: 220, w: 880, cls: 'side' }, [{
+    id: 'c-pungutan-sepatu', prompt: ['Pungutan apa saja yang dikenakan pada paket sepatu Dita?'],
+    build: choice([['Bea Masuk 25%, PPN efektif 11%, dan PPh 5%'], ['Hanya PPN efektif 11%'], ['Bea Masuk 7,5% dan PPN, tanpa PPh'], ['Tidak ada pungutan karena FOB di bawah USD 1.500']], 0,
+      'Sepatu komoditas khusus: Bea Masuk 25% dan PPh 5%, ditambah PPN efektif 11%.',
+      [null, 'Pembebasan Bea Masuk hanya untuk FOB sampai USD 3, dan sepatu komoditas khusus.', 'Tarif tunggal 7,5% dan pengecualian PPh tidak berlaku untuk alas kaki.', 'Komoditas khusus tetap dipungut walau FOB di bawah USD 1.500.']),
+  }], done) }],
+
+  ['jawab', 'Jawaban untuk Dita', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Jawaban untuk Dita: sepatu komoditas bertarif khusus,|earbuds memakai tarif umum paket', { tag: 'MENJAWAB PERTANYAAN DITA' });
+    const q = G(p);
+    mcard(q, 92, 230, 500, 470);
+    tile(q, 'chat', 175, 310, { size: 96, v: 'gold' });
+    T(q, 'PERTANYAAN', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
+    lines(q, '“Sepatu Rp1,7 juta,|mengapa tagihannya|hampir Rp780 ribu?”', 132, 420, { size: 28, weight: 700, lh: 1.3 });
+    slideUp(q, .4);
+    [['a1', 'shoe', 'gold', 'Sepatu: komoditas bertarif khusus', 'melindungi industri alas|kaki dalam negeri'],
+     ['a2', 'coins', 'blue', 'BM 25% ditambah PPN dan PPh', `${rp(B.tot)} dari pabean ${rp(B.np)}`],
+     ['a3', 'phones', 'sky', 'Earbuds lebih kecil', 'tarif umum 7,5% dan|tanpa PPh']].forEach(([mark, gl, v, n, sub], i) => {
+      const y = 230 + i * 160, g = G(p);
+      mcard(g, 640, y, 868, 140);
+      tile(g, gl, 715, y + 70, { size: 80, v, floor: false });
+      T(g, n, { x: 780, y: y + 62, size: 27, weight: 700, fill: MK.navy });
+      lines(g, sub, 780, y + 96, { size: 19, weight: 500, fill: MK.dim });
+      T(g, '0' + (i + 1), { x: 1470, y: y + 62, size: 30, weight: 700, fill: MK.line, anchor: 'end' });
+      slideUp(g, m(mark) - .2, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 7.4', m('a1'));
+  }],
+
+  ['wrap', 'Rangkuman', (m, D) => {
+    const p = panel(0);
+    navy(p, 9, D);
+    actionTitle(p, 'Rangkuman: nilai FOB dan jenis komoditas|menentukan pungutan barang kiriman', { tag: 'RANGKUMAN BAB 7', dark: true });
+    [['w1', 'pack', 'sky', 'Barang kiriman|memakai ketentuan|khusus: nilai FOB|dan jenis komoditas'],
+     ['w2', 'percent', 'gold', 'FOB di atas USD 3|sampai USD 1.500:|BM 7,5%, PPh|dikecualikan'],
+     ['w3', 'coins', 'blue', 'PPN tetap dipungut,|beban efektif 11%;|komoditas tertentu|punya tarif sendiri']].forEach(([mark, gl, v, str], i) => {
+      const x = 92 + i * 482, c = G(p);
+      mcard(c, x, 250, 450, 450, { dark: true });
+      const strip = mk('rect', { x, y: 250, width: 450, height: 12, rx: 6, fill: MK.gold, 'fill-opacity': 0 }, c);
+      tile(c, gl, x + 90, 335, { size: 96, v });
+      T(c, '0' + (i + 1), { x: x + 400, y: 320, size: 34, weight: 700, fill: MK.line, anchor: 'end' });
+      lines(c, str, x + 40, 450, { size: 26, weight: 700, lh: 1.32 });
+      put(c, { o: 0 }); tw(c, { o: .35 }, .3, .4);
+      tw(c, { o: 1 }, m(mark), .4); pulse(c, m(mark), 1.03);
+      prog(q => strip.setAttribute('fill-opacity', q), m(mark), .4, out);
+    });
+  }],
+
+  ['final1', 'Latihan bab', (m) => { const p = panel(0); paper(p); }, { ask: done => quiz(SCREEN, [{
+    id: 'p-tali', prompt: ['Latihan 7.1. Sebuah paket berisi tali sepatu bernilai FOB USD 2. Pungutan apa yang dikenakan?'],
+    build: choice([['Hanya PPN dengan beban efektif 11%'], ['Bea Masuk 7,5% dan PPN'], ['Bea Masuk 25% dan PPh 5%'], ['Tarif umum dengan PIB']], 0,
+      'FOB sampai USD 3: Bea Masuk dibebaskan dan PPh dikecualikan. Yang dibayar hanya PPN, beban efektif 11%.',
+      [null, 'Bea Masuk 7,5% berlaku untuk FOB di atas USD 3.', 'Tarif 25% dan 5% untuk alas kaki; tali sepatu bernilai FOB USD 2 jatuh pada batas terendah.', 'Tarif umum untuk FOB di atas USD 1.500.']),
+  }, {
+    id: 'p-total-a', prompt: [`Latihan 7.2. Untuk paket A (earbuds), nilai impornya ${rp(A.ni)}. Hitung PPN dengan beban efektif 11%, lalu totalnya bersama Bea Masuk ${rp(A.bm)}.`],
+    build: blanks([{ parts: ['PPN: 11% × ' + rp(A.ni) + ' = Rp', { box: idNum(A.ppn) }], why: `11% × ${rp(A.ni)} = ${rp(A.ppn)}.`, hint: 'Kalikan nilai impor dengan 11%.' },
+      { parts: ['Total: ' + rp(A.bm) + ' + ' + rp(A.ppn) + ' = Rp', { box: idNum(A.tot) }], why: `${rp(A.bm)} + ${rp(A.ppn)} = ${rp(A.tot)}.`, hint: 'PPh dikecualikan, jadi hanya Bea Masuk dan PPN.' }]),
+  }, {
+    id: 'p-jelaskan-dita', prompt: ['Latihan 7.3. Mana penjelasan yang paling tepat untuk Dita?'],
+    build: choice([['Sepatu termasuk komoditas bertarif khusus: Bea Masuk 25% ditambah PPN dan PPh, untuk melindungi industri alas kaki'], ['Tagihan itu keliru karena paket di bawah USD 1.500 pasti bebas pungutan'], ['Semua paket dikenai tarif tunggal 7,5% tanpa PPh'], ['Tagihan mengikuti harga sepatu di toko, bukan aturan pemerintah']], 0,
+      'Jelaskan komoditasnya, tarif khususnya, dan tujuan perlindungan industri dalam negeri.',
+      [null, 'Komoditas tertentu tetap dikenai tarif khusus walau nilainya di bawah USD 1.500.', 'Tarif tunggal 7,5% tidak berlaku untuk alas kaki.', 'Pungutan mengikuti ketentuan, bukan harga toko.']),
+  }], done, 'Latihan bab') }],
+
+  ['finish', 'Selesai', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    const left = G(p);
+    path(left, 'M0 0H640L470 900H0Z', { fill: MK.navy });
+    path(p, 'M640 0H700L530 900H470Z', { fill: MK.gold });
+    path(p, 'M712 0H742L572 900H542Z', { fill: MK.sky });
+    const md = G(p, { x: 300, y: 440 });
+    const rays = G(md);
+    for (let i = 0; i < 16; i++) path(rays, `M0 0L${-18} -260L18 -260Z`, { fill: MK.gold, 'fill-opacity': .12 }).setAttribute('transform', `rotate(${i * 22.5})`);
+    clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
+    tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
+    popIn(md, .3);
+    const orb = [['pack', 'blue'], ['phones', 'sky'], ['shoe', 'gold']].map(([gl, v], i) => {
+      const e = tile(p, gl, 0, 0, { size: 64, v, floor: false });
+      return { e, a: i * 2.094 };
+    });
+    clockRun(t => orb.forEach(o => put(o.e, { x: 300 + 190 * Math.cos(o.a + t * .4), y: 440 + 190 * Math.sin(o.a + t * .4) * .55 })), D, { tail: true });
+    orb.forEach(o => { put(o.e, { o: 0 }); show(o.e, .8, .5); });
+    const h = T(p, 'Selamat, Sobat Pemelajar!', { x: 1120, y: 200, size: 44, weight: 700, fill: MK.navy, anchor: 'middle' });
+    slideUp(h, .5);
+  }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
+
+{
+  const NAVY = new Set(['intro', 'ambang', 'wrap']);
+  BEATS.forEach((b, i) => {
+    if (!i || b.lead === false) return;
+    const prev = BEATS[i - 1];
+    if (NAVY.has(b.id) !== NAVY.has(prev.id) || b.id === 'finish') {
+      const run = b.run;
+      b.run = (m, D) => { run(m, D); wipeIn(S.panel); };
+    }
+  });
+}
+
+mkBoot();
+</script>
+</body>
+</html>

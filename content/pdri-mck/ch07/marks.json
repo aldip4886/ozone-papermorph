@@ -1,0 +1,13 @@
+{
+ "intro": [["sub", "Pada materi ketujuh"]],
+ "ask": [["ask", "Kali ini kita pakai"], ["ans", "Lalu Dita bertanya"]],
+ "hukum": [["p96", "Dasarnya PMK"], ["p4", "terakhir dengan PMK"], ["lon", "Perubahan terakhir itu"]],
+ "ambang": [["s1", "Sampai tiga dolar"], ["s2", "Di atas tiga dolar"], ["s3", "Di atas seribu lima ratus dolar"]],
+ "komoditas": [["k8", "Tapi ada pengecualian"], ["kaki", "Untuk latihan ini"]],
+ "beda": [["r1", "Dokumennya"], ["r2", "Yang mengurus"], ["r3", "Bea Masuknya tarif tunggal"], ["r4", "Dan PPh Pasal dua puluh dua dikecualikan"]],
+ "paketA": [["np", "Nilai pabeannya CIF"], ["bm", "Bea Masuk tujuh koma lima"], ["ni", "Nilai impornya tujuh ratus"], ["ppn", "dan PPN dengan beban"], ["pph", "PPh dikecualikan"], ["tot", "Total pungutannya"]],
+ "paketB": [["np", "Nilai pabeannya CIF sembilan"], ["bm", "Karena alas kaki"], ["ni", "Nilai impornya dua juta"], ["ppn", "dan PPN-nya dua ratus"], ["pph", "Ditambah PPh lima persen"], ["tot", "Total pungutannya"]],
+ "banding": [["a", "Bandingkan keduanya"], ["b", "Pungutan sepatu sekitar"], ["why", "Bedanya ada pada tarif"]],
+ "jawab": [["a1", "Sepatu termasuk"], ["a2", "Bea Masuknya dua puluh lima"], ["a3", "Pungutan earbuds lebih kecil"]],
+ "wrap": [["w1", "Barang kiriman memakai"], ["w2", "Untuk FOB di atas tiga"], ["w3", "PPN tetap dipungut"]]
+}
