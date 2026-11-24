@@ -315,6 +315,28 @@ const BEATS = [
     source(p, 'Bahan Ajar PDRI KB 4.4', m('pib'));
   }],
 
+  ['rina', 'Bu Rina bukan PKP', (m, D) => {
+    const p = panel(0);
+    navy(p, 41, D);
+    actionTitle(p, 'Bu Rina bukan PKP, tetapi tetap membayar PPN|Impor, dan tidak dapat mengkreditkannya', { tag: 'PANGGIL ULANG · BU RINA (KB 3.3)', dark: true });
+    const q = G(p);
+    mcard(q, 92, 250, 600, 420, { dark: true });
+    tile(q, 'chat', 175, 330, { size: 92, v: 'gold' });
+    T(q, 'BU RINA', { x: 245, y: 320, size: 16, weight: 700, fill: MK.dim });
+    lines(q, '“Saya bukan PKP,|kenapa tetap|membayar PPN?”', 132, 440, { size: 30, weight: 700, lh: 1.35 });
+    slideUp(q, .4);
+    [['obj', 'law', 'blue', 'Syarat objektif terpenuhi', 'Impor Barang Kena Pajak berlaku|untuk siapa pun. PPN Impor-nya|Rp11.000.000.'],
+     ['kredit', 'wallet', 'gold', 'Tidak dapat dikreditkan', 'Karena bukan PKP, PPN itu|menjadi bagian biaya. PT Kain|Prima Nusantara dapat|mengkreditkannya, paling lama|3 masa pajak berikutnya|(PMK 81/2024).']].forEach(([mark, gl, v, n, sub], i) => {
+      const x = 760 + i * 380, c = G(p);
+      mcard(c, x, 250, 360, 420, { dark: true });
+      tile(c, gl, x + 180, 330, { size: 88, v });
+      T(c, n, { x: x + 36, y: 420, size: 23, weight: 800, fill: MK.navy });
+      lines(c, sub, x + 36, 456, { size: 17, weight: 500, fill: MK.dim, lh: 1.35 });
+      popIn(c, m(mark) - .1);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.3, 4.2, dan 4.4; PMK 81 Tahun 2024', .8, true);
+  }],
+
   ['estafet', 'Estafet PPN', (m, D) => {
     const p = panel(0);
     paper(p);
@@ -465,7 +487,7 @@ const BEATS = [
 ].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
 
 {
-  const NAVY = new Set(['intro', 'ciri', 'pkpm', 'wrap']);
+  const NAVY = new Set(['intro', 'ciri', 'pkpm', 'rina', 'wrap']);
   BEATS.forEach((b, i) => {
     if (!i || b.lead === false) return;
     const prev = BEATS[i - 1];

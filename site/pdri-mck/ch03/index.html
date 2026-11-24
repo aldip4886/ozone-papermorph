@@ -15,7 +15,7 @@
 'use strict';
 /* Bab 3 (KB 3): who levies PDRI and how. Three collection systems on one PIB, kinds of tax, the legal map and
    its hierarchy, the six parties and the importer's identity check. McKinsey-style exhibits in the INSW design. */
-const CHAPTER = { number: 3, title: 'Pihak dan Sistem Pemungutan', minutes: 5, language: 'id' };
+const CHAPTER = { number: 3, title: 'Pihak dan Sistem Pemungutan', minutes: 6, language: 'id' };
 
 const paper = p => bgPaper(p);
 const navy = (p, seed, D) => bgNavy(p, seed, D);
@@ -202,7 +202,67 @@ const BEATS = [
       T(g, 'vs', { x: 1020, y: y + 8, size: 20, weight: 700, fill: MK.faint, anchor: 'middle' });
       slideUp(g, m(mark) - .2, .5);
     });
+    const note = G(p);
+    lines(note, '“Pajak subjektif dan objektif” di sini adalah jenis pajak. Jangan tertukar dengan|“syarat subjektif dan objektif”, yang memunculkan kewajiban pajak, di adegan berikutnya.', 92, 700, { size: 18, weight: 500, fill: MK.dim, lh: 1.4 });
+    show(note, m('j3') + 1, .4);
     source(p, 'Bahan Ajar PDRI KB 3.2', m('j1'));
+  }],
+
+  ['syarat', 'Kapan kewajiban pajak muncul', (m, D) => {
+    const p = panel(0);
+    navy(p, 29, D);
+    actionTitle(p, 'Kewajiban pajak muncul ketika syarat subjektif|dan syarat objektif sama-sama terpenuhi', { tag: 'KAPAN KEWAJIBAN PAJAK MUNCUL', dark: true });
+    const quote = G(p);
+    lines(quote, '“Setiap Wajib Pajak yang telah memenuhi persyaratan subjektif dan objektif ... wajib|mendaftarkan diri ... dan kepadanya diberikan Nomor Pokok Wajib Pajak.” — Pasal 2 ayat (1) UU KUP', 92, 236, { size: 18, weight: 600, fill: '#D5E2F5', lh: 1.4 });
+    show(quote, .5, .4);
+    const col = (x, t0, gl, v, head, q, items) => {
+      const c = G(p);
+      mcard(c, x, 300, 700, 330, { dark: true });
+      tile(c, gl, x + 70, 368, { size: 80, v });
+      T(c, head, { x: x + 128, y: 358, size: 28, weight: 700, fill: MK.navy });
+      T(c, q, { x: x + 128, y: 386, size: 17, weight: 500, fill: MK.dim });
+      mk('rect', { x: x + 30, y: 420, width: 640, height: 2, fill: MK.line }, c);
+      items.forEach((it, k) => lines(c, it, x + 56, 460 + k * 62, { size: 19, weight: 600, fill: MK.navy, lh: 1.25 }));
+      slideUp(c, t0);
+      return c;
+    };
+    col(92, m('subj') - .2, 'user', 'blue', 'Syarat subjektif', 'Apakah ia subjek pajak?',
+      ['Pasal 2 dan 2A UU PPh: orang pribadi,|warisan belum terbagi, badan, atau BUT',
+       'Kasus 1: PT Kain Prima Nusantara, badan|yang didirikan di Indonesia']);
+    col(842, m('obj') - .2, 'container', 'gold', 'Syarat objektif', 'Apakah ada objek pajak?',
+      ['Pasal 4(1) UU PPh: penghasilan. Pasal 4(1)b|dan Pasal 11 UU PPN: impor Barang Kena Pajak',
+       'Kasus 1: penjualan kain, dan impor|Barang Kena Pajak']);
+    const peg = G(p);
+    lines(peg, 'PPN Impor cukup tanya “apa yang diimpor” — siapa pun kena, PKP atau bukan.|PPh Pasal 22 Impor mengangsur kewajiban subjektif PPh importir sendiri.', 92, 672, { size: 19, weight: 600, fill: '#fff', lh: 1.35 });
+    show(peg, m('pegangan'), .4);
+    source(p, 'Bahan Ajar PDRI KB 3.3; UU KUP Ps. 2(1); UU PPh Ps. 2, 2A, 4; UU PPN Ps. 4(1)b dan 11', .8, true);
+  }],
+
+  ['rina', 'Varian Bu Rina', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Varian Bu Rina: bukan PKP dan tanpa API,|tetap kena PPN Impor dan PPh Pasal 22', { tag: 'VARIAN BU RINA' });
+    const pf = G(p);
+    mcard(pf, 92, 230, 520, 470);
+    tile(pf, 'user', 175, 310, { size: 96, v: 'gold' });
+    T(pf, 'Bu Rina', { x: 245, y: 300, size: 28, weight: 800, fill: MK.navy });
+    lines(pf, 'Orang pribadi, impor mesin|jahit untuk usaha rumahan', 245, 332, { size: 18, weight: 500, fill: MK.dim, lh: 1.3 });
+    mk('rect', { x: 122, y: 400, width: 460, height: 2, fill: MK.line }, pf);
+    [['Bukan PKP', MK.red], ['Tanpa API', MK.red], ['Nilai impor Rp100.000.000', MK.navy]].forEach(([t, col], i) => {
+      pill(pf, t, 132, 450 + i * 60, { size: 18, anchor: 'start', bg: i < 2 ? col : '#EEF2F8', ink: i < 2 ? '#fff' : MK.navy });
+    });
+    slideUp(pf, .4);
+    [['subj', 'Syarat subjektif', 'Terpenuhi: orang pribadi dalam negeri; NPWP-nya NIK', 230],
+     ['obj', 'Syarat objektif PPN Impor', 'Terpenuhi oleh impor Barang Kena Pajak, walaupun bukan PKP', 350],
+     ['ppn', 'PPN Impor', '12% × 11/12 × Rp100.000.000 = Rp11.000.000', 470],
+     ['pph', 'PPh Pasal 22 Impor', 'Tanpa API: 7,5% × Rp100.000.000 = Rp7.500.000', 590]].forEach(([mark, n, v, y]) => {
+      const g = G(p);
+      mcard(g, 660, y, 848, 100);
+      T(g, n, { x: 692, y: y + 36, size: 17, weight: 700, fill: MK.dim });
+      T(g, v, { x: 692, y: y + 72, size: 25, weight: 700, fill: MK.navy });
+      slideUp(g, m(mark) - .2, .45);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.3', m('subj'));
   }],
 
   ['hukum', 'Peta dasar hukum', (m, D) => {
@@ -373,6 +433,11 @@ const BEATS = [
       { parts: ['PPN'], ans: ['t'], why: 'PPN dapat dialihkan sampai konsumen akhir: pajak tidak langsung.' },
       { parts: ['PPnBM'], ans: ['t'], why: 'PPnBM juga pajak tidak langsung.' },
     ], [['l', 'Langsung', MK.blue, 'l'], ['t', 'Tidak langsung', MK.goldDark, 't']], { multi: false, text: true }),
+  }, {
+    id: 'p-rina-objektif', prompt: ['Latihan 3.4. Bu Rina bertanya, "Saya bukan PKP, kenapa tetap membayar PPN?" Jawaban mana yang tepat?'],
+    build: choice([['Syarat objektif PPN Impor terpenuhi oleh impor Barang Kena Pajak, berlaku untuk siapa pun; status PKP hanya menentukan pengkreditannya'], ['Bu Rina tetap PKP karena nilai impornya besar'], ['PPN Impor hanya berlaku untuk importir ber-API'], ['Ini kekeliruan; bukan PKP seharusnya tidak membayar PPN Impor']], 0,
+      'Kewajiban PPN Impor muncul dari syarat objektif: impor Barang Kena Pajak, oleh siapa pun. Status PKP baru menentukan apakah PPN itu dapat dikreditkan.',
+      [null, 'Status PKP ditentukan dengan dikukuhkan, bukan oleh besar kecilnya nilai impor.', 'PPN Impor terutang pada siapa pun yang mengimpor Barang Kena Pajak, dengan API atau tanpa API.', 'PPN Impor tetap dipungut; yang berbeda hanya dapat tidaknya dikreditkan.']),
   }], done, 'Latihan bab') }],
 
   ['finish', 'Selesai', (m, D) => {
@@ -400,7 +465,7 @@ const BEATS = [
 ].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
 
 {
-  const NAVY = new Set(['intro', 'sistem', 'hierarki', 'wrap']);
+  const NAVY = new Set(['intro', 'sistem', 'syarat', 'hierarki', 'wrap']);
   BEATS.forEach((b, i) => {
     if (!i || b.lead === false) return;
     const prev = BEATS[i - 1];
