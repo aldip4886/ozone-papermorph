@@ -1,0 +1,21 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<script>
+window.LOG = [];
+window.CMI = { 'cmi.core.lesson_status': 'not attempted', 'cmi.core.entry': 'ab-initio' };
+let state = 'new';
+const call = (name, f) => (...a) => { const r = f(...a); LOG.push(`${name}(${JSON.stringify(a)}) -> ${r}`); return r; };
+const init = () => { if (state !== 'new') return 'false'; state = 'live'; return 'true'; };
+const fin = () => { if (state !== 'live') return 'false'; state = 'done'; return 'true'; };
+window.API = {
+  LMSInitialize: call('LMSInitialize', init), LMSFinish: call('LMSFinish', fin),
+  LMSGetValue: call('LMSGetValue', k => (k in CMI ? String(CMI[k]) : '')),
+  LMSSetValue: call('LMSSetValue', (k, v) => { if (state !== 'live') return 'false'; CMI[k] = String(v); return 'true'; }),
+  LMSCommit: call('LMSCommit', () => 'true'),
+  LMSGetLastError: () => '0', LMSGetErrorString: () => '', LMSGetDiagnostic: () => '',
+};
+window.PAPERMORPH_SCORM_CONFIG = { version: '1.2', chapters: [{ n: 3, title: 'Pihak dan Sistem Pemungutan' }], mastery: 70, progressKey: null };
+</script>
+<script src="scorm-host.js"></script>
+</head>
+<body><iframe id="book" style="width:1400px;height:900px" src="book/ch03/index.html"></iframe></body></html>

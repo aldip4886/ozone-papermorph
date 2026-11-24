@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pajak dalam Rangka Impor</title>
+<meta name="description" content="Pelajaran animasi untuk pegawai baru DJBC: memahami dan menghitung PPN, PPnBM, dan PPh Pasal 22 Impor.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231565b5'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='40' font-family='Arial' font-weight='700' fill='%23ffcc29'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="lib/units.css">
+<link rel="stylesheet" href="lib/contents.css">
+<script src="lib/units.js"></script>
+<script src="lib/contents.js"></script>
+<script src="unit-art.js"></script>
+<!-- <script src="refs.js"></script>  a book that cites works: its reference list, built by the skill's scripts/refs.py -->
+<link rel="expect" href="#ch01" blocking="render">
+<style>
+/* Template Media Lite: DJBC blue with the template's texture, navy, yellow accent, Poppins everywhere */
+@font-face { font-family: "Poppins"; font-weight: 400; font-display: block; src: url("lib/fonts/Poppins-400.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 500; font-display: block; src: url("lib/fonts/Poppins-500.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 600; font-display: block; src: url("lib/fonts/Poppins-600.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 700; font-display: block; src: url("lib/fonts/Poppins-700.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 800; font-display: block; src: url("lib/fonts/Poppins-800.woff2") format("woff2"); }
+:root { --page: #0A2A5C; --board: #0A2A5C; --panel: #0E3A78; --edge: #12468C;
+  --chalk: #ffffff; --dim: #c4daf2; --faint: #5f8fc4; --task: #F5B324; --quiz: #F5B324; --good: #2ecc71;
+  --top-bg: rgba(11, 51, 88, .92); --top-line: #0a2f50; --lift: rgba(0, 0, 0, .3); color-scheme: dark;
+  --ui: "Poppins", "Segoe UI", Arial, sans-serif; --book: var(--ui); }
+body::before { background: radial-gradient(ellipse at 70% 30%, #12468C 0%, #0A2A5C 55%, #071E45 100%); }
+h1, .top strong { font-weight: 700; letter-spacing: 0; }
+.kicker { color: #F5B324; }
+.chalk span { font-style: normal; font-weight: 600; }
+.btn.go { color: #0b3358; }
+.logos { position: fixed; top: 22px; right: 26px; z-index: 5; background: #fff; border-radius: 40px; padding: 8px 26px; display: flex; }
+.logos img { height: 52px; width: auto; display: block; }
+#guide { display: none; }
+</style>
+</head>
+<body>
+<div class="logos" aria-hidden="true"><img src="lib/img/logos.png" alt=""></div>
+<section id="cover">
+  <div class="chalk" aria-hidden="true"><!-- a few faint formulas or phrases from the book, drawn in chalk -->
+    <span style="left:7%;top:13%;--d:1.6">Nilai impor = NP + BM + BMTP</span>
+    <span style="right:8%;top:17%;--d:1.9">PPN 12% × 11/12</span>
+    <span style="left:5%;bottom:20%;--d:2.2">PPh Pasal 22: 2,5%</span>
+    <span style="right:6%;bottom:15%;--d:2.5">Rp18.155 / USD</span>
+  </div>
+  <svg class="mascot draw" id="guide" width="210" height="147" aria-hidden="true"></svg>
+  <h1>Pajak dalam Rangka Impor</h1>
+  <p class="kicker">Versi McKinsey · Suara narator · DJBC</p>
+  <p class="lede">Ikuti kain impor dari kapal sampai tagihan: nilai impor, PPN, PPnBM, PPh Pasal 22, fasilitas, dan barang kiriman, dihitung langkah demi langkah dengan kuis di setiap bab.</p>
+  <div class="acts">
+    <a class="btn go" href="#contents" data-t="open">Open the book<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2.5 11.5 8 6 13.5 4.6 12.1 8.7 8 4.6 3.9z"/></svg></a>
+    <a class="btn quiet" id="resume" hidden></a>
+  </div>
+  <p class="meta" id="meta"></p>
+</section>
+
+<main id="contents">
+  <header class="top">
+    <a class="home" href="#book" aria-label="Back to the cover" data-t-label="toCover"><svg class="mascot" id="guideSmall" width="52" height="36" aria-hidden="true"></svg><strong>Pajak dalam Rangka Impor</strong></a>
+    <span class="prog" id="prog"></span>
+  </header>
+  <div id="units"></div>
+  <p class="refs-more" id="refsMore" hidden><a href="#references"><b data-t="references">References</b><span id="refsCount"></span><i data-t="viewAll">View all →</i></a></p>
+</main>
+
+<main id="refpage" aria-labelledby="refsTitle">
+  <header class="top">
+    <a class="back" href="#contents" data-t="backToContents">← Contents</a>
+    <span class="rp-book" id="rpBook"></span>
+  </header>
+  <section class="refs" id="references">
+    <h1 id="refsTitle" tabindex="-1" data-t="references">References</h1>
+    <p class="lead" data-t="refsLead">Every work cited in the lessons.</p>
+    <ol id="refList"></ol>
+  </section>
+</main>
+
+<script>
+// Units and chapters are numbered in order from start (a book whose scope starts mid-way, e.g. at unit 3, chapter 9,
+// keeps the original numbers). Add a chapter here when its lesson is ready.
+Contents.book({
+  start: { unit: 1, chapter: 3 },
+  units: [   // trimmed to this chapter alone by tools/pdri/scorm/stage_chapter.py
+    ['Bab 3', [['Pihak dan Sistem Pemungutan', 6]]],
+  ],
+  hues: ['#F5B324', '#3A9BE1'],
+});
+</script>
+</body>
+</html>

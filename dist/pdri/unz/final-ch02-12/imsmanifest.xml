@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="papermorph.ch02" version="1"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="org">
+    <organization identifier="org">
+      <title>PDRI: Pajak dalam Rangka Impor (Bab 2)</title>
+      <item identifier="item_book" identifierref="res_book" isvisible="true">
+        <title>PDRI: Pajak dalam Rangka Impor (Bab 2)</title>
+        <adlcp:masteryscore>70</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="res_book" type="webcontent" adlcp:scormtype="sco" href="launch.html">
+      <file href="book/ch02/audio/id/asas.mp3"/>
+      <file href="book/ch02/audio/id/ask.mp3"/>
+      <file href="book/ch02/audio/id/final1.mp3"/>
+      <file href="book/ch02/audio/id/finish.mp3"/>
+      <file href="book/ch02/audio/id/fungsi.mp3"/>
+      <file href="book/ch02/audio/id/hukum.mp3"/>
+      <file href="book/ch02/audio/id/intro.mp3"/>
+      <file href="book/ch02/audio/id/pembeda.mp3"/>
+      <file href="book/ch02/audio/id/q1.mp3"/>
+      <file href="book/ch02/audio/id/q2.mp3"/>
+      <file href="book/ch02/audio/id/teori.mp3"/>
+      <file href="book/ch02/audio/id/timings.js"/>
+      <file href="book/ch02/audio/id/unsur.mp3"/>
+      <file href="book/ch02/audio/id/wilayah.mp3"/>
+      <file href="book/ch02/audio/id/wrap.mp3"/>
+      <file href="book/ch02/index.html"/>
+      <file href="book/index.html"/>
+      <file href="book/lib/book.css"/>
+      <file href="book/lib/contents.css"/>
+      <file href="book/lib/contents.js"/>
+      <file href="book/lib/engine.css"/>
+      <file href="book/lib/engine.js"/>
+      <file href="book/lib/fonts/Poppins-400.woff2"/>
+      <file href="book/lib/fonts/Poppins-500.woff2"/>
+      <file href="book/lib/fonts/Poppins-600.woff2"/>
+      <file href="book/lib/fonts/Poppins-700.woff2"/>
+      <file href="book/lib/fonts/Poppins-800.woff2"/>
+      <file href="book/lib/img/kapal.jpg"/>
+      <file href="book/lib/img/logos.png"/>
+      <file href="book/lib/math.js"/>
+      <file href="book/lib/mck.js"/>
+      <file href="book/lib/units.css"/>
+      <file href="book/lib/units.js"/>
+      <file href="book/lib/volume.css"/>
+      <file href="book/lib/volume.js"/>
+      <file href="book/scorm-bridge.js"/>
+      <file href="book/unit-art.js"/>
+      <file href="launch.html"/>
+      <file href="scorm-host.js"/>
+    </resource>
+  </resources>
+</manifest>
