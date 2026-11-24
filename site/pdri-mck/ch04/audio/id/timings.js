@@ -1,376 +1,445 @@
 window.TIMINGS = {
  "intro": {
-  "dur": 11.736,
+  "dur": 10.25,
   "marks": {
-   "sub": 3.724
+   "sub": 2.3
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Mari kita lanjutkan, ya, sobat."
    ],
    [
-    3.724,
-    "Pada materi keempat ini, kita membahas PPN Impor: cara menghitungnya, dan ke mana PPN itu mengalir setelah dibayar."
+    2.25,
+    "Pada materi keempat ini, kita membahas PPN Impor: cara menghitungnya,"
+   ],
+   [
+    6.97,
+    "dan ke mana PPN itu mengalir setelah dibayar."
    ]
   ]
  },
  "ask": {
-  "dur": 19.992,
+  "dur": 19.29,
   "marks": {
-   "ask": 4.413,
-   "ans": 12.394
+   "ask": 4.92,
+   "ans": 12.42
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Staf PT Kain Prima Nusantara datang lagi dengan pertanyaan baru."
    ],
    [
-    4.413,
+    4.87,
     "Perusahaan kami sudah membayar PPN sekitar 168 juta rupiah."
    ],
    [
-    9.517,
+    10.01,
     "Apakah uang itu hilang begitu saja?"
    ],
    [
-    12.394,
+    12.37,
     "Jawabannya, tidak."
    ],
    [
-    15.104,
+    14.21,
     "Tapi untuk menjelaskannya, kita perlu mengenal dulu cara kerja PPN."
    ]
   ]
  },
  "ciri": {
-  "dur": 25.872,
+  "dur": 25.13,
   "marks": {
-   "c1": 2.604,
-   "c2": 8.423,
-   "c3": 17.227
+   "c1": 2.14,
+   "c2": 8.42,
+   "c3": 16.42
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "PPN punya tiga ciri."
    ],
    [
-    2.604,
+    2.09,
     "Pertama, PPN adalah pajak atas konsumsi barang dan jasa di dalam daerah pabean."
    ],
    [
-    8.423,
+    8.37,
     "Kedua, PPN termasuk pajak tidak langsung."
    ],
    [
-    12.252,
+    11.77,
     "Penjual atau importir yang menyetor, tetapi konsumen akhir yang menanggung."
    ],
    [
-    17.227,
-    "Ketiga, PPN dikenakan di setiap tahap penyerahan, tetapi hanya atas pertambahan nilainya, jadi tidak menimbulkan pajak berganda."
+    16.37,
+    "Ketiga, PPN dikenakan di setiap tahap penyerahan,"
+   ],
+   [
+    19.85,
+    "tetapi hanya atas pertambahan nilainya, jadi tidak menimbulkan pajak berganda."
    ]
   ]
  },
  "objek": {
-  "dur": 23.112,
+  "dur": 25.41,
   "marks": {
-   "obj": 3.384,
-   "who": 9.01,
-   "pkp": 14.896
+   "obj": 2.86,
+   "who": 9.54,
+   "pkp": 16.58
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Lalu, apa yang dikenai PPN Impor?"
    ],
    [
-    3.384,
+    2.81,
     "Pasal 4 ayat 1 UU PPN menetapkan impor Barang Kena Pajak sebagai objek PPN."
    ],
    [
-    9.01,
+    9.49,
     "Dan PPN Impor dipungut dari siapa pun yang mengimpor, baik PKP maupun bukan PKP."
    ],
    [
-    14.896,
-    "PKP, atau Pengusaha Kena Pajak, adalah pengusaha yang menyerahkan barang atau jasa yang dikenai pajak berdasarkan UU PPN."
+    16.53,
+    "PKP, atau Pengusaha Kena Pajak,"
+   ],
+   [
+    18.83,
+    "adalah pengusaha yang menyerahkan barang atau jasa yang dikenai pajak berdasarkan UU PPN."
    ]
   ]
  },
  "tarif": {
-  "dur": 29.736,
+  "dur": 30.85,
   "marks": {
-   "hpp": 2.057,
-   "non": 10.456,
-   "lux": 18.555,
-   "note": 25.311
+   "hpp": 1.64,
+   "non": 10.88,
+   "lux": 19.9,
+   "note": 26.54
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Berapa tarifnya?"
    ],
    [
-    2.057,
+    1.59,
     "UU HPP menetapkan tarif PPN 12 persen, dan PMK 131 Tahun 2024 mengatur cara menerapkannya."
    ],
    [
-    10.456,
-    "Untuk barang yang tidak tergolong mewah, dasar pengenaannya 11/12 dari nilai impor, sehingga beban efektifnya 11 persen."
+    10.83,
+    "Untuk barang yang tidak tergolong mewah,"
    ],
    [
-    18.555,
+    13.15,
+    "dasar pengenaannya 11/12 dari nilai impor, sehingga beban efektifnya 11 persen."
+   ],
+   [
+    19.85,
     "Untuk barang mewah yang dikenai PPnBM, dasarnya nilai impor penuh, jadi bebannya 12 persen."
    ],
    [
-    25.311,
+    26.49,
     "Saat bahan ajar ini disusun, aturan ini masih berlaku."
    ]
   ]
  },
  "q1": {
-  "dur": 8.376,
+  "dur": 7.89,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.05,
     "Sekarang, mari kita cek pemahaman kamu."
    ],
    [
-    3.541,
+    3.27,
     "Kira-kira, berapa beban efektif PPN untuk kain kita, ya?"
    ]
   ]
  },
  "hitung": {
-  "dur": 28.752,
+  "dur": 32.61,
   "marks": {
-   "cek": 3.645,
-   "ni": 12.734,
-   "ppn": 18.84,
-   "res": 24.035
+   "cek": 3.94,
+   "ni": 13.68,
+   "ppn": 20.74,
+   "res": 26.82
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Sekarang kita hitung PPN Impor untuk Kasus 1."
    ],
    [
-    3.645,
+    3.89,
     "Cek dulu: kain tidak tergolong mewah, dan importirnya PKP."
    ],
    [
-    8.645,
+    8.81,
     "Jadi dasar pengenaannya 11/12 dari nilai impor."
    ],
    [
-    12.734,
+    13.63,
     "Nilai impornya sudah kita hitung di materi pertama, yaitu 1,528 miliar rupiah."
    ],
    [
-    18.84,
+    20.69,
     "PPN Impor sama dengan 12 persen dikali 11/12 dikali nilai impor."
    ],
    [
-    24.035,
+    26.77,
     "Hasilnya 168.105.300 rupiah."
    ]
   ]
  },
  "pkpm": {
-  "dur": 31.608,
+  "dur": 31.89,
   "marks": {
-   "pk": 4.322,
-   "pm": 8.827,
-   "kb": 14.075,
-   "lb": 23.815
+   "pk": 4.28,
+   "pm": 8.9,
+   "kb": 15.02,
+   "lb": 23.76
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Supaya tahu ke mana uang ini pergi, kenali dua istilah."
    ],
    [
-    4.322,
+    4.23,
     "Pajak keluaran adalah PPN yang dipungut PKP saat menjual barang."
    ],
    [
-    8.827,
+    8.85,
     "Pajak masukan adalah PPN yang dibayar PKP saat membeli atau mengimpor barang."
    ],
    [
-    14.075,
+    14.97,
     "Setiap masa pajak, PKP menghitung pajak keluaran dikurangi pajak masukan."
    ],
    [
-    19.427,
+    20.25,
     "Kalau pajak keluaran lebih besar, PKP menyetor selisihnya."
    ],
    [
-    23.815,
-    "Kalau pajak masukan yang lebih besar, terjadi lebih bayar, dan PKP bisa meminta pengembalian atau mengompensasikannya."
+    23.71,
+    "Kalau pajak masukan yang lebih besar, terjadi lebih bayar,"
+   ],
+   [
+    26.95,
+    "dan PKP bisa meminta pengembalian atau mengompensasikannya."
    ]
   ]
  },
  "faktur": {
-  "dur": 14.832,
+  "dur": 14.01,
   "marks": {
-   "pib": 4.192,
-   "kredit": 8.957
+   "pib": 3.84,
+   "kredit": 8.3
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Lalu, bagaimana PPN Impor masuk ke hitungan itu?"
    ],
    [
-    4.192,
+    3.79,
     "PIB beserta bukti pembayarannya berkedudukan sama dengan faktur pajak."
    ],
    [
-    8.957,
+    8.25,
     "Jadi, importir yang PKP dapat mengkreditkan PPN Impor sebagai pajak masukan."
    ]
   ]
  },
- "estafet": {
-  "dur": 40.272,
+ "rina": {
+  "dur": 30.01,
   "marks": {
-   "e1": 7.279,
-   "e2": 14.023,
-   "e3": 23.723,
-   "e4": 27.839,
-   "sum": 32.422
+   "obj": 7.18,
+   "kredit": 16.48
   },
   "cues": [
    [
-    0.101,
+    0.05,
+    "Ingat Bu Rina dari materi ketiga?"
+   ],
+   [
+    2.51,
+    "Ia bertanya, saya bukan PKP, kenapa tetap membayar PPN?"
+   ],
+   [
+    7.13,
+    "Jawabannya, syarat objektif tetap terpenuhi: impor Barang Kena Pajak berlaku untuk siapa pun."
+   ],
+   [
+    13.65,
+    "PPN Impornya sebelas juta rupiah."
+   ],
+   [
+    16.43,
+    "Tapi karena bukan PKP, ia tidak dapat mengkreditkannya; PPN itu menjadi bagian biaya."
+   ],
+   [
+    22.29,
+    "Berbeda dengan PT Kain Prima Nusantara, yang dapat mengkreditkannya,"
+   ],
+   [
+    26.81,
+    "paling lama tiga masa pajak berikutnya."
+   ]
+  ]
+ },
+ "estafet": {
+  "dur": 38.33,
+  "marks": {
+   "e1": 6.66,
+   "e2": 13.14,
+   "e3": 22.72,
+   "e4": 26.38,
+   "sum": 29.62
+  },
+  "cues": [
+   [
+    0.05,
     "Mari kita ikuti perjalanan kain ini sampai menjadi kemeja."
    ],
    [
-    4.166,
+    4.07,
     "Angkanya disederhanakan, ya."
    ],
    [
-    7.279,
+    6.61,
     "Saat impor, importir membayar PPN sekitar 168 juta rupiah sebagai pajak masukan."
    ],
    [
-    14.023,
-    "Importir menjual kain ke konveksi, memungut PPN 198 juta, lalu menyetor selisihnya, sekitar 29,9 juta."
+    13.09,
+    "Importir menjual kain ke konveksi, memungut PPN 198 juta,"
    ],
    [
-    23.723,
+    18.51,
+    "lalu menyetor selisihnya, sekitar 29,9 juta."
+   ],
+   [
+    22.67,
     "Konveksi menjual ke toko dan menyetor 77 juta."
    ],
    [
-    27.839,
+    26.33,
     "Toko menjual ke pembeli, dan menyetor 77 juta lagi."
    ],
    [
-    32.422,
-    "Kalau dijumlahkan, kas negara menerima 352 juta rupiah, sama persis dengan PPN yang dibayar pembeli akhir."
+    29.57,
+    "Kalau dijumlahkan, kas negara menerima 352 juta rupiah,"
+   ],
+   [
+    34.75,
+    "sama persis dengan PPN yang dibayar pembeli akhir."
    ]
   ]
  },
  "q2": {
-  "dur": 6.912,
+  "dur": 5.89,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.05,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    4.009,
+    2.69,
     "Berapa PPN yang disetor konveksi?"
    ]
   ]
  },
  "jawab": {
-  "dur": 18.864,
+  "dur": 18.17,
   "marks": {
-   "a1": 3.931,
-   "a2": 7.891,
-   "a3": 13.906
+   "a1": 3.68,
+   "a2": 7.92,
+   "a3": 13.68
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Jadi, apa jawaban untuk staf importir tadi?"
    ],
    [
-    3.931,
+    3.63,
     "PPN Impor 168 juta itu tidak hilang."
    ],
    [
-    7.891,
+    7.87,
     "Sebagai PKP, perusahaan dapat mengkreditkannya sebagai pajak masukan saat menjual kain."
    ],
    [
-    13.906,
+    13.63,
     "Beban PPN-nya berpindah ke pembeli berikutnya, sampai ke konsumen akhir."
    ]
   ]
  },
  "wrap": {
-  "dur": 24.792,
+  "dur": 24.49,
   "marks": {
-   "w1": 3.099,
-   "w2": 7.839,
-   "w3": 17.943
+   "w1": 2.18,
+   "w2": 6.92,
+   "w3": 17.02
   },
   "cues": [
    [
-    0.101,
+    0.05,
     "Jadi, ini rangkumannya."
    ],
    [
-    3.099,
+    2.13,
     "PPN Impor dikenakan atas impor Barang Kena Pajak, oleh siapa pun."
    ],
    [
-    7.839,
+    6.87,
     "Untuk barang tidak mewah, rumusnya 12 persen dikali 11/12 dikali nilai impor."
    ],
    [
-    13.801,
+    13.37,
     "Untuk barang mewah, 12 persen dikali nilai impor."
    ],
    [
-    17.943,
+    16.97,
     "Importir PKP mengkreditkan PPN Impor sebagai pajak masukan, dan konsumen akhir yang menanggung PPN."
    ]
   ]
  },
  "final1": {
-  "dur": 6.552,
+  "dur": 4.61,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Nah, sekarang kita latihan, ya."
    ],
    [
-    3.645,
+    2.31,
     "Coba kamu jawab latihan berikut ini."
    ]
   ]
  },
  "finish": {
-  "dur": 11.976,
+  "dur": 11.65,
   "marks": {},
   "cues": [
    [
-    0.101,
+    0.05,
     "Bagus, materi keempat selesai."
    ],
    [
-    3.411,
-    "Berikutnya, kita bahas PPh Pasal 22 Impor, dan mengapa PPh sudah dipungut di pelabuhan, padahal kainnya belum terjual."
+    2.93,
+    "Berikutnya, kita bahas PPh Pasal 22 Impor,"
+   ],
+   [
+    6.35,
+    "dan mengapa PPh sudah dipungut di pelabuhan, padahal kainnya belum terjual."
    ]
   ]
  }

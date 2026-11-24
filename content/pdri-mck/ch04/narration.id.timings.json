@@ -1,2729 +1,2685 @@
 {
  "intro": {
-  "key": "0bef9f9bc7a201bfa71612455b6d1e1bb94ec4a6",
-  "dur": 11.736,
+  "key": "94315b26313af0e525fc759eace62f24c3ae1e82",
+  "dur": 10.0,
   "words": [
    [
-    0.101041,
+    0.0,
     "Mari"
    ],
    [
-    0.3745,
+    0.44,
     "kita"
    ],
    [
-    0.569791,
+    0.64,
     "lanjutkan"
    ],
    [
-    1.520333,
-    "ya"
+    1.08,
+    "sobat,"
    ],
    [
-    2.171375,
-    "sobat"
+    2.3,
+    "pada"
    ],
    [
-    3.723958,
-    "Pada"
-   ],
-   [
-    3.932291,
+    2.68,
     "materi"
    ],
    [
-    4.21875,
+    3.12,
     "keempat"
    ],
    [
-    4.51825,
-    "ini"
+    3.5,
+    "ini,"
    ],
    [
-    5.273458,
+    4.02,
     "kita"
    ],
    [
-    5.494791,
+    4.24,
     "membahas"
    ],
    [
-    5.885416,
-    "PPN"
+    4.78,
+    "ppn"
    ],
    [
-    6.210958,
-    "Impor"
+    5.26,
+    "impor,"
    ],
    [
-    7.01825,
+    6.08,
     "cara"
    ],
    [
-    7.278666,
+    6.34,
     "menghitungnya"
    ],
    [
-    8.398458,
+    7.02,
     "dan"
    ],
    [
-    8.645833,
-    "ke"
+    7.38,
+    "kemana"
    ],
    [
-    8.723958,
-    "mana"
+    7.88,
+    "ppn"
    ],
    [
-    8.945333,
-    "PPN"
-   ],
-   [
-    9.244791,
+    8.36,
     "itu"
    ],
    [
-    9.492208,
+    8.48,
     "mengalir"
    ],
    [
-    9.895833,
+    8.94,
     "setelah"
    ],
    [
-    10.221375,
-    "dibayar"
-   ]
-  ],
-  "marks": {
-   "sub": 3.724
-  },
-  "cues": [
-   [
-    0.101,
-    "Mari kita lanjutkan, ya, sobat."
-   ],
-   [
-    3.724,
-    "Pada materi keempat ini, kita membahas PPN Impor: cara menghitungnya, dan ke mana PPN itu mengalir setelah dibayar."
+    9.3,
+    "dibayar."
    ]
   ]
  },
  "ask": {
-  "key": "31ab4838c92294e477a265c2f28a92219ace511f",
-  "dur": 19.992,
+  "key": "1c1d1e90346ff037ed8534b265ec75e0636aaee6",
+  "dur": 19.04,
   "words": [
    [
-    0.101041,
-    "Staf"
+    0.0,
+    "Staff"
    ],
    [
-    0.465625,
-    "PT"
+    0.52,
+    "PTK"
    ],
    [
-    0.752083,
-    "Kain"
+    1.14,
+    "-in"
    ],
    [
-    1.038541,
+    1.26,
     "Prima"
    ],
    [
-    1.259916,
+    1.56,
     "Nusantara"
    ],
    [
-    1.702625,
+    2.26,
     "datang"
    ],
    [
-    1.963041,
+    2.9,
     "lagi"
    ],
    [
-    2.314583,
+    3.2,
     "dengan"
    ],
    [
-    2.575,
+    3.42,
     "pertanyaan"
    ],
    [
-    3.069791,
-    "baru"
+    3.9,
+    "baru."
    ],
    [
-    4.413041,
+    4.92,
     "Perusahaan"
    ],
    [
-    5.051041,
+    5.54,
     "kami"
    ],
    [
-    5.272416,
+    5.74,
     "sudah"
    ],
    [
-    5.506791,
+    6.0,
     "membayar"
    ],
    [
-    5.858333,
+    6.48,
     "PPN"
    ],
    [
-    6.353125,
+    6.86,
     "sekitar"
    ],
    [
-    6.756791,
+    7.36,
     "168"
    ],
    [
-    7.850541,
+    8.84,
     "juta"
    ],
    [
-    8.058875,
-    "rupiah"
+    9.12,
+    "rupiah."
    ],
    [
-    9.516666,
+    10.06,
     "Apakah"
    ],
    [
-    9.985416,
-    "uang"
+    10.32,
+    "wang"
    ],
    [
-    10.167708,
+    10.52,
     "itu"
    ],
    [
-    10.402083,
+    10.66,
     "hilang"
    ],
    [
-    10.6625,
+    11.04,
     "begitu"
    ],
    [
-    10.935958,
-    "saja"
+    11.26,
+    "saja?"
    ],
    [
-    12.39375,
-    "Jawabannya"
+    12.42,
+    "Jawabannya?"
    ],
    [
-    13.617708,
-    "tidak"
+    13.44,
+    "Tidak."
    ],
    [
-    15.104166,
+    14.26,
     "Tapi"
    ],
    [
-    15.338541,
+    14.64,
     "untuk"
    ],
    [
-    15.546875,
-    "menjelaskannya"
+    15.14,
+    "menjelaskannya,"
    ],
    [
-    16.770833,
+    16.22,
     "kita"
    ],
    [
-    17.005208,
+    16.38,
     "perlu"
    ],
    [
-    17.252625,
+    16.68,
     "mengenal"
    ],
    [
-    17.604166,
+    17.08,
     "dulu"
    ],
    [
-    17.864583,
+    17.28,
     "cara"
    ],
    [
-    18.085958,
+    17.68,
     "kerja"
    ],
    [
-    18.4245,
-    "PPN"
-   ]
-  ],
-  "marks": {
-   "ask": 4.413,
-   "ans": 12.394
-  },
-  "cues": [
-   [
-    0.101,
-    "Staf PT Kain Prima Nusantara datang lagi dengan pertanyaan baru."
-   ],
-   [
-    4.413,
-    "Perusahaan kami sudah membayar PPN sekitar 168 juta rupiah."
-   ],
-   [
-    9.517,
-    "Apakah uang itu hilang begitu saja?"
-   ],
-   [
-    12.394,
-    "Jawabannya, tidak."
-   ],
-   [
-    15.104,
-    "Tapi untuk menjelaskannya, kita perlu mengenal dulu cara kerja PPN."
+    18.12,
+    "PPN."
    ]
   ]
  },
  "ciri": {
-  "key": "fec6e6f241c4678d6b284f9301ffac5dca3b40fe",
-  "dur": 25.872,
+  "key": "3c96f52dfd659553c29065faffb0db5e102fbf9b",
+  "dur": 24.88,
   "words": [
    [
-    0.101041,
+    0.0,
     "PPN"
    ],
    [
-    0.647916,
+    0.58,
     "punya"
    ],
    [
-    0.934375,
+    0.86,
     "tiga"
    ],
    [
-    1.194791,
-    "ciri"
+    1.18,
+    "ciri."
    ],
    [
-    2.604166,
-    "Pertama"
+    2.14,
+    "Pertama,"
    ],
    [
-    3.606791,
+    3.02,
     "PPN"
    ],
    [
-    4.036458,
+    3.4,
     "adalah"
    ],
    [
-    4.322916,
+    3.82,
     "pajak"
    ],
    [
-    4.6745,
+    4.5,
     "atas"
    ],
    [
-    4.908875,
+    4.82,
     "konsumsi"
    ],
    [
-    5.351583,
+    5.28,
     "barang"
    ],
    [
-    5.664083,
+    5.68,
     "dan"
    ],
    [
-    5.846375,
+    5.88,
     "jasa"
    ],
    [
-    6.25,
+    6.3,
     "di"
    ],
    [
-    6.354166,
+    6.62,
     "dalam"
    ],
    [
-    6.627625,
+    6.86,
     "daerah"
    ],
    [
-    6.914083,
-    "pabean"
+    7.32,
+    "pabean."
    ],
    [
-    8.423458,
-    "Kedua"
+    8.42,
+    "Kedua,"
    ],
    [
-    9.373958,
+    9.3,
     "PPN"
    ],
    [
-    9.790625,
+    9.74,
     "termasuk"
    ],
    [
-    10.16825,
+    10.18,
     "pajak"
    ],
    [
-    10.545833,
+    10.66,
     "tidak"
    ],
    [
-    10.767208,
-    "langsung"
+    10.84,
+    "langsung."
    ],
    [
-    12.251583,
+    11.82,
     "Penjual"
    ],
    [
-    12.694291,
+    12.26,
     "atau"
    ],
    [
-    12.889583,
+    12.46,
     "importir"
    ],
    [
-    13.384375,
+    13.0,
     "yang"
    ],
    [
-    13.514583,
+    13.12,
     "menyetor"
    ],
    [
-    14.387,
+    13.66,
     "tetapi"
    ],
    [
-    14.764583,
+    14.16,
     "konsumen"
    ],
    [
-    15.194291,
+    14.58,
     "akhir"
    ],
    [
-    15.532833,
+    14.96,
     "yang"
    ],
    [
-    15.676041,
-    "menanggung"
+    15.2,
+    "menanggung."
    ],
    [
-    17.226583,
-    "Ketiga"
+    16.42,
+    "Ketiga,"
    ],
    [
-    18.177083,
+    17.28,
     "PPN"
    ],
    [
-    18.567708,
+    17.72,
     "dikenakan"
    ],
    [
-    19.010416,
+    18.16,
     "di"
    ],
    [
-    19.075541,
+    18.4,
     "setiap"
    ],
    [
-    19.388041,
+    18.74,
     "tahap"
    ],
    [
-    19.622416,
-    "penyerahan"
+    19.04,
+    "penyerahan,"
    ],
    [
-    20.612,
+    19.9,
     "tetapi"
    ],
    [
-    20.963541,
+    20.28,
     "hanya"
    ],
    [
-    21.210958,
+    20.56,
     "atas"
    ],
    [
-    21.419291,
+    20.94,
     "pertambahan"
    ],
    [
-    21.888041,
-    "nilainya"
+    21.44,
+    "nilainya,"
    ],
    [
-    22.838541,
+    22.3,
     "jadi"
    ],
    [
-    23.151041,
+    22.68,
     "tidak"
    ],
    [
-    23.372416,
+    23.04,
     "menimbulkan"
    ],
    [
-    23.919291,
+    23.6,
     "pajak"
    ],
    [
-    24.283875,
-    "berganda"
-   ]
-  ],
-  "marks": {
-   "c1": 2.604,
-   "c2": 8.423,
-   "c3": 17.227
-  },
-  "cues": [
-   [
-    0.101,
-    "PPN punya tiga ciri."
-   ],
-   [
-    2.604,
-    "Pertama, PPN adalah pajak atas konsumsi barang dan jasa di dalam daerah pabean."
-   ],
-   [
-    8.423,
-    "Kedua, PPN termasuk pajak tidak langsung."
-   ],
-   [
-    12.252,
-    "Penjual atau importir yang menyetor, tetapi konsumen akhir yang menanggung."
-   ],
-   [
-    17.227,
-    "Ketiga, PPN dikenakan di setiap tahap penyerahan, tetapi hanya atas pertambahan nilainya, jadi tidak menimbulkan pajak berganda."
+    24.06,
+    "bergadah."
    ]
   ]
  },
  "objek": {
-  "key": "52c35d815cbf2674d52a4e88926deb464ac62ebc",
-  "dur": 23.112,
+  "key": "6a246365bc4b8273feb3240e25938ed039e20c7a",
+  "dur": 25.16,
   "words": [
    [
-    0.101041,
-    "Lalu"
+    0.0,
+    "Lalu,"
    ],
    [
-    0.960416,
+    0.76,
     "apa"
    ],
    [
-    1.194791,
+    1.1,
     "yang"
    ],
    [
-    1.325,
+    1.28,
     "dikenai"
    ],
    [
-    1.650541,
+    1.64,
     "PPN"
    ],
    [
-    1.976041,
-    "Impor"
+    1.96,
+    "impor?"
    ],
    [
-    3.384375,
+    2.86,
     "Pasal"
    ],
    [
-    3.696875,
+    3.24,
     "4"
    ],
    [
-    3.93125,
+    3.54,
     "ayat"
    ],
    [
-    4.204708,
+    3.92,
     "1"
    ],
    [
-    4.465125,
+    4.3,
     "UU"
    ],
    [
-    4.634375,
+    4.68,
     "PPN"
    ],
    [
-    5.116166,
+    5.22,
     "menetapkan"
    ],
    [
-    5.610958,
+    6.06,
     "impor"
    ],
    [
-    5.910416,
-    "Barang"
-   ],
-   [
-    6.157833,
-    "Kena"
-   ],
-   [
-    6.314083,
-    "Pajak"
-   ],
-   [
-    6.704708,
-    "sebagai"
-   ],
-   [
-    7.069291,
-    "objek"
-   ],
-   [
-    7.485958,
-    "PPN"
-   ],
-   [
-    9.010416,
-    "Dan"
-   ],
-   [
-    9.257833,
-    "PPN"
-   ],
-   [
-    9.596375,
-    "Impor"
-   ],
-   [
-    9.960958,
-    "dipungut"
-   ],
-   [
-    10.364583,
-    "dari"
-   ],
-   [
-    10.546875,
-    "siapa"
-   ],
-   [
-    10.846375,
-    "pun"
-   ],
-   [
-    11.028666,
-    "yang"
-   ],
-   [
-    11.145833,
-    "mengimpor"
-   ],
-   [
-    12.057291,
-    "baik"
-   ],
-   [
-    12.317708,
-    "PKP"
-   ],
-   [
-    12.747416,
-    "maupun"
-   ],
-   [
-    13.085958,
-    "bukan"
-   ],
-   [
-    13.372416,
-    "PKP"
-   ],
-   [
-    14.895833,
-    "PKP"
-   ],
-   [
-    15.859375,
-    "atau"
-   ],
-   [
-    16.145833,
-    "Pengusaha"
-   ],
-   [
-    16.575541,
-    "Kena"
-   ],
-   [
-    16.744791,
-    "Pajak"
-   ],
-   [
-    17.604166,
-    "adalah"
-   ],
-   [
-    17.916666,
-    "pengusaha"
-   ],
-   [
-    18.359375,
-    "yang"
-   ],
-   [
-    18.502625,
-    "menyerahkan"
-   ],
-   [
-    18.945333,
+    6.64,
     "barang"
    ],
    [
-    19.257833,
-    "atau"
+    7.02,
+    "kena"
    ],
    [
-    19.466166,
-    "jasa"
-   ],
-   [
-    19.817708,
-    "yang"
-   ],
-   [
-    19.973958,
-    "dikenai"
-   ],
-   [
-    20.286458,
+    7.26,
     "pajak"
    ],
    [
-    20.651041,
+    7.64,
+    "sebagai"
+   ],
+   [
+    7.92,
+    "objek"
+   ],
+   [
+    8.52,
+    "PPN."
+   ],
+   [
+    9.54,
+    "Dan"
+   ],
+   [
+    10.18,
+    "PPN"
+   ],
+   [
+    10.52,
+    "impor"
+   ],
+   [
+    11.0,
+    "dipungut"
+   ],
+   [
+    11.52,
+    "dari"
+   ],
+   [
+    11.78,
+    "siapapun"
+   ],
+   [
+    12.62,
+    "yang"
+   ],
+   [
+    12.78,
+    "mengimpor,"
+   ],
+   [
+    13.62,
+    "baik"
+   ],
+   [
+    13.86,
+    "PKP"
+   ],
+   [
+    14.54,
+    "maupun"
+   ],
+   [
+    15.1,
+    "bukan"
+   ],
+   [
+    15.44,
+    "PKP."
+   ],
+   [
+    16.58,
+    "PKP"
+   ],
+   [
+    17.38,
+    "atau"
+   ],
+   [
+    17.64,
+    "pengusaha"
+   ],
+   [
+    18.14,
+    "kena"
+   ],
+   [
+    18.38,
+    "pajak"
+   ],
+   [
+    18.88,
+    "adalah"
+   ],
+   [
+    19.34,
+    "pengusaha"
+   ],
+   [
+    19.86,
+    "yang"
+   ],
+   [
+    20.06,
+    "menyerahkan"
+   ],
+   [
+    20.72,
+    "barang"
+   ],
+   [
+    21.18,
+    "atau"
+   ],
+   [
+    21.38,
+    "jasa"
+   ],
+   [
+    21.86,
+    "yang"
+   ],
+   [
+    22.18,
+    "dikenai"
+   ],
+   [
+    22.58,
+    "pajak"
+   ],
+   [
+    23.04,
     "berdasarkan"
    ],
    [
-    21.263041,
-    "UU"
+    23.54,
+    "undang"
    ],
    [
-    21.536458,
-    "PPN"
-   ]
-  ],
-  "marks": {
-   "obj": 3.384,
-   "who": 9.01,
-   "pkp": 14.896
-  },
-  "cues": [
-   [
-    0.101,
-    "Lalu, apa yang dikenai PPN Impor?"
+    24.04,
+    "-undang"
    ],
    [
-    3.384,
-    "Pasal 4 ayat 1 UU PPN menetapkan impor Barang Kena Pajak sebagai objek PPN."
-   ],
-   [
-    9.01,
-    "Dan PPN Impor dipungut dari siapa pun yang mengimpor, baik PKP maupun bukan PKP."
-   ],
-   [
-    14.896,
-    "PKP, atau Pengusaha Kena Pajak, adalah pengusaha yang menyerahkan barang atau jasa yang dikenai pajak berdasarkan UU PPN."
+    24.34,
+    "PPN."
    ]
   ]
  },
  "tarif": {
-  "key": "ec65cda4d61d534fbb57e73a5dabed84e90b63c1",
-  "dur": 29.736,
+  "key": "2658537ecf54fde0d2c48876b5341d4850deffa7",
+  "dur": 30.6,
   "words": [
    [
-    0.1,
+    0.0,
     "Berapa"
    ],
    [
-    0.477625,
-    "tarifnya"
+    0.52,
+    "tarifnya?"
    ],
    [
-    2.057291,
-    "UU"
+    1.64,
+    "Undang"
    ],
    [
-    2.356791,
+    1.96,
+    "-undang"
+   ],
+   [
+    2.26,
     "HPP"
    ],
    [
-    2.786458,
-    "menetapkan"
+    2.82,
+    "mendetapkan"
    ],
    [
-    3.333333,
+    3.38,
     "tarif"
    ],
    [
-    3.567708,
+    3.72,
     "PPN"
    ],
    [
-    3.958333,
+    4.14,
     "12"
    ],
    [
-    4.309916,
-    "persen"
+    4.78,
+    "persen,"
    ],
    [
-    5.15625,
+    5.38,
     "dan"
    ],
    [
-    5.416666,
+    5.76,
     "PMK"
    ],
    [
-    5.820333,
+    6.24,
     "131"
    ],
    [
-    6.809916,
-    "Tahun"
+    7.44,
+    "tahun"
    ],
    [
-    7.148458,
+    7.86,
     "2024"
    ],
    [
-    8.098958,
+    8.44,
     "mengatur"
    ],
    [
-    8.4245,
+    9.26,
     "cara"
    ],
    [
-    8.710958,
-    "menerapkannya"
+    9.56,
+    "menerapkannya."
    ],
    [
-    10.45575,
+    10.88,
     "Untuk"
    ],
    [
-    10.716166,
+    11.3,
     "barang"
    ],
    [
-    10.989583,
+    11.56,
     "yang"
    ],
    [
-    11.106791,
+    11.72,
     "tidak"
    ],
    [
-    11.341166,
+    11.98,
     "tergolong"
    ],
    [
-    11.692708,
-    "mewah"
+    12.42,
+    "mewah,"
    ],
    [
-    12.526041,
+    13.2,
     "dasar"
    ],
    [
-    12.851583,
+    13.48,
     "pengenaannya"
    ],
    [
-    13.333333,
-    "11/12"
+    14.12,
+    "11x12"
    ],
    [
-    14.21875,
+    15.34,
     "dari"
    ],
    [
-    14.388041,
+    15.96,
     "nilai"
    ],
    [
-    14.622416,
-    "impor"
+    16.3,
+    "impor,"
    ],
    [
-    15.45575,
+    16.9,
     "sehingga"
    ],
    [
-    15.859375,
+    17.46,
     "beban"
    ],
    [
-    16.119791,
+    17.8,
     "efektifnya"
    ],
    [
-    16.731791,
+    18.5,
     "11"
    ],
    [
-    17.083333,
-    "persen"
+    19.02,
+    "persen."
    ],
    [
-    18.554708,
+    19.9,
     "Untuk"
    ],
    [
-    18.802083,
+    20.46,
     "barang"
    ],
    [
-    19.023458,
+    20.68,
     "mewah"
    ],
    [
-    19.309916,
+    21.06,
     "yang"
    ],
    [
-    19.453125,
+    21.3,
     "dikenai"
    ],
    [
-    19.778666,
-    "PPnBM"
+    21.7,
+    "PPNBM,"
    ],
    [
-    20.963541,
+    23.06,
     "dasarnya"
    ],
    [
-    21.471375,
+    23.36,
     "nilai"
    ],
    [
-    21.71875,
+    23.92,
     "impor"
    ],
    [
-    21.979166,
-    "penuh"
+    24.24,
+    "penuh."
    ],
    [
-    22.682291,
-    "jadi"
+    24.96,
+    "Jadi"
    ],
    [
-    22.994791,
+    25.2,
     "bebannya"
    ],
    [
-    23.4375,
+    25.68,
     "12"
    ],
    [
-    23.854166,
-    "persen"
+    26.08,
+    "persen."
    ],
    [
-    25.311458,
+    26.54,
     "Saat"
    ],
    [
-    25.65,
+    27.5,
     "bahan"
    ],
    [
-    25.884375,
+    27.74,
     "ajar"
    ],
    [
-    26.170833,
+    28.0,
     "ini"
    ],
    [
-    26.340125,
-    "disusun"
+    28.14,
+    "disusun,"
    ],
    [
-    27.303666,
+    28.92,
     "aturan"
    ],
    [
-    27.629166,
+    29.24,
     "ini"
    ],
    [
-    27.876583,
+    29.46,
     "masih"
    ],
    [
-    28.163041,
-    "berlaku"
-   ]
-  ],
-  "marks": {
-   "hpp": 2.057,
-   "non": 10.456,
-   "lux": 18.555,
-   "note": 25.311
-  },
-  "cues": [
-   [
-    0.1,
-    "Berapa tarifnya?"
-   ],
-   [
-    2.057,
-    "UU HPP menetapkan tarif PPN 12 persen, dan PMK 131 Tahun 2024 mengatur cara menerapkannya."
-   ],
-   [
-    10.456,
-    "Untuk barang yang tidak tergolong mewah, dasar pengenaannya 11/12 dari nilai impor, sehingga beban efektifnya 11 persen."
-   ],
-   [
-    18.555,
-    "Untuk barang mewah yang dikenai PPnBM, dasarnya nilai impor penuh, jadi bebannya 12 persen."
-   ],
-   [
-    25.311,
-    "Saat bahan ajar ini disusun, aturan ini masih berlaku."
+    29.72,
+    "berlaku."
    ]
   ]
  },
  "q1": {
-  "key": "8f0b32898366ce6657699bafd9a121e1f8d69fec",
-  "dur": 8.376,
+  "key": "08dd54bf7d0efd72118ab5a7fe88aa2c78b1b232",
+  "dur": 7.64,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    1.064583,
+    0.76,
     "mari"
    ],
    [
-    1.298958,
+    1.2,
     "kita"
    ],
    [
-    1.533333,
+    1.52,
     "cek"
    ],
    [
-    1.715625,
+    1.8,
     "pemahaman"
    ],
    [
-    2.184375,
-    "kamu"
+    2.26,
+    "kamu."
    ],
    [
-    3.540625,
-    "Kira-kira"
+    3.32,
+    "Kira"
    ],
    [
-    4.595333,
+    3.66,
+    "-kira"
+   ],
+   [
+    4.1,
     "berapa"
    ],
    [
-    4.933875,
+    4.82,
     "beban"
    ],
    [
-    5.18125,
+    5.18,
     "efektif"
    ],
    [
-    5.584916,
+    5.76,
     "PPN"
    ],
    [
-    6.001583,
+    6.28,
     "untuk"
    ],
    [
-    6.196875,
+    6.6,
     "kain"
    ],
    [
-    6.392208,
+    6.88,
     "kita"
    ],
    [
-    7.082291,
-    "ya"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, mari kita cek pemahaman kamu."
-   ],
-   [
-    3.541,
-    "Kira-kira, berapa beban efektif PPN untuk kain kita, ya?"
+    7.14,
+    "ya?"
    ]
   ]
  },
  "hitung": {
-  "key": "ba799c93cad9eb950a9b01c23bac8b3fc9d775f4",
-  "dur": 28.752,
+  "key": "7d33a35e710110aa899e4ac32e361e85ac601d18",
+  "dur": 32.36,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    0.556791,
+    0.66,
     "kita"
    ],
    [
-    0.752083,
+    1.0,
     "hitung"
    ],
    [
-    1.038541,
-    "PPN"
+    1.46,
+    "ppn"
    ],
    [
-    1.351041,
-    "Impor"
+    1.94,
+    "impor"
    ],
    [
-    1.741666,
+    2.36,
     "untuk"
    ],
    [
-    1.976041,
-    "Kasus"
+    2.72,
+    "kasus"
    ],
    [
-    2.2495,
-    "1"
+    3.16,
+    "1,"
    ],
    [
-    3.644791,
-    "Cek"
+    3.94,
+    "cek"
    ],
    [
-    3.879166,
-    "dulu"
+    4.2,
+    "dulu,"
    ],
    [
-    4.686458,
+    4.92,
     "kain"
    ],
    [
-    4.946875,
+    5.3,
     "tidak"
    ],
    [
-    5.16825,
+    5.68,
     "tergolong"
    ],
    [
-    5.519791,
+    6.1,
     "mewah"
    ],
    [
-    6.288041,
+    6.5,
     "dan"
    ],
    [
-    6.509375,
+    6.94,
     "importirnya"
    ],
    [
-    7.108333,
-    "PKP"
+    7.82,
+    "pkp."
    ],
    [
-    8.644791,
+    8.86,
     "Jadi"
    ],
    [
-    8.996375,
+    9.24,
     "dasar"
    ],
    [
-    9.282833,
-    "pengenaannya"
+    9.64,
+    "pengenanya"
    ],
    [
-    9.803666,
-    "11/12"
+    10.22,
+    "11x12"
    ],
    [
-    10.767208,
+    11.38,
     "dari"
    ],
    [
-    10.988541,
+    12.02,
     "nilai"
    ],
    [
-    11.248958,
-    "impor"
+    12.62,
+    "impor."
    ],
    [
-    12.734375,
+    13.68,
     "Nilai"
    ],
    [
-    12.994791,
+    14.3,
     "impornya"
    ],
    [
-    13.4375,
+    14.78,
     "sudah"
    ],
    [
-    13.697916,
+    14.98,
     "kita"
    ],
    [
-    13.867208,
+    15.16,
     "hitung"
    ],
    [
-    14.179708,
+    15.54,
     "di"
    ],
    [
-    14.257833,
+    15.8,
     "materi"
    ],
    [
-    14.51825,
-    "pertama"
+    16.08,
+    "pertama,"
    ],
    [
-    15.494791,
+    16.68,
     "yaitu"
    ],
    [
-    15.885416,
-    "1,528"
+    17.18,
+    "1"
    ],
    [
-    17.096375,
+    17.6,
+    ",528"
+   ],
+   [
+    19.04,
     "miliar"
    ],
    [
-    17.382833,
-    "rupiah"
+    19.7,
+    "rupiah."
    ],
    [
-    18.840125,
-    "PPN"
+    20.74,
+    "Ppn"
    ],
    [
-    19.217708,
-    "Impor"
-   ],
-   [
-    19.504166,
-    "sama"
-   ],
-   [
-    19.842708,
-    "dengan"
-   ],
-   [
-    20.090125,
-    "12"
-   ],
-   [
-    20.428666,
-    "persen"
-   ],
-   [
-    20.80625,
-    "dikali"
-   ],
-   [
-    21.079708,
-    "11/12"
-   ],
-   [
-    21.965125,
-    "dikali"
-   ],
-   [
-    22.329708,
-    "nilai"
-   ],
-   [
-    22.577083,
+    21.22,
     "impor"
    ],
    [
-    24.035416,
+    21.66,
+    "sama"
+   ],
+   [
+    21.88,
+    "dengan"
+   ],
+   [
+    22.16,
+    "12"
+   ],
+   [
+    22.76,
+    "%"
+   ],
+   [
+    23.14,
+    "di"
+   ],
+   [
+    23.64,
+    "kali"
+   ],
+   [
+    23.94,
+    "11x12"
+   ],
+   [
+    24.94,
+    "di"
+   ],
+   [
+    25.48,
+    "kali"
+   ],
+   [
+    25.84,
+    "nilai"
+   ],
+   [
+    26.18,
+    "impor."
+   ],
+   [
+    26.82,
     "Hasilnya"
    ],
    [
-    24.582291,
-    "168.105.300"
+    27.58,
+    "168"
    ],
    [
-    27.290625,
-    "rupiah"
-   ]
-  ],
-  "marks": {
-   "cek": 3.645,
-   "ni": 12.734,
-   "ppn": 18.84,
-   "res": 24.035
-  },
-  "cues": [
-   [
-    0.101,
-    "Sekarang kita hitung PPN Impor untuk Kasus 1."
+    29.14,
+    "juta"
    ],
    [
-    3.645,
-    "Cek dulu: kain tidak tergolong mewah, dan importirnya PKP."
+    29.62,
+    "105"
    ],
    [
-    8.645,
-    "Jadi dasar pengenaannya 11/12 dari nilai impor."
+    30.1,
+    ".300"
    ],
    [
-    12.734,
-    "Nilai impornya sudah kita hitung di materi pertama, yaitu 1,528 miliar rupiah."
-   ],
-   [
-    18.84,
-    "PPN Impor sama dengan 12 persen dikali 11/12 dikali nilai impor."
-   ],
-   [
-    24.035,
-    "Hasilnya 168.105.300 rupiah."
+    31.28,
+    "rupiah."
    ]
   ]
  },
  "pkpm": {
-  "key": "ad32d32f3e60a87d8154ddd9c1a9134fc1491125",
-  "dur": 31.608,
+  "key": "fbe90c2cb9bbe5cc00f46c7c1341ea061b1d0160",
+  "dur": 31.64,
   "words": [
    [
-    0.101041,
+    0.0,
     "Supaya"
    ],
    [
-    0.504708,
+    0.62,
     "tahu"
    ],
    [
-    0.791166,
-    "ke"
+    0.94,
+    "kemana"
    ],
    [
-    0.882291,
-    "mana"
-   ],
-   [
-    1.077625,
+    1.42,
     "uang"
    ],
    [
-    1.259916,
+    1.7,
     "ini"
    ],
    [
-    1.416166,
-    "pergi"
+    1.86,
+    "pergi,"
    ],
    [
-    2.275541,
+    2.74,
     "kenali"
    ],
    [
-    2.653125,
+    3.14,
     "dua"
    ],
    [
-    2.822416,
-    "istilah"
+    3.34,
+    "istilah."
    ],
    [
-    4.321875,
+    4.28,
     "Pajak"
    ],
    [
-    4.660416,
+    4.66,
     "keluaran"
    ],
    [
-    5.077083,
+    5.02,
     "adalah"
    ],
    [
-    5.389583,
+    5.58,
     "PPN"
    ],
    [
-    5.819291,
+    6.14,
     "yang"
    ],
    [
-    5.9625,
-    "dipungut"
+    6.4,
+    "dipunggut"
    ],
    [
-    6.314083,
+    6.78,
     "PKP"
    ],
    [
-    6.808875,
+    7.42,
     "saat"
    ],
    [
-    7.05625,
+    7.7,
     "menjual"
    ],
    [
-    7.420833,
-    "barang"
+    8.06,
+    "barang."
    ],
    [
-    8.827083,
+    8.9,
     "Pajak"
    ],
    [
-    9.178666,
+    9.44,
     "masukan"
    ],
    [
-    9.660416,
+    9.84,
     "adalah"
    ],
    [
-    9.933875,
+    10.42,
     "PPN"
    ],
    [
-    10.350541,
+    11.0,
     "yang"
    ],
    [
-    10.49375,
+    11.28,
     "dibayar"
    ],
    [
-    10.858333,
+    11.7,
     "PKP"
    ],
    [
-    11.405208,
+    12.38,
     "saat"
    ],
    [
-    11.652625,
+    12.62,
     "membeli"
    ],
    [
-    11.991166,
+    13.24,
     "atau"
    ],
    [
-    12.251583,
+    13.56,
     "mengimpor"
    ],
    [
-    12.66825,
-    "barang"
+    14.0,
+    "barang."
    ],
    [
-    14.0745,
+    15.02,
     "Setiap"
    ],
    [
-    14.478125,
+    15.64,
     "masa"
    ],
    [
-    14.6995,
-    "pajak"
+    15.82,
+    "pajak,"
    ],
    [
-    15.584916,
+    16.62,
     "PKP"
    ],
    [
-    15.975541,
+    17.1,
     "menghitung"
    ],
    [
-    16.392208,
+    17.4,
     "pajak"
    ],
    [
-    16.704708,
+    17.76,
     "keluaran"
    ],
    [
-    17.069291,
+    18.16,
     "dikurangi"
    ],
    [
-    17.498958,
+    18.86,
     "pajak"
    ],
    [
-    17.876583,
-    "masukan"
+    19.28,
+    "masukan."
    ],
    [
-    19.427083,
+    20.3,
     "Kalau"
    ],
    [
-    19.648458,
+    20.56,
     "pajak"
    ],
    [
-    19.973958,
+    20.82,
     "keluaran"
    ],
    [
-    20.3125,
+    21.08,
     "lebih"
    ],
    [
-    20.507833,
-    "besar"
+    21.3,
+    "besar,"
    ],
    [
-    21.328125,
+    22.04,
     "PKP"
    ],
    [
-    21.757833,
+    22.44,
     "menyetor"
    ],
    [
-    22.135416,
-    "selisihnya"
+    22.76,
+    "selisihnya."
    ],
    [
-    23.815125,
+    23.76,
     "Kalau"
    ],
    [
-    24.036458,
+    24.08,
     "pajak"
    ],
    [
-    24.335958,
+    24.38,
     "masukan"
    ],
    [
-    24.739583,
+    24.72,
     "yang"
    ],
    [
-    24.856791,
+    24.88,
     "lebih"
    ],
    [
-    25.052083,
-    "besar"
+    25.04,
+    "besar,"
    ],
    [
-    25.846375,
+    25.72,
     "terjadi"
    ],
    [
-    26.276041,
+    26.22,
     "lebih"
    ],
    [
-    26.497416,
-    "bayar"
+    26.56,
+    "bayar."
    ],
    [
-    27.34375,
-    "dan"
+    27.0,
+    "Dan"
    ],
    [
-    27.578125,
+    27.5,
     "PKP"
    ],
    [
-    28.007833,
+    28.06,
     "bisa"
    ],
    [
-    28.255208,
+    28.36,
     "meminta"
    ],
    [
-    28.567708,
+    28.78,
     "pengembalian"
    ],
    [
-    29.179708,
+    29.48,
     "atau"
    ],
    [
-    29.492208,
-    "mengompensasikannya"
-   ]
-  ],
-  "marks": {
-   "pk": 4.322,
-   "pm": 8.827,
-   "kb": 14.075,
-   "lb": 23.815
-  },
-  "cues": [
-   [
-    0.101,
-    "Supaya tahu ke mana uang ini pergi, kenali dua istilah."
-   ],
-   [
-    4.322,
-    "Pajak keluaran adalah PPN yang dipungut PKP saat menjual barang."
-   ],
-   [
-    8.827,
-    "Pajak masukan adalah PPN yang dibayar PKP saat membeli atau mengimpor barang."
-   ],
-   [
-    14.075,
-    "Setiap masa pajak, PKP menghitung pajak keluaran dikurangi pajak masukan."
-   ],
-   [
-    19.427,
-    "Kalau pajak keluaran lebih besar, PKP menyetor selisihnya."
-   ],
-   [
-    23.815,
-    "Kalau pajak masukan yang lebih besar, terjadi lebih bayar, dan PKP bisa meminta pengembalian atau mengompensasikannya."
+    30.0,
+    "mengkompensasikannya."
    ]
   ]
  },
  "faktur": {
-  "key": "33de5171b2456ed08382abe9f1ff58cbb9227c80",
-  "dur": 14.832,
+  "key": "53a65371f840c8536dec482512b9d48038d5adbb",
+  "dur": 13.76,
   "words": [
    [
-    0.101041,
+    0.0,
     "Lalu"
    ],
    [
-    0.986458,
+    0.6,
     "bagaimana"
    ],
    [
-    1.546375,
-    "PPN"
+    1.32,
+    "ppn"
    ],
    [
-    1.871875,
-    "Impor"
+    1.66,
+    "impor"
    ],
    [
-    2.197416,
+    1.96,
     "masuk"
    ],
    [
-    2.470833,
+    2.18,
     "ke"
    ],
    [
-    2.522916,
+    2.34,
     "hitungan"
    ],
    [
-    2.8745,
-    "itu"
+    2.64,
+    "itu?"
    ],
    [
-    4.191666,
-    "PIB"
+    3.84,
+    "PIB,"
    ],
    [
-    4.621375,
+    4.76,
     "beserta"
    ],
    [
-    5.025,
+    5.0,
     "bukti"
    ],
    [
-    5.311458,
-    "pembayarannya"
+    5.28,
+    "pembayarannya,"
    ],
    [
-    5.975541,
+    6.0,
     "berkedudukan"
    ],
    [
-    6.5875,
+    6.54,
     "sama"
    ],
    [
-    6.926041,
+    6.94,
     "dengan"
    ],
    [
-    7.173458,
-    "faktur"
+    7.22,
+    "faktor"
    ],
    [
-    7.512,
-    "pajak"
+    7.64,
+    "pajak."
    ],
    [
-    8.957291,
-    "Jadi"
+    8.3,
+    "Jadi,"
    ],
    [
-    9.933875,
-    "importir"
+    9.16,
+    "impor"
    ],
    [
-    10.415625,
+    9.4,
+    "tir"
+   ],
+   [
+    9.6,
     "yang"
    ],
    [
-    10.558875,
+    9.78,
     "PKP"
    ],
    [
-    11.014583,
+    10.28,
     "dapat"
    ],
    [
-    11.301041,
+    10.56,
     "mengkreditkan"
    ],
    [
-    11.873958,
-    "PPN"
+    11.28,
+    "ppn"
    ],
    [
-    12.225541,
-    "Impor"
+    11.72,
+    "impor"
    ],
    [
-    12.590125,
+    12.14,
     "sebagai"
    ],
    [
-    12.954708,
+    12.38,
     "pajak"
    ],
    [
-    13.319291,
-    "masukan"
+    12.84,
+    "masukan."
    ]
-  ],
-  "marks": {
-   "pib": 4.192,
-   "kredit": 8.957
-  },
-  "cues": [
+  ]
+ },
+ "rina": {
+  "key": "6dcf713c8dfc81daa82c4adee3a565eba941add7",
+  "dur": 29.76,
+  "words": [
    [
-    0.101,
-    "Lalu, bagaimana PPN Impor masuk ke hitungan itu?"
+    0.0,
+    "Ingat"
    ],
    [
-    4.192,
-    "PIB beserta bukti pembayarannya berkedudukan sama dengan faktur pajak."
+    0.48,
+    "Burina"
    ],
    [
-    8.957,
-    "Jadi, importir yang PKP dapat mengkreditkan PPN Impor sebagai pajak masukan."
+    0.86,
+    "dari"
+   ],
+   [
+    1.24,
+    "materi"
+   ],
+   [
+    1.64,
+    "ketiga?"
+   ],
+   [
+    2.56,
+    "Ya"
+   ],
+   [
+    2.7,
+    "bertanya,"
+   ],
+   [
+    3.5,
+    "saya"
+   ],
+   [
+    3.76,
+    "bukan"
+   ],
+   [
+    4.08,
+    "PKP,"
+   ],
+   [
+    5.0,
+    "kenapa"
+   ],
+   [
+    5.32,
+    "tetap"
+   ],
+   [
+    5.66,
+    "membayar"
+   ],
+   [
+    6.04,
+    "PPN?"
+   ],
+   [
+    7.18,
+    "Jawabannya,"
+   ],
+   [
+    8.46,
+    "syarat"
+   ],
+   [
+    8.64,
+    "objektif"
+   ],
+   [
+    9.32,
+    "tetap"
+   ],
+   [
+    9.64,
+    "terpenuhi."
+   ],
+   [
+    10.58,
+    "Impor"
+   ],
+   [
+    11.06,
+    "barang"
+   ],
+   [
+    11.4,
+    "kenapa"
+   ],
+   [
+    11.7,
+    "jak"
+   ],
+   [
+    11.98,
+    "berlaku"
+   ],
+   [
+    12.48,
+    "untuk"
+   ],
+   [
+    12.7,
+    "siapapun."
+   ],
+   [
+    13.7,
+    "PPN"
+   ],
+   [
+    14.18,
+    "impornya"
+   ],
+   [
+    14.88,
+    "11"
+   ],
+   [
+    15.36,
+    "juta"
+   ],
+   [
+    15.68,
+    "rupiah."
+   ],
+   [
+    16.48,
+    "Tapi"
+   ],
+   [
+    16.7,
+    "karena"
+   ],
+   [
+    16.94,
+    "bukan"
+   ],
+   [
+    17.2,
+    "PKP,"
+   ],
+   [
+    18.14,
+    "ia"
+   ],
+   [
+    18.24,
+    "tidak"
+   ],
+   [
+    18.46,
+    "dapat"
+   ],
+   [
+    18.74,
+    "mengkreditkannya."
+   ],
+   [
+    20.02,
+    "PPN"
+   ],
+   [
+    20.42,
+    "itu"
+   ],
+   [
+    20.64,
+    "menjadi"
+   ],
+   [
+    20.86,
+    "bagian"
+   ],
+   [
+    21.36,
+    "biaya."
+   ],
+   [
+    22.34,
+    "Berbeda"
+   ],
+   [
+    22.9,
+    "dengan"
+   ],
+   [
+    23.18,
+    "PT"
+   ],
+   [
+    23.64,
+    "Kain"
+   ],
+   [
+    24.12,
+    "Primanusantara"
+   ],
+   [
+    25.08,
+    "yang"
+   ],
+   [
+    25.54,
+    "dapat"
+   ],
+   [
+    25.92,
+    "mengkreditkannya."
+   ],
+   [
+    26.86,
+    "Paling"
+   ],
+   [
+    27.42,
+    "lama,"
+   ],
+   [
+    27.98,
+    "tiga"
+   ],
+   [
+    28.3,
+    "masa"
+   ],
+   [
+    28.5,
+    "panjak"
+   ],
+   [
+    28.88,
+    "berikutnya."
    ]
   ]
  },
  "estafet": {
-  "key": "b9630b5b42fa3c786284bd6596ba6b9b12d37602",
-  "dur": 40.272,
+  "key": "00e60af45e5f439356af461943611239d95dcc84",
+  "dur": 38.08,
   "words": [
    [
-    0.101041,
+    0.0,
     "Mari"
    ],
    [
-    0.3875,
+    0.42,
     "kita"
    ],
    [
-    0.582833,
+    0.64,
     "ikuti"
    ],
    [
-    0.869291,
+    1.04,
     "perjalanan"
    ],
    [
-    1.403125,
+    1.7,
     "kain"
    ],
    [
-    1.598458,
+    1.98,
     "ini"
    ],
    [
-    1.937,
+    2.3,
     "sampai"
    ],
    [
-    2.288541,
+    2.76,
     "menjadi"
    ],
    [
-    2.640125,
-    "kemeja"
+    3.3,
+    "kemeja."
    ],
    [
-    4.165625,
+    4.12,
     "Angkanya"
    ],
    [
-    4.647416,
-    "disederhanakan"
+    4.84,
+    "di"
    ],
    [
-    5.897416,
-    "ya"
+    5.14,
+    "sederhanakan"
    ],
    [
-    7.278666,
+    5.74,
+    "ya."
+   ],
+   [
+    6.66,
     "Saat"
    ],
    [
-    7.565125,
+    7.0,
+    "impor,"
+   ],
+   [
+    7.6,
     "impor"
    ],
    [
-    8.398458,
-    "importir"
+    7.96,
+    "tir"
    ],
    [
-    8.867208,
+    8.12,
     "membayar"
    ],
    [
-    9.244791,
+    8.54,
     "PPN"
    ],
    [
-    9.6875,
+    8.88,
     "sekitar"
    ],
    [
-    10.091166,
+    9.46,
     "168"
    ],
    [
-    11.132833,
+    10.82,
     "juta"
    ],
    [
-    11.354166,
+    11.12,
     "rupiah"
    ],
    [
-    11.731791,
+    11.48,
     "sebagai"
    ],
    [
-    12.122416,
+    11.84,
     "pajak"
    ],
    [
-    12.487,
-    "masukan"
+    12.34,
+    "masukan."
    ],
    [
-    14.023458,
-    "Importir"
+    13.14,
+    "Impor"
    ],
    [
-    14.505208,
+    13.56,
+    "tir"
+   ],
+   [
+    13.76,
     "menjual"
    ],
    [
-    14.869791,
+    14.22,
     "kain"
    ],
    [
-    15.130208,
+    14.6,
     "ke"
    ],
    [
-    15.208333,
-    "konveksi"
+    14.78,
+    "konfeksi,"
    ],
    [
-    16.263041,
+    15.7,
     "memungut"
    ],
    [
-    16.640625,
+    15.98,
     "PPN"
    ],
    [
-    17.03125,
+    16.38,
     "198"
    ],
    [
-    18.112,
-    "juta"
+    17.1,
+    "juta."
    ],
    [
-    18.945333,
-    "lalu"
+    18.56,
+    "Lalu"
    ],
    [
-    19.21875,
+    18.74,
     "menyetor"
    ],
    [
-    19.544291,
-    "selisihnya"
+    19.08,
+    "selisihnya,"
    ],
    [
-    20.559916,
+    19.86,
     "sekitar"
    ],
    [
-    21.015625,
-    "29,9"
+    20.28,
+    "29"
    ],
    [
-    22.33075,
-    "juta"
+    20.92,
+    ",9"
    ],
    [
-    23.722916,
-    "Konveksi"
+    21.86,
+    "juta."
    ],
    [
-    24.23075,
+    22.72,
+    "Konfeksi"
+   ],
+   [
+    23.38,
     "menjual"
    ],
    [
-    24.582291,
+    23.76,
     "ke"
    ],
    [
-    24.647416,
+    23.94,
     "toko"
    ],
    [
-    25.077083,
+    24.2,
     "dan"
    ],
    [
-    25.246375,
+    24.44,
     "menyetor"
    ],
    [
-    25.623958,
+    24.84,
     "77"
    ],
    [
-    26.405208,
-    "juta"
+    25.52,
+    "juta."
    ],
    [
-    27.838541,
+    26.38,
     "Toko"
    ],
    [
-    28.072916,
+    26.68,
     "menjual"
    ],
    [
-    28.4375,
+    27.02,
     "ke"
    ],
    [
-    28.515625,
+    27.18,
     "pembeli"
    ],
    [
-    29.388041,
+    27.56,
     "dan"
    ],
    [
-    29.635416,
+    27.92,
     "menyetor"
    ],
    [
-    30.013041,
+    28.34,
     "77"
    ],
    [
-    30.807291,
+    28.9,
     "juta"
    ],
    [
-    31.041666,
-    "lagi"
+    29.36,
+    "lagi."
    ],
    [
-    32.421875,
-    "Kalau"
+    29.62,
+    "Kalo"
    ],
    [
-    32.630208,
-    "dijumlahkan"
+    30.28,
+    "dijumlahkan,"
    ],
    [
-    33.737,
+    31.2,
     "kas"
    ],
    [
-    33.945333,
+    31.38,
     "negara"
    ],
    [
-    34.244791,
+    31.8,
     "menerima"
    ],
    [
-    34.609375,
+    32.28,
     "352"
    ],
    [
-    35.638041,
+    33.76,
     "juta"
    ],
    [
-    35.872416,
-    "rupiah"
+    34.08,
+    "rupiah,"
    ],
    [
-    36.770833,
+    34.8,
     "sama"
    ],
    [
-    37.057291,
+    35.12,
     "persis"
    ],
    [
-    37.421875,
+    35.64,
     "dengan"
    ],
    [
-    37.630208,
+    35.88,
     "PPN"
    ],
    [
-    38.046875,
+    36.3,
     "yang"
    ],
    [
-    38.190125,
+    36.5,
     "dibayar"
    ],
    [
-    38.58075,
+    37.02,
     "pembeli"
    ],
    [
-    38.854166,
-    "akhir"
-   ]
-  ],
-  "marks": {
-   "e1": 7.279,
-   "e2": 14.023,
-   "e3": 23.723,
-   "e4": 27.839,
-   "sum": 32.422
-  },
-  "cues": [
-   [
-    0.101,
-    "Mari kita ikuti perjalanan kain ini sampai menjadi kemeja."
-   ],
-   [
-    4.166,
-    "Angkanya disederhanakan, ya."
-   ],
-   [
-    7.279,
-    "Saat impor, importir membayar PPN sekitar 168 juta rupiah sebagai pajak masukan."
-   ],
-   [
-    14.023,
-    "Importir menjual kain ke konveksi, memungut PPN 198 juta, lalu menyetor selisihnya, sekitar 29,9 juta."
-   ],
-   [
-    23.723,
-    "Konveksi menjual ke toko dan menyetor 77 juta."
-   ],
-   [
-    27.839,
-    "Toko menjual ke pembeli, dan menyetor 77 juta lagi."
-   ],
-   [
-    32.422,
-    "Kalau dijumlahkan, kas negara menerima 352 juta rupiah, sama persis dengan PPN yang dibayar pembeli akhir."
+    37.36,
+    "akhir."
    ]
   ]
  },
  "q2": {
-  "key": "e7a3b74498dac4b209bca6c1aba527501ffefde7",
-  "dur": 6.912,
+  "key": "46db63cd5b4ff09aa9c34a35389bfa16d67d57ea",
+  "dur": 5.64,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    1.051583,
+    0.72,
     "kita"
    ],
    [
-    1.298958,
+    1.12,
     "cek"
    ],
    [
-    1.48125,
+    1.48,
     "pemahaman"
    ],
    [
-    1.923958,
+    1.86,
     "lagi"
    ],
    [
-    2.666166,
-    "ya"
+    2.08,
+    "ya,"
    ],
    [
-    4.008875,
-    "Berapa"
+    2.74,
+    "berapa"
    ],
    [
-    4.386458,
-    "PPN"
+    3.24,
+    "ppn"
    ],
    [
-    4.816166,
+    3.98,
     "yang"
    ],
    [
-    4.959375,
+    4.32,
     "disetor"
    ],
    [
-    5.297916,
-    "konveksi"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, kita cek pemahaman lagi, ya."
-   ],
-   [
-    4.009,
-    "Berapa PPN yang disetor konveksi?"
+    4.8,
+    "konveksi."
    ]
   ]
  },
  "jawab": {
-  "key": "e782687bde49b56feaf51b9d9c007c2ad32afc63",
-  "dur": 18.864,
+  "key": "db78f92c01223545f01c84c3f1081c83ea6f6a8d",
+  "dur": 17.92,
   "words": [
    [
-    0.101041,
-    "Jadi"
+    0.0,
+    "Jadi,"
    ],
    [
-    1.025541,
+    0.7,
     "apa"
    ],
    [
-    1.259916,
+    1.04,
     "jawaban"
    ],
    [
-    1.676583,
+    1.66,
     "untuk"
    ],
    [
-    1.884916,
+    2.0,
     "staf"
    ],
    [
-    2.145333,
+    2.36,
     "importir"
    ],
    [
-    2.535958,
-    "tadi"
+    2.84,
+    "tadi?"
    ],
    [
-    3.93125,
+    3.68,
     "PPN"
    ],
    [
-    4.321875,
-    "Impor"
+    4.14,
+    "import"
    ],
    [
-    4.673458,
+    4.64,
     "168"
    ],
    [
-    5.715125,
+    6.08,
     "juta"
    ],
    [
-    5.923458,
+    6.48,
     "itu"
    ],
    [
-    6.196875,
+    6.64,
     "tidak"
    ],
    [
-    6.470333,
-    "hilang"
+    6.92,
+    "hilang."
    ],
    [
-    7.890625,
+    7.92,
     "Sebagai"
    ],
    [
-    8.28125,
-    "PKP"
+    8.3,
+    "PKP,"
    ],
    [
-    9.257833,
+    9.1,
     "perusahaan"
    ],
    [
-    9.804708,
+    9.7,
     "dapat"
    ],
    [
-    10.052083,
+    9.86,
     "mengkreditkannya"
    ],
    [
-    10.742208,
+    10.8,
     "sebagai"
    ],
    [
-    11.08075,
+    11.2,
     "pajak"
    ],
    [
-    11.39325,
+    11.78,
     "masukan"
    ],
    [
-    11.888041,
+    12.2,
     "saat"
    ],
    [
-    12.135416,
-    "menjual"
+    12.46,
+    "menjualkain."
    ],
    [
-    12.5,
-    "kain"
-   ],
-   [
-    13.90625,
+    13.68,
     "Beban"
    ],
    [
-    14.21875,
-    "PPN-nya"
+    14.0,
+    "PPNnya"
    ],
    [
-    14.700541,
+    14.48,
     "berpindah"
    ],
    [
-    15.182291,
+    15.18,
     "ke"
    ],
    [
-    15.260416,
+    15.24,
     "pembeli"
    ],
    [
-    15.507833,
+    15.58,
     "berikutnya"
    ],
    [
-    16.523458,
+    16.06,
     "sampai"
    ],
    [
-    16.940125,
+    16.62,
     "ke"
    ],
    [
-    17.044291,
+    16.82,
     "konsumen"
    ],
    [
-    17.447916,
-    "akhir"
-   ]
-  ],
-  "marks": {
-   "a1": 3.931,
-   "a2": 7.891,
-   "a3": 13.906
-  },
-  "cues": [
-   [
-    0.101,
-    "Jadi, apa jawaban untuk staf importir tadi?"
-   ],
-   [
-    3.931,
-    "PPN Impor 168 juta itu tidak hilang."
-   ],
-   [
-    7.891,
-    "Sebagai PKP, perusahaan dapat mengkreditkannya sebagai pajak masukan saat menjual kain."
-   ],
-   [
-    13.906,
-    "Beban PPN-nya berpindah ke pembeli berikutnya, sampai ke konsumen akhir."
+    17.16,
+    "akhir."
    ]
   ]
  },
  "wrap": {
-  "key": "34216d0de7a40ca1a2c70a071ef5c6ba2ba5579c",
-  "dur": 24.792,
+  "key": "c00134efecf16e04fb317409ef734eec0e9796a3",
+  "dur": 24.24,
   "words": [
    [
-    0.100541,
-    "Jadi"
+    0.0,
+    "Jadi,"
    ],
    [
-    1.064083,
+    0.84,
     "ini"
    ],
    [
-    1.376583,
-    "rangkumannya"
+    1.04,
+    "rangkumannya."
    ],
    [
-    3.098958,
+    2.18,
     "PPN"
    ],
    [
-    3.4245,
-    "Impor"
+    2.56,
+    "impor"
    ],
    [
-    3.776041,
+    3.04,
     "dikenakan"
    ],
    [
-    4.231791,
+    3.54,
     "atas"
    ],
    [
-    4.479166,
+    4.12,
     "impor"
    ],
    [
-    4.765625,
-    "Barang"
-   ],
-   [
-    4.987,
-    "Kena"
-   ],
-   [
-    5.14325,
-    "Pajak"
-   ],
-   [
-    5.976583,
-    "oleh"
-   ],
-   [
-    6.210958,
-    "siapa"
-   ],
-   [
-    6.536458,
-    "pun"
-   ],
-   [
-    7.838541,
-    "Untuk"
-   ],
-   [
-    8.098958,
+    4.6,
     "barang"
    ],
    [
-    8.346375,
-    "tidak"
+    4.94,
+    "kena"
    ],
    [
-    8.567708,
-    "mewah"
-   ],
-   [
-    9.388041,
-    "rumusnya"
-   ],
-   [
-    9.869791,
-    "12"
-   ],
-   [
-    10.234375,
-    "persen"
-   ],
-   [
-    10.598958,
-    "dikali"
-   ],
-   [
-    10.872416,
-    "11/12"
-   ],
-   [
-    11.744791,
-    "dikali"
-   ],
-   [
-    12.096375,
-    "nilai"
-   ],
-   [
-    12.34375,
-    "impor"
-   ],
-   [
-    13.801041,
-    "Untuk"
-   ],
-   [
-    14.100541,
-    "barang"
-   ],
-   [
-    14.321875,
-    "mewah"
-   ],
-   [
-    15.142208,
-    "12"
-   ],
-   [
-    15.532833,
-    "persen"
-   ],
-   [
-    15.884375,
-    "dikali"
-   ],
-   [
-    16.209916,
-    "nilai"
-   ],
-   [
-    16.470333,
-    "impor"
-   ],
-   [
-    17.942708,
-    "Importir"
-   ],
-   [
-    18.398458,
-    "PKP"
-   ],
-   [
-    18.802083,
-    "mengkreditkan"
-   ],
-   [
-    19.401041,
-    "PPN"
-   ],
-   [
-    19.739583,
-    "Impor"
-   ],
-   [
-    20.117208,
-    "sebagai"
-   ],
-   [
-    20.45575,
+    5.14,
     "pajak"
    ],
    [
-    20.76825,
+    5.58,
+    "oleh"
+   ],
+   [
+    5.94,
+    "siapapun."
+   ],
+   [
+    6.92,
+    "Untuk"
+   ],
+   [
+    7.26,
+    "barang"
+   ],
+   [
+    7.46,
+    "tidak"
+   ],
+   [
+    7.62,
+    "mewah,"
+   ],
+   [
+    8.36,
+    "rumusnya"
+   ],
+   [
+    8.84,
+    "12"
+   ],
+   [
+    9.4,
+    "%"
+   ],
+   [
+    9.92,
+    "dikali"
+   ],
+   [
+    10.54,
+    "11"
+   ],
+   [
+    10.82,
+    "per"
+   ],
+   [
+    11.18,
+    "12"
+   ],
+   [
+    11.48,
+    "dikali"
+   ],
+   [
+    12.28,
+    "nilai"
+   ],
+   [
+    12.6,
+    "impor."
+   ],
+   [
+    13.42,
+    "Untuk"
+   ],
+   [
+    13.72,
+    "barang"
+   ],
+   [
+    13.92,
+    "mewah,"
+   ],
+   [
+    14.54,
+    "12"
+   ],
+   [
+    14.96,
+    "%"
+   ],
+   [
+    15.32,
+    "dikali"
+   ],
+   [
+    15.82,
+    "nilai"
+   ],
+   [
+    16.16,
+    "impor."
+   ],
+   [
+    17.02,
+    "Impor"
+   ],
+   [
+    17.42,
+    "tir"
+   ],
+   [
+    17.6,
+    "PKP"
+   ],
+   [
+    18.24,
+    "mengkreditkan"
+   ],
+   [
+    19.02,
+    "PPN"
+   ],
+   [
+    19.42,
+    "impor"
+   ],
+   [
+    19.84,
+    "sebagai"
+   ],
+   [
+    20.04,
+    "pajak"
+   ],
+   [
+    20.54,
     "masukan"
    ],
    [
-    21.731791,
+    20.96,
     "dan"
    ],
    [
-    21.992208,
+    21.58,
     "konsumen"
    ],
    [
-    22.382833,
+    22.08,
     "akhir"
    ],
    [
-    22.721375,
+    22.44,
     "yang"
    ],
    [
-    22.864583,
+    22.86,
     "menanggung"
    ],
    [
-    23.255208,
-    "PPN"
-   ]
-  ],
-  "marks": {
-   "w1": 3.099,
-   "w2": 7.839,
-   "w3": 17.943
-  },
-  "cues": [
-   [
-    0.101,
-    "Jadi, ini rangkumannya."
-   ],
-   [
-    3.099,
-    "PPN Impor dikenakan atas impor Barang Kena Pajak, oleh siapa pun."
-   ],
-   [
-    7.839,
-    "Untuk barang tidak mewah, rumusnya 12 persen dikali 11/12 dikali nilai impor."
-   ],
-   [
-    13.801,
-    "Untuk barang mewah, 12 persen dikali nilai impor."
-   ],
-   [
-    17.943,
-    "Importir PKP mengkreditkan PPN Impor sebagai pajak masukan, dan konsumen akhir yang menanggung PPN."
+    23.38,
+    "PPN."
    ]
   ]
  },
  "final1": {
-  "key": "e63bfc62eadfcc749e2e86eaa0f7f13885510737",
-  "dur": 6.552,
+  "key": "8024632dc116bac8b619d936f2d6f2689872635f",
+  "dur": 4.36,
   "words": [
    [
-    0.1,
-    "Nah"
+    0.0,
+    "Nah,"
    ],
    [
-    0.894291,
+    1.04,
     "sekarang"
    ],
    [
-    1.284916,
+    1.08,
     "kita"
    ],
    [
-    1.480208,
+    1.28,
     "latihan"
    ],
    [
-    2.2875,
-    "ya"
+    1.72,
+    "ya,"
    ],
    [
-    3.644791,
-    "Coba"
+    2.36,
+    "coba"
    ],
    [
-    3.970333,
+    2.66,
     "kamu"
    ],
    [
-    4.204708,
+    2.84,
     "jawab"
    ],
    [
-    4.504166,
+    3.14,
     "latihan"
    ],
    [
-    4.920833,
+    3.48,
     "berikut"
    ],
    [
-    5.220333,
-    "ini"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.1,
-    "Nah, sekarang kita latihan, ya."
-   ],
-   [
-    3.645,
-    "Coba kamu jawab latihan berikut ini."
+    3.76,
+    "ini."
    ]
   ]
  },
  "finish": {
-  "key": "83dd4cf61b5e093947a2d163e1d0cb94bab72e3a",
-  "dur": 11.976,
+  "key": "f336be8749ec82b74f41c9ecad0d11aa917efc8f",
+  "dur": 11.4,
   "words": [
    [
-    0.101041,
-    "Bagus"
+    0.0,
+    "Bagus,"
    ],
    [
-    1.064583,
+    1.0,
     "materi"
    ],
    [
-    1.494291,
-    "keempat"
+    1.46,
+    "kem"
    ],
    [
-    1.858875,
-    "selesai"
+    1.68,
+    "4"
    ],
    [
-    3.411458,
-    "Berikutnya"
+    1.86,
+    "selesai."
    ],
    [
-    4.414083,
+    2.98,
+    "Berikutnya,"
+   ],
+   [
+    4.04,
     "kita"
    ],
    [
-    4.661458,
+    4.18,
     "bahas"
    ],
    [
-    4.921875,
-    "PPh"
+    4.56,
+    "PPH"
    ],
    [
-    5.273458,
-    "Pasal"
+    4.92,
+    "pasal"
    ],
    [
-    5.625,
+    5.3,
     "22"
    ],
    [
-    6.119791,
-    "Impor"
+    5.84,
+    "impor"
    ],
    [
-    6.940125,
+    6.4,
     "dan"
    ],
    [
-    7.148458,
+    6.86,
     "mengapa"
    ],
    [
-    7.447916,
-    "PPh"
+    7.3,
+    "PPH"
    ],
    [
-    7.851583,
+    7.82,
     "sudah"
    ],
    [
-    8.085958,
-    "dipungut"
+    7.98,
+    "dipunggut"
    ],
    [
-    8.4245,
+    8.42,
     "di"
    ],
    [
-    8.489583,
+    8.48,
     "pelabuhan"
    ],
    [
-    9.466166,
+    8.92,
     "padahal"
    ],
    [
-    9.856791,
+    9.62,
     "kainnya"
    ],
    [
-    10.221375,
+    10.08,
     "belum"
    ],
    [
-    10.429708,
-    "terjual"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Bagus, materi keempat selesai."
-   ],
-   [
-    3.411,
-    "Berikutnya, kita bahas PPh Pasal 22 Impor, dan mengapa PPh sudah dipungut di pelabuhan, padahal kainnya belum terjual."
+    10.36,
+    "terjual."
    ]
   ]
  }

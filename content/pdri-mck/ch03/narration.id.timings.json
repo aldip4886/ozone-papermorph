@@ -1,10 +1,10 @@
 {
  "intro": {
-  "key": "0cd8b37cfb75500965d3eebc65e4e02c1d68443f",
-  "dur": 8.76,
+  "key": "69b0b8790ac77e858d218185d44a4062b1e72efb",
+  "dur": 8.04,
   "words": [
    [
-    0.100541,
+    0.0,
     "Mari"
    ],
    [
@@ -12,2293 +12,2898 @@
     "kita"
    ],
    [
-    0.595333,
+    0.6,
     "lanjutkan"
    ],
    [
-    1.519791,
+    1.06,
     "ya"
    ],
    [
-    2.877625,
-    "Pada"
+    1.24,
+    "sobat,"
    ],
    [
-    3.085958,
+    2.22,
+    "pada"
+   ],
+   [
+    2.42,
     "materi"
    ],
    [
-    3.359375,
+    2.8,
     "ketiga"
    ],
    [
-    3.671875,
+    3.08,
     "ini"
    ],
    [
-    4.466166,
+    3.36,
     "kita"
    ],
    [
-    4.6745,
+    3.84,
     "akan"
    ],
    [
-    4.856791,
+    4.12,
     "melihat"
    ],
    [
-    5.15625,
+    4.56,
     "siapa"
    ],
    [
-    5.442708,
+    5.14,
     "yang"
    ],
    [
-    5.572916,
+    5.36,
     "memungut"
    ],
    [
-    5.885416,
+    5.82,
     "pajak"
    ],
    [
-    6.692708,
+    6.4,
     "dan"
    ],
    [
-    6.953125,
+    6.74,
     "dengan"
    ],
    [
-    7.200541,
+    7.04,
     "cara"
    ],
    [
-    7.382833,
-    "apa"
-   ]
-  ],
-  "marks": {
-   "sub": 2.878
-  },
-  "cues": [
-   [
-    0.101,
-    "Mari kita lanjutkan, ya."
-   ],
-   [
-    2.878,
-    "Pada materi ketiga ini, kita akan melihat siapa yang memungut pajak, dan dengan cara apa."
+    7.34,
+    "apa."
    ]
   ]
  },
  "ask": {
-  "key": "480895298c071abafd3c731101801af878977605",
-  "dur": 18.456,
+  "key": "b59a757d2eca38260d40f80ad70b4bca45dacb80",
+  "dur": 18.28,
   "words": [
    [
-    0.101041,
+    0.0,
     "Staf"
    ],
    [
-    0.439583,
+    0.4,
     "PT"
    ],
    [
-    0.7,
+    0.6,
     "Kain"
    ],
    [
-    0.947416,
-    "Prima"
+    0.92,
+    "Primanusantara"
    ],
    [
-    1.16875,
-    "Nusantara"
-   ],
-   [
-    1.598458,
+    1.78,
     "kini"
    ],
    [
-    1.78075,
-    "bertanya"
+    2.02,
+    "bertanya,"
    ],
    [
-    2.770333,
+    2.8,
     "siapa"
    ],
    [
-    3.095833,
+    3.18,
     "sebenarnya"
    ],
    [
-    3.564583,
+    3.72,
     "yang"
    ],
    [
-    3.694791,
+    3.9,
     "memungut"
    ],
    [
-    4.476041,
+    4.4,
     "dan"
    ],
    [
-    4.723458,
+    4.84,
     "dengan"
    ],
    [
-    4.944791,
+    5.24,
     "cara"
    ],
    [
-    5.127083,
-    "apa"
+    5.5,
+    "apa?"
    ],
    [
-    6.497416,
+    6.46,
     "Jawabannya"
    ],
    [
-    7.109375,
+    7.06,
     "bertemu"
    ],
    [
-    7.473958,
+    7.6,
     "dalam"
    ],
    [
-    7.708333,
+    7.82,
     "satu"
    ],
    [
-    7.942708,
-    "dokumen"
+    8.16,
+    "dokumen,"
    ],
    [
-    8.867208,
+    9.0,
     "yaitu"
    ],
    [
-    9.21875,
+    9.26,
     "Pemberitahuan"
    ],
    [
-    9.778666,
+    9.92,
     "Impor"
    ],
    [
-    10.039083,
+    10.42,
     "Barang"
    ],
    [
-    10.807291,
+    10.84,
     "atau"
    ],
    [
-    11.158875,
-    "PIB"
+    11.18,
+    "PIB."
    ],
    [
-    12.695333,
+    12.52,
     "Di"
    ],
    [
-    12.825541,
+    12.78,
     "balik"
    ],
    [
-    13.059916,
+    12.96,
     "satu"
    ],
    [
-    13.320333,
+    13.18,
     "PIB"
    ],
    [
-    13.59375,
-    "itu"
+    13.58,
+    "itu,"
    ],
    [
-    14.453125,
+    14.1,
     "ada"
    ],
    [
-    14.6745,
+    14.3,
     "enam"
    ],
    [
-    14.869791,
+    14.52,
     "pihak"
    ],
    [
-    15.208333,
+    14.94,
     "dan"
    ],
    [
-    15.390625,
+    15.22,
     "tiga"
    ],
    [
-    15.625,
+    15.64,
     "sistem"
    ],
    [
-    15.950541,
+    15.92,
     "pemungutan"
    ],
    [
-    16.445333,
+    16.5,
     "yang"
    ],
    [
-    16.588541,
+    16.92,
     "bekerja"
    ],
    [
-    16.953125,
-    "bersama"
-   ]
-  ],
-  "marks": {
-   "pib": 6.497,
-   "roles": 12.695,
-   "sys": 15.208
-  },
-  "cues": [
-   [
-    0.101,
-    "Staf PT Kain Prima Nusantara kini bertanya, siapa sebenarnya yang memungut, dan dengan cara apa?"
-   ],
-   [
-    6.497,
-    "Jawabannya bertemu dalam satu dokumen, yaitu Pemberitahuan Impor Barang, atau PIB."
-   ],
-   [
-    12.695,
-    "Di balik satu PIB itu, ada enam pihak dan tiga sistem pemungutan yang bekerja bersama."
+    17.34,
+    "bersama."
    ]
   ]
  },
  "sistem": {
-  "key": "f534900e7c4c1ffe10e0c3f35480dadf18f6e4bd",
-  "dur": 36.936,
+  "key": "96b6a3665a9d32f23fa49c6b8a3e5ef21607f674",
+  "dur": 33.76,
   "words": [
    [
-    0.101041,
+    0.0,
     "Kita"
    ],
    [
-    0.400541,
+    0.22,
     "mulai"
    ],
    [
-    0.687,
+    0.62,
     "dari"
    ],
    [
-    0.882291,
+    0.86,
     "tiga"
    ],
    [
-    1.129708,
+    1.28,
     "sistem"
    ],
    [
-    1.546375,
+    1.68,
     "pemungutan"
    ],
    [
-    2.028125,
-    "pajak"
+    2.16,
+    "pajak."
    ],
    [
-    3.489583,
-    "Pertama"
+    3.04,
+    "Pertama,"
    ],
    [
-    4.453125,
+    3.82,
     "official"
    ],
    [
-    4.921875,
-    "assessment"
+    4.14,
+    "assessment."
    ],
    [
-    5.885416,
-    "petugas"
+    5.14,
+    "Petugas"
    ],
    [
-    6.289083,
+    5.5,
     "pajak"
    ],
    [
-    7.109375,
+    5.98,
     "atau"
    ],
    [
-    7.369791,
+    6.3,
     "fiskus"
    ],
    [
-    8.242208,
+    6.92,
     "yang"
    ],
    [
-    8.4245,
+    7.18,
     "menentukan"
    ],
    [
-    8.880208,
+    7.58,
     "besarnya"
    ],
    [
-    9.283875,
-    "pajak"
+    7.96,
+    "pajak."
    ],
    [
-    10.716166,
+    8.92,
     "Dalam"
    ],
    [
-    10.989583,
-    "Kasus"
+    9.14,
+    "kasus"
    ],
    [
-    11.237,
-    "1"
+    9.4,
+    "satu,"
    ],
    [
-    12.083333,
+    10.08,
     "pejabat"
    ],
    [
-    12.513041,
+    10.4,
     "DJBC"
    ],
    [
-    13.072916,
+    11.0,
     "meneliti"
    ],
    [
-    13.463541,
+    11.52,
     "PIB"
    ],
    [
-    14.0495,
+    12.04,
     "dan"
    ],
    [
-    14.244791,
+    12.44,
     "dapat"
    ],
    [
-    14.51825,
+    12.68,
     "menetapkan"
    ],
    [
-    15.039083,
+    13.28,
     "kekurangan"
    ],
    [
-    15.46875,
-    "pembayaran"
+    13.88,
+    "pembayaran."
    ],
    [
-    17.069291,
-    "Kedua"
+    15.2,
+    "Kedua,"
    ],
    [
-    17.967708,
+    16.0,
     "self"
    ],
    [
-    18.29325,
-    "assessment"
+    16.18,
+    "-assessment."
    ],
    [
-    19.282833,
-    "wajib"
+    17.1,
+    "Wajib"
    ],
    [
-    19.660416,
+    17.48,
     "pajak"
    ],
    [
-    20.012,
+    17.78,
     "menentukan"
    ],
    [
-    20.441666,
-    "sendiri"
+    18.24,
+    "sendiri."
    ],
    [
-    21.913041,
+    19.12,
     "Importir"
    ],
    [
-    22.446875,
+    19.76,
     "menghitung"
    ],
    [
-    22.8245,
+    20.28,
     "sendiri"
    ],
    [
-    23.228125,
-    "Bea"
+    20.7,
+    "beya"
    ],
    [
-    23.410416,
-    "Masuk"
+    21.06,
+    "masuk"
    ],
    [
-    23.775,
+    21.34,
     "dan"
    ],
    [
-    23.957291,
+    21.62,
     "PDRI"
    ],
    [
-    24.530208,
+    22.34,
     "dalam"
    ],
    [
-    24.829708,
-    "PIB"
+    22.58,
+    "PIB."
    ],
    [
-    26.288041,
-    "Ketiga"
+    23.74,
+    "Ketiga,"
    ],
    [
-    27.238541,
-    "withholding"
+    24.6,
+    "withholding."
    ],
    [
-    28.29325,
-    "pihak"
+    25.6,
+    "Piha"
    ],
    [
-    28.566666,
+    25.84,
     "ketiga"
    ],
    [
-    28.892208,
+    26.2,
     "yang"
    ],
    [
-    29.022416,
+    26.4,
     "ditunjuk"
    ],
    [
-    29.4,
-    "undang-undang"
+    26.82,
+    "undang"
    ],
    [
-    29.998958,
+    27.08,
+    "-undang"
+   ],
+   [
+    27.48,
     "memungut"
    ],
    [
-    30.3375,
-    "pajaknya"
+    27.92,
+    "pajaknya."
    ],
    [
-    31.926041,
+    28.42,
     "DJBC"
    ],
    [
-    32.577083,
+    29.56,
     "memungut"
    ],
    [
-    32.928666,
-    "PPh"
+    30.08,
+    "PPH"
    ],
    [
-    33.267208,
-    "Pasal"
+    30.56,
+    "pasal"
    ],
    [
-    33.631791,
+    31.0,
     "22"
    ],
    [
-    34.126583,
-    "Impor"
+    31.44,
+    "impor"
    ],
    [
-    34.517208,
+    32.0,
     "atas"
    ],
    [
-    34.829708,
+    32.38,
     "penghasilan"
    ],
    [
-    35.3245,
-    "importir"
-   ]
-  ],
-  "marks": {
-   "s1": 3.49,
-   "s2": 17.069,
-   "s3": 26.288
-  },
-  "cues": [
-   [
-    0.101,
-    "Kita mulai dari tiga sistem pemungutan pajak."
-   ],
-   [
-    3.49,
-    "Pertama, official assessment: petugas pajak, atau fiskus, yang menentukan besarnya pajak."
-   ],
-   [
-    10.716,
-    "Dalam Kasus 1, pejabat DJBC meneliti PIB dan dapat menetapkan kekurangan pembayaran."
-   ],
-   [
-    17.069,
-    "Kedua, self assessment: wajib pajak menentukan sendiri."
-   ],
-   [
-    21.913,
-    "Importir menghitung sendiri Bea Masuk dan PDRI dalam PIB."
-   ],
-   [
-    26.288,
-    "Ketiga, withholding: pihak ketiga yang ditunjuk undang-undang memungut pajaknya."
-   ],
-   [
-    31.926,
-    "DJBC memungut PPh Pasal 22 Impor atas penghasilan importir."
+    32.88,
+    "importir."
    ]
   ]
  },
  "alur": {
-  "key": "4e434fea49d467f03ef998c8bb74fad412520503",
-  "dur": 14.568,
+  "key": "886b4862503bd036caa9636f24681a3507c5b973",
+  "dur": 13.08,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sistem"
    ],
    [
-    0.491666,
+    0.62,
     "utama"
    ],
    [
-    0.84325,
+    1.0,
     "di"
    ],
    [
-    0.921375,
+    1.18,
     "Indonesia"
    ],
    [
-    1.46825,
+    1.62,
     "adalah"
    ],
    [
-    1.78075,
-    "self"
+    2.04,
+    "Self"
    ],
    [
-    2.080208,
-    "assessment"
+    2.38,
+    "-Assessment,"
    ],
    [
-    3.710958,
-    "Tetapi"
+    3.42,
+    "tetapi"
    ],
    [
-    4.088541,
+    3.88,
     "dalam"
    ],
    [
-    4.322916,
-    "impor"
+    4.06,
+    "impor,"
    ],
    [
-    5.117208,
+    5.02,
     "ketiganya"
    ],
    [
-    5.638041,
+    5.44,
     "berjalan"
    ],
    [
-    6.119791,
-    "bersama"
+    5.78,
+    "bersama."
    ],
    [
-    7.64325,
+    6.82,
     "Importir"
    ],
    [
-    8.125,
-    "menghitung"
+    7.42,
+    "menghitung,"
    ],
    [
-    9.088541,
-    "DJBC"
+    8.48,
+    "DGBC"
    ],
    [
-    9.6875,
-    "meneliti"
+    8.9,
+    "meneliti,"
    ],
    [
-    10.664083,
+    9.7,
     "dan"
    ],
    [
-    10.898458,
-    "DJBC"
+    9.96,
+    "DGBC"
    ],
    [
-    11.523458,
+    10.66,
     "juga"
    ],
    [
-    11.783875,
+    10.86,
     "memungut"
    ],
    [
-    12.148458,
-    "PPh"
+    11.24,
+    "PPH"
    ],
    [
-    12.5,
+    11.64,
     "Pasal"
    ],
    [
-    12.877625,
-    "22"
-   ]
-  ],
-  "marks": {
-   "flow": 3.711,
-   "f1": 7.643,
-   "f2": 9.089,
-   "f3": 10.664
-  },
-  "cues": [
-   [
-    0.101,
-    "Sistem utama di Indonesia adalah self assessment."
-   ],
-   [
-    3.711,
-    "Tetapi dalam impor, ketiganya berjalan bersama."
-   ],
-   [
-    7.643,
-    "Importir menghitung, DJBC meneliti, dan DJBC juga memungut PPh Pasal 22."
+    11.98,
+    "22."
    ]
   ]
  },
  "q1": {
-  "key": "2b19804b75a215928d5f8005508a2ce21bfe2929",
-  "dur": 7.296,
+  "key": "21ea836a72e994009e9e916d03ae7c5810ff984c",
+  "dur": 5.4,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    1.051583,
+    0.72,
     "mari"
    ],
    [
-    1.285958,
+    1.16,
     "kita"
    ],
    [
-    1.520333,
+    1.42,
     "cek"
    ],
    [
-    1.702625,
+    1.72,
     "pemahaman"
    ],
    [
-    2.171375,
-    "kamu"
+    2.14,
+    "kamu."
    ],
    [
-    3.527625,
+    2.84,
     "Sistem"
    ],
    [
-    3.91825,
+    3.2,
     "apa"
    ],
    [
-    4.126583,
+    3.46,
     "yang"
    ],
    [
-    4.256791,
+    3.6,
     "bekerja"
    ],
    [
-    4.660416,
+    4.0,
     "di"
    ],
    [
-    4.738541,
+    4.14,
     "setiap"
    ],
    [
-    5.038041,
+    4.48,
     "langkah"
    ],
    [
-    5.311458,
+    4.72,
     "ini"
    ],
    [
-    5.975541,
-    "ya"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, mari kita cek pemahaman kamu."
-   ],
-   [
-    3.528,
-    "Sistem apa yang bekerja di setiap langkah ini, ya?"
+    4.9,
+    "ya?"
    ]
   ]
  },
  "jenis": {
-  "key": "b24d84b6887c8de75e625778159a5b595c7825a6",
-  "dur": 34.2,
+  "key": "103f2a6fcc911174581341cdebf6d5331fae3fe8",
+  "dur": 33.36,
   "words": [
    [
-    0.101041,
+    0.0,
     "Pajak"
    ],
    [
-    0.504708,
+    0.78,
     "juga"
    ],
    [
-    0.778125,
+    1.16,
     "dapat"
    ],
    [
-    1.038541,
+    1.44,
     "dibagi"
    ],
    [
-    1.429166,
+    1.86,
     "menurut"
    ],
    [
-    1.78075,
+    2.3,
     "tiga"
    ],
    [
-    2.028125,
-    "dasar"
+    2.5,
+    "dasar."
    ],
    [
-    3.489583,
+    3.52,
     "Menurut"
    ],
    [
-    3.828125,
+    4.02,
     "lembaga"
    ],
    [
-    4.153666,
-    "pemungutnya"
+    4.34,
+    "pemungutnya,"
    ],
    [
-    5.182291,
+    5.3,
     "ada"
    ],
    [
-    5.416666,
+    5.6,
     "pajak"
    ],
    [
-    5.703125,
-    "pusat"
+    5.9,
+    "pusat,"
    ],
    [
-    6.39325,
+    6.54,
     "seperti"
    ],
    [
-    6.770833,
-    "PPN"
+    6.82,
+    "PPN,"
    ],
    [
-    7.630208,
-    "PPnBM"
+    7.72,
+    "PPNBM,"
    ],
    [
-    8.75,
-    "PPh"
+    8.76,
+    "PPH,"
    ],
    [
-    9.713541,
+    9.58,
     "dan"
    ],
    [
-    9.973958,
-    "Bea"
+    9.58,
+    "biama"
    ],
    [
-    10.14325,
-    "Meterai"
+    9.86,
+    "terai,"
    ],
    [
-    10.976583,
+    10.72,
     "dan"
    ],
    [
-    11.210958,
+    10.96,
     "ada"
    ],
    [
-    11.40625,
+    11.26,
     "pajak"
    ],
    [
-    11.70575,
-    "daerah"
+    11.58,
+    "daerah,"
    ],
    [
-    12.487,
+    12.22,
     "seperti"
    ],
    [
-    12.864583,
+    12.54,
     "pajak"
    ],
    [
-    13.203125,
+    13.02,
     "kendaraan"
    ],
    [
-    13.541666,
+    13.46,
     "bermotor"
    ],
    [
-    14.010416,
+    13.94,
     "dan"
    ],
    [
-    14.20575,
+    14.14,
     "pajak"
    ],
    [
-    14.544291,
-    "hotel"
+    14.46,
+    "hotel."
    ],
    [
-    15.963541,
+    15.56,
     "Menurut"
    ],
    [
-    16.263041,
+    16.04,
     "pihak"
    ],
    [
-    16.5495,
+    16.32,
     "yang"
    ],
    [
-    16.666666,
-    "menanggung"
+    16.52,
+    "menanggung,"
    ],
    [
-    17.578125,
-    "PPh"
+    17.38,
+    "PPH"
    ],
    [
-    17.96875,
+    17.82,
     "adalah"
    ],
    [
-    18.26825,
+    18.06,
     "pajak"
    ],
    [
-    18.567708,
-    "langsung"
+    18.5,
+    "langsung,"
    ],
    [
-    19.388041,
+    19.16,
     "sedangkan"
    ],
    [
-    19.84375,
+    19.66,
     "PPN"
    ],
    [
-    20.286458,
+    20.2,
     "dan"
    ],
    [
-    20.45575,
-    "PPnBM"
+    20.34,
+    "PPNBM"
    ],
    [
-    21.119791,
+    21.02,
     "adalah"
    ],
    [
-    21.445333,
+    21.36,
     "pajak"
    ],
    [
-    21.822916,
+    21.88,
     "tidak"
    ],
    [
-    22.044291,
-    "langsung"
+    22.1,
+    "langsung."
    ],
    [
-    23.528666,
+    23.2,
     "Menurut"
    ],
    [
-    23.828125,
-    "sifatnya"
+    23.66,
+    "sifatnya,"
    ],
    [
-    24.83075,
-    "PPh"
+    24.58,
+    "PPH"
    ],
    [
-    25.247416,
+    24.96,
     "adalah"
    ],
    [
-    25.546875,
+    25.18,
     "pajak"
    ],
    [
-    25.859375,
-    "subjektif"
+    25.6,
+    "subyaktif,"
    ],
    [
-    26.888041,
+    26.38,
     "karena"
    ],
    [
-    27.148458,
+    26.82,
     "memperhatikan"
    ],
    [
-    27.760416,
+    27.38,
     "keadaan"
    ],
    [
-    28.151041,
+    28.02,
     "wajib"
    ],
    [
-    28.4245,
-    "pajak"
+    28.34,
+    "pajak,"
    ],
    [
-    29.244791,
+    28.74,
     "sedangkan"
    ],
    [
-    29.713541,
+    29.46,
     "PPN"
    ],
    [
-    30.130208,
+    29.9,
     "adalah"
    ],
    [
-    30.429708,
+    30.12,
     "pajak"
    ],
    [
-    30.742208,
-    "objektif"
+    30.56,
+    "objektif,"
    ],
    [
-    31.70575,
+    31.36,
     "karena"
    ],
    [
-    31.966166,
+    31.7,
     "memperhatikan"
    ],
    [
-    32.539083,
-    "objeknya"
+    32.4,
+    "obyeknya."
    ]
-  ],
-  "marks": {
-   "j1": 3.49,
-   "j2": 15.964,
-   "j3": 23.529
-  },
-  "cues": [
+  ]
+ },
+ "syarat": {
+  "key": "4c0a557747a9d05d8d5cb032bccab7d776c3ec35",
+  "dur": 62.96,
+  "words": [
    [
-    0.101,
-    "Pajak juga dapat dibagi menurut tiga dasar."
+    0.0,
+    "Pajak"
    ],
    [
-    3.49,
-    "Menurut lembaga pemungutnya, ada pajak pusat, seperti PPN, PPnBM, PPh, dan Bea Meterai, dan ada pajak daerah, seperti pajak kendaraan bermotor dan pajak hotel."
+    0.64,
+    "baru"
    ],
    [
-    15.964,
-    "Menurut pihak yang menanggung, PPh adalah pajak langsung, sedangkan PPN dan PPnBM adalah pajak tidak langsung."
+    0.86,
+    "dapat"
    ],
    [
-    23.529,
-    "Menurut sifatnya, PPh adalah pajak subjektif, karena memperhatikan keadaan wajib pajak, sedangkan PPN adalah pajak objektif, karena memperhatikan objeknya."
+    1.08,
+    "dipunggut"
+   ],
+   [
+    1.6,
+    "kalau"
+   ],
+   [
+    2.12,
+    "dua"
+   ],
+   [
+    2.56,
+    "syarat"
+   ],
+   [
+    2.92,
+    "terpenuhi."
+   ],
+   [
+    3.88,
+    "Pasal"
+   ],
+   [
+    4.26,
+    "2"
+   ],
+   [
+    4.52,
+    "ayat"
+   ],
+   [
+    5.0,
+    "1"
+   ],
+   [
+    5.32,
+    "undang"
+   ],
+   [
+    5.56,
+    "-undang"
+   ],
+   [
+    5.84,
+    "KUP"
+   ],
+   [
+    6.3,
+    "menyebutnya"
+   ],
+   [
+    7.08,
+    "Syarat"
+   ],
+   [
+    7.64,
+    "Subjektif"
+   ],
+   [
+    8.38,
+    "dan"
+   ],
+   [
+    8.58,
+    "Objektif."
+   ],
+   [
+    9.56,
+    "Syarat"
+   ],
+   [
+    10.04,
+    "Subjektif,"
+   ],
+   [
+    11.04,
+    "apakah"
+   ],
+   [
+    11.44,
+    "ia"
+   ],
+   [
+    11.72,
+    "Subjekt"
+   ],
+   [
+    12.18,
+    "Pajak,"
+   ],
+   [
+    13.04,
+    "diatur"
+   ],
+   [
+    13.44,
+    "Pasal"
+   ],
+   [
+    13.82,
+    "2"
+   ],
+   [
+    14.08,
+    "dan"
+   ],
+   [
+    14.44,
+    "2a"
+   ],
+   [
+    15.12,
+    "undang"
+   ],
+   [
+    15.56,
+    "-undang"
+   ],
+   [
+    15.8,
+    "PPH."
+   ],
+   [
+    16.64,
+    "Orang"
+   ],
+   [
+    17.0,
+    "pribadi,"
+   ],
+   [
+    17.9,
+    "warisan"
+   ],
+   [
+    18.24,
+    "belum"
+   ],
+   [
+    18.56,
+    "terbagi,"
+   ],
+   [
+    19.48,
+    "badan,"
+   ],
+   [
+    20.26,
+    "atau"
+   ],
+   [
+    20.48,
+    "bentuk"
+   ],
+   [
+    20.82,
+    "usaha"
+   ],
+   [
+    21.14,
+    "tetap."
+   ],
+   [
+    22.08,
+    "Dalam"
+   ],
+   [
+    22.42,
+    "kasus"
+   ],
+   [
+    22.66,
+    "1,"
+   ],
+   [
+    23.38,
+    "PT"
+   ],
+   [
+    23.6,
+    "Kain"
+   ],
+   [
+    24.08,
+    "Primanusan"
+   ],
+   [
+    24.64,
+    "Tara"
+   ],
+   [
+    25.0,
+    "adalah"
+   ],
+   [
+    25.56,
+    "badan"
+   ],
+   [
+    26.12,
+    "yang"
+   ],
+   [
+    26.24,
+    "didirikan"
+   ],
+   [
+    26.72,
+    "di"
+   ],
+   [
+    26.94,
+    "Indonesia."
+   ],
+   [
+    28.12,
+    "Syarat"
+   ],
+   [
+    28.5,
+    "Objektif,"
+   ],
+   [
+    29.48,
+    "apakah"
+   ],
+   [
+    29.94,
+    "ada"
+   ],
+   [
+    30.3,
+    "objekt"
+   ],
+   [
+    30.64,
+    "Pajak?"
+   ],
+   [
+    31.54,
+    "Pasal"
+   ],
+   [
+    31.86,
+    "4"
+   ],
+   [
+    32.14,
+    "ayat"
+   ],
+   [
+    32.46,
+    "1"
+   ],
+   [
+    32.84,
+    "undang"
+   ],
+   [
+    33.14,
+    "-undang"
+   ],
+   [
+    33.38,
+    "PPH"
+   ],
+   [
+    33.86,
+    "mengatur"
+   ],
+   [
+    34.34,
+    "penghasilan."
+   ],
+   [
+    35.34,
+    "Dan"
+   ],
+   [
+    35.6,
+    "Pasal"
+   ],
+   [
+    35.94,
+    "4"
+   ],
+   [
+    36.16,
+    "ayat"
+   ],
+   [
+    36.48,
+    "1"
+   ],
+   [
+    36.82,
+    "huruf"
+   ],
+   [
+    37.12,
+    "B"
+   ],
+   [
+    37.4,
+    "serta"
+   ],
+   [
+    37.82,
+    "Pasal"
+   ],
+   [
+    38.08,
+    "11"
+   ],
+   [
+    38.4,
+    "undang"
+   ],
+   [
+    38.86,
+    "-undang"
+   ],
+   [
+    39.1,
+    "PPN"
+   ],
+   [
+    39.58,
+    "mengatur"
+   ],
+   [
+    40.28,
+    "impor"
+   ],
+   [
+    40.82,
+    "barang"
+   ],
+   [
+    41.22,
+    "kena"
+   ],
+   [
+    41.44,
+    "Pajak."
+   ],
+   [
+    42.4,
+    "Dalam"
+   ],
+   [
+    42.76,
+    "kasus"
+   ],
+   [
+    43.06,
+    "1,"
+   ],
+   [
+    43.78,
+    "perusahaan"
+   ],
+   [
+    44.16,
+    "memperoleh"
+   ],
+   [
+    44.62,
+    "penghasilan"
+   ],
+   [
+    45.1,
+    "dari"
+   ],
+   [
+    45.38,
+    "penjualan"
+   ],
+   [
+    45.94,
+    "Kain"
+   ],
+   [
+    46.32,
+    "dan"
+   ],
+   [
+    46.84,
+    "melakukan"
+   ],
+   [
+    47.28,
+    "impor"
+   ],
+   [
+    47.94,
+    "barang"
+   ],
+   [
+    48.24,
+    "kena"
+   ],
+   [
+    48.42,
+    "Pajak."
+   ],
+   [
+    49.32,
+    "Pegangannya"
+   ],
+   [
+    49.8,
+    "begini,"
+   ],
+   [
+    50.58,
+    "PPN"
+   ],
+   [
+    51.08,
+    "impor"
+   ],
+   [
+    51.56,
+    "cukup"
+   ],
+   [
+    52.02,
+    "bertanya"
+   ],
+   [
+    52.4,
+    "apa"
+   ],
+   [
+    52.78,
+    "yang"
+   ],
+   [
+    52.98,
+    "diimpor,"
+   ],
+   [
+    53.7,
+    "siapapun"
+   ],
+   [
+    54.3,
+    "kena,"
+   ],
+   [
+    54.88,
+    "PKP"
+   ],
+   [
+    55.38,
+    "atau"
+   ],
+   [
+    55.56,
+    "bukan."
+   ],
+   [
+    55.84,
+    "Sedangkan,"
+   ],
+   [
+    57.14,
+    "PPH"
+   ],
+   [
+    57.58,
+    "Pasal"
+   ],
+   [
+    57.94,
+    "22"
+   ],
+   [
+    58.4,
+    "impor"
+   ],
+   [
+    58.94,
+    "mengangsur"
+   ],
+   [
+    59.76,
+    "kewajiban"
+   ],
+   [
+    60.36,
+    "subjektif"
+   ],
+   [
+    61.08,
+    "PPH"
+   ],
+   [
+    61.58,
+    "impor"
+   ],
+   [
+    62.0,
+    "tir"
+   ],
+   [
+    62.18,
+    "sendiri."
+   ]
+  ]
+ },
+ "rina": {
+  "key": "d8d623d7e867610e2c9a640f77b2514245dd3868",
+  "dur": 43.0,
+  "words": [
+   [
+    0.0,
+    "Mari"
+   ],
+   [
+    0.36,
+    "kita"
+   ],
+   [
+    0.58,
+    "lihat"
+   ],
+   [
+    0.8,
+    "satu"
+   ],
+   [
+    1.14,
+    "variasi."
+   ],
+   [
+    2.22,
+    "Burina,"
+   ],
+   [
+    3.1,
+    "orang"
+   ],
+   [
+    3.32,
+    "pribadi,"
+   ],
+   [
+    4.2,
+    "sekali"
+   ],
+   [
+    4.64,
+    "mengimpor"
+   ],
+   [
+    5.22,
+    "mesin"
+   ],
+   [
+    5.5,
+    "jahit"
+   ],
+   [
+    5.8,
+    "untuk"
+   ],
+   [
+    6.14,
+    "usaha"
+   ],
+   [
+    6.56,
+    "rumahan,"
+   ],
+   [
+    7.46,
+    "dengan"
+   ],
+   [
+    7.68,
+    "nilai"
+   ],
+   [
+    7.96,
+    "impor"
+   ],
+   [
+    8.4,
+    "100"
+   ],
+   [
+    8.84,
+    "juta"
+   ],
+   [
+    9.36,
+    "rupiah."
+   ],
+   [
+    10.3,
+    "Ia"
+   ],
+   [
+    10.48,
+    "bukan"
+   ],
+   [
+    10.66,
+    "PKP"
+   ],
+   [
+    11.22,
+    "dan"
+   ],
+   [
+    11.6,
+    "tidak"
+   ],
+   [
+    11.94,
+    "memiliki"
+   ],
+   [
+    12.46,
+    "api."
+   ],
+   [
+    13.58,
+    "Syarat"
+   ],
+   [
+    13.82,
+    "subjektifnya"
+   ],
+   [
+    14.5,
+    "tetap"
+   ],
+   [
+    14.82,
+    "terpenuhi."
+   ],
+   [
+    15.72,
+    "Ia"
+   ],
+   [
+    16.0,
+    "orang"
+   ],
+   [
+    16.2,
+    "pribadi"
+   ],
+   [
+    16.66,
+    "dalam"
+   ],
+   [
+    16.88,
+    "negeri,"
+   ],
+   [
+    17.62,
+    "dan"
+   ],
+   [
+    17.74,
+    "NPWP"
+   ],
+   [
+    18.38,
+    "-nya"
+   ],
+   [
+    18.6,
+    "adalah"
+   ],
+   [
+    19.0,
+    "NICA."
+   ],
+   [
+    20.4,
+    "Syarat"
+   ],
+   [
+    20.76,
+    "objektif"
+   ],
+   [
+    21.36,
+    "PPN"
+   ],
+   [
+    21.66,
+    "impor"
+   ],
+   [
+    22.06,
+    "juga"
+   ],
+   [
+    22.22,
+    "terpenuhi"
+   ],
+   [
+    22.94,
+    "oleh"
+   ],
+   [
+    23.28,
+    "impor"
+   ],
+   [
+    23.78,
+    "barang"
+   ],
+   [
+    24.2,
+    "kena"
+   ],
+   [
+    24.42,
+    "pajak,"
+   ],
+   [
+    25.06,
+    "walaupun"
+   ],
+   [
+    25.52,
+    "iya"
+   ],
+   [
+    25.78,
+    "bukan"
+   ],
+   [
+    25.94,
+    "PKP."
+   ],
+   [
+    26.5,
+    "PPN"
+   ],
+   [
+    27.32,
+    "impornya"
+   ],
+   [
+    27.86,
+    "12"
+   ],
+   [
+    28.46,
+    "%"
+   ],
+   [
+    28.94,
+    "kali"
+   ],
+   [
+    29.3,
+    "11x12x100"
+   ],
+   [
+    31.2,
+    "juta"
+   ],
+   [
+    31.56,
+    "rupiah,"
+   ],
+   [
+    32.08,
+    "11"
+   ],
+   [
+    32.6,
+    "juta"
+   ],
+   [
+    33.04,
+    "rupiah."
+   ],
+   [
+    33.82,
+    "Dan"
+   ],
+   [
+    34.16,
+    "PPH"
+   ],
+   [
+    34.62,
+    "Pasal"
+   ],
+   [
+    35.06,
+    "22"
+   ],
+   [
+    35.48,
+    "impornya"
+   ],
+   [
+    36.22,
+    "karena"
+   ],
+   [
+    36.74,
+    "tanpa"
+   ],
+   [
+    37.18,
+    "api"
+   ],
+   [
+    37.64,
+    "7"
+   ],
+   [
+    38.14,
+    ",5"
+   ],
+   [
+    38.7,
+    "%"
+   ],
+   [
+    39.04,
+    "kali"
+   ],
+   [
+    39.32,
+    "100"
+   ],
+   [
+    39.74,
+    "juta"
+   ],
+   [
+    40.06,
+    "rupiah,"
+   ],
+   [
+    40.72,
+    "7"
+   ],
+   [
+    40.98,
+    ",500"
+   ],
+   [
+    41.78,
+    "ribu"
+   ],
+   [
+    42.2,
+    "rupiah."
    ]
   ]
  },
  "hukum": {
-  "key": "03e753839c72ecb351e06350755ae67af751fc01",
-  "dur": 30.24,
+  "key": "01a6a23ae6383619b8f070e8d84f81caa7591be4",
+  "dur": 34.28,
   "words": [
    [
-    0.101041,
-    "Lalu"
+    0.0,
+    "Lalu,"
    ],
    [
-    0.973458,
+    0.88,
     "aturan"
    ],
    [
-    1.338041,
+    1.22,
     "mana"
    ],
    [
-    1.585416,
+    1.56,
     "yang"
    ],
    [
-    1.715625,
+    1.94,
     "menjadi"
    ],
    [
-    2.028125,
-    "pegangan"
+    2.18,
+    "pegangan?"
    ],
    [
-    3.515625,
-    "UU"
+    4.26,
+    "UUKUP,"
    ],
    [
-    3.75,
-    "KUP"
+    5.3,
+    "UUPPH,"
    ],
    [
-    4.661458,
-    "UU"
-   ],
-   [
-    4.908875,
-    "PPh"
-   ],
-   [
-    5.872416,
+    6.9,
     "dan"
    ],
    [
-    6.09375,
-    "UU"
+    6.92,
+    "UUPPN"
    ],
    [
-    6.302083,
-    "PPN"
-   ],
-   [
-    6.627625,
+    7.9,
     "berasal"
    ],
    [
-    7.044291,
+    8.54,
     "dari"
    ],
    [
-    7.1875,
+    8.68,
     "tahun"
    ],
    [
-    7.460958,
+    8.96,
     "1983"
    ],
    [
-    9.583333,
+    10.24,
     "dan"
    ],
    [
-    9.804708,
+    11.84,
     "terakhir"
    ],
    [
-    10.117208,
+    12.22,
     "diubah"
    ],
    [
-    10.507833,
+    12.54,
     "dengan"
    ],
    [
-    10.755208,
-    "UU"
+    12.72,
+    "UU6"
    ],
    [
-    10.989583,
-    "6"
+    13.64,
+    "tahun"
    ],
    [
-    11.210958,
-    "Tahun"
-   ],
-   [
-    11.510416,
+    14.12,
     "2023"
    ],
    [
-    12.487,
+    14.82,
     "tentang"
    ],
    [
-    12.8125,
-    "Cipta"
+    15.38,
+    "cipta"
    ],
    [
-    13.085958,
-    "Kerja"
+    15.84,
+    "kerja."
    ],
    [
-    14.544291,
+    16.76,
     "UU"
    ],
    [
-    14.791666,
+    17.4,
     "Harmonisasi"
    ],
    [
-    15.442708,
+    18.0,
     "Peraturan"
    ],
    [
-    15.820333,
+    18.48,
     "Perpajakan"
    ],
    [
-    16.380208,
+    18.98,
     "menetapkan"
    ],
    [
-    16.914083,
+    19.58,
     "tarif"
    ],
    [
-    17.200541,
+    20.1,
     "PPN"
    ],
    [
-    17.604166,
+    20.62,
     "12"
    ],
    [
-    17.95575,
-    "persen"
+    21.18,
+    "persen,"
    ],
    [
-    18.815125,
+    22.1,
     "paling"
    ],
    [
-    19.075541,
+    22.42,
     "lambat"
    ],
    [
-    19.362,
-    "1 Januari 2025"
+    22.74,
+    "1"
    ],
    [
-    21.966166,
+    23.06,
+    "Januari"
+   ],
+   [
+    23.58,
+    "2025."
+   ],
+   [
+    24.28,
     "Untuk"
    ],
    [
-    22.213541,
-    "kepabeanan"
+    25.96,
+    "Kepabianar,"
    ],
    [
-    23.294291,
+    26.92,
     "pegangannya"
    ],
    [
-    23.802083,
+    27.46,
     "UU"
    ],
    [
-    23.971375,
+    28.08,
     "10"
    ],
    [
-    24.283875,
-    "Tahun"
+    28.44,
+    "tahun"
    ],
    [
-    24.596375,
+    29.02,
     "1995"
    ],
    [
-    26.666666,
+    30.08,
     "yang"
    ],
    [
-    26.875,
+    31.26,
     "diubah"
    ],
    [
-    27.252625,
+    31.66,
     "dengan"
    ],
    [
-    27.5,
+    31.8,
     "UU"
    ],
    [
-    27.734375,
+    32.32,
     "17"
    ],
    [
-    28.229166,
-    "Tahun"
+    32.74,
+    "tahun"
    ],
    [
-    28.541666,
-    "2006"
-   ]
-  ],
-  "marks": {
-   "kup": 3.516,
-   "hpp": 14.544,
-   "kep": 21.966
-  },
-  "cues": [
-   [
-    0.101,
-    "Lalu, aturan mana yang menjadi pegangan?"
-   ],
-   [
-    3.516,
-    "UU KUP, UU PPh, dan UU PPN berasal dari tahun 1983, dan terakhir diubah dengan UU 6 Tahun 2023 tentang Cipta Kerja."
-   ],
-   [
-    14.544,
-    "UU Harmonisasi Peraturan Perpajakan menetapkan tarif PPN 12 persen, paling lambat 1 Januari 2025."
-   ],
-   [
-    21.966,
-    "Untuk kepabeanan, pegangannya UU 10 Tahun 1995, yang diubah dengan UU 17 Tahun 2006."
+    33.22,
+    "2006."
    ]
   ]
  },
  "hierarki": {
-  "key": "03a2c200870ae7e3f2b1c12c6ccdd8b20c197b8e",
-  "dur": 17.424,
+  "key": "1843986027713bed6a21424e828b9ba9b0dddc98",
+  "dur": 14.64,
   "words": [
    [
-    0.101041,
+    0.0,
     "Dalam"
    ],
    [
-    0.400541,
-    "pekerjaan"
+    0.66,
+    "pekerjaan,"
    ],
    [
-    1.507291,
+    1.56,
     "Anda"
    ],
    [
-    1.754708,
+    1.74,
     "akan"
    ],
    [
-    1.963041,
+    1.9,
     "menemui"
    ],
    [
-    2.2625,
+    2.26,
     "peraturan"
    ],
    [
-    2.73125,
+    2.76,
     "dengan"
    ],
    [
-    2.965625,
+    2.96,
     "urutan"
    ],
    [
-    3.291166,
-    "ini"
+    3.28,
+    "ini."
    ],
    [
-    4.609375,
-    "Undang-undang"
+    3.94,
+    "Undang"
    ],
    [
-    5.690125,
-    "Peraturan"
+    4.22,
+    "-undang,"
    ],
    [
-    6.09375,
-    "Pemerintah"
+    4.96,
+    "peraturan"
    ],
    [
-    7.070333,
-    "Peraturan"
+    5.32,
+    "pemerintah,"
    ],
    [
-    7.487,
-    "Menteri"
+    6.24,
+    "peraturan"
    ],
    [
-    7.734375,
-    "Keuangan"
+    6.64,
+    "menteri"
    ],
    [
-    8.216166,
+    6.9,
+    "keuangan"
+   ],
+   [
+    7.28,
     "atau"
    ],
    [
-    8.450541,
-    "PMK"
+    7.62,
+    "PMK,"
    ],
    [
-    9.453125,
+    8.32,
     "lalu"
    ],
    [
-    9.726583,
-    "Peraturan"
-   ],
-   [
-    10.182291,
-    "Direktur"
-   ],
-   [
-    10.585958,
-    "Jenderal"
-   ],
-   [
-    12.095333,
-    "Ingat"
-   ],
-   [
-    12.967708,
+    8.78,
     "peraturan"
    ],
    [
-    13.397416,
+    9.22,
+    "direktur"
+   ],
+   [
+    9.56,
+    "general."
+   ],
+   [
+    10.54,
+    "Ingat,"
+   ],
+   [
+    11.1,
+    "peraturan"
+   ],
+   [
+    11.6,
     "yang"
    ],
    [
-    13.501583,
+    11.7,
     "lebih"
    ],
    [
-    13.696875,
+    11.84,
     "rendah"
    ],
    [
-    14.009375,
+    12.18,
     "tidak"
    ],
    [
-    14.217708,
+    12.32,
     "boleh"
    ],
    [
-    14.413041,
+    12.56,
     "bertentangan"
    ],
    [
-    14.985958,
+    13.1,
     "dengan"
    ],
    [
-    15.207291,
+    13.3,
     "peraturan"
    ],
    [
-    15.663041,
+    13.8,
     "yang"
    ],
    [
-    15.80625,
+    13.9,
     "lebih"
    ],
    [
-    16.027625,
-    "tinggi"
-   ]
-  ],
-  "marks": {
-   "h1": 4.609,
-   "h2": 5.69,
-   "h3": 7.07,
-   "h4": 9.453,
-   "rule": 12.095
-  },
-  "cues": [
-   [
-    0.101,
-    "Dalam pekerjaan, Anda akan menemui peraturan dengan urutan ini."
-   ],
-   [
-    4.609,
-    "Undang-undang, Peraturan Pemerintah, Peraturan Menteri Keuangan atau PMK, lalu Peraturan Direktur Jenderal."
-   ],
-   [
-    12.095,
-    "Ingat, peraturan yang lebih rendah tidak boleh bertentangan dengan peraturan yang lebih tinggi."
+    14.04,
+    "tinggi."
    ]
   ]
  },
  "peran": {
-  "key": "351146d355f8e0d544fed53ec6b241e330edb2db",
-  "dur": 33.36,
+  "key": "4912f6789f971222e17d479dfc6b167ba9c4fe8d",
+  "dur": 35.68,
   "words": [
    [
-    0.101041,
-    "Sekarang"
+    0.0,
+    "Sekarang,"
    ],
    [
-    1.064583,
+    0.88,
     "siapa"
    ],
    [
-    1.416166,
+    1.38,
     "melakukan"
    ],
    [
-    1.819791,
-    "apa"
+    1.92,
+    "apa?"
    ],
    [
-    3.203125,
+    3.2,
     "Importir"
    ],
    [
-    3.658875,
+    4.0,
     "menghitung"
    ],
    [
-    4.127625,
+    4.66,
     "dan"
    ],
    [
-    4.257833,
+    4.86,
     "membayar"
    ],
    [
-    4.635416,
-    "Bea"
+    5.34,
+    "biamasuk"
    ],
    [
-    4.817708,
-    "Masuk"
-   ],
-   [
-    5.169291,
+    5.98,
     "dan"
    ],
    [
-    5.351583,
+    6.2,
     "PDRI"
    ],
    [
-    6.354166,
+    6.98,
     "serta"
    ],
    [
-    6.731791,
+    7.58,
     "mengisi"
    ],
    [
-    7.096375,
-    "PIB"
+    7.96,
+    "PIB."
    ],
    [
-    8.579708,
+    9.08,
     "PPJK"
    ],
    [
-    9.152625,
+    9.82,
     "mengurus"
    ],
    [
-    9.491166,
-    "kewajiban"
+    10.5,
+    "kuajiban"
    ],
    [
-    9.985958,
-    "kepabeanan"
+    10.94,
+    "kepabianan"
    ],
    [
-    10.623958,
+    11.78,
     "atas"
    ],
    [
-    10.923458,
+    12.18,
     "kuasa"
    ],
    [
-    11.222916,
-    "importir"
+    12.44,
+    "importir."
    ],
    [
-    12.838541,
-    "DJBC"
+    13.8,
+    "DGBC"
    ],
    [
-    13.4245,
+    14.5,
     "meneliti"
    ],
    [
-    13.815125,
-    "PIB"
+    15.24,
+    "PIB,"
    ],
    [
-    14.778666,
+    16.24,
     "memungut"
    ],
    [
-    15.169291,
-    "PDRI"
+    16.54,
+    "PDRI,"
    ],
    [
-    16.158875,
+    17.42,
     "dan"
    ],
    [
-    16.39325,
+    17.64,
     "menetapkan"
    ],
    [
-    16.901041,
+    18.28,
     "kekurangan"
    ],
    [
-    17.34375,
-    "pembayaran"
+    18.78,
+    "pembayaran."
    ],
    [
-    18.970333,
+    20.08,
     "Bank"
    ],
    [
-    19.23075,
-    "persepsi"
+    20.4,
+    "Persepsi"
    ],
    [
-    19.764583,
+    21.02,
     "atau"
    ],
    [
-    20.012,
-    "bank"
+    21.24,
+    "Bank"
    ],
    [
-    20.207291,
-    "devisa"
+    21.44,
+    "Defisa"
    ],
    [
-    20.623958,
+    21.94,
     "menerima"
    ],
    [
-    21.027625,
-    "pembayarannya"
+    22.68,
+    "pembayarannya."
    ],
    [
-    22.785416,
-    "DJP"
+    24.02,
+    "DGBC"
    ],
    [
-    23.280208,
+    24.62,
     "mengadministrasikan"
    ],
    [
-    24.23075,
+    26.1,
     "pengkreditan"
    ],
    [
-    24.738541,
+    26.8,
     "PPN"
    ],
    [
-    25.220333,
+    27.28,
     "dan"
    ],
    [
-    25.389583,
-    "PPh"
+    27.56,
+    "PPH"
    ],
    [
-    25.728125,
+    28.1,
     "Pasal"
    ],
    [
-    26.092708,
+    28.44,
     "22"
    ],
    [
-    26.782833,
+    28.96,
     "dalam"
    ],
    [
-    27.069291,
+    29.48,
     "SPT"
    ],
    [
-    27.498958,
-    "importir"
+    30.12,
+    "Importir"
    ],
    [
-    29.100541,
-    "Dan"
+    30.86,
+    "dan"
    ],
    [
-    29.387,
+    31.38,
     "konsumen"
    ],
    [
-    29.790625,
+    31.82,
     "akhir"
    ],
    [
-    30.103125,
+    32.16,
     "menanggung"
    ],
    [
-    30.49375,
+    33.12,
     "PPN"
    ],
    [
-    30.988541,
+    33.64,
     "di"
    ],
    [
-    31.079708,
+    33.9,
     "ujung"
    ],
    [
-    31.392208,
+    34.32,
     "rantai"
    ],
    [
-    31.704708,
-    "penjualan"
-   ]
-  ],
-  "marks": {
-   "r1": 3.203,
-   "r2": 8.58,
-   "r3": 12.839,
-   "r4": 18.97,
-   "r5": 22.785,
-   "r6": 29.101
-  },
-  "cues": [
-   [
-    0.101,
-    "Sekarang, siapa melakukan apa?"
-   ],
-   [
-    3.203,
-    "Importir menghitung dan membayar Bea Masuk dan PDRI, serta mengisi PIB."
-   ],
-   [
-    8.58,
-    "PPJK mengurus kewajiban kepabeanan atas kuasa importir."
-   ],
-   [
-    12.839,
-    "DJBC meneliti PIB, memungut PDRI, dan menetapkan kekurangan pembayaran."
-   ],
-   [
-    18.97,
-    "Bank persepsi atau bank devisa menerima pembayarannya."
-   ],
-   [
-    22.785,
-    "DJP mengadministrasikan pengkreditan PPN dan PPh Pasal 22 dalam SPT importir."
-   ],
-   [
-    29.101,
-    "Dan konsumen akhir menanggung PPN di ujung rantai penjualan."
+    34.8,
+    "penjualan."
    ]
   ]
  },
  "identitas": {
-  "key": "69a6cc865a438bd95bdbb4636263bd81fceed294",
-  "dur": 18.6,
+  "key": "5d15c8662b30b7d2403d7f5ad13f651300a9f08b",
+  "dur": 18.92,
   "words": [
    [
-    0.101041,
+    0.0,
     "Saat"
    ],
    [
-    0.426583,
-    "melayani"
+    0.54,
+    "melayani,"
    ],
    [
-    1.442208,
+    1.42,
     "Anda"
    ],
    [
-    1.702625,
+    1.62,
     "akan"
    ],
    [
-    1.910958,
+    1.92,
     "sering"
    ],
    [
-    2.158333,
+    2.4,
     "memeriksa"
    ],
    [
-    2.575,
+    3.02,
     "identitas"
    ],
    [
-    3.108875,
-    "importir"
+    3.66,
+    "importir,"
    ],
    [
-    4.726583,
+    4.68,
     "NPWP"
    ],
    [
-    5.2995,
+    5.5,
     "atau"
    ],
    [
-    5.559916,
-    "NIK"
+    5.78,
+    "NIC,"
    ],
    [
-    6.184916,
-    "Angka"
+    6.64,
+    "angka"
    ],
    [
-    6.471375,
-    "Pengenal"
+    7.0,
+    "pengenal"
    ],
    [
-    6.796875,
-    "Importir"
+    7.4,
+    "importir,"
    ],
    [
-    7.760416,
-    "API-U"
+    8.32,
+    "APU"
    ],
    [
-    8.151041,
+    9.08,
     "atau"
    ],
    [
-    8.385416,
-    "API-P"
+    9.34,
+    "APP,"
    ],
    [
-    9.296875,
+    10.26,
     "dan"
    ],
    [
-    9.51825,
+    10.56,
     "status"
    ],
    [
-    9.895833,
-    "Pengusaha"
+    10.94,
+    "pengusaha"
    ],
    [
-    10.325541,
-    "Kena"
+    11.66,
+    "kena"
    ],
    [
-    10.494791,
-    "Pajak"
+    11.94,
+    "pajak"
    ],
    [
-    11.289083,
+    12.4,
     "atau"
    ],
    [
-    11.588541,
-    "PKP"
+    12.7,
+    "PKP."
    ],
    [
-    13.151041,
+    13.96,
     "Data"
    ],
    [
-    13.411458,
+    14.24,
     "ini"
    ],
    [
-    13.671875,
+    14.46,
     "terhubung"
    ],
    [
-    14.140625,
+    14.92,
     "dengan"
    ],
    [
-    14.362,
-    "Coretax"
+    15.12,
+    "Cortex,"
    ],
    [
-    15.273458,
-    "sistem"
+    16.02,
+    "Sistem"
    ],
    [
-    15.690125,
-    "administrasi"
+    16.42,
+    "Administrasi"
    ],
    [
-    16.40625,
-    "perpajakan"
+    17.18,
+    "Perpajakan"
    ],
    [
-    17.01825,
-    "DJP"
-   ]
-  ],
-  "marks": {
-   "npwp": 4.727,
-   "api": 6.185,
-   "pkp": 9.297,
-   "core": 13.151
-  },
-  "cues": [
-   [
-    0.101,
-    "Saat melayani, Anda akan sering memeriksa identitas importir."
-   ],
-   [
-    4.727,
-    "NPWP atau NIK, Angka Pengenal Importir, API-U atau API-P, dan status Pengusaha Kena Pajak, atau PKP."
-   ],
-   [
-    13.151,
-    "Data ini terhubung dengan Coretax, sistem administrasi perpajakan DJP."
+    17.72,
+    "DJP."
    ]
   ]
  },
  "q2": {
-  "key": "0a067c72e2701413e43b61b839f970aa51dbf0c8",
-  "dur": 6.96,
+  "key": "f0f7b1e5e4b3cdfc12f2ff9adf8f6e1c5b87fa6e",
+  "dur": 5.44,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    1.038541,
+    0.78,
     "kita"
    ],
    [
-    1.285958,
+    1.1,
     "cek"
    ],
    [
-    1.46825,
+    1.46,
     "pemahaman"
    ],
    [
-    1.910958,
+    1.9,
     "lagi"
    ],
    [
-    2.653125,
-    "ya"
+    2.22,
+    "ya,"
    ],
    [
-    3.996375,
-    "Siapa"
+    2.88,
+    "siapa"
    ],
    [
-    4.426041,
+    3.36,
     "yang"
    ],
    [
-    4.55625,
+    3.58,
     "menjalankan"
    ],
    [
-    5.116166,
+    4.28,
     "setiap"
    ],
    [
-    5.428666,
+    4.86,
     "peran"
    ],
    [
-    5.623958,
-    "ini"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, kita cek pemahaman lagi, ya."
-   ],
-   [
-    3.996,
-    "Siapa yang menjalankan setiap peran ini?"
+    5.12,
+    "ini?"
    ]
   ]
  },
  "wrap": {
-  "key": "066711fdf8685fe35c2995b4122a3507c99cd1ac",
-  "dur": 23.376,
+  "key": "617761f371fe9dcb9e8ab8f64c892630ec1cb42b",
+  "dur": 21.28,
   "words": [
    [
-    0.100541,
-    "Jadi"
+    0.0,
+    "Jadi,"
    ],
    [
-    1.064083,
+    0.98,
     "ini"
    ],
    [
-    1.376583,
-    "rangkumannya"
+    1.14,
+    "rangkumannya."
    ],
    [
-    3.098958,
+    2.42,
     "Dalam"
    ],
    [
-    3.372416,
-    "impor"
+    2.78,
+    "impor,"
    ],
    [
-    4.21875,
+    3.68,
     "self"
    ],
    [
-    4.53125,
-    "assessment"
+    3.9,
+    "-assessment,"
    ],
    [
-    5.45575,
+    4.78,
     "official"
    ],
    [
-    5.872416,
+    5.12,
     "assessment"
    ],
    [
-    6.731791,
+    5.62,
     "dan"
    ],
    [
-    6.966166,
+    5.98,
     "withholding"
    ],
    [
-    7.421875,
+    6.56,
     "berjalan"
    ],
    [
-    7.877625,
-    "bersama"
+    7.08,
+    "bersama."
    ],
    [
-    9.387,
-    "DJBC"
+    8.2,
+    "DGBC"
    ],
    [
-    10.038041,
+    8.94,
     "memungut"
    ],
    [
-    10.402625,
+    9.36,
     "PDRI"
    ],
    [
-    10.884375,
+    9.92,
     "di"
    ],
    [
-    10.975541,
-    "pelabuhan"
+    10.06,
+    "pelabuhan,"
    ],
    [
-    11.991166,
+    10.98,
     "sedangkan"
    ],
    [
-    12.485958,
-    "DJP"
+    11.42,
+    "DGB"
    ],
    [
-    12.902625,
+    11.82,
     "mengadministrasikan"
    ],
    [
-    13.892208,
-    "pengkreditannya"
+    13.02,
+    "pengereditannya."
    ],
    [
-    15.664083,
+    14.54,
     "Dan"
    ],
    [
-    15.872416,
+    14.9,
     "sebelum"
    ],
    [
-    16.197916,
-    "melayani"
+    15.28,
+    "melayani,"
    ],
    [
-    17.1745,
+    16.08,
     "periksa"
    ],
    [
-    17.513041,
+    16.4,
     "dulu"
    ],
    [
-    17.734375,
+    16.6,
     "identitas"
    ],
    [
-    18.242208,
-    "importir"
+    17.12,
+    "importer,"
    ],
    [
-    19.244791,
-    "NPWP"
+    18.0,
+    "NPWP,"
    ],
    [
-    20.351583,
-    "API"
+    19.12,
+    "API,"
    ],
    [
-    21.184916,
+    20.06,
     "dan"
    ],
    [
-    21.419291,
+    20.1,
     "status"
    ],
    [
-    21.835958,
-    "PKP"
-   ]
-  ],
-  "marks": {
-   "w1": 3.099,
-   "w2": 9.387,
-   "w3": 15.664
-  },
-  "cues": [
-   [
-    0.101,
-    "Jadi, ini rangkumannya."
-   ],
-   [
-    3.099,
-    "Dalam impor, self assessment, official assessment, dan withholding berjalan bersama."
-   ],
-   [
-    9.387,
-    "DJBC memungut PDRI di pelabuhan, sedangkan DJP mengadministrasikan pengkreditannya."
-   ],
-   [
-    15.664,
-    "Dan sebelum melayani, periksa dulu identitas importir: NPWP, API, dan status PKP."
+    20.46,
+    "PKP."
    ]
   ]
  },
  "final1": {
-  "key": "e63bfc62eadfcc749e2e86eaa0f7f13885510737",
-  "dur": 6.552,
+  "key": "8024632dc116bac8b619d936f2d6f2689872635f",
+  "dur": 3.96,
   "words": [
    [
-    0.1,
-    "Nah"
+    0.0,
+    "Nah,"
    ],
    [
-    0.894291,
+    0.66,
     "sekarang"
    ],
    [
-    1.284916,
+    0.88,
     "kita"
    ],
    [
-    1.480208,
+    1.06,
     "latihan"
    ],
    [
-    2.2875,
-    "ya"
+    1.4,
+    "ya,"
    ],
    [
-    3.644791,
-    "Coba"
+    2.02,
+    "coba"
    ],
    [
-    3.970333,
+    2.38,
     "kamu"
    ],
    [
-    4.204708,
+    2.6,
     "jawab"
    ],
    [
-    4.504166,
+    2.92,
     "latihan"
    ],
    [
-    4.920833,
+    3.28,
     "berikut"
    ],
    [
-    5.220333,
-    "ini"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.1,
-    "Nah, sekarang kita latihan, ya."
-   ],
-   [
-    3.645,
-    "Coba kamu jawab latihan berikut ini."
+    3.54,
+    "ini."
    ]
   ]
  },
  "finish": {
-  "key": "996785f5a80f76534ab0c70f0fbd341209465504",
-  "dur": 10.44,
+  "key": "0112e4b3cfeb9318e1a3f99bb28832f3f6967aba",
+  "dur": 9.24,
   "words": [
    [
-    0.101041,
-    "Bagus"
+    0.0,
+    "Bagus,"
    ],
    [
-    1.051583,
+    0.88,
     "materi"
    ],
    [
-    1.46825,
+    1.26,
     "ketiga"
    ],
    [
-    1.806791,
-    "selesai"
+    1.58,
+    "selesai."
    ],
    [
-    3.372416,
-    "Berikutnya"
+    2.4,
+    "Berikutnya,"
    ],
    [
-    4.375,
+    3.14,
     "kita"
    ],
    [
-    4.622416,
+    3.28,
     "bahas"
    ],
    [
-    4.882833,
+    3.6,
     "PPN"
    ],
    [
-    5.208333,
-    "Impor"
+    3.98,
+    "impor,"
    ],
    [
-    6.041666,
+    4.74,
     "dan"
    ],
    [
-    6.25,
+    5.02,
     "mengapa"
    ],
    [
-    6.536458,
+    5.52,
     "PPN"
    ],
    [
-    6.940125,
+    6.06,
     "yang"
    ],
    [
-    7.070333,
+    6.2,
     "sudah"
    ],
    [
-    7.304708,
+    6.44,
     "dibayar"
    ],
    [
-    7.669291,
-    "importir"
+    6.94,
+    "impor"
    ],
    [
-    8.190125,
+    7.3,
+    "tir"
+   ],
+   [
+    7.44,
     "tidak"
    ],
    [
-    8.4375,
+    7.76,
     "hilang"
    ],
    [
-    8.710958,
+    8.1,
     "begitu"
    ],
    [
-    8.997416,
-    "saja"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Bagus, materi ketiga selesai."
-   ],
-   [
-    3.372,
-    "Berikutnya, kita bahas PPN Impor, dan mengapa PPN yang sudah dibayar importir tidak hilang begitu saja."
+    8.28,
+    "saja."
    ]
   ]
  }
