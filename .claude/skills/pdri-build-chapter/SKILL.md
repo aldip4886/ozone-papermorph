@@ -57,6 +57,18 @@ For each chapter N (`chNN`):
      `-af "atrim=start=T,asetpts=PTS-STARTPTS,afade=t=in:d=0.05"`. Don't use `-ss` before `-i` on these WAVs —
      it trimmed twice as much. Check the new duration = old − T.
    After any audio/text fix, re-run `transcribe_all.py` before aligning.
+
+   **Pronunciation vs the naskah** (numbers spelled out, abbreviations letter by letter — the naskah's
+   style prompt is the rule). Plain ASR writes digits, so it can't show how a number was read. Run:
+   ```
+   uv run --with faster-whisper python S/check_pronunciation.py . N <scratch>/pron.json   # model medium
+   ```
+   It transcribes with a prompt in the naskah's spelled style and diffs against the Teks column. Where it
+   still writes digits, judge by word timings in `pron.json`: a missing "persen" shows as no `%`/"persen"
+   token after the number; "51" said as "lima puluh satu" spans ~0.8 s. For abbreviations that are also
+   words (API → "api"), compare the token's duration with the beat's median seconds-per-syllable: letter
+   reading (a-pe-i) is 3+ syllables, the word 2. Durations near the boundary can't be settled by ASR — cut
+   those spots into one short MP3 for the user to listen to, rather than claiming they're right.
 4. **Is the timing aligned?** `content/pdri-mck/chNN/narration.id.timings.json` must have one entry per beat
    with `dur` equal to the MP3 length and ASR words; `timings.js` `dur` = MP3 + 0.25 s. If not (e.g. cues
    were only scaled proportionally), align every beat from the cached transcripts:
