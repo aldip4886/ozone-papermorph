@@ -140,6 +140,33 @@ const BEATS = [
     source(p, 'Bahan Ajar PDRI KB 5.2', .8, true);
   }],
 
+  ['rina', 'PPh 22 Impor mengangsur kewajiban siapa', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPh Pasal 22 Impor mengangsur kewajiban|subjektif PPh importir sendiri', { tag: 'PANGGIL ULANG · KEWAJIBAN SUBJEKTIF (KB 3.3)' });
+    const q = G(p);
+    mcard(q, 92, 230, 660, 230);
+    tile(q, 'chat', 175, 310, { size: 90, v: 'gold' });
+    T(q, 'PERTANYAAN', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
+    lines(q, 'PPh 22 Impor mengangsur|kewajiban siapa?', 245, 340, { size: 24, weight: 700, lh: 1.3 });
+    slideUp(q, .4);
+    const ans = G(p);
+    mcard(ans, 92, 490, 660, 210);
+    tile(ans, 'law', 175, 585, { size: 88, v: 'blue', floor: false });
+    lines(ans, 'Kewajiban subjektif PPh|importir sendiri, dikreditkan|di SPT Tahunan', 240, 555, { size: 21, weight: 700, lh: 1.3 });
+    slideUp(ans, m('jwb') - .2);
+    [['pt', 'briefcase', 'blue', 'PT Kain Prima Nusantara', 'SPT Tahunan PPh Badan'],
+     ['rina', 'user', 'gold', 'Bu Rina', 'SPT Tahunan PPh orang pribadi']].forEach(([mark, gl, v, n, sub], i) => {
+      const y = 230 + i * 240, c = G(p);
+      mcard(c, 800, y, 708, 210);
+      tile(c, gl, 880, y + 105, { size: 92, v });
+      T(c, n, { x: 970, y: y + 90, size: 27, weight: 700, fill: MK.navy });
+      pill(c, sub, 970, y + 140, { size: 17, anchor: 'start', bg: '#EEF2F8', ink: MK.navy });
+      slideUp(c, m(mark) - .2, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.3 dan 5.2', m('jwb'));
+  }],
+
   ['tarif', 'Tarif PPh Pasal 22 Impor', (m, D) => {
     const p = panel(0);
     paper(p);
