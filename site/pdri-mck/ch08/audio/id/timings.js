@@ -254,6 +254,29 @@ window.TIMINGS = {
   ],
   "silent": true
  },
+ "hak": {
+  "dur": 20.749,
+  "marks": {
+   "tanya": 3.27,
+   "jawab": 7.139,
+   "tenggat": 16.551
+  },
+  "cues": [
+   [
+    0.1,
+    "Kadang, pengguna jasa tetap tidak setuju."
+   ],
+   [
+    3.27,
+    "Kalau saya tidak setuju, saya harus ke mana?"
+   ],
+   [
+    7.139,
+    "Tutup dengan haknya, dari materi ketujuh: Bapak, Ibu, dapat mengajukan keberatan kepada Direktur Jenderal Bea dan Cukai melalui Portal DJBC, paling lambat enam puluh hari sejak tanggal penetapan."
+   ]
+  ],
+  "silent": true
+ },
  "layanan": {
   "dur": 18.813,
   "marks": {

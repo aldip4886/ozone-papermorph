@@ -1,10 +1,12 @@
 # Naskah Voice Over Bab 8 PDRI
 
-Nov 22, 2026 · @John
+Nov 22, 2026 · @John. Diperbarui 23 Nov 2026 untuk [session plan v3](08-session-plan-v3.md).
+
+**Pembaruan v3.** JP 7 berubah dari Barang Kiriman menjadi Upaya Hukum, dan role play JP 8 kini memuat satu keberatan tak terduga tentang jalur hukum: "Kalau saya tidak setuju, saya harus ke mana?" ([outline v3](07-outline-materi-v3.md), [bahan ajar v3](bahan-ajar-pdri-v3.md) 8.4). Ditambah satu adegan baru, `hak`, setelah `jelaskan` dan sebelum `layanan`, supaya kursus menutup penjelasan tagihan dengan hak keberatan pengguna jasa. Adegan lain tidak berubah.
 
 ## Cara kerja
 
-Bab 8 adalah materi terakhir dan memakai 14 file suara pendek, satu per adegan. Gaya bahasanya tetap: "Anda" saat menjelaskan, "kamu" dan "ya" saat mengajak latihan, dan pembuka "Mari kita lanjutkan, ya, sobat".
+Bab 8 adalah materi terakhir dan memakai 15 file suara pendek, satu per adegan. Gaya bahasanya tetap: "Anda" saat menjelaskan, "kamu" dan "ya" saat mengajak latihan, dan pembuka "Mari kita lanjutkan, ya, sobat".
 
 1. Buka Google AI Studio, menu **Generate speech** (Gemini TTS), mode **Single-speaker audio**.
 2. Tempel **prompt gaya** di bawah ke kolom Style instructions, lalu pilih suara yang sama dengan bab sebelumnya.
@@ -36,7 +38,7 @@ Bila suara terlalu cepat atau datar, ubah satu baris saja (misalnya tempo) lalu 
 
 ## Naskah per adegan
 
-Total 14 adegan, sekitar 5 menit 27 detik dengan suara draf Ardi. Tempel kolom Teks apa adanya; rekaman Anda boleh sedikit lebih panjang atau pendek karena animasi akan saya selaraskan ulang.
+Total 15 adegan, sekitar 6 menit 8 detik (perkiraan 140 kata per menit untuk adegan `hak`; sisanya dengan suara draf Ardi). Tempel kolom Teks apa adanya; rekaman Anda boleh sedikit lebih panjang atau pendek karena animasi akan saya selaraskan ulang.
 
 | No | Kode file | Durasi draf | Layar | Teks |
 | --- | --- | --- | --- | --- |
@@ -49,10 +51,11 @@ Total 14 adegan, sekitar 5 menit 27 detik dengan suara draf Ardi. Tempel kolom T
 | 7 | `salah` | 35 detik | Tabel tiga kesalahan yang sering terjadi | Ada tiga kesalahan yang sering terjadi. Pertama, Bea Masuk atau BMTP tidak dimasukkan ke nilai impor. Akibatnya PPN kurang tiga puluh enam koma tiga juta, dan PPh Pasal dua puluh dua kurang delapan koma dua lima juta. Kedua, DPP sebelas per dua belas dipakai untuk barang mewah. PPN motor Kasus dua jadi kurang lima koma nol delapan juta. Ketiga, tarif PPh Pasal dua puluh dua salah pilih. Importir tanpa API dikenai dua koma lima persen, sehingga PPh-nya kurang tujuh puluh enam koma empat juta. |
 | 8 | `q2` | 7 detik | Kuis: temukan kesalahan di lembar hitung | Sekarang, kita cek pemahaman lagi, ya. Coba temukan kesalahan dalam hitungan ini. |
 | 9 | `jelaskan` | 44 detik | Empat kartu langkah penjelasan | Lalu, bagaimana menjelaskannya kepada pengguna jasa? Susun dalam empat langkah, paling lama dua menit. Satu, nilai impor: pajak dihitung dari harga kain dalam rupiah ditambah Bea Masuk dan BMTP, sebesar satu koma lima tiga miliar. Dua, PPN Impor seratus enam puluh delapan koma satu juta, yang dapat dikreditkan sebagai pajak masukan di SPT Masa PPN. Tiga, PPh Pasal dua puluh dua tiga puluh delapan koma dua juta, pembayaran di muka yang dapat dikreditkan di SPT Tahunan. Empat, dasar hukumnya: PMK seratus tiga puluh satu Tahun dua ribu dua puluh empat untuk PPN, dan PMK lima puluh satu Tahun dua ribu dua puluh lima untuk PPh Pasal dua puluh dua. |
-| 10 | `layanan` | 19 detik | Empat kartu kriteria penjelasan | Penjelasan yang baik memenuhi empat hal. Angkanya tepat: semua komponen benar. Dasar hukumnya disebut tanpa diminta. Bahasanya awam, dan selesai dalam dua menit. Dan sikapnya tenang saat ditanya balik, serta tahu kapan mengarahkan pengguna jasa ke DJP. |
-| 11 | `empat` | 35 detik | Empat pertanyaan kasus dan jawabannya | Selama delapan materi, Anda sudah menjawab empat pertanyaan kasus. Atas dasar apa negara memungut? Undang-undang, sesuai Pasal dua puluh tiga A UUD seribu sembilan ratus empat puluh lima. Siapa yang memungut? DJBC di pelabuhan, dengan tiga sistem pemungutan yang bekerja bersama. Apakah PPN Impor hilang? Tidak, PPN dikreditkan sebagai pajak masukan. Mengapa PPh dipungut sebelum kain terjual? Karena PPh Pasal dua puluh dua Impor adalah cicilan di muka. |
-| 12 | `wrap` | 22 detik | Tiga kartu rangkuman | Jadi, ini rangkumannya. Hitung dari nilai impor, yaitu nilai pabean ditambah Bea Masuk dan BMTP. Waspadai tiga kesalahan yang sering terjadi: nilai impor, DPP barang mewah, dan tarif PPh Pasal dua puluh dua. Jelaskan dalam empat langkah, dengan bahasa awam dan dasar hukum yang jelas. |
-| 13 | `final1` | 7 detik | Lomba hitung: tiga variasi dan urutan penjelasan | Nah, ini latihan terakhir, ya. Coba kamu kerjakan lomba hitung berikut ini. |
-| 14 | `finish` | 15 detik | Kartu selesai kursus | Selamat, sobat, seluruh materi PDRI sudah selesai. Terakhir, tuliskan refleksi Anda di Paspor Misi: satu hal yang paling berguna, dan satu kesalahan yang ingin Anda hindari. Sampai jumpa di meja layanan! |
+| 10 | `hak` | 21 detik | Baru di v3. Kartu pertanyaan staf, lalu kartu jawaban hak keberatan dengan tenggat 60 hari | Kadang, pengguna jasa tetap tidak setuju. Kalau saya tidak setuju, saya harus ke mana? Tutup dengan haknya, dari materi ketujuh: Bapak, Ibu, dapat mengajukan keberatan kepada Direktur Jenderal Bea dan Cukai melalui Portal DJBC, paling lambat enam puluh hari sejak tanggal penetapan. |
+| 11 | `layanan` | 19 detik | Empat kartu kriteria penjelasan | Penjelasan yang baik memenuhi empat hal. Angkanya tepat: semua komponen benar. Dasar hukumnya disebut tanpa diminta. Bahasanya awam, dan selesai dalam dua menit. Dan sikapnya tenang saat ditanya balik, serta tahu kapan mengarahkan pengguna jasa ke DJP. |
+| 12 | `empat` | 35 detik | Empat pertanyaan kasus dan jawabannya | Selama delapan materi, Anda sudah menjawab empat pertanyaan kasus. Atas dasar apa negara memungut? Undang-undang, sesuai Pasal dua puluh tiga A UUD seribu sembilan ratus empat puluh lima. Siapa yang memungut? DJBC di pelabuhan, dengan tiga sistem pemungutan yang bekerja bersama. Apakah PPN Impor hilang? Tidak, PPN dikreditkan sebagai pajak masukan. Mengapa PPh dipungut sebelum kain terjual? Karena PPh Pasal dua puluh dua Impor adalah cicilan di muka. |
+| 13 | `wrap` | 22 detik | Tiga kartu rangkuman | Jadi, ini rangkumannya. Hitung dari nilai impor, yaitu nilai pabean ditambah Bea Masuk dan BMTP. Waspadai tiga kesalahan yang sering terjadi: nilai impor, DPP barang mewah, dan tarif PPh Pasal dua puluh dua. Jelaskan dalam empat langkah, dengan bahasa awam dan dasar hukum yang jelas. |
+| 14 | `final1` | 7 detik | Lomba hitung: tiga variasi dan urutan penjelasan | Nah, ini latihan terakhir, ya. Coba kamu kerjakan lomba hitung berikut ini. |
+| 15 | `finish` | 15 detik | Kartu selesai kursus | Selamat, sobat, seluruh materi PDRI sudah selesai. Terakhir, tuliskan refleksi Anda di Paspor Misi: satu hal yang paling berguna, dan satu kesalahan yang ingin Anda hindari. Sampai jumpa di meja layanan! |
 
 Anda boleh memperbaiki kalimat saat merekam, seperti di bab sebelumnya. Saya akan mentranskripsi rekaman Anda dan menyesuaikan subtitle serta waktu animasi dari suara itu.

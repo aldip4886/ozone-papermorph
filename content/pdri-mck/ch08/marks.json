@@ -6,6 +6,7 @@
  "variasi": [["v1", "Kalau importir tidak memiliki API"], ["v2", "Kalau petugas lupa"], ["v3", "Dan kalau importir memiliki SKB"]],
  "salah": [["e1", "Pertama,"], ["e2", "Kedua,"], ["e3", "Ketiga,"]],
  "jelaskan": [["j1", "Satu, nilai impor"], ["j2", "Dua, PPN Impor"], ["j3", "Tiga, PPh Pasal"], ["j4", "Empat, dasar hukumnya"]],
+ "hak": [["tanya", "Kalau saya tidak setuju"], ["jawab", "Tutup dengan haknya"], ["tenggat", "paling lambat enam puluh hari"]],
  "layanan": [["l1", "Angkanya tepat"], ["l2", "Dasar hukumnya disebut"], ["l3", "Bahasanya awam"], ["l4", "Dan sikapnya tenang"]],
  "empat": [["q1", "Atas dasar apa"], ["q2", "Siapa yang memungut"], ["q3", "Apakah PPN Impor hilang"], ["q4", "Mengapa PPh dipungut"]],
  "wrap": [["w1", "Hitung dari nilai impor"], ["w2", "Waspadai tiga"], ["w3", "Jelaskan dalam empat"]]

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene 1: Intro - Pihak dan Sistem Pemungutan</title>
+<link rel="stylesheet" href="../../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+</head>
+<body>
+<script src="../../lib/engine.js"></script>
+<script src="../../lib/mck.js"></script>
+<script src="../../audio/id/timings.js"></script>
+<script>
+'use strict';
+const CHAPTER = { number: 3, title: 'Pihak dan Sistem Pemungutan', minutes: 5, language: 'id' };
+
+const paper = p => bgPaper(p);
+const navy = (p, seed, D) => bgNavy(p, seed, D);
+const cap = (p, str, x, y, { size = 21, weight = 600, fill = MK.navy, anchor = 'middle' } = {}) => T(p, str, { x, y, size, weight, fill, anchor });
+
+const SYS = { off: ['search', 'blue', 'Official assessment', MK.blue], self: ['calc', 'gold', 'Self assessment', MK.goldDark], wh: ['hand', 'sky', 'Withholding', MK.sky] };
+const sysPill = (p, k, x, y, size = 17, anchor = 'middle') => pill(p, SYS[k][2], x, y, { size, anchor, bg: SYS[k][3], ink: '#fff' });
+
+const ROLE = [['user', 'gold', 'Importir'], ['briefcase', 'sky', 'PPJK'], ['shield', 'blue', 'DJBC'], ['office', 'gold', 'Bank persepsi'], ['server', 'blue', 'DJP'], ['cart', 'sky', 'Konsumen akhir']];
+
+const BEATS = [
+  ['intro', 'Pihak dan sistem pemungutan', (m, D) => {
+    const p = panel(0);
+    navy(p, 21, D);
+    const ph = G(p, { x: 1130, y: 470 });
+    const ring = G(ph);
+    mk('circle', { r: 262, fill: 'none', stroke: MK.sky, 'stroke-width': 4, 'stroke-opacity': .8 }, ring);
+    path(ring, 'M-285 0A285 285 0 0 1 0 -285', { stroke: MK.gold, 'stroke-width': 16, 'stroke-linecap': 'round', fill: 'none' });
+    path(ring, 'M285 0A285 285 0 0 1 0 285', { stroke: MK.gold, 'stroke-width': 16, 'stroke-linecap': 'round', fill: 'none' });
+    clockRun(t => ring.setAttribute('transform', `rotate(${t * 6})`), D, { tail: true });
+    mk('circle', { r: 240, fill: '#fff' }, ph);
+    const photo = G(ph); photo.setAttribute('clip-path', 'url(#mkPhoto)');
+    const im = mk('image', { href: IMG + 'kapal.jpg', x: -420, y: -236, width: 840, height: 472, preserveAspectRatio: 'xMidYMid slice' }, photo);
+    prog(q => im.setAttribute('transform', `scale(${1 + .06 * q})`), 0, D - .2, lin);
+    popIn(ph, .3);
+    ROLE.forEach(([gl, v, n], k) => {
+      const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 270 * Math.cos(a), y = 470 + 270 * Math.sin(a);
+      const g = G(p);
+      tile(g, gl, x, y, { size: 84, v, floor: false });
+      pill(g, n, x, y + 60, { size: 16, bg: '#fff', ink: MK.navy });
+      popIn(g, m('sub') + .3 + k * .22);
+    });
+    const tg = pill(p, 'BAB 3 · KEGIATAN BELAJAR 3', 92, 290, { size: 20, anchor: 'start' });
+    slideUp(tg, .5);
+    const t1 = T(p, 'Pihak dan Sistem', { x: 92, y: 392, size: 70, weight: 700, fill: '#fff' });
+    const t2 = T(p, 'Pemungutan', { x: 92, y: 474, size: 70, weight: 700, fill: MK.gold });
+    slideUp(t1, .7); slideUp(t2, .85);
+    const rule = mk('rect', { x: 92, y: 512, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
+    prog(q => rule.setAttribute('width', 120 * q), 1.2, .5, out);
+    const sub = G(p);
+    lines(sub, 'Siapa yang memungut pajak,|dan dengan cara apa', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
+    slideUp(sub, m('sub'));
+  }]
+];
+
+mkBoot();
+</script>
+</body>
+</html>
