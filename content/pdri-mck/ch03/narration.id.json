@@ -1,9 +1,9 @@
 {
- "voice": "id-ID-ArdiNeural",
+ "voice": "Rekaman Google AI Studio (Bodi), 2026-11-23",
  "rate": "-4%",
- "note": "Draf suara Ardi untuk storyboard; diganti rekaman Google AI Studio dari John setelah disetujui.",
+ "note": "Suara Bodi (Gemini 3.8 Flash TTS) dari prompt gaya naskah Bab 3.",
  "beats": {
-  "intro": "Mari kita lanjutkan, ya. [[sub]]Pada materi ketiga ini, kita akan melihat siapa yang memungut pajak, dan dengan cara apa.",
+  "intro": "Mari kita lanjutkan, ya, sobat. [[sub]]Pada materi ketiga ini, kita akan melihat siapa yang memungut pajak, dan dengan cara apa.",
   "ask": "Staf PT Kain Prima Nusantara kini bertanya, siapa sebenarnya yang memungut, dan dengan cara apa? [[pib]]Jawabannya bertemu dalam satu dokumen, yaitu Pemberitahuan Impor Barang, atau PIB. [[roles]]Di balik satu PIB itu, ada enam pihak [[sys]]dan tiga sistem pemungutan yang bekerja bersama.",
   "sistem": "Kita mulai dari tiga sistem pemungutan pajak. [[s1]]Pertama, official assessment: petugas pajak, atau fiskus, yang menentukan besarnya pajak. Dalam Kasus 1, pejabat DJBC meneliti PIB dan dapat menetapkan kekurangan pembayaran. [[s2]]Kedua, self assessment: wajib pajak menentukan sendiri. Importir menghitung sendiri Bea Masuk dan PDRI dalam PIB. [[s3]]Ketiga, withholding: pihak ketiga yang ditunjuk undang-undang memungut pajaknya. DJBC memungut PPh Pasal 22 Impor atas penghasilan importir.",
   "alur": "Sistem utama di Indonesia adalah self assessment. [[flow]]Tetapi dalam impor, ketiganya berjalan bersama. [[f1]]Importir menghitung, [[f2]]DJBC meneliti, [[f3]]dan DJBC juga memungut PPh Pasal 22.",
