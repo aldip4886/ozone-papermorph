@@ -11,7 +11,7 @@ URL = os.environ.get("URL", "http://localhost:8765/pdri-mck/ch03/")
 # Question beat id -> one step per question in turn: '1'..'9' picks a choice; '=a,b' fills the boxes and checks;
 # '#2;1+3' answers a grid (rows split by ';', each row's columns counted from 1, '+' for several, '#2;;1' a row left empty) and checks;
 # '@2' clicks the 2nd target ring on the stage (tap, tapEls, pickEls: in the order of their values, idx or items).
-ANSWERS = {"q1": ["#1;2;3;1"], "q2": ["#1;2;3;2;2"], "final1": ["1", "1", "#1;2;2"]}
+ANSWERS = {"q1": ["#1;2;3;1"], "q2": ["#1;2;3;2;2"], "final1": ["1", "1", "#1;2;2", "1"]}
 
 # The frame reached by seeking straight to t equals the one reached by stepping through the beat (replays are exact).
 SAME_FRAME = r"""

@@ -4,7 +4,12 @@ books/*/pages/
 books/*/source.md
 # upstream engine checkout and the skill itself
 engine/
-.claude/
+.claude/*
+# ...except the project's own PDRI skills, shared through the repo
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/pdri-build-chapter/
+!.claude/skills/pdri-voiceover/
 # working leftovers
 _to_delete/
 __pycache__/

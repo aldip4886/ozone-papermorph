@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bab 5 · PPh Pasal 22 Impor</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/mck.js"></script>
+<script src="audio/id/timings.js"></script>
+<script>
+'use strict';
+/* Bab 5 (KB 5): PPh Pasal 22 Impor. Paying income tax during the year, the PMK 51/2025 rules, the rate table
+   and the order to check it, the Kasus 1 calculation, the money flow, and why the API status is a cash-flow matter.
+   McKinsey-style exhibits in the INSW design. */
+const CHAPTER = { number: 5, title: 'Pajak Penghasilan Pasal 22 Impor', minutes: 5, language: 'id' };
+
+const paper = p => bgPaper(p);
+const navy = (p, seed, D) => bgNavy(p, seed, D);
+const cap = (p, str, x, y, { size = 21, weight = 600, fill = MK.navy, anchor = 'middle' } = {}) => T(p, str, { x, y, size, weight, fill, anchor });
+const okTick = (p, x, y, r = 20, col = MK.green) => {
+  const ok = G(p, { x, y });
+  mk('circle', { r, fill: col }, ok);
+  path(ok, `M${-r * .45} ${r * .05}l${r * .3} ${r * .3}l${r * .6} ${-r * .6}`, { stroke: '#fff', 'stroke-width': r * .22, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  return ok;
+};
+// Kasus 1 numbers (KB 5.4)
+const NI = 1528230000, PPH_API = NI * .025, PPH_NON = NI * .075;   // 38.205.750 and 114.617.250
+const NI2 = 764115000, PPH2 = NI2 * .025;                           // 19.102.875
+const pct = v => String(v).replace('.', ',') + '%';
+
+/* ---------- beats ---------- */
+const BEATS = [
+  ['intro', 'PPh Pasal 22 Impor', (m, D) => {
+    const p = panel(0);
+    navy(p, 51, D);
+    const ring = G(p, { x: 1130, y: 470 });
+    mk('circle', { r: 250, fill: 'none', stroke: MK.sky, 'stroke-width': 3, 'stroke-opacity': .6, 'stroke-dasharray': '6 10' }, ring);
+    path(ring, 'M-270 0A270 270 0 0 1 0 -270', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
+    path(ring, 'M270 0A270 270 0 0 1 0 270', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
+    clockRun(t => ring.setAttribute('transform', `translate(1130 470) rotate(${t * 6})`), D, { tail: true });
+    const mid = G(p, { x: 1130, y: 470 });
+    mk('circle', { r: 150, fill: '#fff' }, mid);
+    tile(mid, 'wallet', 0, -18, { size: 150, v: 'gold' });
+    T(mid, 'PPh 22', { y: 92, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
+    popIn(mid, .3);
+    [['user', 'gold', 'Importir'], ['doc', 'blue', 'PIB'], ['shield', 'sky', 'DJBC'], ['office', 'gold', 'Bank devisa'], ['coins', 'blue', 'Kas negara'], ['calc', 'sky', 'SPT Tahunan']].forEach(([gl, v, n], k) => {
+      const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 250 * Math.cos(a), y = 470 + 250 * Math.sin(a);
+      const g = G(p);
+      tile(g, gl, x, y, { size: 84, v, floor: false });
+      pill(g, n, x, y + 60, { size: 16, bg: '#fff', ink: MK.navy });
+      popIn(g, m('sub') + .3 + k * .22);
+    });
+    const part = pill(p, 'BAGIAN II · MENGHITUNG, MEMERIKSA, MENJELASKAN', 92, 240, { size: 16, anchor: 'start', bg: MK.navy2, ink: '#D5E2F5' });
+    slideUp(part, m('sub'));
+    const tg = pill(p, 'BAB 5 · KEGIATAN BELAJAR 5', 92, 290, { size: 20, anchor: 'start' });
+    slideUp(tg, .5);
+    const t1 = T(p, 'PPh Pasal 22', { x: 92, y: 392, size: 70, weight: 700, fill: '#fff' });
+    const t2 = T(p, 'Impor', { x: 92, y: 474, size: 70, weight: 700, fill: MK.gold });
+    slideUp(t1, .7); slideUp(t2, .85);
+    const rule = mk('rect', { x: 92, y: 512, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
+    prog(q => rule.setAttribute('width', 120 * q), 1.2, .5, out);
+    const sub = G(p);
+    lines(sub, 'Cicilan PPh yang dibayar|di pelabuhan', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
+    slideUp(sub, 1.3);
+  }],
+
+  ['ask', 'PPh sebelum kain terjual', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPh Pasal 22 Impor bukan pajak tambahan,|melainkan cicilan PPh di muka', { tag: 'PERTANYAAN KASUS 4' });
+    const q = G(p);
+    mcard(q, 92, 230, 620, 470);
+    tile(q, 'chat', 175, 310, { size: 96, v: 'gold' });
+    T(q, 'STAF PT KAIN PRIMA NUSANTARA', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
+    lines(q, '“Kain kami belum terjual.|Mengapa PPh sudah|dipungut di pelabuhan?”', 132, 420, { size: 30, weight: 700, lh: 1.3 });
+    slideUp(q, .4);
+    const k = G(p);
+    tile(k, 'fabric', 175, 625, { size: 72, v: 'sky', floor: false });
+    T(k, 'Kain kapas masih di gudang', { x: 230, y: 633, size: 21, weight: 600, fill: MK.dim });
+    slideUp(k, m('ask') + 2);
+    const a = G(p);
+    mcard(a, 760, 230, 748, 470, { fill: MK.navy });
+    T(a, 'Jawaban singkatnya', { x: 810, y: 310, size: 22, weight: 600, fill: '#D5E2F5' });
+    T(a, 'Cicilan di muka', { x: 810, y: 395, size: 60, weight: 800, fill: MK.gold });
+    lines(a, 'atas PPh perusahaan tahun ini,|bukan pajak tambahan', 810, 470, { size: 28, weight: 600, fill: '#fff' });
+    tile(a, 'wallet', 1420, 620, { size: 96, v: 'gold' });
+    show(a, m('ans') - .2, .4);
+    source(p, 'Bahan Ajar PDRI, Kasus yang Dipakai dan KB 5', m('ans') + 1);
+  }],
+
+  ['lunas', 'Pelunasan PPh dalam tahun berjalan', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPh dapat dicicil dalam tahun berjalan;|PPh Pasal 22 adalah salah satu caranya', { tag: 'PELUNASAN PPH DALAM TAHUN BERJALAN' });
+    [['p21', '21', 'users', 'sky', 'Pemotongan', 'oleh pemberi kerja|atas gaji pegawai'],
+     ['p22', '22', 'ship', 'gold', 'Pemungutan', 'oleh pihak tertentu,|termasuk atas impor'],
+     ['p23', '23', 'coins', 'blue', 'Pemotongan', 'atas dividen, bunga,|royalti, sewa, dan|jasa tertentu'],
+     ['p25', '25', 'calc', 'sky', 'Angsuran', 'bulanan oleh wajib|pajak sendiri']].forEach(([mark, n, gl, v, how, desc], i) => {
+      const x = 92 + i * 360, c = G(p), hot = n === '22';
+      mcard(c, x, 235, 336, 390, { fill: hot ? '#FFF7E3' : '#fff' });
+      if (hot) mk('rect', { x, y: 235, width: 336, height: 390, rx: 15, fill: 'none', stroke: MK.gold, 'stroke-width': 3 }, c);
+      tile(c, gl, x + 70, 310, { size: 80, v });
+      T(c, 'PPh Pasal', { x: x + 150, y: 300, size: 18, weight: 600, fill: MK.dim });
+      T(c, n, { x: x + 150, y: 350, size: 54, weight: 800, fill: hot ? MK.goldDark : MK.navy });
+      pill(c, how, x + 36, 412, { size: 17, anchor: 'start', bg: hot ? MK.gold : '#EEF2F8', ink: MK.navy });
+      lines(c, desc, x + 36, 470, { size: 20, weight: 600, lh: 1.3 });
+      slideUp(c, m(mark) - .2, .5);
+    });
+    // pemotongan + pemungutan = withholding (pasal 21, 22, 23)
+    const t0 = m('wh'), w = G(p);
+    path(w, 'M104 645V662H1152V645', { stroke: MK.navy, 'stroke-width': 3, fill: 'none' });
+    pill(w, 'Pemotongan dan pemungutan: withholding', 628, 690, { size: 18, bg: MK.navy, ink: '#fff' });
+    show(w, t0 - .1, .4);
+    source(p, 'Bahan Ajar PDRI KB 5.1', m('p21'));
+  }],
+
+  ['ketentuan', 'Ketentuan PPh Pasal 22 Impor', (m, D) => {
+    const p = panel(0);
+    navy(p, 53, D);
+    actionTitle(p, 'PPh Pasal 22 Impor dipungut bersama Bea|Masuk dan tidak bersifat final', { tag: 'KETENTUAN · PMK 51 TAHUN 2025', dark: true });
+    [['k1', 'shield', 'blue', 'PEMUNGUT', 'DJBC dan bank devisa', ''],
+     ['k2', 'container', 'sky', 'DASAR PEMUNGUTAN', 'Nilai impor', ''],
+     ['k3', 'coins', 'gold', 'SAAT TERUTANG', 'Bersamaan dengan', 'pembayaran Bea Masuk'],
+     ['k4', 'calc', 'gold', 'SIFAT', 'Tidak final', 'kredit pajak dalam SPT Tahunan PPh']].forEach(([mark, gl, v, lab, val, sub], i) => {
+      const x = 92 + (i % 2) * 716, y = 250 + Math.floor(i / 2) * 225, c = G(p);
+      mcard(c, x, y, 700, 200, { dark: true });
+      if (mark === 'k4') mk('rect', { x, y, width: 12, height: 200, rx: 6, fill: MK.gold }, c);
+      tile(c, gl, x + 95, y + 100, { size: 96, v });
+      T(c, lab, { x: x + 180, y: y + 70, size: 15, weight: 700, fill: MK.dim });
+      T(c, val, { x: x + 180, y: y + 118, size: 32, weight: 700, fill: MK.navy });
+      if (sub) T(c, sub, { x: x + 180, y: y + 155, size: 20, weight: 500, fill: MK.dim });
+      popIn(c, m(mark) - .1);
+    });
+    const since = pill(p, 'Berlaku sejak 1 Agustus 2025', 1180, 752, { size: 16, anchor: 'start', bg: MK.gold });
+    popIn(since, 1.2);
+    source(p, 'Bahan Ajar PDRI KB 5.2', .8, true);
+  }],
+
+  ['rina', 'PPh 22 Impor mengangsur kewajiban siapa', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPh Pasal 22 Impor mengangsur kewajiban|subjektif PPh importir sendiri', { tag: 'PANGGIL ULANG · KEWAJIBAN SUBJEKTIF (KB 3.3)' });
+    const q = G(p);
+    mcard(q, 92, 230, 660, 230);
+    tile(q, 'chat', 175, 310, { size: 90, v: 'gold' });
+    T(q, 'PERTANYAAN', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
+    lines(q, 'PPh 22 Impor mengangsur|kewajiban siapa?', 245, 340, { size: 24, weight: 700, lh: 1.3 });
+    slideUp(q, .4);
+    const ans = G(p);
+    mcard(ans, 92, 490, 660, 210);
+    tile(ans, 'law', 175, 585, { size: 88, v: 'blue', floor: false });
+    lines(ans, 'Kewajiban subjektif PPh|importir sendiri, dikreditkan|di SPT Tahunan', 240, 555, { size: 21, weight: 700, lh: 1.3 });
+    slideUp(ans, m('jwb') - .2);
+    [['pt', 'briefcase', 'blue', 'PT Kain Prima Nusantara', 'SPT Tahunan PPh Badan'],
+     ['rina', 'user', 'gold', 'Bu Rina', 'SPT Tahunan PPh orang pribadi']].forEach(([mark, gl, v, n, sub], i) => {
+      const y = 230 + i * 240, c = G(p);
+      mcard(c, 800, y, 708, 210);
+      tile(c, gl, 880, y + 105, { size: 92, v });
+      T(c, n, { x: 970, y: y + 90, size: 27, weight: 700, fill: MK.navy });
+      pill(c, sub, 970, y + 140, { size: 17, anchor: 'start', bg: '#EEF2F8', ink: MK.navy });
+      slideUp(c, m(mark) - .2, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.3 dan 5.2', m('jwb'));
+  }],
+
+  ['tarif', 'Tarif PPh Pasal 22 Impor', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Tarif PPh Pasal 22 Impor berkisar 0,25%|sampai 10%, bergantung barang dan importir', { tag: 'TARIF PPH PASAL 22 IMPOR' });
+    const x0 = 640, S = 54;   // 1% = 54 px
+    const H = G(p);
+    T(H, 'KONDISI', { x: 92, y: 240, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'TARIF', { x: x0, y: 240, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'DASAR', { x: 1508, y: 240, size: 15, weight: 700, fill: MK.dim, anchor: 'end' });
+    mk('rect', { x: 92, y: 254, width: 1416, height: 3, fill: MK.navy }, H);
+    show(H, .4, .4);
+    [['t1', 'Importir memiliki API', 2.5, '2,5%', MK.blue, 'nilai impor'],
+     ['t1', 'Importir tidak memiliki API', 7.5, '7,5%', MK.sky, 'nilai impor'],
+     ['t2', 'Kedelai, gandum, terigu (ber-API)', .5, '0,5%', MK.gold, 'nilai impor'],
+     ['t2', 'Emas batangan', .25, '0,25%', MK.gold, 'nilai impor'],
+     ['t3', 'Barang di lampiran PMK 51/2025', 10, '10% atau 7,5%', MK.goldDark, 'nilai impor'],
+     ['t4', 'Barang yang tidak dikuasai', 7.5, '7,5%', MK.dim, 'harga jual lelang']].forEach(([mark, n, v, lab, col, base], i) => {
+      const y = 300 + i * 68, g = G(p), t0 = m(mark) - .2 + (i === 1 || i === 3 ? 1.2 : 0);
+      if (i) mk('rect', { x: 92, y: y - 34, width: 1416, height: 1.5, fill: MK.line }, g);
+      T(g, n, { x: 92, y: y + 8, size: 22, weight: 700, fill: MK.navy });
+      const bar = mk('rect', { x: x0, y: y - 16, width: 0, height: 32, rx: 6, fill: col }, g);
+      const l = T(g, lab, { x: x0 + v * S + 14, y: y + 8, size: 22, weight: 800, fill: col === MK.gold ? MK.goldDark : col });
+      T(g, base, { x: 1508, y: y + 8, size: 19, weight: 500, fill: MK.dim, anchor: 'end' });
+      slideUp(g, t0, .4);
+      prog(q => bar.setAttribute('width', v * S * q), t0 + .2, .7, out);
+      put(l, { o: 0 }); show(l, t0 + .8, .3);
+    });
+    source(p, 'Bahan Ajar PDRI KB 5.3; PMK 51 Tahun 2025', m('t1'));
+  }],
+
+  ['urutan', 'Urutan memilih tarif', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Pilih tarif dengan urutan: lampiran PMK,|barang khusus, lalu status API', { tag: 'URUTAN PEMERIKSAAN TARIF' });
+    [['d1', 'Barang tercantum di lampiran PMK 51/2025?', [['Ya', 'Pakai tarif lampiran', '10% atau 7,5%', MK.goldDark]]],
+     ['d2', 'Kedelai, gandum, terigu, atau emas batangan?', [['Ya', 'Pakai tarif khusus', '0,5% atau 0,25%', MK.gold]]],
+     ['d3', 'Importir memiliki API?', [['Ya', 'Tarif umum', '2,5%', MK.blue], ['Tidak', 'Tarif tanpa API', '7,5%', MK.sky]]]].forEach(([mark, qs, ans], i) => {
+      const y = 240 + i * 165, g = G(p), t0 = m(mark) - .2;
+      mcard(g, 92, y, 720, 125);
+      mk('circle', { cx: 150, cy: y + 62, r: 28, fill: MK.navy }, g);
+      T(g, String(i + 1), { x: 150, y: y + 72, size: 26, weight: 700, fill: '#fff', anchor: 'middle' });
+      T(g, qs, { x: 200, y: y + 72, size: 24, weight: 700, fill: MK.navy });
+      slideUp(g, t0, .5);
+      if (i < 2) {
+        const dn = G(p);
+        flow(dn, `M452 ${y + 128}V${y + 160}`, MK.dim, t0 + 3.5, .3, 3);
+        T(dn, 'Tidak', { x: 470, y: y + 152, size: 17, weight: 700, fill: MK.dim });
+        show(dn, t0 + 3.5, .3);
+      }
+      ans.forEach(([yn, n, r, col], j) => {
+        const a = G(p), ay = ans.length > 1 ? y + 2 + j * 64 : y + 12, h = ans.length > 1 ? 58 : 100;
+        flow(a, `M816 ${ay + h / 2}H880`, col, t0 + .8 + j * 1.6, .3, 3);
+        mkHead(a, 882, ay + h / 2, 0, col, t0 + 1 + j * 1.6, 12);
+        T(a, yn, { x: 848, y: ay + h / 2 - 10, size: 15, weight: 700, fill: col, anchor: 'middle' });
+        mk('rect', { x: 900, y: ay, width: 608, height: h, rx: 12, fill: '#fff', stroke: col, 'stroke-width': 2.5 }, a);
+        T(a, n, { x: 930, y: ay + h / 2 + 8, size: 22, weight: 700, fill: MK.navy });
+        T(a, r, { x: 1480, y: ay + h / 2 + 10, size: 28, weight: 800, fill: col, anchor: 'end' });
+        slideUp(a, t0 + 1 + j * 1.6, .4);
+      });
+    });
+    source(p, 'Bahan Ajar PDRI KB 5.3', m('d1'));
+  }],
+
+  ['q1', 'Cek pemahaman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cek pemahaman: berapa tarif PPh Pasal 22|untuk setiap importir?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['search', 'gold', 'Lampiran PMK 51'], ['tag', 'blue', 'Barang khusus'], ['idcard', 'sky', 'Status API']].forEach(([gl, v, n], i) => {
+      const c = G(p), y = 250 + i * 150;
+      mcard(c, 92, y, 400, 126);
+      tile(c, gl, 155, y + 62, { size: 76, v });
+      T(c, 'Cek ke-' + (i + 1), { x: 210, y: y + 52, size: 18, weight: 600, fill: MK.dim });
+      T(c, n, { x: 210, y: y + 88, size: 26, weight: 700, fill: MK.navy });
+      slideUp(c, .2 + i * .15);
+    });
+  }, { ask: done => quiz({ x: 530, y: 200, w: 990, cls: 'side' }, [{
+    id: 'c-tarif', prompt: ['Berapa tarif PPh Pasal 22 Impor untuk setiap importir?'],
+    build: grid([
+      { parts: ['PT H (API-U) mengimpor tepung terigu'], ans: ['h'], why: 'Terigu yang diimpor importir ber-API: tarif khusus 0,5%.' },
+      { parts: ['CV J (tanpa API) mengimpor kain kapas'], ans: ['n'], why: 'Kain kapas bukan barang khusus, dan importirnya tidak memiliki API: 7,5%.' },
+      { parts: ['PT K (API-P) mengimpor mesin jahit yang tidak ada di lampiran'], ans: ['a'], why: 'Tidak di lampiran, bukan barang khusus, importir ber-API: 2,5%.' },
+    ], [['h', '0,5%', MK.goldDark, 'h'], ['a', '2,5%', MK.blue, 'a'], ['n', '7,5%', MK.sky, 'n']], { multi: false, text: true }),
+  }], done) }],
+
+  ['hitung', 'Menghitung PPh Pasal 22 Impor', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, `PPh Pasal 22 Impor Kasus 1 sebesar ${rp(PPH_API)}`, { tag: 'MENGHITUNG PPH PASAL 22 IMPOR · KASUS 1' });
+    const c = G(p);
+    mcard(c, 92, 230, 600, 250);
+    T(c, 'CEK DULU', { x: 132, y: 280, size: 15, weight: 700, fill: MK.dim });
+    [['Pos 52 tidak di daftar 10% lampiran', 330], ['Importir memiliki API-U', 395]].forEach(([s, y]) => {
+      T(c, s, { x: 132, y: y + 8, size: 23, weight: 700, fill: MK.navy });
+      okTick(c, 640, y);
+    });
+    pill(c, 'Tarif 2,5%', 132, 448, { size: 18, anchor: 'start', bg: MK.blue, ink: '#fff' });
+    slideUp(c, m('cek') - .2);
+    const n = G(p);
+    mcard(n, 92, 510, 600, 190);
+    tile(n, 'container', 175, 605, { size: 88, v: 'blue', floor: false });
+    T(n, 'NILAI IMPOR', { x: 240, y: 575, size: 15, weight: 700, fill: MK.dim });
+    T(n, rp(NI), { x: 240, y: 620, size: 36, weight: 800, fill: MK.navy });
+    T(n, 'sama seperti di materi pertama', { x: 240, y: 658, size: 18, weight: 500, fill: MK.dim });
+    slideUp(n, m('ni') - .2);
+    const f = G(p);
+    mcard(f, 740, 230, 768, 470);
+    T(f, 'LANGKAH HITUNG', { x: 780, y: 280, size: 15, weight: 700, fill: MK.dim });
+    show(f, m('cek') - .2, .4);
+    const st = G(p);
+    T(st, 'PPh 22', { x: 780, y: 350, size: 22, weight: 700, fill: MK.dim });
+    T(st, '= 2,5% × nilai impor', { x: 880, y: 350, size: 26, weight: 700, fill: MK.navy });
+    T(st, '= 2,5% × ' + rp(NI), { x: 880, y: 398, size: 26, weight: 700, fill: MK.navy });
+    slideUp(st, m('ni') + 1, .5);
+    const res = G(p);
+    mk('rect', { x: 780, y: 450, width: 688, height: 100, rx: 14, fill: MK.navy }, res);
+    T(res, 'PPh Pasal 22 Impor', { x: 815, y: 512, size: 24, weight: 600, fill: '#D5E2F5' });
+    T(res, rp(PPH_API), { x: 1440, y: 516, size: 40, weight: 800, fill: MK.gold, anchor: 'end' });
+    popIn(res, m('res') + 1.5);
+    const note = G(p);
+    lines(note, 'Catatan bahan ajar: daftar tarif 7,5% dalam lampiran PMK 51/2025|untuk pos 52 masih perlu dicocokkan.', 780, 620, { size: 17, weight: 500, fill: MK.dim });
+    show(note, m('res') + 2.5, .4);
+    source(p, 'Bahan Ajar PDRI KB 5.4', m('cek'));
+  }],
+
+  ['alur', 'Alur uang PPh Pasal 22', (m, D) => {
+    const p = panel(0);
+    navy(p, 55, D);
+    actionTitle(p, 'PPh Pasal 22 dibayar bersama Bea Masuk,|lalu dikreditkan dalam SPT Tahunan', { tag: 'ALUR UANG PPH PASAL 22', dark: true });
+    [['f1', 'doc', 'blue', 'Importir', 'mengajukan PIB'], ['f2', 'coins', 'gold', 'Membayar PDRI', 'bersama Bea Masuk'], ['f3', 'office', 'sky', 'Kas negara', 'menerima dana'],
+     ['f4', 'shield', 'blue', 'DJBC', 'melaporkan hasil|pemungutan'], ['f5', 'calc', 'gold', 'Importir', 'mengkreditkan dalam|SPT Tahunan']].forEach(([mark, gl, v, n, sub], i) => {
+      const x = 92 + i * 290, c = G(p), t0 = m(mark) - .1;
+      mcard(c, x, 290, 256, 330, { dark: true });
+      if (i === 4) mk('rect', { x, y: 290, width: 256, height: 12, rx: 6, fill: MK.gold }, c);
+      T(c, '0' + (i + 1), { x: x + 228, y: 335, size: 26, weight: 700, fill: MK.line, anchor: 'end' });
+      tile(c, gl, x + 128, 395, { size: 96, v });
+      T(c, n, { x: x + 128, y: 500, size: 25, weight: 700, fill: MK.navy, anchor: 'middle' });
+      lines(c, sub, x + 128, 540, { size: 19, weight: 500, fill: MK.dim, anchor: 'middle' });
+      popIn(c, t0);
+      if (i) { flow(p, `M${x - 30} 455H${x - 8}`, MK.gold, t0 - .2, .2, 4); mkHead(p, x - 6, 455, 0, MK.gold, t0, 10); }
+    });
+    source(p, 'Bahan Ajar PDRI KB 5.5', .8, true);
+  }],
+
+  ['kas', 'API dan arus kas', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Tanpa API, uang yang tertahan di muka tiga|kali lipat, tetapi tetap dapat dikreditkan', { tag: 'STATUS API DAN ARUS KAS · KASUS 1' });
+    const base = 650, K2 = 330 / PPH_NON;
+    const ax = G(p);
+    mk('rect', { x: 120, y: base, width: 640, height: 3, fill: MK.navy }, ax);
+    show(ax, .4, .3);
+    [['api', 'Dengan API', '2,5%', PPH_API, MK.blue, 240], ['nonapi', 'Tanpa API', '7,5%', PPH_NON, MK.sky, 560]].forEach(([mark, n, r, v, col, x]) => {
+      const t0 = m(mark) - .1, g = G(p), h = v * K2;
+      const bar = mk('rect', { x: x - 90, y: base, width: 180, height: 0, fill: col }, g);
+      prog(q => { bar.setAttribute('y', base - h * q); bar.setAttribute('height', h * q); }, t0, .8, out);
+      T(g, n, { x, y: base + 38, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+      T(g, 'tarif ' + r, { x, y: base + 66, size: 18, weight: 500, fill: MK.dim, anchor: 'middle' });
+      const l = T(g, rp(v), { x, y: base - h - 18, size: 24, weight: 800, fill: col, anchor: 'middle' });
+      put(l, { o: 0 }); show(l, t0 + .8, .3);
+      show(g, t0, .2);
+    });
+    const c = G(p);
+    mcard(c, 860, 240, 648, 210);
+    tile(c, 'calc', 945, 345, { size: 96, v: 'gold' });
+    T(c, 'Keduanya tetap', { x: 1020, y: 330, size: 22, weight: 600, fill: MK.dim });
+    lines(c, 'dikreditkan dalam|SPT Tahunan PPh', 1020, 370, { size: 28, weight: 700 });
+    popIn(c, m('kredit') - .1);
+    const d = G(p);
+    mcard(d, 860, 480, 648, 220, { fill: MK.navy });
+    T(d, 'DAMPAKNYA: ARUS KAS', { x: 900, y: 530, size: 15, weight: 700, fill: '#D5E2F5' });
+    T(d, rp(PPH_NON - PPH_API), { x: 900, y: 600, size: 44, weight: 800, fill: MK.gold });
+    T(d, 'lebih banyak tertahan di muka', { x: 900, y: 650, size: 22, weight: 600, fill: '#fff' });
+    popIn(d, m('kredit') + 4);
+    source(p, 'Bahan Ajar PDRI KB 5.3 dan 5.7', m('api'));
+  }],
+
+  ['q2', 'Cek pemahaman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cek pemahaman: apa sifat PPh Pasal 22|Impor?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['shield', 'blue', 'Pemungut', 'DJBC dan bank devisa'], ['container', 'sky', 'Dasar', 'nilai impor'], ['question', 'gold', 'Sifat', '?']].forEach(([gl, v, n, sub], i) => {
+      const c = G(p), y = 250 + i * 150;
+      mcard(c, 92, y, 640, 126);
+      tile(c, gl, 155, y + 62, { size: 76, v });
+      T(c, n, { x: 210, y: y + 58, size: 28, weight: 700, fill: MK.navy });
+      T(c, sub, { x: 210, y: y + 92, size: 20, weight: 500, fill: MK.dim });
+      slideUp(c, .2 + i * .15);
+    });
+  }, { ask: done => quiz({ x: 790, y: 220, w: 730, cls: 'side' }, [{
+    id: 'c-sifat', prompt: ['Apa sifat PPh Pasal 22 Impor bagi importir?'],
+    build: choice([['Tidak final: dikreditkan dalam SPT Tahunan PPh'], ['Final: tidak dapat diperhitungkan lagi'], ['Dikreditkan dalam SPT Masa PPN'], ['Dikembalikan tunai oleh DJBC setelah barang terjual']], 0,
+      'PPh Pasal 22 Impor tidak final. Importir memperhitungkannya sebagai kredit pajak dalam SPT Tahunan PPh.',
+      [null, 'Menurut PMK 51 Tahun 2025, PPh Pasal 22 Impor tidak bersifat final.', 'Yang dikreditkan dalam SPT Masa PPN adalah PPN Impor. PPh Pasal 22 masuk SPT Tahunan PPh.', 'DJBC tidak mengembalikannya. Importir mengkreditkannya dalam SPT Tahunan.']),
+  }], done) }],
+
+  ['jawab', 'Jawaban untuk staf', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Jawaban untuk staf: PPh Pasal 22 adalah cicilan,|yang terasa hanya arus kasnya', { tag: 'MENJAWAB PERTANYAAN KASUS 4' });
+    const q = G(p);
+    mcard(q, 92, 230, 500, 470);
+    tile(q, 'chat', 175, 310, { size: 96, v: 'gold' });
+    T(q, 'PERTANYAAN', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
+    lines(q, '“Kain kami belum|terjual. Mengapa|PPh sudah dipungut|di pelabuhan?”', 132, 420, { size: 28, weight: 700, lh: 1.3 });
+    slideUp(q, .4);
+    [['a1', 'wallet', 'gold', 'Pembayaran di muka', 'atas PPh perusahaan tahun ini,|bukan pajak tambahan'],
+     ['a2', 'calc', 'blue', `${rp(PPH_API)} dikreditkan`, 'dalam SPT Tahunan PPh'],
+     ['a3', 'rate', 'sky', 'Yang terasa: arus kas', 'bukan beban pajak baru']].forEach(([mark, gl, v, n, sub], i) => {
+      const y = 230 + i * 160, g = G(p);
+      mcard(g, 640, y, 868, 140);
+      tile(g, gl, 715, y + 70, { size: 80, v, floor: false });
+      T(g, n, { x: 780, y: y + 62, size: 27, weight: 700, fill: MK.navy });
+      lines(g, sub, 780, y + 96, { size: 19, weight: 500, fill: MK.dim });
+      T(g, '0' + (i + 1), { x: 1470, y: y + 62, size: 30, weight: 700, fill: MK.line, anchor: 'end' });
+      slideUp(g, m(mark) - .2, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 5.7', m('a1'));
+  }],
+
+  ['wrap', 'Rangkuman', (m, D) => {
+    const p = panel(0);
+    navy(p, 9, D);
+    actionTitle(p, 'Rangkuman: cicilan di muka, pilih tarif|berurutan, API soal arus kas', { tag: 'RANGKUMAN BAB 5', dark: true });
+    [['w1', 'wallet', 'gold', 'PPh Pasal 22 Impor|adalah pembayaran|di muka dan tidak|bersifat final'],
+     ['w2', 'search', 'blue', 'Cek lampiran PMK|51, lalu barang|khusus, lalu|status API'],
+     ['w3', 'rate', 'sky', 'Tanpa API lebih|tinggi, tetapi tetap|dikreditkan: soal|arus kas']].forEach(([mark, gl, v, str], i) => {
+      const x = 92 + i * 482, c = G(p);
+      mcard(c, x, 250, 450, 450, { dark: true });
+      const strip = mk('rect', { x, y: 250, width: 450, height: 12, rx: 6, fill: MK.gold, 'fill-opacity': 0 }, c);
+      tile(c, gl, x + 90, 335, { size: 96, v });
+      T(c, '0' + (i + 1), { x: x + 400, y: 320, size: 34, weight: 700, fill: MK.line, anchor: 'end' });
+      lines(c, str, x + 40, 450, { size: 26, weight: 700, lh: 1.32 });
+      put(c, { o: 0 }); tw(c, { o: .35 }, .3, .4);
+      tw(c, { o: 1 }, m(mark), .4); pulse(c, m(mark), 1.03);
+      prog(q => strip.setAttribute('fill-opacity', q), m(mark), .4, out);
+    });
+  }],
+
+  ['final1', 'Latihan bab', (m) => { const p = panel(0); paper(p); }, { ask: done => quiz(SCREEN, [{
+    id: 'p-pilih-tarif', prompt: ['Latihan 5.1. Pilih tarifmu: tentukan tarif PPh Pasal 22 Impor untuk setiap skenario.'],
+    build: grid([
+      { parts: ['PT A (API-U) mengimpor kain kapas'], ans: ['c'], why: 'Bukan barang khusus, importir ber-API: 2,5%.' },
+      { parts: ['CV B (tanpa API) mengimpor kain kapas'], ans: ['d'], why: 'Tanpa API: 7,5%.' },
+      { parts: ['PT C (API-P) mengimpor gandum untuk pabrik tepung'], ans: ['b'], why: 'Gandum, importir ber-API: 0,5%.' },
+      { parts: ['PT D (API-U) mengimpor emas batangan'], ans: ['a'], why: 'Emas batangan: 0,25%.' },
+    ], [['a', '0,25%', MK.gold, 'a'], ['b', '0,5%', MK.goldDark, 'b'], ['c', '2,5%', MK.blue, 'c'], ['d', '7,5%', MK.sky, 'd'], ['e', '10%', MK.navy, 'e']], { multi: false, text: true }),
+  }, {
+    id: 'p-pilih-tarif-2', prompt: ['Latihan 5.1 (lanjutan). Tentukan tarif untuk empat skenario berikutnya.'],
+    build: grid([
+      { parts: ['Barang tidak dikuasai yang dilelang DJBC'], ans: ['d'], why: 'Barang tidak dikuasai: 7,5% dari harga jual lelang.' },
+      { parts: ['PT E (API-U) mengimpor barang di daftar 10% lampiran PMK 51/2025'], ans: ['e'], why: 'Lampiran diperiksa lebih dulu: 10%.' },
+      { parts: ['PT F (API-U) mengimpor kedelai'], ans: ['b'], why: 'Kedelai, importir ber-API: 0,5%.' },
+      { parts: ['PT G (tanpa API) mengimpor kedelai'], ans: ['d'], why: 'Tarif 0,5% untuk kedelai hanya bagi importir ber-API. Tanpa API: 7,5%.' },
+    ], [['a', '0,25%', MK.gold, 'a'], ['b', '0,5%', MK.goldDark, 'b'], ['c', '2,5%', MK.blue, 'c'], ['d', '7,5%', MK.sky, 'd'], ['e', '10%', MK.navy, 'e']], { multi: false, text: true }),
+  }, {
+    id: 'p-pph-50rb', prompt: [`Latihan 5.2. Untuk varian 50.000 meter, nilai impornya ${rp(NI2)}. Importirnya memiliki API-U. Berapa PPh Pasal 22 Impornya?`],
+    build: blanks([{ parts: ['2,5% × ' + rp(NI2) + ' = Rp', { box: idNum(PPH2) }],
+      why: `2,5% × ${rp(NI2)} = ${rp(PPH2)}.`, hint: 'Kalikan nilai impor dengan 2,5%.' }]),
+  }, {
+    id: 'p-tanpa-api', prompt: ['Latihan 5.3. Seandainya PT Kain Prima Nusantara tidak memiliki API, apa yang berubah?'],
+    build: choice([[`PPh Pasal 22 menjadi ${rp(PPH_NON)}, tetapi tetap dapat dikreditkan; yang terdampak arus kasnya`], ['PPh Pasal 22 menjadi final dan tidak dapat dikreditkan'], ['PPh Pasal 22 tidak dipungut sama sekali'], [`PPh Pasal 22 tetap ${rp(PPH_API)}`]], 0,
+      `Tanpa API, tarifnya 7,5%: 7,5% × ${rp(NI)} = ${rp(PPH_NON)}. Tetap dapat dikreditkan, jadi dampaknya pada arus kas.`,
+      [null, 'Status API mengubah tarif, bukan sifatnya. PPh Pasal 22 Impor tetap tidak final.', 'Tanpa API, PPh tetap dipungut, dengan tarif lebih tinggi.', 'Tarif 2,5% hanya untuk importir ber-API.']),
+  }], done, 'Latihan bab') }],
+
+  ['finish', 'Selesai', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    const left = G(p);
+    path(left, 'M0 0H640L470 900H0Z', { fill: MK.navy });
+    path(p, 'M640 0H700L530 900H470Z', { fill: MK.gold });
+    path(p, 'M712 0H742L572 900H542Z', { fill: MK.sky });
+    const md = G(p, { x: 300, y: 440 });
+    const rays = G(md);
+    for (let i = 0; i < 16; i++) path(rays, `M0 0L${-18} -260L18 -260Z`, { fill: MK.gold, 'fill-opacity': .12 }).setAttribute('transform', `rotate(${i * 22.5})`);
+    clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
+    tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
+    popIn(md, .3);
+    const orb = [['wallet', 'blue'], ['ship', 'sky'], ['calc', 'gold']].map(([gl, v], i) => {
+      const e = tile(p, gl, 0, 0, { size: 64, v, floor: false });
+      return { e, a: i * 2.094 };
+    });
+    clockRun(t => orb.forEach(o => put(o.e, { x: 300 + 190 * Math.cos(o.a + t * .4), y: 440 + 190 * Math.sin(o.a + t * .4) * .55 })), D, { tail: true });
+    orb.forEach(o => { put(o.e, { o: 0 }); show(o.e, .8, .5); });
+    const h = T(p, 'Selamat, Sobat Pemelajar!', { x: 1120, y: 200, size: 44, weight: 700, fill: MK.navy, anchor: 'middle' });
+    slideUp(h, .5);
+  }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
+
+{
+  const NAVY = new Set(['intro', 'ketentuan', 'alur', 'wrap']);
+  BEATS.forEach((b, i) => {
+    if (!i || b.lead === false) return;
+    const prev = BEATS[i - 1];
+    if (NAVY.has(b.id) !== NAVY.has(prev.id) || b.id === 'finish') {
+      const run = b.run;
+      b.run = (m, D) => { run(m, D); wipeIn(S.panel); };
+    }
+  });
+}
+
+mkBoot();
+</script>
+</body>
+</html>

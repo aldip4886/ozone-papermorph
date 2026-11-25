@@ -1,13 +1,12 @@
 {
- "intro": [["sub", "Pada materi ketujuh"]],
- "ask": [["ask", "Kali ini kita pakai"], ["ans", "Lalu Dita bertanya"]],
- "hukum": [["p96", "Dasarnya PMK"], ["p4", "terakhir dengan PMK"], ["lon", "Perubahan terakhir itu"]],
- "ambang": [["s1", "Sampai tiga dolar"], ["s2", "Di atas tiga dolar"], ["s3", "Di atas seribu lima ratus dolar"]],
- "komoditas": [["k8", "Tapi ada pengecualian"], ["kaki", "Untuk latihan ini"]],
- "beda": [["r1", "Dokumennya"], ["r2", "Yang mengurus"], ["r3", "Bea Masuknya tarif tunggal"], ["r4", "Dan PPh Pasal dua puluh dua dikecualikan"]],
- "paketA": [["np", "Nilai pabeannya CIF"], ["bm", "Bea Masuk tujuh koma lima"], ["ni", "Nilai impornya tujuh ratus"], ["ppn", "dan PPN dengan beban"], ["pph", "PPh dikecualikan"], ["tot", "Total pungutannya"]],
- "paketB": [["np", "Nilai pabeannya CIF sembilan"], ["bm", "Karena alas kaki"], ["ni", "Nilai impornya dua juta"], ["ppn", "dan PPN-nya dua ratus"], ["pph", "Ditambah PPh lima persen"], ["tot", "Total pungutannya"]],
- "banding": [["a", "Bandingkan keduanya"], ["b", "Pungutan sepatu sekitar"], ["why", "Bedanya ada pada tarif"]],
- "jawab": [["a1", "Sepatu termasuk"], ["a2", "Bea Masuknya dua puluh lima"], ["a3", "Pungutan earbuds lebih kecil"]],
- "wrap": [["w1", "Barang kiriman memakai"], ["w2", "Untuk FOB di atas tiga"], ["w3", "PPN tetap dipungut"]]
+ "intro": [["sub", "Inilah materi ketujuh"]],
+ "ask": [["tanya", "Dua-duanya kami tidak setuju"]],
+ "penetapan": [["s1", "SPTNP, Pasal enam belas"], ["s2", "SPKTNP, Pasal tujuh belas"], ["s3", "SPP, Pasal sembilan puluh tiga"], ["s4", "SPSA, Pasal sembilan puluh empat"], ["rantai", "Begini rantainya"], ["denda", "Denda kesalahan nilai pabean"]],
+ "kasus3": [["np", "Selisih nilai pabeannya"], ["bm", "Kekurangan Bea Masuk sepuluh persen"], ["ni", "Selisih nilai impornya"], ["ppn", "Kekurangan PPN Impor tiga belas"], ["pph", "kekurangan PPh Pasal dua puluh dua dua koma"], ["denda", "Dendanya seratus persen"], ["tot", "total tagihan SPTNP"]],
+ "jalur1": [["f1", "keberatan ke Direktur Jenderal Bea dan Cukai"], ["f2", "banding ke Pengadilan Pajak"], ["f3", "peninjauan kembali ke Mahkamah Agung"]],
+ "hak": [["seng", "sengketa: menguji kebenaran"], ["mohon", "permohonan: memperbaiki"]],
+ "bandingkan": [["r1", "Tenggat keberatannya"], ["r2", "Syarat bayarnya"], ["r3", "Tenggat bandingnya"], ["r4", "risikonya"]],
+ "lensa": [["l1", "kontrol atas wewenang"], ["l2", "kepastian dan keadilan"], ["l3", "peran Anda"]],
+ "jawab": [["a1", "Untuk map SPTNP"], ["a2", "Untuk map SKPKB"], ["a3", "kas yang sedang seret"]],
+ "wrap": [["w1", "Penetapan DJBC diuji ke DJBC"], ["w2", "Ketetapan DJP diuji"], ["w3", "sebutkan hak"]]
 }

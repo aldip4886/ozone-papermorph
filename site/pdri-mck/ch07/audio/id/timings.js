@@ -1,6 +1,6 @@
 window.TIMINGS = {
  "intro": {
-  "dur": 11.706,
+  "dur": 11.719,
   "marks": {
    "sub": 3.011
   },
@@ -11,115 +11,142 @@ window.TIMINGS = {
    ],
    [
     3.011,
-    "Pada materi ketujuh ini, kita membahas barang kiriman: paket belanja daring yang datang lewat jasa titipan atau pos."
+    "Inilah materi ketujuh: upaya hukum, dan hak wajib pajak ketika tidak setuju dengan penetapan DJBC atau ketetapan DJP."
    ]
   ],
   "silent": true
  },
  "ask": {
-  "dur": 24.937,
+  "dur": 17.543,
   "marks": {
-   "ask": 0.1,
-   "ans": 15.39
+   "tanya": 10.186
   },
   "cues": [
    [
     0.1,
-    "Kali ini kita pakai Kasus tiga."
+    "Staf PT Kain Prima Nusantara datang membawa dua map: map biru berisi SPTNP dari DJBC, map kuning berisi SKPKB dan STP dari KPP."
    ],
    [
-    2.941,
-    "Dita, mahasiswi di Bekasi, menerima dua paket lewat Perusahaan Jasa Titipan: earbuds dengan nilai FOB tiga puluh dolar, dan sepatu sneakers dengan nilai FOB delapan puluh dolar."
-   ],
-   [
-    15.39,
-    "Lalu Dita bertanya, saya beli sepatu sekitar satu koma tujuh juta rupiah, mengapa tagihannya hampir tujuh ratus delapan puluh ribu?"
+    10.186,
+    "Dua-duanya kami tidak setuju, dan kas kami sedang seret, apa saja yang bisa kami lakukan?"
    ]
   ],
   "silent": true
  },
- "hukum": {
-  "dur": 22.979,
+ "penetapan": {
+  "dur": 48.75,
   "marks": {
-   "p96": 2.676,
-   "p4": 9.603,
-   "lon": 14.086
+   "s1": 5.08,
+   "s2": 9.594,
+   "s3": 14.301,
+   "s4": 20.483,
+   "rantai": 25.177,
+   "denda": 36.186
   },
   "cues": [
    [
     0.1,
-    "Barang kiriman punya aturan sendiri."
+    "Penetapan pejabat bea dan cukai bisa datang dalam empat bentuk surat."
    ],
    [
-    2.676,
-    "Dasarnya PMK sembilan puluh enam Tahun dua ribu dua puluh tiga, yang sudah beberapa kali diubah, terakhir dengan PMK empat Tahun dua ribu dua puluh lima."
+    5.08,
+    "SPTNP, Pasal enam belas, soal tarif dan nilai pabean."
    ],
    [
-    14.086,
-    "Perubahan terakhir itu antara lain melonggarkan ketentuan untuk barang kiriman jemaah haji, serta hadiah perlombaan atau penghargaan internasional."
+    9.594,
+    "SPKTNP, Pasal tujuh belas, penetapan kembali oleh Direktur Jenderal."
+   ],
+   [
+    14.301,
+    "SPP, Pasal sembilan puluh tiga A, untuk penetapan selain tarif dan nilai pabean."
+   ],
+   [
+    20.483,
+    "SPSA, Pasal sembilan puluh empat, sanksi administrasi berupa denda."
+   ],
+   [
+    25.177,
+    "Begini rantainya: nilai pabean naik, Bea Masuk kurang dibayar, nilai impor ikut naik, dan PPN serta PPh Pasal dua puluh dua Impor ikut kurang."
+   ],
+   [
+    36.186,
+    "Denda kesalahan nilai pabean dihitung dari kekurangan Bea Masuk saja: seratus persen untuk kekurangan sampai lima puluh persen dari Bea Masuk yang dibayar, berlapis sampai seribu persen."
    ]
   ],
   "silent": true
  },
- "ambang": {
-  "dur": 28.15,
+ "kasus3": {
+  "dur": 44.617,
   "marks": {
-   "s1": 3.516,
-   "s2": 12.337,
-   "s3": 21.989
+   "np": 2.573,
+   "bm": 12.153,
+   "ni": 17.436,
+   "ppn": 22.467,
+   "pph": 26.739,
+   "denda": 32.087,
+   "tot": 38.817
   },
   "cues": [
    [
     0.1,
-    "Pungutannya ditentukan oleh nilai FOB per kiriman."
+    "Mari kita hitung Kasus tiga."
    ],
    [
-    3.516,
-    "Sampai tiga dolar, Bea Masuk dibebaskan dan PPh dikecualikan."
+    2.573,
+    "Selisih nilai pabeannya: enam ribu dolar dikali delapan belas ribu seratus lima puluh lima rupiah, seratus delapan koma sembilan tiga juta."
    ],
    [
-    7.933,
-    "Yang dibayar hanya PPN, dengan beban efektif sebelas persen."
+    12.153,
+    "Kekurangan Bea Masuk sepuluh persen, sepuluh koma delapan sembilan tiga juta."
    ],
    [
-    12.337,
-    "Di atas tiga dolar sampai seribu lima ratus dolar, Bea Masuknya tujuh koma lima persen, PPh tetap dikecualikan, dan PPN-nya sama."
+    17.436,
+    "Selisih nilai impornya seratus sembilan belas koma delapan dua tiga juta."
    ],
    [
-    21.989,
-    "Di atas seribu lima ratus dolar, berlaku tarif umum, seperti impor biasa."
+    22.467,
+    "Kekurangan PPN Impor tiga belas koma satu delapan juta, dan kekurangan PPh Pasal dua puluh dua dua koma sembilan sembilan lima juta."
+   ],
+   [
+    32.087,
+    "Dendanya seratus persen dari kekurangan Bea Masuk, sepuluh koma delapan sembilan tiga juta."
+   ],
+   [
+    38.21,
+    "Jadi, total tagihan SPTNP-nya tiga puluh tujuh koma sembilan enam dua juta rupiah."
    ]
   ],
   "silent": true
  },
- "komoditas": {
-  "dur": 27.539,
+ "jalur1": {
+  "dur": 25.573,
   "marks": {
-   "k8": 0.1,
-   "kaki": 15.491
+   "f1": 3.969,
+   "f2": 13.8,
+   "f3": 19.677
   },
   "cues": [
    [
     0.1,
-    "Tapi ada pengecualian."
+    "Surat dari DJBC diuji ke DJBC juga."
    ],
    [
-    1.836,
-    "Delapan kelompok komoditas dikenai tarif yang berbeda dari tujuh koma lima persen, antara lain tas, produk tekstil, alas kaki, sepeda, jam tangan, kosmetik, besi dan baja, serta buku."
+    3.323,
+    "Pertama, keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, enam puluh hari sejak tanggal penetapan, dengan jaminan sebesar tagihan."
    ],
    [
-    15.491,
-    "Untuk latihan ini, alas kaki kita hitung dengan Bea Masuk dua puluh lima persen dan PPh lima persen."
+    13.18,
+    "Kedua, banding ke Pengadilan Pajak, enam puluh hari setelah tagihan dilunasi."
    ],
    [
-    23.38,
-    "Angka ini perlu dicocokkan dengan tabel resmi DJBC."
+    18.663,
+    "Dan ketiga, peninjauan kembali ke Mahkamah Agung, dengan alasan terbatas, hanya satu kali."
    ]
   ],
   "silent": true
  },
  "q1": {
-  "dur": 7.984,
+  "dur": 11.781,
   "marks": {},
   "cues": [
    [
@@ -128,152 +155,47 @@ window.TIMINGS = {
    ],
    [
     3.244,
-    "Ketentuan mana yang berlaku untuk setiap paket ini, ya?"
+    "Importir menerima SPTNP yang menaikkan nilai pabean."
+   ],
+   [
+    6.686,
+    "Ke mana dan berapa lama ia bisa mengajukan keberatan, ya?"
    ]
   ],
   "silent": true
  },
- "beda": {
-  "dur": 25.907,
+ "hak": {
+  "dur": 35.489,
   "marks": {
-   "r1": 2.599,
-   "r2": 6.873,
-   "r3": 13.034,
-   "r4": 18.201
+   "seng": 5.111,
+   "mohon": 20.494
   },
   "cues": [
    [
     0.1,
-    "Apa bedanya dengan impor umum?"
+    "Di bidang perpajakan, wajib pajak punya dua keluarga hak."
    ],
    [
-    2.599,
-    "Dokumennya bukan PIB, melainkan Consignment Note, atau PIBK."
+    4.466,
+    "Pertama, sengketa: menguji kebenaran ketetapan, lewat keberatan, banding, gugatan, atau peninjauan kembali."
    ],
    [
-    6.873,
-    "Yang mengurus adalah Perusahaan Jasa Titipan atau penyelenggara pos, bukan importir atau PPJK."
+    11.464,
+    "Kalau kalah, risikonya sanksi tiga puluh persen untuk keberatan, dan enam puluh persen untuk banding atau peninjauan kembali."
    ],
    [
-    13.034,
-    "Bea Masuknya tarif tunggal tujuh koma lima persen, bukan tarif BTKI."
+    19.874,
+    "Kedua, permohonan: memperbaiki atau meringankan tanpa sengketa, lewat pembetulan SPT, pembetulan ketetapan, pengurangan atau penghapusan sanksi, atau angsuran dan penundaan pembayaran."
    ],
    [
-    18.201,
-    "Dan PPh Pasal dua puluh dua dikecualikan sampai seribu lima ratus dolar, kecuali untuk komoditas tertentu."
-   ]
-  ],
-  "silent": true
- },
- "paketA": {
-  "dur": 42.186,
-  "marks": {
-   "np": 3.231,
-   "bm": 14.48,
-   "ni": 21.593,
-   "ppn": 27.124,
-   "pph": 34.993,
-   "tot": 36.334
-  },
-  "cues": [
-   [
-    0.1,
-    "Sekarang kita hitung paket A, earbuds."
-   ],
-   [
-    3.231,
-    "Nilai pabeannya CIF empat puluh dolar dikali kurs delapan belas ribu seratus lima puluh lima rupiah, yaitu tujuh ratus dua puluh enam ribu dua ratus rupiah."
-   ],
-   [
-    14.48,
-    "Bea Masuk tujuh koma lima persen, lima puluh empat ribu empat ratus enam puluh lima rupiah."
-   ],
-   [
-    21.593,
-    "Nilai impornya tujuh ratus delapan puluh ribu enam ratus enam puluh lima rupiah, dan PPN dengan beban efektif sebelas persen sebesar delapan puluh lima ribu delapan ratus tujuh puluh tiga rupiah."
-   ],
-   [
-    34.993,
-    "PPh dikecualikan."
-   ],
-   [
-    36.334,
-    "Total pungutannya seratus empat puluh ribu tiga ratus tiga puluh delapan rupiah."
-   ]
-  ],
-  "silent": true
- },
- "paketB": {
-  "dur": 49.167,
-  "marks": {
-   "np": 2.799,
-   "bm": 12.393,
-   "ni": 21.411,
-   "ppn": 26.943,
-   "pph": 32.266,
-   "tot": 38.299
-  },
-  "cues": [
-   [
-    0.1,
-    "Lalu paket B, sepatu sneakers."
-   ],
-   [
-    2.799,
-    "Nilai pabeannya CIF sembilan puluh lima dolar, yaitu satu juta tujuh ratus dua puluh empat ribu tujuh ratus dua puluh lima rupiah."
-   ],
-   [
-    12.393,
-    "Karena alas kaki, Bea Masuknya dua puluh lima persen, empat ratus tiga puluh satu ribu seratus delapan puluh satu rupiah."
-   ],
-   [
-    21.411,
-    "Nilai impornya dua juta seratus lima puluh lima ribu sembilan ratus enam rupiah, dan PPN-nya dua ratus tiga puluh tujuh ribu seratus lima puluh rupiah."
-   ],
-   [
-    32.266,
-    "Ditambah PPh lima persen, seratus tujuh ribu tujuh ratus sembilan puluh lima rupiah."
-   ],
-   [
-    38.299,
-    "Total pungutannya tujuh ratus tujuh puluh enam ribu seratus dua puluh enam rupiah."
-   ],
-   [
-    44.106,
-    "Angka ini belum dibulatkan; pembulatannya mengikuti ketentuan pengisian dokumen."
-   ]
-  ],
-  "silent": true
- },
- "banding": {
-  "dur": 19.856,
-  "marks": {
-   "a": 0.1,
-   "b": 5.787,
-   "why": 9.177
-  },
-  "cues": [
-   [
-    0.1,
-    "Bandingkan keduanya."
-   ],
-   [
-    1.48,
-    "Pungutan earbuds sekitar sembilan belas persen dari nilai pabeannya."
-   ],
-   [
-    5.787,
-    "Pungutan sepatu sekitar empat puluh lima persen."
-   ],
-   [
-    9.177,
-    "Bedanya ada pada tarif khusus alas kaki, yaitu Bea Masuk dua puluh lima persen ditambah PPh, untuk melindungi industri alas kaki dalam negeri."
+    30.833,
+    "Permohonan ini tidak menggantikan keberatan untuk SKP yang sama."
    ]
   ],
   "silent": true
  },
  "q2": {
-  "dur": 7.984,
+  "dur": 14.716,
   "marks": {},
   "cues": [
    [
@@ -282,44 +204,111 @@ window.TIMINGS = {
    ],
    [
     3.431,
-    "Pungutan apa saja yang dikenakan pada paket sepatu Dita?"
+    "PT Kain Prima Nusantara menerima STP denda lima ratus ribu rupiah karena SPT Masa PPN-nya terlambat, dan ia merasa khilaf."
+   ],
+   [
+    12.263,
+    "Jalur apa yang tepat?"
+   ]
+  ],
+  "silent": true
+ },
+ "bandingkan": {
+  "dur": 32.181,
+  "marks": {
+   "r1": 3.31,
+   "r2": 8.716,
+   "r3": 15.077,
+   "r4": 23.371
+  },
+  "cues": [
+   [
+    0.1,
+    "Dua jalur ini berbeda di tiga hal."
+   ],
+   [
+    3.31,
+    "Tenggat keberatannya: enam puluh hari untuk DJBC, tiga bulan untuk DJP."
+   ],
+   [
+    8.716,
+    "Syarat bayarnya: jaminan sebesar tagihan untuk DJBC, melunasi jumlah yang disetujui untuk DJP."
+   ],
+   [
+    15.077,
+    "Tenggat bandingnya: enam puluh hari setelah lunas untuk DJBC, tiga bulan dengan sisa pajak tertangguh untuk DJP."
+   ],
+   [
+    22.99,
+    "Dan risikonya: DJBC tidak mengenakan sanksi khusus, sedangkan DJP mengenakan sanksi tiga puluh atau enam puluh persen jika kalah."
+   ]
+  ],
+  "silent": true
+ },
+ "lensa": {
+  "dur": 34.016,
+  "marks": {
+   "l1": 2.786,
+   "l2": 14.743,
+   "l3": 25.596
+  },
+  "cues": [
+   [
+    0.1,
+    "Mengapa hak ini ada?"
+   ],
+   [
+    2.14,
+    "Pertama, kontrol atas wewenang: Pasal dua puluh tiga A UUD seribu sembilan ratus empat puluh lima mensyaratkan pungutan diatur undang-undang, dan penetapan pejabat harus dapat diuji."
+   ],
+   [
+    14.123,
+    "Kedua, kepastian dan keadilan: asas certainty dan equality tidak cukup di atas kertas, wajib pajak perlu jalan resmi untuk menguji penetapan yang menurutnya keliru."
+   ],
+   [
+    25.214,
+    "Dan peran Anda: tetapkan dengan benar, lalu jelaskan hak pengguna jasa dengan jujur."
+   ],
+   [
+    31.447,
+    "Jangan menilai peluang menang."
    ]
   ],
   "silent": true
  },
  "jawab": {
-  "dur": 23.216,
+  "dur": 27.033,
   "marks": {
-   "a1": 2.786,
-   "a2": 8.973,
-   "a3": 14.89
+   "a1": 3.231,
+   "a2": 11.713,
+   "a3": 19.877
   },
   "cues": [
    [
     0.1,
-    "Jadi, apa jawaban untuk Dita?"
+    "Jadi, bagaimana menjawab dua map tadi?"
    ],
    [
-    2.786,
-    "Sepatu termasuk komoditas dengan tarif khusus, untuk melindungi industri alas kaki dalam negeri."
+    3.231,
+    "Untuk map SPTNP, sampaikan haknya: keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, enam puluh hari."
    ],
    [
-    8.973,
-    "Bea Masuknya dua puluh lima persen dari nilai pabean, ditambah PPN dan PPh."
+    11.713,
+    "Untuk map SKPKB, keberatan ke Direktur Jenderal Pajak, tiga bulan, setelah melunasi jumlah yang disetujui."
    ],
    [
-    14.89,
-    "Pungutan earbuds lebih kecil, karena earbuds memakai tarif umum barang kiriman tujuh koma lima persen, tanpa PPh."
+    19.089,
+    "Dan untuk kas yang sedang seret, sampaikan permohonan angsuran atau penundaan, lewat KPP tempat ia terdaftar."
    ]
   ],
   "silent": true
  },
  "wrap": {
-  "dur": 21.754,
+  "dur": 19.079,
   "marks": {
    "w1": 2.049,
-   "w2": 7.409,
-   "w3": 17.331
+   "w2": 7.254,
+   "w3": 13.764
   },
   "cues": [
    [
@@ -328,36 +317,36 @@ window.TIMINGS = {
    ],
    [
     2.049,
-    "Barang kiriman memakai ketentuan khusus, berdasarkan nilai FOB dan jenis komoditas."
+    "Penetapan DJBC diuji ke DJBC: keberatan enam puluh hari dengan jaminan."
    ],
    [
-    7.409,
-    "Untuk FOB di atas tiga sampai seribu lima ratus dolar, Bea Masuknya tujuh koma lima persen dan PPh dikecualikan, kecuali komoditas tertentu."
+    7.254,
+    "Ketetapan DJP diuji lewat sengketa, yang berisiko sanksi, atau permohonan, yang tidak."
    ],
    [
-    17.331,
-    "PPN tetap dipungut, dengan beban efektif sebelas persen."
+    13.383,
+    "Dan sebutkan hak serta tenggatnya dengan jujur, jangan menilai peluang menang."
    ]
   ],
   "silent": true
  },
  "final1": {
-  "dur": 6.317,
+  "dur": 7.487,
   "marks": {},
   "cues": [
    [
     0.1,
-    "Nah, sekarang kita latihan, ya."
+    "Nah, ini latihan bab, ya."
    ],
    [
-    3.011,
-    "Coba kamu jawab latihan berikut ini."
+    2.934,
+    "Coba kamu pilih jalurnya untuk tiga situasi berikut ini."
    ]
   ],
   "silent": true
  },
  "finish": {
-  "dur": 10.781,
+  "dur": 10.387,
   "marks": {},
   "cues": [
    [
@@ -366,7 +355,7 @@ window.TIMINGS = {
    ],
    [
     2.469,
-    "Di materi terakhir, kita kembali ke staf PT Kain Prima Nusantara, dan menyusun jawaban lengkap untuk tagihannya."
+    "Berikutnya, kita kembali ke Kasus satu, dan menyusun jawaban lengkap untuk tagihan PT Kain Prima Nusantara."
    ]
   ],
   "silent": true

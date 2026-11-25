@@ -274,6 +274,27 @@ const BEATS = [
     source(p, 'Bahan Ajar PDRI KB 8.4', .8, true);
   }],
 
+  ['hak', 'Kalau tetap tidak setuju', (m, D) => {
+    const p = panel(0);
+    navy(p, 85, D);
+    actionTitle(p, 'Kalau pengguna jasa tetap tidak setuju, tutup|dengan satu hal lagi: haknya', { tag: 'SATU KEBERATAN TAK TERDUGA', dark: true });
+    const q = G(p);
+    mcard(q, 92, 260, 620, 400, { dark: true });
+    tile(q, 'chat', 175, 340, { size: 92, v: 'gold' });
+    T(q, 'STAF PT KAIN PRIMA NUSANTARA', { x: 245, y: 330, size: 16, weight: 700, fill: MK.dim });
+    lines(q, '“Kalau saya tidak setuju,|saya harus ke mana?”', 132, 450, { size: 30, weight: 700, lh: 1.35 });
+    slideUp(q, m('tanya'));
+    const a = G(p);
+    mcard(a, 760, 260, 748, 400, { dark: true });
+    tile(a, 'law', 850, 340, { size: 92, v: 'blue' });
+    T(a, 'JAWABAN ANDA', { x: 940, y: 330, size: 16, weight: 700, fill: MK.dim });
+    lines(a, 'Bapak, Ibu, dapat mengajukan|keberatan kepada Direktur Jenderal|Bea dan Cukai melalui Portal DJBC.', 940, 370, { size: 23, weight: 700, lh: 1.4 });
+    slideUp(a, m('jawab') - .2);
+    const tg = pill(a, 'Paling lambat 60 hari sejak tanggal penetapan', 800, 590, { size: 18, anchor: 'start', bg: MK.gold });
+    popIn(tg, m('tenggat'));
+    source(p, 'Bahan Ajar PDRI KB 8.4 dan KB 7', .8, true);
+  }],
+
   ['layanan', 'Penjelasan yang baik', (m, D) => {
     const p = panel(0);
     paper(p);
@@ -371,7 +392,7 @@ const BEATS = [
 ].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
 
 {
-  const NAVY = new Set(['intro', 'jelaskan', 'wrap']);
+  const NAVY = new Set(['intro', 'jelaskan', 'hak', 'wrap']);
   BEATS.forEach((b, i) => {
     if (!i || b.lead === false) return;
     const prev = BEATS[i - 1];

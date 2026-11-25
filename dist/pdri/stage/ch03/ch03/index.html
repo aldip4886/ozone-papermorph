@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bab 3 · Pihak dan Sistem Pemungutan</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/mck.js"></script>
+<script src="audio/id/timings.js"></script>
+<script>
+'use strict';
+/* Bab 3 (KB 3): who levies PDRI and how. Three collection systems on one PIB, kinds of tax, the legal map and
+   its hierarchy, the six parties and the importer's identity check. McKinsey-style exhibits in the INSW design. */
+const CHAPTER = { number: 3, title: 'Pihak dan Sistem Pemungutan', minutes: 6, language: 'id' };
+
+const paper = p => bgPaper(p);
+const navy = (p, seed, D) => bgNavy(p, seed, D);
+const cap = (p, str, x, y, { size = 21, weight = 600, fill = MK.navy, anchor = 'middle' } = {}) => T(p, str, { x, y, size, weight, fill, anchor });
+// the three systems: one tile and colour each, wherever a system is named
+const SYS = { off: ['search', 'blue', 'Official assessment', MK.blue], self: ['calc', 'gold', 'Self assessment', MK.goldDark], wh: ['hand', 'sky', 'Withholding', MK.sky] };
+const sysPill = (p, k, x, y, size = 17, anchor = 'middle') => pill(p, SYS[k][2], x, y, { size, anchor, bg: SYS[k][3], ink: '#fff' });
+// the six parties
+const ROLE = [['user', 'gold', 'Importir'], ['briefcase', 'sky', 'PPJK'], ['shield', 'blue', 'DJBC'], ['office', 'gold', 'Bank persepsi'], ['server', 'blue', 'DJP'], ['cart', 'sky', 'Konsumen akhir']];
+
+/* ---------- beats ---------- */
+const BEATS = [
+  ['intro', 'Pihak dan sistem pemungutan', (m, D) => {
+    const p = panel(0);
+    navy(p, 21, D);
+    // the cover photo in a circle, framed like Bab 1 (design.md 7); the six parties on a ring around it
+    const ph = G(p, { x: 1130, y: 470 });
+    const ring = G(ph);
+    mk('circle', { r: 262, fill: 'none', stroke: MK.sky, 'stroke-width': 4, 'stroke-opacity': .8 }, ring);
+    path(ring, 'M-285 0A285 285 0 0 1 0 -285', { stroke: MK.gold, 'stroke-width': 16, 'stroke-linecap': 'round', fill: 'none' });
+    path(ring, 'M285 0A285 285 0 0 1 0 285', { stroke: MK.gold, 'stroke-width': 16, 'stroke-linecap': 'round', fill: 'none' });
+    clockRun(t => ring.setAttribute('transform', `rotate(${t * 6})`), D, { tail: true });
+    mk('circle', { r: 240, fill: '#fff' }, ph);
+    const photo = G(ph); photo.setAttribute('clip-path', 'url(#mkPhoto)');
+    const im = mk('image', { href: IMG + 'kapal.jpg', x: -420, y: -236, width: 840, height: 472, preserveAspectRatio: 'xMidYMid slice' }, photo);
+    prog(q => im.setAttribute('transform', `scale(${1 + .06 * q})`), 0, D - .2, lin);
+    popIn(ph, .3);
+    ROLE.forEach(([gl, v, n], k) => {
+      const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 270 * Math.cos(a), y = 470 + 270 * Math.sin(a);
+      const g = G(p);
+      tile(g, gl, x, y, { size: 84, v, floor: false });
+      pill(g, n, x, y + 60, { size: 16, bg: '#fff', ink: MK.navy });
+      popIn(g, m('sub') + .3 + k * .22);
+    });
+    const tg = pill(p, 'BAB 3 · KEGIATAN BELAJAR 3', 92, 290, { size: 20, anchor: 'start' });
+    slideUp(tg, .5);
+    const t1 = T(p, 'Pihak dan Sistem', { x: 92, y: 392, size: 70, weight: 700, fill: '#fff' });
+    const t2 = T(p, 'Pemungutan', { x: 92, y: 474, size: 70, weight: 700, fill: MK.gold });
+    slideUp(t1, .7); slideUp(t2, .85);
+    const rule = mk('rect', { x: 92, y: 512, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
+    prog(q => rule.setAttribute('width', 120 * q), 1.2, .5, out);
+    const sub = G(p);
+    lines(sub, 'Siapa yang memungut pajak,|dan dengan cara apa', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
+    slideUp(sub, m('sub'));
+  }],
+
+  ['ask', 'Satu PIB, banyak pihak', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Satu PIB mempertemukan enam pihak dan|tiga sistem pemungutan', { tag: 'PERTANYAAN KASUS 2' });
+    const q = G(p);
+    mcard(q, 92, 230, 560, 470);
+    tile(q, 'chat', 175, 310, { size: 96, v: 'gold' });
+    T(q, 'STAF PT KAIN PRIMA NUSANTARA', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
+    lines(q, '“Siapa yang memungut,|dan dengan cara apa?”', 245, 340, { size: 27, weight: 700 });
+    mk('rect', { x: 122, y: 400, width: 500, height: 2, fill: MK.line }, q);
+    slideUp(q, .4);
+    const pib = G(p);
+    tile(pib, 'doc', 190, 500, { size: 120, v: 'blue' });
+    T(pib, 'PIB', { x: 280, y: 488, size: 40, weight: 800, fill: MK.navy });
+    lines(pib, 'Pemberitahuan|Impor Barang', 280, 528, { size: 22, weight: 600, fill: MK.dim });
+    T(pib, 'satu dokumen untuk Bea Masuk dan PDRI', { x: 122, y: 650, size: 19, weight: 600, fill: MK.navy });
+    slideUp(pib, m('pib') - .2);
+    // the two counts
+    const k1 = G(p);
+    mcard(k1, 700, 230, 808, 220);
+    T(k1, '6', { x: 740, y: 330, size: 96, weight: 800, fill: MK.gold });
+    T(k1, 'pihak', { x: 810, y: 330, size: 32, weight: 700, fill: MK.navy });
+    show(k1, m('roles') - .2, .4);
+    ROLE.forEach(([gl, v, n], i) => {
+      const x = 760 + i * 128, g = G(p);
+      tile(g, gl, x, 385, { size: 60, v, floor: false });
+      cap(g, n.split(' ')[0], x, 430, { size: 15, weight: 700 });
+      popIn(g, m('roles') + .2 + i * .18);
+    });
+    const k2 = G(p);
+    mcard(k2, 700, 480, 808, 220);
+    T(k2, '3', { x: 740, y: 580, size: 96, weight: 800, fill: MK.blue });
+    T(k2, 'sistem pemungutan', { x: 810, y: 580, size: 32, weight: 700, fill: MK.navy });
+    show(k2, m('sys') - .2, .4);
+    ['self', 'off', 'wh'].forEach((k, i) => {
+      const g = G(p), x = 780 + i * 250;
+      tile(g, SYS[k][0], x, 645, { size: 56, v: SYS[k][1], floor: false });
+      T(g, SYS[k][2], { x: x + 38, y: 652, size: 18, weight: 700, fill: MK.navy });
+      popIn(g, m('sys') + .3 + i * .25);
+    });
+    source(p, 'Bahan Ajar PDRI, Kasus yang Dipakai dan KB 3', m('sys') + 1);
+  }],
+
+  ['sistem', 'Tiga sistem pemungutan', (m, D) => {
+    const p = panel(0);
+    navy(p, 23, D);
+    actionTitle(p, 'Tiga sistem dibedakan oleh siapa yang|menentukan besarnya pajak', { tag: 'SISTEM PEMUNGUTAN', dark: true });
+    [['s1', 'off', 'Fiskus', 'petugas pajak', 'Pejabat DJBC meneliti PIB|dan dapat menetapkan|kekurangan pembayaran'],
+     ['s2', 'self', 'Wajib pajak', 'menghitung sendiri', 'Importir menghitung sendiri|Bea Masuk dan PDRI|dalam PIB'],
+     ['s3', 'wh', 'Pihak ketiga', 'ditunjuk undang-undang', 'DJBC memungut PPh Pasal 22|Impor atas penghasilan|importir']].forEach(([mark, k, who, sub, ex], i) => {
+      const x = 92 + i * 482, c = G(p);
+      mcard(c, x, 240, 450, 470, { dark: true });
+      mk('rect', { x, y: 240, width: 450, height: 12, rx: 6, fill: SYS[k][3] }, c);
+      tile(c, SYS[k][0], x + 225, 330, { size: 104, v: SYS[k][1] });
+      T(c, SYS[k][2], { x: x + 225, y: 430, size: 30, weight: 700, fill: MK.navy, anchor: 'middle' });
+      T(c, 'YANG MENENTUKAN', { x: x + 40, y: 480, size: 14, weight: 700, fill: MK.dim });
+      T(c, who, { x: x + 40, y: 512, size: 25, weight: 700, fill: MK.navy });
+      T(c, sub, { x: x + 40 + textW(who, 25, 700) + 12, y: 512, size: 18, weight: 500, fill: MK.dim });
+      mk('rect', { x: x + 40, y: 535, width: 370, height: 2, fill: MK.line }, c);
+      T(c, 'KASUS 1', { x: x + 40, y: 570, size: 14, weight: 700, fill: MK.goldDark });
+      lines(c, ex, x + 40, 605, { size: 21, weight: 600, lh: 1.3 });
+      popIn(c, m(mark) - .1);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.1', .8, true);
+  }],
+
+  ['alur', 'Ketiganya berjalan bersama', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Self assessment adalah sistem utama, tetapi dalam|impor ketiganya bekerja pada satu PIB', { tag: 'ALUR SATU PIB' });
+    const main = pill(p, 'Sistem utama di Indonesia: self assessment', 92, 250, { size: 20, anchor: 'start', bg: MK.gold });
+    slideUp(main, .5);
+    // the path of one PIB: three steps on a line
+    const base = G(p);
+    mk('rect', { x: 180, y: 452, width: 1240, height: 6, rx: 3, fill: MK.line }, base);
+    show(base, m('flow') - .2, .4);
+    const prog1 = mk('rect', { x: 180, y: 452, width: 0, height: 6, rx: 3, fill: MK.navy }, p);
+    prog(q => prog1.setAttribute('width', 1240 * q), m('f1'), m('f3') - m('f1') + 1, lin);
+    [['f1', 'self', 'user', 'gold', 'Importir menghitung', 'Bea Masuk dan PDRI|diisi sendiri dalam PIB', 300],
+     ['f2', 'off', 'shield', 'blue', 'DJBC meneliti', 'PIB diteliti; kekurangan|dapat ditetapkan', 800],
+     ['f3', 'wh', 'shield', 'blue', 'DJBC memungut', 'PPh Pasal 22 Impor atas|penghasilan importir', 1300]].forEach(([mark, k, gl, v, head, sub, x], i) => {
+      const g = G(p);
+      mk('circle', { cx: x, cy: 455, r: 22, fill: '#fff', stroke: MK.navy, 'stroke-width': 5 }, g);
+      T(g, String(i + 1), { x, y: 463, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+      tile(g, gl, x, 355, { size: 96, v });
+      mcard(g, x - 200, 510, 400, 180);
+      T(g, head, { x, y: 560, size: 27, weight: 700, fill: MK.navy, anchor: 'middle' });
+      lines(g, sub, x, 598, { size: 19, weight: 500, fill: MK.dim, anchor: 'middle' });
+      sysPill(g, k, x, 668, 16);
+      popIn(g, m(mark) - .1);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.1', m('flow'));
+  }],
+
+  ['q1', 'Cek pemahaman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cek pemahaman: sistem apa yang bekerja|di setiap langkah?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    ['self', 'off', 'wh'].forEach((k, i) => {
+      const c = G(p), y = 250 + i * 150;
+      mcard(c, 92, y, 400, 126);
+      tile(c, SYS[k][0], 155, y + 62, { size: 76, v: SYS[k][1] });
+      T(c, SYS[k][2].replace(' assessment', ''), { x: 210, y: y + 60, size: 28, weight: 700, fill: MK.navy });
+      if (k !== 'wh') T(c, 'assessment', { x: 210, y: y + 92, size: 20, weight: 500, fill: MK.dim });
+      slideUp(c, .2 + i * .15);
+    });
+  }, { ask: done => quiz({ x: 530, y: 200, w: 990, cls: 'side' }, [{
+    id: 'c-sistem', prompt: ['Sistem apa yang bekerja di setiap langkah?'],
+    build: grid([
+      { parts: ['Importir mengisi sendiri nilai PPN dalam PIB'], ans: ['s'], why: 'Wajib pajak menghitung sendiri: self assessment.' },
+      { parts: ['Petugas meneliti PIB dan menetapkan kekurangan'], ans: ['o'], why: 'Fiskus yang menentukan: official assessment.' },
+      { parts: ['DJBC memungut PPh Pasal 22 Impor'], ans: ['w'], why: 'Pihak ketiga yang ditunjuk undang-undang memungut: withholding.' },
+      { parts: ['Importir menyetor Bea Masuk sesuai hitungannya'], ans: ['s'], why: 'Importir menghitung dan membayar sendiri: self assessment.' },
+    ], [['s', 'Self', MK.goldDark, 's'], ['o', 'Official', MK.blue, 'o'], ['w', 'Withholding', MK.sky, 'w']], { multi: false, text: true }),
+  }], done) }],
+
+  ['jenis', 'Jenis-jenis pajak', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPN dan PPh berada di sisi yang berbeda|pada setiap cara membagi pajak', { tag: 'JENIS-JENIS PAJAK' });
+    const H = G(p);
+    T(H, 'DASAR PEMBAGIAN', { x: 92, y: 236, size: 17, weight: 700, fill: MK.dim });
+    mk('rect', { x: 92, y: 250, width: 1416, height: 3, fill: MK.navy }, H);
+    show(H, .4, .4);
+    [['j1', 'office', 'gold', 'Lembaga pemungut', ['Pajak pusat', 'PPN, PPnBM, PPh, Bea Meterai'], ['Pajak daerah', 'Kendaraan bermotor, hotel']],
+     ['j2', 'wallet', 'blue', 'Pihak yang menanggung', ['Pajak langsung', 'PPh'], ['Pajak tidak langsung', 'PPN, PPnBM']],
+     ['j3', 'user', 'sky', 'Sifat', ['Pajak subjektif', 'PPh: keadaan wajib pajak'], ['Pajak objektif', 'PPN: objeknya']]].forEach(([mark, gl, v, basis, a, b], i) => {
+      const y = 330 + i * 140, g = G(p);
+      if (i) mk('rect', { x: 92, y: y - 70, width: 1416, height: 1.5, fill: MK.line }, g);
+      tile(g, gl, 140, y, { size: 76, v, floor: false });
+      T(g, basis, { x: 196, y: y + 9, size: 25, weight: 700, fill: MK.navy });
+      [[a, 560, MK.navy], [b, 1040, MK.blue]].forEach(([[n, ex], x, col]) => {
+        mk('rect', { x, y: y - 50, width: 440, height: 100, rx: 14, fill: '#fff', stroke: MK.line, 'stroke-width': 2 }, g);
+        mk('rect', { x, y: y - 50, width: 10, height: 100, rx: 5, fill: col }, g);
+        T(g, n, { x: x + 34, y: y - 6, size: 24, weight: 700, fill: MK.navy });
+        T(g, ex, { x: x + 34, y: y + 28, size: 19, weight: 500, fill: MK.dim });
+      });
+      T(g, 'vs', { x: 1020, y: y + 8, size: 20, weight: 700, fill: MK.faint, anchor: 'middle' });
+      slideUp(g, m(mark) - .2, .5);
+    });
+    const note = G(p);
+    lines(note, '“Pajak subjektif dan objektif” di sini adalah jenis pajak. Jangan tertukar dengan|“syarat subjektif dan objektif”, yang memunculkan kewajiban pajak, di adegan berikutnya.', 92, 700, { size: 18, weight: 500, fill: MK.dim, lh: 1.4 });
+    show(note, m('j3') + 1, .4);
+    source(p, 'Bahan Ajar PDRI KB 3.2', m('j1'));
+  }],
+
+  ['syarat', 'Kapan kewajiban pajak muncul', (m, D) => {
+    const p = panel(0);
+    navy(p, 29, D);
+    actionTitle(p, 'Kewajiban pajak muncul ketika syarat subjektif|dan syarat objektif sama-sama terpenuhi', { tag: 'KAPAN KEWAJIBAN PAJAK MUNCUL', dark: true });
+    const quote = G(p);
+    lines(quote, '“Setiap Wajib Pajak yang telah memenuhi persyaratan subjektif dan objektif ... wajib|mendaftarkan diri ... dan kepadanya diberikan Nomor Pokok Wajib Pajak.” — Pasal 2 ayat (1) UU KUP', 92, 236, { size: 18, weight: 600, fill: '#D5E2F5', lh: 1.4 });
+    show(quote, .5, .4);
+    const col = (x, t0, gl, v, head, q, items) => {
+      const c = G(p);
+      mcard(c, x, 300, 700, 330, { dark: true });
+      tile(c, gl, x + 70, 368, { size: 80, v });
+      T(c, head, { x: x + 128, y: 358, size: 28, weight: 700, fill: MK.navy });
+      T(c, q, { x: x + 128, y: 386, size: 17, weight: 500, fill: MK.dim });
+      mk('rect', { x: x + 30, y: 420, width: 640, height: 2, fill: MK.line }, c);
+      items.forEach((it, k) => lines(c, it, x + 56, 460 + k * 62, { size: 19, weight: 600, fill: MK.navy, lh: 1.25 }));
+      slideUp(c, t0);
+      return c;
+    };
+    col(92, m('subj') - .2, 'user', 'blue', 'Syarat subjektif', 'Apakah ia subjek pajak?',
+      ['Pasal 2 dan 2A UU PPh: orang pribadi,|warisan belum terbagi, badan, atau BUT',
+       'Kasus 1: PT Kain Prima Nusantara, badan|yang didirikan di Indonesia']);
+    col(842, m('obj') - .2, 'container', 'gold', 'Syarat objektif', 'Apakah ada objek pajak?',
+      ['Pasal 4(1) UU PPh: penghasilan. Pasal 4(1)b|dan Pasal 11 UU PPN: impor Barang Kena Pajak',
+       'Kasus 1: penjualan kain, dan impor|Barang Kena Pajak']);
+    const peg = G(p);
+    lines(peg, 'PPN Impor cukup tanya “apa yang diimpor” — siapa pun kena, PKP atau bukan.|PPh Pasal 22 Impor mengangsur kewajiban subjektif PPh importir sendiri.', 92, 672, { size: 19, weight: 600, fill: '#fff', lh: 1.35 });
+    show(peg, m('pegangan'), .4);
+    source(p, 'Bahan Ajar PDRI KB 3.3; UU KUP Ps. 2(1); UU PPh Ps. 2, 2A, 4; UU PPN Ps. 4(1)b dan 11', .8, true);
+  }],
+
+  ['rina', 'Varian Bu Rina', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Varian Bu Rina: bukan PKP dan tanpa API,|tetap kena PPN Impor dan PPh Pasal 22', { tag: 'VARIAN BU RINA' });
+    const pf = G(p);
+    mcard(pf, 92, 230, 520, 470);
+    tile(pf, 'user', 175, 310, { size: 96, v: 'gold' });
+    T(pf, 'Bu Rina', { x: 245, y: 300, size: 28, weight: 800, fill: MK.navy });
+    lines(pf, 'Orang pribadi, impor mesin|jahit untuk usaha rumahan', 245, 332, { size: 18, weight: 500, fill: MK.dim, lh: 1.3 });
+    mk('rect', { x: 122, y: 400, width: 460, height: 2, fill: MK.line }, pf);
+    [['Bukan PKP', MK.red], ['Tanpa API', MK.red], ['Nilai impor Rp100.000.000', MK.navy]].forEach(([t, col], i) => {
+      pill(pf, t, 132, 450 + i * 60, { size: 18, anchor: 'start', bg: i < 2 ? col : '#EEF2F8', ink: i < 2 ? '#fff' : MK.navy });
+    });
+    slideUp(pf, .4);
+    [['subj', 'Syarat subjektif', 'Terpenuhi: orang pribadi dalam negeri; NPWP-nya NIK', 230],
+     ['obj', 'Syarat objektif PPN Impor', 'Terpenuhi oleh impor Barang Kena Pajak, walaupun bukan PKP', 350],
+     ['ppn', 'PPN Impor', '12% × 11/12 × Rp100.000.000 = Rp11.000.000', 470],
+     ['pph', 'PPh Pasal 22 Impor', 'Tanpa API: 7,5% × Rp100.000.000 = Rp7.500.000', 590]].forEach(([mark, n, v, y]) => {
+      const g = G(p);
+      mcard(g, 660, y, 848, 100);
+      T(g, n, { x: 692, y: y + 36, size: 17, weight: 700, fill: MK.dim });
+      T(g, v, { x: 692, y: y + 72, size: 25, weight: 700, fill: MK.navy });
+      slideUp(g, m(mark) - .2, .45);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.3', m('subj'));
+  }],
+
+  ['hukum', 'Peta dasar hukum', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Empat undang-undang menjadi pegangan PDRI;|tiga di antaranya terakhir diubah tahun 2023', { tag: 'PETA DASAR HUKUM · PER NOVEMBER 2026' });
+    // a timeline 1983 - 2026 with each law's line
+    const x0 = 420, x1 = 1480, Y0 = 1980, Y1 = 2026, X = yr => x0 + (yr - Y0) * (x1 - x0) / (Y1 - Y0);
+    const ax = G(p);
+    mk('rect', { x: x0, y: 640, width: x1 - x0, height: 2, fill: MK.navy }, ax);
+    [1983, 1995, 2006, 2023].forEach(yr => { mk('rect', { x: X(yr) - 1, y: 634, width: 2, height: 12, fill: MK.navy }, ax); T(ax, String(yr), { x: X(yr), y: 672, size: 17, weight: 600, fill: MK.dim, anchor: 'middle' }); });
+    show(ax, .5, .4);
+    const L = [['kup', 'UU 6/1983 · KUP', 1983, [[2023, 'UU 6/2023']], MK.navy, 280],
+      ['kup', 'UU 7/1983 · PPh', 1983, [[2023, 'UU 6/2023']], MK.navy, 360],
+      ['kup', 'UU 8/1983 · PPN dan PPnBM', 1983, [[2021, 'UU HPP'], [2023, 'UU 6/2023']], MK.blue, 440],
+      ['kep', 'UU 10/1995 · Kepabeanan', 1995, [[2006, 'UU 17/2006']], MK.sky, 540]];
+    L.forEach(([mark, name, from, chg, col, y], i) => {
+      const g = G(p), t0 = m(mark) - .2 + (mark === 'kup' ? i * .5 : 0);
+      T(g, name, { x: 92, y: y + 7, size: 21, weight: 700, fill: MK.navy });
+      const bar = mk('rect', { x: X(from), y: y - 4, width: 0, height: 8, rx: 4, fill: col }, g);
+      mk('circle', { cx: X(from), cy: y, r: 9, fill: col }, g);
+      show(g, t0, .3); prog(q => bar.setAttribute('width', (X(2026) - X(from)) * q), t0, 1, out);
+      chg.forEach(([yr, s], j) => {
+        const c = G(p);
+        mk('circle', { cx: X(yr), cy: y, r: 11, fill: '#fff', stroke: col, 'stroke-width': 4 }, c);
+        T(c, yr === 2021 ? 'UU HPP 2021' : s, { x: X(yr), y: yr === 2021 ? y + 32 : y - 20, size: 15, weight: 700, fill: MK.dim, anchor: 'middle' });
+        popIn(c, (yr === 2021 ? m('hpp') : t0 + .9) + j * .2);
+      });
+    });
+    const hpp = pill(p, 'UU HPP: tarif PPN 12% paling lambat 1 Januari 2025', 1050, 732, { size: 18, bg: MK.gold });
+    popIn(hpp, m('hpp') + .6);
+    const cat = T(p, 'UU 6/2023: penetapan Perppu 2/2022 tentang Cipta Kerja', { x: 92, y: 740, size: 17, weight: 600, fill: MK.dim });
+    show(cat, m('kup') + 3, .4);
+  }],
+
+  ['hierarki', 'Urutan peraturan', (m, D) => {
+    const p = panel(0);
+    navy(p, 27, D);
+    actionTitle(p, 'Peraturan yang lebih rendah tidak boleh|bertentangan dengan yang lebih tinggi', { tag: 'HIERARKI PERATURAN', dark: true });
+    // a stepped pyramid, top = undang-undang
+    const steps = [['h1', 'Undang-Undang', 'UU KUP, UU PPh, UU PPN, UU Kepabeanan', 360, MK.gold], ['h2', 'Peraturan Pemerintah', 'PP', 500, MK.sky], ['h3', 'Peraturan Menteri Keuangan', 'PMK, misalnya PMK 51 Tahun 2025', 640, MK.blue], ['h4', 'Peraturan Direktur Jenderal', 'Perdirjen', 780, '#2B5C9E']];
+    steps.forEach(([mark, n, ex, w, col], i) => {
+      const y = 250 + i * 118, x = 560 - w / 2 + 220, g = G(p);
+      mk('rect', { x, y, width: w, height: 100, rx: 12, fill: col }, g);
+      T(g, n, { x: x + w / 2, y: y + 46, size: 26, weight: 700, fill: i ? '#fff' : MK.navy, anchor: 'middle' });
+      T(g, ex, { x: x + w / 2, y: y + 78, size: 17, weight: 500, fill: i ? '#D5E2F5' : MK.navy, anchor: 'middle' });
+      slideUp(g, m(mark) - .15, .45);
+    });
+    const ar = G(p);
+    flow(ar, 'M300 700V280', MK.gold, m('rule'), .8, 5);
+    mkHead(ar, 300, 278, -Math.PI / 2, MK.gold, m('rule') + .7, 16);
+    lines(ar, 'makin|tinggi', 230, 480, { size: 20, weight: 700, fill: MK.gold, anchor: 'end' });
+    const c = G(p);
+    mcard(c, 1200, 300, 310, 300, { dark: true });
+    tile(c, 'law', 1355, 380, { size: 96, v: 'gold' });
+    lines(c, 'Yang lebih rendah|tidak boleh|bertentangan', 1355, 480, { size: 22, weight: 700, anchor: 'middle' });
+    popIn(c, m('rule') + .3);
+    source(p, 'Bahan Ajar PDRI KB 3.3', .8, true);
+  }],
+
+  ['peran', 'Pembagian peran', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'DJBC memungut, DJP mengadministrasikan|pengkreditan, konsumen menanggung PPN', { tag: 'PEMBAGIAN PERAN' });
+    const R = ['Menghitung dan membayar|Bea Masuk dan PDRI;|mengisi PIB', 'Mengurus kewajiban|kepabeanan atas kuasa|importir', 'Meneliti PIB, memungut|PDRI, menetapkan|kekurangan pembayaran', 'Menerima pembayaran|pungutan negara', 'Mengadministrasikan|pengkreditan PPN dan|PPh 22 dalam SPT', 'Menanggung PPN pada|akhir rantai penjualan'];
+    ROLE.forEach(([gl, v, n], i) => {
+      const x = 92 + (i % 3) * 482, y = 228 + Math.floor(i / 3) * 252, c = G(p);
+      const hot = n === 'DJBC' || n === 'DJP';
+      mcard(c, x, y, 450, 228, { fill: hot ? '#FFF7E3' : '#fff' });
+      if (hot) mk('rect', { x, y, width: 450, height: 228, rx: 15, fill: 'none', stroke: MK.gold, 'stroke-width': 3 }, c);
+      tile(c, gl, x + 72, y + 72, { size: 84, v });
+      T(c, n, { x: x + 132, y: y + 82, size: 28, weight: 700, fill: MK.navy });
+      lines(c, R[i], x + 36, y + 150, { size: 20, weight: 600, lh: 1.25 });
+      slideUp(c, m('r' + (i + 1)) - .2, .5);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.4', m('r1'));
+  }],
+
+  ['identitas', 'Identitas importir', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Sebelum melayani, periksa tiga data identitas|importir yang terhubung ke Coretax', { tag: 'IDENTITAS IMPORTIR' });
+    const c = G(p);
+    mcard(c, 92, 230, 760, 470);
+    tile(c, 'idcard', 180, 310, { size: 100, v: 'blue' });
+    T(c, 'PT Kain Prima Nusantara', { x: 250, y: 305, size: 28, weight: 700, fill: MK.navy });
+    T(c, 'Kasus 1', { x: 250, y: 338, size: 18, weight: 500, fill: MK.dim });
+    slideUp(c, .4);
+    [['npwp', 'NPWP atau NIK', 'identitas perpajakan', 'terdaftar'], ['api', 'Angka Pengenal Importir', 'API-U atau API-P', 'API-U'], ['pkp', 'Pengusaha Kena Pajak', 'status PKP', 'PKP']].forEach(([mark, a, b, val], i) => {
+      const y = 420 + i * 92, g = G(p);
+      mk('rect', { x: 122, y: y - 38, width: 700, height: 1.5, fill: MK.line }, g);
+      T(g, a, { x: 140, y, size: 24, weight: 700, fill: MK.navy });
+      T(g, b, { x: 140, y: y + 30, size: 18, weight: 500, fill: MK.dim });
+      const ok = G(g, { x: 790, y: y + 4 });
+      mk('circle', { r: 20, fill: MK.green }, ok);
+      path(ok, 'M-9 1l6 6l12 -12', { stroke: '#fff', 'stroke-width': 4.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+      pill(g, val, 700, y + 4, { size: 17, bg: '#EEF2F8', ink: MK.navy });
+      slideUp(g, m(mark) - .2, .45);
+    });
+    // linked to Coretax
+    const t0 = m('core');
+    flow(p, 'M852 465H1010', MK.navy, t0, .5, 4);
+    mkHead(p, 1012, 465, 0, MK.navy, t0 + .45);
+    const cx = G(p);
+    mcard(cx, 1030, 330, 478, 270, { fill: MK.navy });
+    tile(cx, 'server', 1269, 420, { size: 104, v: 'gold' });
+    T(cx, 'Coretax', { x: 1269, y: 520, size: 32, weight: 700, fill: '#fff', anchor: 'middle' });
+    T(cx, 'sistem administrasi perpajakan DJP', { x: 1269, y: 556, size: 18, weight: 500, fill: '#D5E2F5', anchor: 'middle' });
+    popIn(cx, t0 + .4);
+    source(p, 'Bahan Ajar PDRI KB 3.4', m('npwp'));
+  }],
+
+  ['q2', 'Cek pemahaman', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cek pemahaman: siapa yang menjalankan|setiap peran?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['user', 'gold', 'Importir', 250], ['shield', 'blue', 'DJBC', 400], ['server', 'sky', 'DJP', 550]].forEach(([gl, v, n, y], i) => {
+      const c = G(p);
+      mcard(c, 92, y, 400, 126);
+      tile(c, gl, 155, y + 62, { size: 76, v });
+      T(c, n, { x: 210, y: y + 72, size: 30, weight: 700, fill: MK.navy });
+      slideUp(c, .2 + i * .15);
+    });
+  }, { ask: done => quiz({ x: 530, y: 200, w: 990, cls: 'side' }, [{
+    id: 'c-peran', prompt: ['Siapa yang menjalankan setiap peran?'],
+    build: grid([
+      { parts: ['Mengisi PIB dan menghitung PDRI'], ans: ['i'], why: 'Importir menghitung sendiri dalam PIB (self assessment).' },
+      { parts: ['Meneliti PIB'], ans: ['c'], why: 'DJBC meneliti PIB di pelabuhan.' },
+      { parts: ['Mengadministrasikan pengkreditan PPN dalam SPT'], ans: ['p'], why: 'Pengkreditan PPN diadministrasikan DJP.' },
+      { parts: ['Memungut PPh Pasal 22 Impor'], ans: ['c'], why: 'DJBC memungut PPh Pasal 22 Impor (withholding).' },
+      { parts: ['Menetapkan kekurangan pembayaran'], ans: ['c'], why: 'DJBC dapat menetapkan kekurangan (official assessment).' },
+    ], [['i', 'Importir', MK.goldDark, 'i'], ['c', 'DJBC', MK.blue, 'c'], ['p', 'DJP', MK.sky, 'p']], { multi: false, text: true }),
+  }], done) }],
+
+  ['wrap', 'Rangkuman', (m, D) => {
+    const p = panel(0);
+    navy(p, 5, D);
+    actionTitle(p, 'Rangkuman: tiga sistem, dua instansi,|satu PIB', { tag: 'RANGKUMAN BAB 3', dark: true });
+    [['w1', 'calc', 'gold', 'Self assessment,|official assessment,|dan withholding|berjalan bersama'],
+     ['w2', 'shield', 'blue', 'DJBC memungut PDRI|di pelabuhan; DJP|mengadministrasikan|pengkreditannya'],
+     ['w3', 'idcard', 'sky', 'Periksa dulu|identitas importir:|NPWP, API,|dan status PKP']].forEach(([mark, gl, v, str], i) => {
+      const x = 92 + i * 482, c = G(p);
+      mcard(c, x, 250, 450, 450, { dark: true });
+      const strip = mk('rect', { x, y: 250, width: 450, height: 12, rx: 6, fill: MK.gold, 'fill-opacity': 0 }, c);
+      tile(c, gl, x + 90, 335, { size: 96, v });
+      T(c, '0' + (i + 1), { x: x + 400, y: 320, size: 34, weight: 700, fill: MK.line, anchor: 'end' });
+      lines(c, str, x + 40, 450, { size: 26, weight: 700, lh: 1.32 });
+      put(c, { o: 0 }); tw(c, { o: .35 }, .3, .4);
+      tw(c, { o: 1 }, m(mark), .4); pulse(c, m(mark), 1.03);
+      prog(q => strip.setAttribute('fill-opacity', q), m(mark), .4, out);
+    });
+  }],
+
+  ['final1', 'Latihan bab', (m) => { const p = panel(0); paper(p); }, { ask: done => quiz(SCREEN, [{
+    id: 'p-langkah', prompt: ['Latihan 3.1. Importir mengisi sendiri nilai PPN dalam PIB, kemudian petugas meneliti PIB tersebut. Sistem pemungutan apa yang bekerja pada setiap langkah?'],
+    build: choice([['Self assessment, lalu official assessment'], ['Official assessment, lalu self assessment'], ['Withholding pada kedua langkah'], ['Self assessment pada kedua langkah']], 0,
+      'Importir menghitung sendiri: self assessment. Petugas meneliti dan dapat menetapkan: official assessment.',
+      [null, 'Urutannya terbalik: yang mengisi lebih dulu adalah importir sendiri.', 'Withholding berarti pihak ketiga memungut, seperti DJBC atas PPh Pasal 22. Di sini importir menghitung dan petugas meneliti.', 'Langkah kedua dijalankan petugas, jadi official assessment.']),
+  }, {
+    id: 'p-djbc-djp', prompt: ['Latihan 3.2. Apa beda peran DJBC dan DJP atas PPN Impor yang dibayar PT Kain Prima Nusantara?'],
+    build: choice([['DJBC memungut saat barang masuk; DJP mengadministrasikan pengkreditannya dalam SPT Masa PPN importir'], ['DJP memungut saat barang masuk; DJBC mengadministrasikan pengkreditannya'], ['Keduanya memungut PPN Impor yang sama dua kali'], ['DJBC menghitung PPN untuk importir; DJP menerima pembayarannya']], 0,
+      'DJBC memungut PPN Impor di pelabuhan. DJP mengadministrasikan pengkreditan PPN itu dalam SPT Masa PPN importir.',
+      [null, 'Perannya terbalik: yang memungut di pelabuhan adalah DJBC.', 'PPN Impor dipungut sekali, oleh DJBC; DJP mengadministrasikan pengkreditannya.', 'Importir menghitung sendiri, dan pembayaran diterima bank persepsi atau bank devisa.']),
+  }, {
+    id: 'p-jenis', prompt: ['Kelompokkan pajak berikut menurut pihak yang menanggung.'],
+    build: grid([
+      { parts: ['PPh'], ans: ['l'], why: 'PPh ditanggung sendiri oleh wajib pajak: pajak langsung.' },
+      { parts: ['PPN'], ans: ['t'], why: 'PPN dapat dialihkan sampai konsumen akhir: pajak tidak langsung.' },
+      { parts: ['PPnBM'], ans: ['t'], why: 'PPnBM juga pajak tidak langsung.' },
+    ], [['l', 'Langsung', MK.blue, 'l'], ['t', 'Tidak langsung', MK.goldDark, 't']], { multi: false, text: true }),
+  }, {
+    id: 'p-rina-objektif', prompt: ['Latihan 3.4. Bu Rina bertanya, "Saya bukan PKP, kenapa tetap membayar PPN?" Jawaban mana yang tepat?'],
+    build: choice([['Syarat objektif PPN Impor terpenuhi oleh impor Barang Kena Pajak, berlaku untuk siapa pun; status PKP hanya menentukan pengkreditannya'], ['Bu Rina tetap PKP karena nilai impornya besar'], ['PPN Impor hanya berlaku untuk importir ber-API'], ['Ini kekeliruan; bukan PKP seharusnya tidak membayar PPN Impor']], 0,
+      'Kewajiban PPN Impor muncul dari syarat objektif: impor Barang Kena Pajak, oleh siapa pun. Status PKP baru menentukan apakah PPN itu dapat dikreditkan.',
+      [null, 'Status PKP ditentukan dengan dikukuhkan, bukan oleh besar kecilnya nilai impor.', 'PPN Impor terutang pada siapa pun yang mengimpor Barang Kena Pajak, dengan API atau tanpa API.', 'PPN Impor tetap dipungut; yang berbeda hanya dapat tidaknya dikreditkan.']),
+  }], done, 'Latihan bab') }],
+
+  ['finish', 'Selesai', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    const left = G(p);
+    path(left, 'M0 0H640L470 900H0Z', { fill: MK.navy });
+    path(p, 'M640 0H700L530 900H470Z', { fill: MK.gold });
+    path(p, 'M712 0H742L572 900H542Z', { fill: MK.sky });
+    const md = G(p, { x: 300, y: 440 });
+    const rays = G(md);
+    for (let i = 0; i < 16; i++) path(rays, `M0 0L${-18} -260L18 -260Z`, { fill: MK.gold, 'fill-opacity': .12 }).setAttribute('transform', `rotate(${i * 22.5})`);
+    clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
+    tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
+    popIn(md, .3);
+    const orb = [['doc', 'blue'], ['shield', 'sky'], ['server', 'gold']].map(([gl, v], i) => {
+      const e = tile(p, gl, 0, 0, { size: 64, v, floor: false });
+      return { e, a: i * 2.094 };
+    });
+    clockRun(t => orb.forEach(o => put(o.e, { x: 300 + 190 * Math.cos(o.a + t * .4), y: 440 + 190 * Math.sin(o.a + t * .4) * .55 })), D, { tail: true });
+    orb.forEach(o => { put(o.e, { o: 0 }); show(o.e, .8, .5); });
+    const h = T(p, 'Selamat, Sobat Pemelajar!', { x: 1120, y: 200, size: 44, weight: 700, fill: MK.navy, anchor: 'middle' });
+    slideUp(h, .5);
+  }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
+
+{
+  const NAVY = new Set(['intro', 'sistem', 'syarat', 'hierarki', 'wrap']);
+  BEATS.forEach((b, i) => {
+    if (!i || b.lead === false) return;
+    const prev = BEATS[i - 1];
+    if (NAVY.has(b.id) !== NAVY.has(prev.id) || b.id === 'finish') {
+      const run = b.run;
+      b.run = (m, D) => { run(m, D); wipeIn(S.panel); };
+    }
+  });
+}
+
+mkBoot();
+</script>
+</body>
+</html>
