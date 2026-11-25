@@ -2,8 +2,8 @@
 *.pdf
 books/*/pages/
 books/*/source.md
-# upstream engine checkout and the skill itself
-engine/
+# upstream engine checkout (root only; Papermorph/engine/ is vendored)
+/engine/
 .claude/*
 # ...except the project's own PDRI skills, shared through the repo
 !.claude/skills/
@@ -13,3 +13,7 @@ engine/
 # working leftovers
 _to_delete/
 __pycache__/
+# vendored Papermorph (engine + skill): its demo books and upstream tooling stay out
+Papermorph/site/
+Papermorph/.github/
+Papermorph/.opencode/
