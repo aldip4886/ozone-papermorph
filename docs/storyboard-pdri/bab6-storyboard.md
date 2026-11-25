@@ -18,6 +18,6 @@ Lembar kontak: `books/pdri/review/ch06-mck/storyboard-adegan.jpg` (keadaan akhir
 | 12 | jawab | Jawaban untuk Kasus 2 | Materi | 6.3 dtk | Pertanyaan Kasus 2 dijawab dalam tiga poin | Jadi, mengapa pungutan motor ini begitu besar? Karena motor ini barang mewah: PPN-nya dua belas persen penuh, ditambah PPnBM sembilan puluh lima persen. PPnBM tidak dapat dikreditkan, jadi benar-benar menjadi beban. Tujuannya mengatur konsumsi barang mewah, sesuai fungsi regulerend dan teori daya pikul. |
 | 13 | wrap | Rangkuman | Materi | 6 dtk | Tiga kartu rangkuman | Jadi, ini rangkumannya. Untuk barang mewah, PPN-nya dua belas persen dikali nilai impor, ditambah PPnBM sesuai tarifnya. PPnBM tidak dapat dikreditkan. Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumen fasilitas sebelum menghitung. |
 | 14 | final1 | Latihan bab | Interaktif (kuis) | 4 dtk | Latihan bab: Temukan Kesalahan, hitung selisih, dan efek SKB | Nah, sekarang kita latihan, ya. Coba kamu temukan kesalahan dalam hitungan berikut ini. |
-| 15 | finish | Selesai | Interaktif (kuis) | 4 dtk | Kartu selesai | Bagus, materi keenam selesai. Berikutnya, kita bahas barang kiriman, lewat dua paket belanja daring milik Dita. |
+| 15 | finish | Selesai | Interaktif (kuis) | 4 dtk | Kartu selesai | Bagus, materi keenam selesai. Berikutnya, kita bahas upaya hukum, lewat dua map surat penetapan milik PT Kain Prima Nusantara. |
 
 Catatan: pratinjau MP4 memakai tempo animasi tanpa narasi (jeda antar langkah 0,7 sampai 1,6 detik). Adegan interaktif ditampilkan 4 sampai 5 detik sebagai kartu soal.

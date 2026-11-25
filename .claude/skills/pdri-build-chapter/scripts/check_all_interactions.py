@@ -7,7 +7,7 @@ FILL = sys.argv[2] if len(sys.argv) > 2 else '0'
 
 async def main():
     async with async_playwright() as p:
-        b = await p.chromium.launch()
+        b = await p.chromium.launch(channel=__import__("os").environ.get("PW_CHANNEL") or None)
         pg = await b.new_page(viewport={'width': 1600, 'height': 900})
         await pg.add_init_script("window.__ix = []; window.onInteraction = (q, e, d, l) => window.__ix.push([q, e && (e.result ?? e.r ?? JSON.stringify(e)).toString().slice(0, 40)]);")
         await pg.goto(URL); await pg.wait_for_timeout(800)

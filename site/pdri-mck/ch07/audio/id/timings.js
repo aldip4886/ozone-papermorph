@@ -1,363 +1,441 @@
 window.TIMINGS = {
  "intro": {
-  "dur": 11.719,
+  "dur": 10.62,
   "marks": {
-   "sub": 3.011
+   "sub": 1.94
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Mari kita lanjutkan, ya, sobat."
    ],
    [
-    3.011,
-    "Inilah materi ketujuh: upaya hukum, dan hak wajib pajak ketika tidak setuju dengan penetapan DJBC atau ketetapan DJP."
-   ]
-  ],
-  "silent": true
- },
- "ask": {
-  "dur": 17.543,
-  "marks": {
-   "tanya": 10.186
-  },
-  "cues": [
-   [
-    0.1,
-    "Staf PT Kain Prima Nusantara datang membawa dua map: map biru berisi SPTNP dari DJBC, map kuning berisi SKPKB dan STP dari KPP."
+    1.89,
+    "Inilah materi ketujuh: upaya hukum,"
    ],
    [
-    10.186,
-    "Dua-duanya kami tidak setuju, dan kas kami sedang seret, apa saja yang bisa kami lakukan?"
+    4.21,
+    "dan hak wajib pajak ketika tidak setuju dengan penetapan DJBC atau ketetapan DJP."
    ]
-  ],
-  "silent": true
+  ]
  },
- "penetapan": {
-  "dur": 48.75,
+ "ask": {
+  "dur": 17.39,
   "marks": {
-   "s1": 5.08,
-   "s2": 9.594,
-   "s3": 14.301,
-   "s4": 20.483,
-   "rantai": 25.177,
-   "denda": 36.186
+   "tanya": 11.7
   },
   "cues": [
    [
-    0.1,
+    0.05,
+    "Staf PT Kain Prima Nusantara datang membawa dua map: map biru berisi SPTNP dari DJBC,"
+   ],
+   [
+    7.09,
+    "map kuning berisi SKPKB dan STP dari KPP."
+   ],
+   [
+    11.65,
+    "Dua-duanya kami tidak setuju, dan kas kami sedang seret, apa saja yang bisa kami lakukan?"
+   ]
+  ]
+ },
+ "penetapan": {
+  "dur": 43.19,
+  "marks": {
+   "s1": 4.78,
+   "s2": 9.12,
+   "s3": 13.7,
+   "s4": 19.1,
+   "rantai": 23.82,
+   "denda": 33.44
+  },
+  "cues": [
+   [
+    0.05,
     "Penetapan pejabat bea dan cukai bisa datang dalam empat bentuk surat."
    ],
    [
-    5.08,
+    4.73,
     "SPTNP, Pasal enam belas, soal tarif dan nilai pabean."
    ],
    [
-    9.594,
+    9.07,
     "SPKTNP, Pasal tujuh belas, penetapan kembali oleh Direktur Jenderal."
    ],
    [
-    14.301,
+    13.65,
     "SPP, Pasal sembilan puluh tiga A, untuk penetapan selain tarif dan nilai pabean."
    ],
    [
-    20.483,
+    19.05,
     "SPSA, Pasal sembilan puluh empat, sanksi administrasi berupa denda."
    ],
    [
-    25.177,
-    "Begini rantainya: nilai pabean naik, Bea Masuk kurang dibayar, nilai impor ikut naik, dan PPN serta PPh Pasal dua puluh dua Impor ikut kurang."
+    23.77,
+    "Begini rantainya: nilai pabean naik, Bea Masuk kurang dibayar,"
    ],
    [
-    36.186,
-    "Denda kesalahan nilai pabean dihitung dari kekurangan Bea Masuk saja: seratus persen untuk kekurangan sampai lima puluh persen dari Bea Masuk yang dibayar, berlapis sampai seribu persen."
+    28.07,
+    "nilai impor ikut naik, dan PPN serta PPh Pasal dua puluh dua Impor ikut kurang."
+   ],
+   [
+    33.39,
+    "Denda kesalahan nilai pabean dihitung dari kekurangan Bea Masuk saja: seratus persen untuk kekurangan sampai lima puluh persen dari Bea Masuk yang dibayar,"
+   ],
+   [
+    40.83,
+    "berlapis sampai seribu persen."
    ]
-  ],
-  "silent": true
+  ]
  },
  "kasus3": {
-  "dur": 44.617,
+  "dur": 43.26,
   "marks": {
-   "np": 2.573,
-   "bm": 12.153,
-   "ni": 17.436,
-   "ppn": 22.467,
-   "pph": 26.739,
-   "denda": 32.087,
-   "tot": 38.817
+   "np": 2.04,
+   "bm": 12.32,
+   "ni": 16.76,
+   "ppn": 21.54,
+   "pph": 26.5,
+   "denda": 31.5,
+   "tot": 37.32
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Mari kita hitung Kasus tiga."
    ],
    [
-    2.573,
-    "Selisih nilai pabeannya: enam ribu dolar dikali delapan belas ribu seratus lima puluh lima rupiah, seratus delapan koma sembilan tiga juta."
+    1.99,
+    "Selisih nilai pabeannya: enam ribu dolar dikali delapan belas ribu seratus lima puluh lima rupiah,"
    ],
    [
-    12.153,
+    9.31,
+    "seratus delapan koma sembilan tiga juta."
+   ],
+   [
+    12.27,
     "Kekurangan Bea Masuk sepuluh persen, sepuluh koma delapan sembilan tiga juta."
    ],
    [
-    17.436,
+    16.71,
     "Selisih nilai impornya seratus sembilan belas koma delapan dua tiga juta."
    ],
    [
-    22.467,
-    "Kekurangan PPN Impor tiga belas koma satu delapan juta, dan kekurangan PPh Pasal dua puluh dua dua koma sembilan sembilan lima juta."
+    21.49,
+    "Kekurangan PPN Impor tiga belas koma satu delapan juta, dan"
    ],
    [
-    32.087,
+    26.45,
+    "kekurangan PPh Pasal dua puluh dua dua koma sembilan sembilan lima juta."
+   ],
+   [
+    31.45,
     "Dendanya seratus persen dari kekurangan Bea Masuk, sepuluh koma delapan sembilan tiga juta."
    ],
    [
-    38.21,
+    36.69,
     "Jadi, total tagihan SPTNP-nya tiga puluh tujuh koma sembilan enam dua juta rupiah."
    ]
-  ],
-  "silent": true
+  ]
  },
  "jalur1": {
-  "dur": 25.573,
+  "dur": 28.31,
   "marks": {
-   "f1": 3.969,
-   "f2": 13.8,
-   "f3": 19.677
+   "f1": 6.82,
+   "f2": 17.1,
+   "f3": 22.74
   },
   "cues": [
    [
-    0.1,
-    "Surat dari DJBC diuji ke DJBC juga."
+    0.05,
+    "Terhadap penetapan ini, PT Kain Prima Nusantara bisa melakukan upaya hukum."
    ],
    [
-    3.323,
-    "Pertama, keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, enam puluh hari sejak tanggal penetapan, dengan jaminan sebesar tagihan."
+    5.63,
+    "Pertama, keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC,"
    ],
    [
-    13.18,
+    10.37,
+    "enam puluh hari sejak tanggal penetapan, dengan jaminan sebesar tagihan."
+   ],
+   [
+    16.09,
     "Kedua, banding ke Pengadilan Pajak, enam puluh hari setelah tagihan dilunasi."
    ],
    [
-    18.663,
+    21.67,
     "Dan ketiga, peninjauan kembali ke Mahkamah Agung, dengan alasan terbatas, hanya satu kali."
    ]
-  ],
-  "silent": true
+  ]
  },
  "q1": {
-  "dur": 11.781,
+  "dur": 11.39,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, mari kita cek pemahaman kamu."
    ],
    [
-    3.244,
+    2.83,
     "Importir menerima SPTNP yang menaikkan nilai pabean."
    ],
    [
-    6.686,
+    7.57,
     "Ke mana dan berapa lama ia bisa mengajukan keberatan, ya?"
    ]
-  ],
-  "silent": true
+  ]
  },
  "hak": {
-  "dur": 35.489,
+  "dur": 37.35,
   "marks": {
-   "seng": 5.111,
-   "mohon": 20.494
+   "seng": 4.7,
+   "mohon": 21.14
   },
   "cues": [
    [
-    0.1,
-    "Di bidang perpajakan, wajib pajak punya dua keluarga hak."
+    0.05,
+    "Di bidang perpajakan, wajib pajak punya dua kelompok hak."
    ],
    [
-    4.466,
-    "Pertama, sengketa: menguji kebenaran ketetapan, lewat keberatan, banding, gugatan, atau peninjauan kembali."
+    3.95,
+    "Pertama, sengketa."
    ],
    [
-    11.464,
-    "Kalau kalah, risikonya sanksi tiga puluh persen untuk keberatan, dan enam puluh persen untuk banding atau peninjauan kembali."
+    5.53,
+    "Hak ini digunakan untuk menguji kebenaran ketetapan,"
    ],
    [
-    19.874,
-    "Kedua, permohonan: memperbaiki atau meringankan tanpa sengketa, lewat pembetulan SPT, pembetulan ketetapan, pengurangan atau penghapusan sanksi, atau angsuran dan penundaan pembayaran."
+    8.73,
+    "lewat keberatan, banding, gugatan, atau peninjauan kembali."
    ],
    [
-    30.833,
+    12.99,
+    "Kalau kalah, risikonya sanksi tiga puluh persen untuk keberatan,"
+   ],
+   [
+    16.35,
+    "dan enam puluh persen untuk banding atau peninjauan kembali."
+   ],
+   [
+    20.51,
+    "Kedua, permohonan."
+   ],
+   [
+    21.91,
+    "Permohonan bertujuan memperbaiki atau meringankan tanpa sengketa, lewat pembetulan SPT,"
+   ],
+   [
+    27.55,
+    "pembetulan ketetapan, pengurangan atau penghapusan sanksi, atau angsuran dan penundaan pembayaran."
+   ],
+   [
+    33.47,
     "Permohonan ini tidak menggantikan keberatan untuk SKP yang sama."
    ]
-  ],
-  "silent": true
+  ]
  },
  "q2": {
-  "dur": 14.716,
+  "dur": 13.74,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    3.431,
-    "PT Kain Prima Nusantara menerima STP denda lima ratus ribu rupiah karena SPT Masa PPN-nya terlambat, dan ia merasa khilaf."
+    2.43,
+    "PT Kain Prima Nusantara menerima STP denda lima ratus ribu rupiah karena SPT Masa PPN-nya terlambat,"
    ],
    [
-    12.263,
+    9.75,
+    "dan ia merasa khilaf."
+   ],
+   [
+    11.81,
     "Jalur apa yang tepat?"
    ]
-  ],
-  "silent": true
+  ]
  },
  "bandingkan": {
-  "dur": 32.181,
+  "dur": 31.02,
   "marks": {
-   "r1": 3.31,
-   "r2": 8.716,
-   "r3": 15.077,
-   "r4": 23.371
+   "r1": 4.06,
+   "r2": 9.1,
+   "r3": 15.48,
+   "r4": 22.84
   },
   "cues": [
    [
-    0.1,
-    "Dua jalur ini berbeda di tiga hal."
+    0.05,
+    "Upaya hukum untuk dua jalur penetapan ini berbeda di tiga hal."
    ],
    [
-    3.31,
+    4.01,
     "Tenggat keberatannya: enam puluh hari untuk DJBC, tiga bulan untuk DJP."
    ],
    [
-    8.716,
+    9.05,
     "Syarat bayarnya: jaminan sebesar tagihan untuk DJBC, melunasi jumlah yang disetujui untuk DJP."
    ],
    [
-    15.077,
-    "Tenggat bandingnya: enam puluh hari setelah lunas untuk DJBC, tiga bulan dengan sisa pajak tertangguh untuk DJP."
+    15.43,
+    "Tenggat bandingnya: enam puluh hari setelah lunas untuk DJBC,"
    ],
    [
-    22.99,
-    "Dan risikonya: DJBC tidak mengenakan sanksi khusus, sedangkan DJP mengenakan sanksi tiga puluh atau enam puluh persen jika kalah."
+    19.25,
+    "tiga bulan dengan sisa pajak tertangguh untuk DJP."
+   ],
+   [
+    22.47,
+    "Dan risikonya: DJBC tidak mengenakan sanksi khusus,"
+   ],
+   [
+    25.83,
+    "sedangkan DJP mengenakan sanksi tiga puluh atau enam puluh persen jika kalah."
    ]
-  ],
-  "silent": true
+  ]
  },
  "lensa": {
-  "dur": 34.016,
+  "dur": 34.79,
   "marks": {
-   "l1": 2.786,
-   "l2": 14.743,
-   "l3": 25.596
+   "l1": 5.02,
+   "l2": 17.66,
+   "l3": 27.96
   },
   "cues": [
    [
-    0.1,
-    "Mengapa hak ini ada?"
+    0.05,
+    "Mengapa hak untuk melakukan upaya hukum ini diberikan oleh undang-undang?"
    ],
    [
-    2.14,
-    "Pertama, kontrol atas wewenang: Pasal dua puluh tiga A UUD seribu sembilan ratus empat puluh lima mensyaratkan pungutan diatur undang-undang, dan penetapan pejabat harus dapat diuji."
+    4.07,
+    "Pertama, kontrol atas wewenang: Pasal dua puluh tiga A Undang-Undang Dasar seribu sembilan ratus empat puluh lima mensyaratkan pungutan diatur berdasarkan undang-undang,"
    ],
    [
-    14.123,
-    "Kedua, kepastian dan keadilan: asas certainty dan equality tidak cukup di atas kertas, wajib pajak perlu jalan resmi untuk menguji penetapan yang menurutnya keliru."
+    13.59,
+    "dan penetapan pejabat harus dapat diuji."
    ],
    [
-    25.214,
+    16.75,
+    "Kedua, kepastian dan keadilan: asas certainty dan equality tidak cukup di atas kertas,"
+   ],
+   [
+    23.11,
+    "wajib pajak perlu jalan resmi untuk menguji penetapan yang menurutnya keliru."
+   ],
+   [
+    27.59,
     "Dan peran Anda: tetapkan dengan benar, lalu jelaskan hak pengguna jasa dengan jujur."
    ],
    [
-    31.447,
+    33.01,
     "Jangan menilai peluang menang."
    ]
-  ],
-  "silent": true
+  ]
  },
  "jawab": {
-  "dur": 27.033,
+  "dur": 26.07,
   "marks": {
-   "a1": 3.231,
-   "a2": 11.713,
-   "a3": 19.877
+   "a1": 3.0,
+   "a2": 11.32,
+   "a3": 19.2
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Jadi, bagaimana menjawab dua map tadi?"
    ],
    [
-    3.231,
-    "Untuk map SPTNP, sampaikan haknya: keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, enam puluh hari."
+    2.95,
+    "Untuk map SPTNP, sampaikan haknya: keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC,"
    ],
    [
-    11.713,
-    "Untuk map SKPKB, keberatan ke Direktur Jenderal Pajak, tiga bulan, setelah melunasi jumlah yang disetujui."
+    9.17,
+    "enam puluh hari."
    ],
    [
-    19.089,
-    "Dan untuk kas yang sedang seret, sampaikan permohonan angsuran atau penundaan, lewat KPP tempat ia terdaftar."
+    11.27,
+    "Untuk map SKPKB, keberatan ke Direktur Jenderal Pajak,"
+   ],
+   [
+    15.49,
+    "tiga bulan, setelah melunasi jumlah yang disetujui."
+   ],
+   [
+    18.77,
+    "Dan untuk kas yang sedang seret,"
+   ],
+   [
+    20.55,
+    "sampaikan permohonan angsuran atau penundaan, lewat KPP tempat ia terdaftar."
    ]
-  ],
-  "silent": true
+  ]
  },
  "wrap": {
-  "dur": 19.079,
+  "dur": 21.47,
   "marks": {
-   "w1": 2.049,
-   "w2": 7.254,
-   "w3": 13.764
+   "w1": 1.52,
+   "w2": 7.78,
+   "w3": 16.12
   },
   "cues": [
    [
-    0.1,
-    "Jadi, ini rangkumannya."
+    0.05,
+    "Ini rangkumannya."
    ],
    [
-    2.049,
+    1.47,
     "Penetapan DJBC diuji ke DJBC: keberatan enam puluh hari dengan jaminan."
    ],
    [
-    7.254,
-    "Ketetapan DJP diuji lewat sengketa, yang berisiko sanksi, atau permohonan, yang tidak."
+    7.73,
+    "Untuk ketetapan dari DJP, wajib pajak bisa menempuh jalur sengketa,"
    ],
    [
-    13.383,
-    "Dan sebutkan hak serta tenggatnya dengan jujur, jangan menilai peluang menang."
+    11.91,
+    "yang berisiko sanksi, atau permohonan, yang tidak ada sanksi."
+   ],
+   [
+    15.77,
+    "Dan sebutkan hak serta tenggatnya dengan jujur."
+   ],
+   [
+    19.05,
+    "Jangan menilai peluang menang."
    ]
-  ],
-  "silent": true
+  ]
  },
  "final1": {
-  "dur": 7.487,
+  "dur": 5.27,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Nah, ini latihan bab, ya."
    ],
    [
-    2.934,
+    1.77,
     "Coba kamu pilih jalurnya untuk tiga situasi berikut ini."
    ]
-  ],
-  "silent": true
+  ]
  },
  "finish": {
-  "dur": 10.387,
+  "dur": 8.46,
   "marks": {},
   "cues": [
    [
-    0.1,
-    "Bagus, materi ketujuh selesai."
+    0.05,
+    "Materi ketujuh selesai."
    ],
    [
-    2.469,
-    "Berikutnya, kita kembali ke Kasus satu, dan menyusun jawaban lengkap untuk tagihan PT Kain Prima Nusantara."
+    1.71,
+    "Berikutnya, kita kembali ke Kasus satu,"
+   ],
+   [
+    3.75,
+    "dan menyusun jawaban lengkap untuk tagihan PT Kain Prima Nusantara."
    ]
-  ],
-  "silent": true
+  ]
  }
 };

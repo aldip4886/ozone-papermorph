@@ -1327,7 +1327,47 @@ function sources() {
   return h('section', 'srcs', [h('h2', '', translate('sources')), h('ol', '', items)]);
 }
 const uiW = (str, size) => { ctx2d.font = `600 ${size}px ${UI}`; return ctx2d.measureText(str).width; };
-const SCORE = {};                                          // question id -> first-attempt {right, total}
+const SCORE = {};                                          // question id -> first-attempt {right, total, rows?}
+
+/* ---------- SCORM interaction reporting ----------
+   A question's or row's first-ever grading is handed to window.onInteraction, a hook a SCORM
+   package's scorm-bridge.js sets (host.answered(...)); left unset in a plain web book, so this
+   stays a no-op there. Engine.js knows nothing about SCORM or cmi.interactions -- it only reports
+   what was asked, what the learner answered, and what the correct answer was. */
+function slugify(s, max = 40) {
+  let t = String(s).normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  if (!t) t = 'row';
+  if (t.length > max) {
+    let hash = 0;
+    for (let i = 0; i < t.length; i++) hash = (hash * 31 + t.charCodeAt(i)) >>> 0;
+    t = t.slice(0, max - 7) + '-' + hash.toString(36);
+  }
+  return t;
+}
+// Flattens a row's authored content (strings, { box } placeholders, $m() inline math) to plain
+// text, for a stable row key and for a human-readable interaction description. Math parts are
+// dropped rather than approximated, since they carry no SCORM-safe plain-text form.
+function flatten(parts) {
+  return [].concat(parts).map(p => (typeof p === 'string' ? p : '')).join(' ').replace(/\s+/g, ' ').trim();
+}
+// A row's identity for its interaction id: an explicit it.key, else a slug of its own text.
+// Never the row's position, so ids survive reordering and change only when the row's own content
+// does -- the opposite of using the array index, which would silently relabel history.
+const rowKey = it => slugify(it.key || flatten(it.parts));
+// A typed or authored answer as a plain decimal string (no "1.198.230.000" thousands grouping),
+// so a SCORM "numeric" interaction never carries a localized number a validator would misread.
+// Falls back to "fill-in" with the raw text when the engine's own number parser can't read it.
+function numOrText(str) {
+  const r = rat(str);
+  if (!r) return { type: 'fill-in', value: String(str ?? '').trim() };
+  const [n, d] = r;
+  return { type: 'numeric', value: d === 1 ? String(n) : String(n / d) };
+}
+function reportAnswer(qid, entry, promptParts, latencySec) {
+  try { window.onInteraction?.(qid, entry, flatten(promptParts), latencySec); }
+  catch (e) { console.warn('[interactions]', e); }
+}
 
 function h(tag, cls, kids = []) {
   const e = document.createElement(tag);
@@ -1391,6 +1431,7 @@ function quiz(pos, qs, done, label = translate('quickCheck')) {
   const show = () => {
     const q = qs[k];
     let first = true, resolved = false;
+    const askedAt = performance.now();
     const fb = h('div', 'fb'), body = h('div', 'body'), acts = h('div', 'acts');
     fb.setAttribute('role', 'status');   // screen readers announce right or wrong
     const bCheck = h('button', 'btn', [translate('check'), kbd('Enter')]), bShow = h('button', 'btn quiet', [translate('showAnswer'), kbd('S')]);
@@ -1408,7 +1449,14 @@ function quiz(pos, qs, done, label = translate('quickCheck')) {
     const api = {
       grade(ok, msg, score) {
         if (resolved) return;
-        if (first) { if (!Object.hasOwn(SCORE, q.id)) SCORE[q.id] = score || { right: +ok, total: 1 }; first = false; }
+        if (first) {
+          if (!Object.hasOwn(SCORE, q.id)) {
+            const entry = score || { right: +ok, total: 1, rows: [{ key: null, type: 'choice', ok: !!ok, response: '', correct: '' }] };
+            SCORE[q.id] = entry;
+            reportAnswer(q.id, entry, q.prompt, (performance.now() - askedAt) / 1000);
+          }
+          first = false;
+        }
         say(ok ? 'ok' : 'no', [ok ? translate('correct') : translate('notQuite'), ...[].concat(msg || [])]);
         if (guide) {
           mood(guide, ok ? 'happy' : 'oops');
@@ -1448,11 +1496,13 @@ const keyAct = (el, fn) => el.addEventListener('keydown', e => { if (e.key === '
 // Single answer from buttons; each wrong option has its own explanation.
 const choice = (opts, right, yes, no, onRight) => (body, api) => {
   const row = h('div', 'opts');
+  const correct = String(right);
   const bs = opts.map((o, i) => {
     const b = h('button', 'opt', [kbd(String(i + 1)), rich(o, 32)]);
     b.onclick = () => {
-      if (i === right) { b.classList.add('good'); onRight?.(); api.grade(true, yes); }
-      else { b.classList.add('bad'); b.disabled = true; api.grade(false, no[i]); }
+      const entry = { right: i === right ? 1 : 0, total: 1, rows: [{ key: null, type: 'choice', ok: i === right, response: String(i), correct }] };
+      if (i === right) { b.classList.add('good'); onRight?.(); api.grade(true, yes, entry); }
+      else { b.classList.add('bad'); b.disabled = true; api.grade(false, no[i], entry); }
     };
     row.append(b);
     return b;
@@ -1497,10 +1547,12 @@ function tappable(items) {   // [{ g, label, act }]
 // and returns the explanation. targets: [{ g, label, ok, wrong }].
 const stageTap = (api, targets, show, yes, onRight, hint) => {
   let locked = false;
+  const correct = targets[show]?.label ?? '';
   const move = tappable(targets.map(({ g, label, ok, wrong }) => ({ g, label, act: () => {
     if (locked) return;
-    if (ok) { g.classList.add('good'); onRight?.(); api.grade(true, yes); }
-    else { g.classList.add('bad'); api.grade(false, wrong()); }
+    const entry = { right: ok ? 1 : 0, total: 1, rows: [{ key: null, type: 'choice', ok, response: label, correct }] };
+    if (ok) { g.classList.add('good'); onRight?.(); api.grade(true, yes, entry); }
+    else { g.classList.add('bad'); api.grade(false, wrong(), entry); }
   } })));
   return {
     reveal() { targets[show].g.classList.add('good'); onRight?.(); return yes; },
@@ -1809,9 +1861,10 @@ const grid = (items, cols, { multi = true, text = false } = {}) => (body, api) =
   };
   return {
     check() {
-      const right = rows.filter(judge).length;
+      const detail = rows.map(r => ({ key: rowKey(r.it), type: 'choice', ok: judge(r), response: r.picked().join(','), correct: r.it.ans.join(',') }));
+      const right = detail.filter(d => d.ok).length;
       const all = right === rows.length;
-      api.grade(all, single ? rows[0].it.why : all ? [] : [translate('rowsRight', { r: right, n: rows.length })], { right, total: rows.length });
+      api.grade(all, single ? rows[0].it.why : all ? [] : [translate('rowsRight', { r: right, n: rows.length })], { right, total: rows.length, rows: detail });
     },
     reveal() {
       for (const r of rows) {
@@ -1910,10 +1963,17 @@ const blanks = rowsIn => (body, api) => {
   requestAnimationFrame(() => { if (P.started) all[0]?.focus({ preventScroll: true }); });
   return {
     check() {
-      const right = rows.filter(judge).length, done = right === rows.length;
+      const detail = rows.map(r => {
+        const ok = judge(r);
+        if (r.it.test) return { key: rowKey(r.it), type: 'fill-in', ok, response: r.boxes.map(b => b.value).join('|'), correct: '' };
+        const resp = r.boxes.map(b => numOrText(b.value).value), corr = r.boxes.map(b => numOrText(b.dataset.ans));
+        const type = corr.every(c => c.type === 'numeric') ? 'numeric' : 'fill-in';
+        return { key: rowKey(r.it), type, ok, response: resp.join('|'), correct: corr.map(c => c.value).join('|') };
+      });
+      const right = detail.filter(d => d.ok).length, done = right === rows.length;
       const msg = single ? (done ? rows[0].it.why : rows[0].it.hint ?? rows[0].it.why)
         : done ? [] : [translate('rowsRight', { r: right, n: rows.length })];
-      api.grade(done, msg, { right, total: rows.length });
+      api.grade(done, msg, { right, total: rows.length, rows: detail });
     },
     reveal() {
       for (const r of rows) {
@@ -2872,6 +2932,7 @@ const GLYPH = {
   server: 'M4 4h16v6H4z M4 14h16v6H4z M8 7h.01 M8 17h.01 M12 7h5 M12 17h5',
   hand: 'M7 11V5a1.5 1.5 0 0 1 3 0v5 M10 10V3.5a1.5 1.5 0 0 1 3 0V10 M13 10V5a1.5 1.5 0 0 1 3 0v6 M16 9a1.5 1.5 0 0 1 3 0v4c0 4.5-3 8-7.5 8S5 18 4 15l-1.5-3.5a1.5 1.5 0 0 1 2.7-1.3L7 13',
   map: 'M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z M9 3v15 M15 6v15',
+  motor: 'M5.5 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M18.5 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M5.5 16h5.5l3-5.5h3l1.5 5.5 M14 10.5l-1.5-3.5h-2.5 M16.5 7h2.5',
 };
 const LEDGE = { gold: '#C8901A', blue: '#003A73', sky: '#1F6FAE' };
 /* tile: centred on (x, y), `size` px wide (design: 90-110 in cards, 56-72 in small flows -> 75-92 / 47-60) */
@@ -2932,428 +2993,470 @@ function mkBoot() {
 </script>
 <script>window.TIMINGS = {
  "intro": {
-  "dur": 11.706,
+  "dur": 10.62,
   "marks": {
-   "sub": 3.011
+   "sub": 1.94
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Mari kita lanjutkan, ya, sobat."
    ],
    [
-    3.011,
-    "Pada materi ketujuh ini, kita membahas barang kiriman: paket belanja daring yang datang lewat jasa titipan atau pos."
+    1.89,
+    "Inilah materi ketujuh: upaya hukum,"
+   ],
+   [
+    4.21,
+    "dan hak wajib pajak ketika tidak setuju dengan penetapan DJBC atau ketetapan DJP."
    ]
-  ],
-  "silent": true
+  ]
  },
  "ask": {
-  "dur": 24.937,
+  "dur": 17.39,
   "marks": {
-   "ask": 0.1,
-   "ans": 15.39
+   "tanya": 11.7
   },
   "cues": [
    [
-    0.1,
-    "Kali ini kita pakai Kasus tiga."
+    0.05,
+    "Staf PT Kain Prima Nusantara datang membawa dua map: map biru berisi SPTNP dari DJBC,"
    ],
    [
-    2.941,
-    "Dita, mahasiswi di Bekasi, menerima dua paket lewat Perusahaan Jasa Titipan: earbuds dengan nilai FOB tiga puluh dolar, dan sepatu sneakers dengan nilai FOB delapan puluh dolar."
+    7.09,
+    "map kuning berisi SKPKB dan STP dari KPP."
    ],
    [
-    15.39,
-    "Lalu Dita bertanya, saya beli sepatu sekitar satu koma tujuh juta rupiah, mengapa tagihannya hampir tujuh ratus delapan puluh ribu?"
+    11.65,
+    "Dua-duanya kami tidak setuju, dan kas kami sedang seret, apa saja yang bisa kami lakukan?"
    ]
-  ],
-  "silent": true
+  ]
  },
- "hukum": {
-  "dur": 22.979,
+ "penetapan": {
+  "dur": 43.19,
   "marks": {
-   "p96": 2.676,
-   "p4": 9.603,
-   "lon": 14.086
+   "s1": 4.78,
+   "s2": 9.12,
+   "s3": 13.7,
+   "s4": 19.1,
+   "rantai": 23.82,
+   "denda": 33.44
   },
   "cues": [
    [
-    0.1,
-    "Barang kiriman punya aturan sendiri."
+    0.05,
+    "Penetapan pejabat bea dan cukai bisa datang dalam empat bentuk surat."
    ],
    [
-    2.676,
-    "Dasarnya PMK sembilan puluh enam Tahun dua ribu dua puluh tiga, yang sudah beberapa kali diubah, terakhir dengan PMK empat Tahun dua ribu dua puluh lima."
+    4.73,
+    "SPTNP, Pasal enam belas, soal tarif dan nilai pabean."
    ],
    [
-    14.086,
-    "Perubahan terakhir itu antara lain melonggarkan ketentuan untuk barang kiriman jemaah haji, serta hadiah perlombaan atau penghargaan internasional."
+    9.07,
+    "SPKTNP, Pasal tujuh belas, penetapan kembali oleh Direktur Jenderal."
+   ],
+   [
+    13.65,
+    "SPP, Pasal sembilan puluh tiga A, untuk penetapan selain tarif dan nilai pabean."
+   ],
+   [
+    19.05,
+    "SPSA, Pasal sembilan puluh empat, sanksi administrasi berupa denda."
+   ],
+   [
+    23.77,
+    "Begini rantainya: nilai pabean naik, Bea Masuk kurang dibayar,"
+   ],
+   [
+    28.07,
+    "nilai impor ikut naik, dan PPN serta PPh Pasal dua puluh dua Impor ikut kurang."
+   ],
+   [
+    33.39,
+    "Denda kesalahan nilai pabean dihitung dari kekurangan Bea Masuk saja: seratus persen untuk kekurangan sampai lima puluh persen dari Bea Masuk yang dibayar,"
+   ],
+   [
+    40.83,
+    "berlapis sampai seribu persen."
    ]
-  ],
-  "silent": true
+  ]
  },
- "ambang": {
-  "dur": 28.15,
+ "kasus3": {
+  "dur": 43.26,
   "marks": {
-   "s1": 3.516,
-   "s2": 12.337,
-   "s3": 21.989
+   "np": 2.04,
+   "bm": 12.32,
+   "ni": 16.76,
+   "ppn": 21.54,
+   "pph": 26.5,
+   "denda": 31.5,
+   "tot": 37.32
   },
   "cues": [
    [
-    0.1,
-    "Pungutannya ditentukan oleh nilai FOB per kiriman."
+    0.05,
+    "Mari kita hitung Kasus tiga."
    ],
    [
-    3.516,
-    "Sampai tiga dolar, Bea Masuk dibebaskan dan PPh dikecualikan."
+    1.99,
+    "Selisih nilai pabeannya: enam ribu dolar dikali delapan belas ribu seratus lima puluh lima rupiah,"
    ],
    [
-    7.933,
-    "Yang dibayar hanya PPN, dengan beban efektif sebelas persen."
+    9.31,
+    "seratus delapan koma sembilan tiga juta."
    ],
    [
-    12.337,
-    "Di atas tiga dolar sampai seribu lima ratus dolar, Bea Masuknya tujuh koma lima persen, PPh tetap dikecualikan, dan PPN-nya sama."
+    12.27,
+    "Kekurangan Bea Masuk sepuluh persen, sepuluh koma delapan sembilan tiga juta."
    ],
    [
-    21.989,
-    "Di atas seribu lima ratus dolar, berlaku tarif umum, seperti impor biasa."
+    16.71,
+    "Selisih nilai impornya seratus sembilan belas koma delapan dua tiga juta."
+   ],
+   [
+    21.49,
+    "Kekurangan PPN Impor tiga belas koma satu delapan juta, dan"
+   ],
+   [
+    26.45,
+    "kekurangan PPh Pasal dua puluh dua dua koma sembilan sembilan lima juta."
+   ],
+   [
+    31.45,
+    "Dendanya seratus persen dari kekurangan Bea Masuk, sepuluh koma delapan sembilan tiga juta."
+   ],
+   [
+    36.69,
+    "Jadi, total tagihan SPTNP-nya tiga puluh tujuh koma sembilan enam dua juta rupiah."
    ]
-  ],
-  "silent": true
+  ]
  },
- "komoditas": {
-  "dur": 27.539,
+ "jalur1": {
+  "dur": 28.31,
   "marks": {
-   "k8": 0.1,
-   "kaki": 15.491
+   "f1": 6.82,
+   "f2": 17.1,
+   "f3": 22.74
   },
   "cues": [
    [
-    0.1,
-    "Tapi ada pengecualian."
+    0.05,
+    "Terhadap penetapan ini, PT Kain Prima Nusantara bisa melakukan upaya hukum."
    ],
    [
-    1.836,
-    "Delapan kelompok komoditas dikenai tarif yang berbeda dari tujuh koma lima persen, antara lain tas, produk tekstil, alas kaki, sepeda, jam tangan, kosmetik, besi dan baja, serta buku."
+    5.63,
+    "Pertama, keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC,"
    ],
    [
-    15.491,
-    "Untuk latihan ini, alas kaki kita hitung dengan Bea Masuk dua puluh lima persen dan PPh lima persen."
+    10.37,
+    "enam puluh hari sejak tanggal penetapan, dengan jaminan sebesar tagihan."
    ],
    [
-    23.38,
-    "Angka ini perlu dicocokkan dengan tabel resmi DJBC."
+    16.09,
+    "Kedua, banding ke Pengadilan Pajak, enam puluh hari setelah tagihan dilunasi."
+   ],
+   [
+    21.67,
+    "Dan ketiga, peninjauan kembali ke Mahkamah Agung, dengan alasan terbatas, hanya satu kali."
    ]
-  ],
-  "silent": true
+  ]
  },
  "q1": {
-  "dur": 7.984,
+  "dur": 11.39,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, mari kita cek pemahaman kamu."
    ],
    [
-    3.244,
-    "Ketentuan mana yang berlaku untuk setiap paket ini, ya?"
+    2.83,
+    "Importir menerima SPTNP yang menaikkan nilai pabean."
+   ],
+   [
+    7.57,
+    "Ke mana dan berapa lama ia bisa mengajukan keberatan, ya?"
    ]
-  ],
-  "silent": true
+  ]
  },
- "beda": {
-  "dur": 25.907,
+ "hak": {
+  "dur": 37.35,
   "marks": {
-   "r1": 2.599,
-   "r2": 6.873,
-   "r3": 13.034,
-   "r4": 18.201
+   "seng": 4.7,
+   "mohon": 21.14
   },
   "cues": [
    [
-    0.1,
-    "Apa bedanya dengan impor umum?"
+    0.05,
+    "Di bidang perpajakan, wajib pajak punya dua kelompok hak."
    ],
    [
-    2.599,
-    "Dokumennya bukan PIB, melainkan Consignment Note, atau PIBK."
+    3.95,
+    "Pertama, sengketa."
    ],
    [
-    6.873,
-    "Yang mengurus adalah Perusahaan Jasa Titipan atau penyelenggara pos, bukan importir atau PPJK."
+    5.53,
+    "Hak ini digunakan untuk menguji kebenaran ketetapan,"
    ],
    [
-    13.034,
-    "Bea Masuknya tarif tunggal tujuh koma lima persen, bukan tarif BTKI."
+    8.73,
+    "lewat keberatan, banding, gugatan, atau peninjauan kembali."
    ],
    [
-    18.201,
-    "Dan PPh Pasal dua puluh dua dikecualikan sampai seribu lima ratus dolar, kecuali untuk komoditas tertentu."
+    12.99,
+    "Kalau kalah, risikonya sanksi tiga puluh persen untuk keberatan,"
+   ],
+   [
+    16.35,
+    "dan enam puluh persen untuk banding atau peninjauan kembali."
+   ],
+   [
+    20.51,
+    "Kedua, permohonan."
+   ],
+   [
+    21.91,
+    "Permohonan bertujuan memperbaiki atau meringankan tanpa sengketa, lewat pembetulan SPT,"
+   ],
+   [
+    27.55,
+    "pembetulan ketetapan, pengurangan atau penghapusan sanksi, atau angsuran dan penundaan pembayaran."
+   ],
+   [
+    33.47,
+    "Permohonan ini tidak menggantikan keberatan untuk SKP yang sama."
    ]
-  ],
-  "silent": true
- },
- "paketA": {
-  "dur": 42.186,
-  "marks": {
-   "np": 3.231,
-   "bm": 14.48,
-   "ni": 21.593,
-   "ppn": 27.124,
-   "pph": 34.993,
-   "tot": 36.334
-  },
-  "cues": [
-   [
-    0.1,
-    "Sekarang kita hitung paket A, earbuds."
-   ],
-   [
-    3.231,
-    "Nilai pabeannya CIF empat puluh dolar dikali kurs delapan belas ribu seratus lima puluh lima rupiah, yaitu tujuh ratus dua puluh enam ribu dua ratus rupiah."
-   ],
-   [
-    14.48,
-    "Bea Masuk tujuh koma lima persen, lima puluh empat ribu empat ratus enam puluh lima rupiah."
-   ],
-   [
-    21.593,
-    "Nilai impornya tujuh ratus delapan puluh ribu enam ratus enam puluh lima rupiah, dan PPN dengan beban efektif sebelas persen sebesar delapan puluh lima ribu delapan ratus tujuh puluh tiga rupiah."
-   ],
-   [
-    34.993,
-    "PPh dikecualikan."
-   ],
-   [
-    36.334,
-    "Total pungutannya seratus empat puluh ribu tiga ratus tiga puluh delapan rupiah."
-   ]
-  ],
-  "silent": true
- },
- "paketB": {
-  "dur": 49.167,
-  "marks": {
-   "np": 2.799,
-   "bm": 12.393,
-   "ni": 21.411,
-   "ppn": 26.943,
-   "pph": 32.266,
-   "tot": 38.299
-  },
-  "cues": [
-   [
-    0.1,
-    "Lalu paket B, sepatu sneakers."
-   ],
-   [
-    2.799,
-    "Nilai pabeannya CIF sembilan puluh lima dolar, yaitu satu juta tujuh ratus dua puluh empat ribu tujuh ratus dua puluh lima rupiah."
-   ],
-   [
-    12.393,
-    "Karena alas kaki, Bea Masuknya dua puluh lima persen, empat ratus tiga puluh satu ribu seratus delapan puluh satu rupiah."
-   ],
-   [
-    21.411,
-    "Nilai impornya dua juta seratus lima puluh lima ribu sembilan ratus enam rupiah, dan PPN-nya dua ratus tiga puluh tujuh ribu seratus lima puluh rupiah."
-   ],
-   [
-    32.266,
-    "Ditambah PPh lima persen, seratus tujuh ribu tujuh ratus sembilan puluh lima rupiah."
-   ],
-   [
-    38.299,
-    "Total pungutannya tujuh ratus tujuh puluh enam ribu seratus dua puluh enam rupiah."
-   ],
-   [
-    44.106,
-    "Angka ini belum dibulatkan; pembulatannya mengikuti ketentuan pengisian dokumen."
-   ]
-  ],
-  "silent": true
- },
- "banding": {
-  "dur": 19.856,
-  "marks": {
-   "a": 0.1,
-   "b": 5.787,
-   "why": 9.177
-  },
-  "cues": [
-   [
-    0.1,
-    "Bandingkan keduanya."
-   ],
-   [
-    1.48,
-    "Pungutan earbuds sekitar sembilan belas persen dari nilai pabeannya."
-   ],
-   [
-    5.787,
-    "Pungutan sepatu sekitar empat puluh lima persen."
-   ],
-   [
-    9.177,
-    "Bedanya ada pada tarif khusus alas kaki, yaitu Bea Masuk dua puluh lima persen ditambah PPh, untuk melindungi industri alas kaki dalam negeri."
-   ]
-  ],
-  "silent": true
+  ]
  },
  "q2": {
-  "dur": 7.984,
+  "dur": 13.74,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    3.431,
-    "Pungutan apa saja yang dikenakan pada paket sepatu Dita?"
+    2.43,
+    "PT Kain Prima Nusantara menerima STP denda lima ratus ribu rupiah karena SPT Masa PPN-nya terlambat,"
+   ],
+   [
+    9.75,
+    "dan ia merasa khilaf."
+   ],
+   [
+    11.81,
+    "Jalur apa yang tepat?"
    ]
-  ],
-  "silent": true
+  ]
+ },
+ "bandingkan": {
+  "dur": 31.02,
+  "marks": {
+   "r1": 4.06,
+   "r2": 9.1,
+   "r3": 15.48,
+   "r4": 22.84
+  },
+  "cues": [
+   [
+    0.05,
+    "Upaya hukum untuk dua jalur penetapan ini berbeda di tiga hal."
+   ],
+   [
+    4.01,
+    "Tenggat keberatannya: enam puluh hari untuk DJBC, tiga bulan untuk DJP."
+   ],
+   [
+    9.05,
+    "Syarat bayarnya: jaminan sebesar tagihan untuk DJBC, melunasi jumlah yang disetujui untuk DJP."
+   ],
+   [
+    15.43,
+    "Tenggat bandingnya: enam puluh hari setelah lunas untuk DJBC,"
+   ],
+   [
+    19.25,
+    "tiga bulan dengan sisa pajak tertangguh untuk DJP."
+   ],
+   [
+    22.47,
+    "Dan risikonya: DJBC tidak mengenakan sanksi khusus,"
+   ],
+   [
+    25.83,
+    "sedangkan DJP mengenakan sanksi tiga puluh atau enam puluh persen jika kalah."
+   ]
+  ]
+ },
+ "lensa": {
+  "dur": 34.79,
+  "marks": {
+   "l1": 5.02,
+   "l2": 17.66,
+   "l3": 27.96
+  },
+  "cues": [
+   [
+    0.05,
+    "Mengapa hak untuk melakukan upaya hukum ini diberikan oleh undang-undang?"
+   ],
+   [
+    4.07,
+    "Pertama, kontrol atas wewenang: Pasal dua puluh tiga A Undang-Undang Dasar seribu sembilan ratus empat puluh lima mensyaratkan pungutan diatur berdasarkan undang-undang,"
+   ],
+   [
+    13.59,
+    "dan penetapan pejabat harus dapat diuji."
+   ],
+   [
+    16.75,
+    "Kedua, kepastian dan keadilan: asas certainty dan equality tidak cukup di atas kertas,"
+   ],
+   [
+    23.11,
+    "wajib pajak perlu jalan resmi untuk menguji penetapan yang menurutnya keliru."
+   ],
+   [
+    27.59,
+    "Dan peran Anda: tetapkan dengan benar, lalu jelaskan hak pengguna jasa dengan jujur."
+   ],
+   [
+    33.01,
+    "Jangan menilai peluang menang."
+   ]
+  ]
  },
  "jawab": {
-  "dur": 23.216,
+  "dur": 26.07,
   "marks": {
-   "a1": 2.786,
-   "a2": 8.973,
-   "a3": 14.89
+   "a1": 3.0,
+   "a2": 11.32,
+   "a3": 19.2
   },
   "cues": [
    [
-    0.1,
-    "Jadi, apa jawaban untuk Dita?"
+    0.05,
+    "Jadi, bagaimana menjawab dua map tadi?"
    ],
    [
-    2.786,
-    "Sepatu termasuk komoditas dengan tarif khusus, untuk melindungi industri alas kaki dalam negeri."
+    2.95,
+    "Untuk map SPTNP, sampaikan haknya: keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC,"
    ],
    [
-    8.973,
-    "Bea Masuknya dua puluh lima persen dari nilai pabean, ditambah PPN dan PPh."
+    9.17,
+    "enam puluh hari."
    ],
    [
-    14.89,
-    "Pungutan earbuds lebih kecil, karena earbuds memakai tarif umum barang kiriman tujuh koma lima persen, tanpa PPh."
+    11.27,
+    "Untuk map SKPKB, keberatan ke Direktur Jenderal Pajak,"
+   ],
+   [
+    15.49,
+    "tiga bulan, setelah melunasi jumlah yang disetujui."
+   ],
+   [
+    18.77,
+    "Dan untuk kas yang sedang seret,"
+   ],
+   [
+    20.55,
+    "sampaikan permohonan angsuran atau penundaan, lewat KPP tempat ia terdaftar."
    ]
-  ],
-  "silent": true
+  ]
  },
  "wrap": {
-  "dur": 21.754,
+  "dur": 21.47,
   "marks": {
-   "w1": 2.049,
-   "w2": 7.409,
-   "w3": 17.331
+   "w1": 1.52,
+   "w2": 7.78,
+   "w3": 16.12
   },
   "cues": [
    [
-    0.1,
-    "Jadi, ini rangkumannya."
+    0.05,
+    "Ini rangkumannya."
    ],
    [
-    2.049,
-    "Barang kiriman memakai ketentuan khusus, berdasarkan nilai FOB dan jenis komoditas."
+    1.47,
+    "Penetapan DJBC diuji ke DJBC: keberatan enam puluh hari dengan jaminan."
    ],
    [
-    7.409,
-    "Untuk FOB di atas tiga sampai seribu lima ratus dolar, Bea Masuknya tujuh koma lima persen dan PPh dikecualikan, kecuali komoditas tertentu."
+    7.73,
+    "Untuk ketetapan dari DJP, wajib pajak bisa menempuh jalur sengketa,"
    ],
    [
-    17.331,
-    "PPN tetap dipungut, dengan beban efektif sebelas persen."
+    11.91,
+    "yang berisiko sanksi, atau permohonan, yang tidak ada sanksi."
+   ],
+   [
+    15.77,
+    "Dan sebutkan hak serta tenggatnya dengan jujur."
+   ],
+   [
+    19.05,
+    "Jangan menilai peluang menang."
    ]
-  ],
-  "silent": true
+  ]
  },
  "final1": {
-  "dur": 6.317,
+  "dur": 5.27,
   "marks": {},
   "cues": [
    [
-    0.1,
-    "Nah, sekarang kita latihan, ya."
+    0.05,
+    "Nah, ini latihan bab, ya."
    ],
    [
-    3.011,
-    "Coba kamu jawab latihan berikut ini."
+    1.77,
+    "Coba kamu pilih jalurnya untuk tiga situasi berikut ini."
    ]
-  ],
-  "silent": true
+  ]
  },
  "finish": {
-  "dur": 10.781,
+  "dur": 8.46,
   "marks": {},
   "cues": [
    [
-    0.1,
-    "Bagus, materi ketujuh selesai."
+    0.05,
+    "Materi ketujuh selesai."
    ],
    [
-    2.469,
-    "Di materi terakhir, kita kembali ke staf PT Kain Prima Nusantara, dan menyusun jawaban lengkap untuk tagihannya."
+    1.71,
+    "Berikutnya, kita kembali ke Kasus satu,"
+   ],
+   [
+    3.75,
+    "dan menyusun jawaban lengkap untuk tagihan PT Kain Prima Nusantara."
    ]
-  ],
-  "silent": true
+  ]
  }
 };
 
-</script>
+window.CLIP = { "q1": 'data:audio/mpeg;base64,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t/qjcrOkS2SklgGWNYNbQEeGiIH/82TE/SNygjQIwZA92OUJQzIkVrnVz3U51bix4rUCQSAqkJaFqgz0wc5UljAYkeidcwkdaJI9ElaJpiZE60W2nxIuEpjG1Yaw2pMqMsQ/hq1peZNSWOJKu2SW0ExEtLv//CYiWU1NES2pmSykv7DRVIsSqImr/9qSlURNFMV3Tsl/lVSSWIlpRV7RVJalv///82TE8h/aijgMekwEl1isz/xKDjkVSKIllUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/82TE9R+xVfgUwYZdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=' };</script>
 <script>
 'use strict';
-/* Bab 7 (KB 7): Barang Kiriman. Kasus 3 (Dita, dua paket belanja daring): ambang nilai FOB, komoditas bertarif khusus,
-   perbedaan dengan impor umum, dan hitungan paket earbuds dan sepatu. McKinsey-style exhibits in the INSW design. */
-const CHAPTER = { number: 7, label: '7 · Adegan 6 dari 15', title: "Cek pemahaman", minutes: 1, language: 'id', next: '07-beda.html' };
+/* Bab 7 (KB 7, v3): Upaya Hukum dan Hak Wajib Pajak. Penetapan DJBC (SPTNP dkk.) sebagai pintu masuk, Kasus 3
+   (SPTNP atas Kasus 1), jalur kepabeanan, lalu hak wajib pajak di bidang perpajakan: sengketa vs permohonan,
+   jalur banding dua instansi, dan menjawab pengguna jasa yang tidak setuju. McKinsey-style exhibits, INSW design. */
+const CHAPTER = { number: 7, label: '7 · Adegan 6 dari 14', title: "Cek pemahaman", minutes: 1, language: 'id', next: '07-hak.html' };
 
-Object.assign(GLYPH, {
-  pack: 'M3 7l9-4 9 4v10l-9 4-9-4z M3 7l9 4 9-4 M12 11v10',
-  shoe: 'M2 17v-3l5-1 3-4 3 3h4c2 0 4 1 4 3v2z M2 17h20 M10 9l1.5 1.5',
-  phones: 'M4 15v-3a8 8 0 0 1 16 0v3 M4 15h3v5H4z M17 15h3v5h-3z',
-  watch: 'M12 17a5 5 0 1 0 0-10a5 5 0 1 0 0 10z M12 10v2.5l1.5 1 M9 7l.5-4h5l.5 4 M9 17l.5 4h5l.5-4',
-  bag: 'M5 8h14l1 13H4z M9 8V6a3 3 0 0 1 6 0v2',
-  bike: 'M6 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M18 19a3 3 0 1 0 0-6a3 3 0 1 0 0 6z M6 16l4-7h5l3 7 M9 9l-1-2H6 M13 9l-1-3h3',
-});
 const paper = p => bgPaper(p);
-const okTick = (p, x, y, r = 20, col = MK.green) => {
-  const ok = G(p, { x, y });
-  mk('circle', { r, fill: col }, ok);
-  path(ok, `M${-r * .45} ${r * .05}l${r * .3} ${r * .3}l${r * .6} ${-r * .6}`, { stroke: '#fff', 'stroke-width': r * .22, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
-  return ok;
-};
 const navy = (p, seed, D) => bgNavy(p, seed, D);
-// Kasus 3 numbers (KB 7.4 dan 7.5), dibulatkan ke rupiah per komponen
+// Kasus 3 (KB 7.3): SPTNP menaikkan nilai kain Kasus 1 dari USD 60.000 menjadi USD 66.000
 const KURS = 18155, r0 = Math.round;
-const A = { cif: 40, np: 40 * KURS }; A.bm = r0(A.np * .075); A.ni = A.np + A.bm; A.ppn = r0(A.ni * .11); A.tot = A.bm + A.ppn;          // 726.200 · 54.465 · 780.665 · 85.873 · 140.338
-const B = { cif: 95, np: 95 * KURS }; B.bm = r0(B.np * .25); B.ni = r0(B.np + B.np * .25); B.ppn = r0(B.ni * .11); B.pph = r0(B.ni * .05); B.tot = B.bm + B.ppn + B.pph;   // 1.724.725 · 431.181 · 2.155.906 · 237.150 · 107.795 · 776.126
-const pct = v => String(v).replace('.', ',') + '%';
-// tabel hitung: baris [tanda, nama, cara, nilai, sorot]
-function calcTable(p, m, rows) {
-  const H = G(p);
-  T(H, 'KOMPONEN', { x: 92, y: 246, size: 15, weight: 700, fill: MK.dim });
-  T(H, 'CARA HITUNG', { x: 560, y: 246, size: 15, weight: 700, fill: MK.dim });
-  T(H, 'RUPIAH', { x: 1508, y: 246, size: 15, weight: 700, fill: MK.dim, anchor: 'end' });
-  mk('rect', { x: 92, y: 258, width: 1416, height: 3, fill: MK.navy }, H);
-  show(H, .4, .4);
-  rows.forEach(([mark, n, how, v, hot], i) => {
-    const y = 280 + i * 62, g = G(p), t0 = m(mark) - .2, last = i === rows.length - 1;
-    if (hot) mk('rect', { x: 84, y, width: 1432, height: 54, rx: 10, fill: last ? MK.navy : '#EAF2FB' }, g);
-    T(g, n, { x: 104, y: y + 36, size: 24, weight: 700, fill: last ? '#fff' : MK.navy });
-    T(g, how, { x: 560, y: y + 36, size: 21, weight: 500, fill: last ? '#D5E2F5' : MK.dim });
-    T(g, typeof v === 'number' ? rp(v) : v, { x: 1496, y: y + 38, size: last ? 32 : 26, weight: 800, fill: last ? MK.gold : MK.navy, anchor: 'end' });
-    slideUp(g, t0, .45);
-  });
-}
+const K3 = {};
+K3.np = 6000 * KURS;                               // 108.930.000 selisih nilai pabean
+K3.bm = r0(K3.np * .10);                           // 10.893.000 kekurangan Bea Masuk
+K3.ni = K3.np + K3.bm;                             // 119.823.000 selisih nilai impor
+K3.ppn = r0(K3.ni * 11 / 12 * .12);                // 13.180.530 kekurangan PPN Impor
+K3.pph = r0(K3.ni * .025);                         // 2.995.575 kekurangan PPh Pasal 22
+K3.denda = K3.bm;                                  // 10.893.000 denda (100% dari kekurangan BM)
+K3.tot = K3.bm + K3.ppn + K3.pph + K3.denda;       // 37.962.105 total tagihan SPTNP
 
 /* ---------- beats ---------- */
 const BEATS = [
-  ['intro', 'Barang Kiriman', (m, D) => {
+  ['intro', 'Upaya hukum dan hak wajib pajak', (m, D) => {
     const p = panel(0);
     navy(p, 71, D);
     const ring = G(p, { x: 1130, y: 470 });
@@ -3363,10 +3466,10 @@ const BEATS = [
     clockRun(t => ring.setAttribute('transform', `translate(1130 470) rotate(${t * 6})`), D, { tail: true });
     const mid = G(p, { x: 1130, y: 470 });
     mk('circle', { r: 150, fill: '#fff' }, mid);
-    tile(mid, 'pack', 0, -18, { size: 150, v: 'sky' });
-    T(mid, 'Paket', { y: 92, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
+    tile(mid, 'law', 0, -18, { size: 150, v: 'gold' });
+    T(mid, 'Hak', { y: 92, size: 30, weight: 800, fill: MK.navy, anchor: 'middle' });
     popIn(mid, .3);
-    [['user', 'gold', 'Dita'], ['phones', 'blue', 'Earbuds'], ['shoe', 'sky', 'Sneakers'], ['cart', 'gold', 'Belanja daring'], ['globe', 'blue', 'Luar negeri'], ['doc', 'sky', 'CN atau PIBK']].forEach(([gl, v, n], k) => {
+    [['doc', 'sky', 'SPTNP'], ['shield', 'sky', 'DJBC'], ['server', 'blue', 'DJP'], ['percent', 'gold', 'Sanksi'], ['check', 'blue', 'Permohonan'], ['office', 'sky', 'Pengadilan Pajak']].forEach(([gl, v, n], k) => {
       const a = -Math.PI / 2 + k * Math.PI / 3, x = 1130 + 250 * Math.cos(a), y = 470 + 250 * Math.sin(a);
       const g = G(p);
       tile(g, gl, x, y, { size: 84, v, floor: false });
@@ -3377,236 +3480,168 @@ const BEATS = [
     slideUp(part, m('sub'));
     const tg = pill(p, 'BAB 7 · KEGIATAN BELAJAR 7', 92, 290, { size: 20, anchor: 'start' });
     slideUp(tg, .5);
-    const t1 = T(p, 'Barang', { x: 92, y: 392, size: 70, weight: 700, fill: '#fff' });
-    const t2 = T(p, 'Kiriman', { x: 92, y: 474, size: 70, weight: 700, fill: MK.gold });
+    const t1 = T(p, 'Upaya Hukum dan', { x: 92, y: 392, size: 62, weight: 700, fill: '#fff' });
+    const t2 = T(p, 'Hak Wajib Pajak', { x: 92, y: 474, size: 62, weight: 700, fill: MK.gold });
     slideUp(t1, .7); slideUp(t2, .85);
     const rule = mk('rect', { x: 92, y: 512, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
     prog(q => rule.setAttribute('width', 120 * q), 1.2, .5, out);
     const sub = G(p);
-    lines(sub, 'Paket belanja daring lewat|jasa titipan atau pos', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
+    lines(sub, 'Hak importir saat tidak setuju dengan|penetapan DJBC atau ketetapan DJP', 92, 572, { size: 30, weight: 500, fill: '#D5E2F5' });
     slideUp(sub, 1.3);
   }],
 
-  ['ask', 'Kasus 3: dua paket Dita', (m, D) => {
+  ['ask', 'Dua map yang tidak disetujui', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Kasus 3: dua paket belanja daring Dita|dikenai pungutan yang berbeda jauh', { tag: 'KASUS 3 · DITA, BEKASI' });
-    [['phones', 'sky', 'PAKET A · EARBUDS', 'FOB USD 30', 'CIF USD 40', 92], ['shoe', 'gold', 'PAKET B · SEPATU SNEAKERS', 'FOB USD 80', 'CIF USD 95', 442]].forEach(([gl, v, lab, fob, cif, x], i) => {
+    actionTitle(p, 'Staf PT Kain Prima Nusantara membawa dua map,|dan kas perusahaan sedang seret', { tag: 'PANCINGAN' });
+    [['doc', 'sky', 'MAP BIRU', 'SPTNP dari DJBC', 92], ['doc', 'gold', 'MAP KUNING', 'SKPKB dan STP dari KPP', 442]].forEach(([gl, v, lab, sub, x], i) => {
       const c = G(p);
       mcard(c, x, 230, 330, 330);
       tile(c, gl, x + 165, 330, { size: 110, v });
       T(c, lab, { x: x + 165, y: 430, size: 15, weight: 700, fill: MK.dim, anchor: 'middle' });
-      T(c, fob, { x: x + 165, y: 480, size: 32, weight: 800, fill: MK.navy, anchor: 'middle' });
-      T(c, cif, { x: x + 165, y: 520, size: 21, weight: 600, fill: MK.dim, anchor: 'middle' });
+      lines(c, sub, x + 165, 475, { size: 22, weight: 700, fill: MK.navy, anchor: 'middle', lh: 1.3 });
       slideUp(c, .4 + i * .3, .5);
     });
-    const via = G(p);
-    mcard(via, 92, 590, 680, 110, { fill: '#EAF2FB' });
-    tile(via, 'office', 160, 645, { size: 70, v: 'blue', floor: false });
-    T(via, 'Dikirim lewat Perusahaan Jasa Titipan (PJT)', { x: 215, y: 655, size: 22, weight: 700, fill: MK.navy });
-    slideUp(via, m('ask') + 3.5);
     const a = G(p);
     mcard(a, 820, 230, 688, 470, { fill: MK.navy });
     tile(a, 'chat', 905, 320, { size: 90, v: 'gold' });
-    T(a, 'PERTANYAAN DITA', { x: 975, y: 315, size: 16, weight: 700, fill: '#D5E2F5' });
-    lines(a, '“Saya beli sepatu sekitar|Rp1,7 juta. Mengapa|tagihannya hampir|Rp780 ribu?”', 870, 420, { size: 34, weight: 700, fill: '#fff', lh: 1.3 });
-    show(a, m('ans') - .2, .4);
-    source(p, 'Bahan Ajar PDRI, Kasus yang Dipakai dan KB 7', m('ask') + 1);
+    T(a, 'STAF PT KAIN PRIMA NUSANTARA', { x: 975, y: 315, size: 16, weight: 700, fill: '#D5E2F5' });
+    lines(a, '“Dua-duanya kami tidak|setuju, dan kas kami|sedang seret. Apa saja|yang bisa kami lakukan?”', 870, 420, { size: 32, weight: 700, fill: '#fff', lh: 1.32 });
+    show(a, m('tanya') - .2, .4);
+    source(p, 'Bahan Ajar PDRI KB 7.1 dan Kasus yang Dipakai', m('tanya') + 1);
   }],
 
-  ['hukum', 'Dasar hukum barang kiriman', (m, D) => {
+  ['penetapan', 'Penetapan pejabat: asal tagihan kekurangan', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Barang kiriman punya aturan sendiri:|PMK 96/2023, terakhir diubah PMK 4/2025', { tag: 'DASAR HUKUM BARANG KIRIMAN' });
-    [['p96', 'law', 'blue', 'PMK 96 Tahun 2023', 'ketentuan barang kiriman', 92], ['p4', 'doc', 'gold', 'PMK 4 Tahun 2025', 'perubahan terakhir', 842]].forEach(([mark, gl, v, n, sub, x], i) => {
-      const c = G(p);
-      mcard(c, x, 250, 666 - (i ? 0 : 0), 190, { fill: i ? '#FFF7E3' : '#fff' });
-      tile(c, gl, x + 85, 345, { size: 96, v });
-      T(c, n, { x: x + 160, y: 335, size: 31, weight: 800, fill: MK.navy });
-      T(c, sub, { x: x + 160, y: 378, size: 21, weight: 500, fill: MK.dim });
-      slideUp(c, m(mark) - .2, .5);
-    });
-    const ar = G(p);
-    flow(ar, 'M760 345H830', MK.gold, m('p4') - .3, .3, 5);
-    mkHead(ar, 836, 345, 0, MK.gold, m('p4'), 14);
-    show(ar, m('p4') - .3, .2);
-    [['Jemaah haji', 'pelonggaran untuk barang kiriman jemaah haji', 'users', 'sky'], ['Hadiah internasional', 'pelonggaran untuk hadiah perlombaan atau penghargaan internasional', 'medal', 'gold']].forEach(([n, sub, gl, v], i) => {
-      const c = G(p), x = 92 + i * 750;
-      mcard(c, x, 480, 716, 190);
-      tile(c, gl, x + 85, 575, { size: 90, v, floor: false });
-      pill(c, 'KELONGGARAN ' + (i + 1), x + 160, 530, { size: 14, anchor: 'start', bg: MK.navy, ink: '#fff' });
-      T(c, n, { x: x + 160, y: 580, size: 28, weight: 700, fill: MK.navy });
-      lines(c, sub.replace(' untuk ', ' untuk|'), x + 160, 616, { size: 18, weight: 500, fill: MK.dim });
-      slideUp(c, m('lon') - .2 + i * .8, .5);
-    });
-    source(p, 'Bahan Ajar PDRI KB 7.1; PMK 96 Tahun 2023 s.d. PMK 4 Tahun 2025', m('p96'));
-  }],
-
-  ['ambang', 'Tiga batas nilai FOB', (m, D) => {
-    const p = panel(0);
-    navy(p, 73, D);
-    actionTitle(p, 'Pungutan ditentukan nilai FOB per kiriman:|tiga batas, makin tinggi makin penuh', { tag: 'BATAS NILAI FOB', dark: true });
-    [['s1', 'Sampai USD 3', 250, 'BM dibebaskan', 'PPh dikecualikan', 'PPN efektif 11%', 'sky'],
-     ['s2', 'USD 3 sampai USD 1.500', 340, 'BM 7,5%', 'PPh dikecualikan', 'PPN efektif 11%', 'blue'],
-     ['s3', 'Di atas USD 1.500', 430, 'Tarif umum', 'seperti impor biasa', 'PIB dan PPh Pasal 22', 'gold']].forEach(([mark, n, h, l1, l2, l3, v], i) => {
-      const x = 92 + i * 482, y = 690 - h, c = G(p);
-      mcard(c, x, y, 450, h, { dark: true });
-      if (i === 2) mk('rect', { x, y, width: 450, height: 12, rx: 6, fill: MK.gold }, c);
-      T(c, n, { x: x + 30, y: y + 52, size: 25, weight: 800, fill: MK.navy });
-      [l1, l2, l3].forEach((l, k) => {
-        okTick(c, x + 44, y + 100 + k * 50, 14, k === 0 ? MK.goldDark : MK.green);
-        T(c, l, { x: x + 76, y: y + 108 + k * 50, size: 22, weight: 600, fill: MK.navy });
-      });
+    actionTitle(p, 'Penetapan pejabat dapat menimbulkan kekurangan|Bea Masuk, PDRI, dan denda sekaligus', { tag: 'DARI PENETAPAN KE TAGIHAN' });
+    [['s1', 'SPTNP', 'Pasal 16', 'tarif dan/atau nilai pabean'],
+     ['s2', 'SPKTNP', 'Pasal 17', 'penetapan kembali Dirjen'],
+     ['s3', 'SPP', 'Pasal 93A', 'selain tarif dan nilai pabean'],
+     ['s4', 'SPSA', 'Pasal 94', 'sanksi administrasi berupa denda']].forEach(([mark, n, pasal, sub], i) => {
+      const x = 92 + i * 362, c = G(p);
+      mcard(c, x, 240, 342, 230);
+      tile(c, 'doc', x + 80, 320, { size: 76, v: 'sky' });
+      T(c, n, { x: x + 150, y: 310, size: 26, weight: 800, fill: MK.navy });
+      T(c, pasal, { x: x + 150, y: 338, size: 16, weight: 700, fill: MK.goldDark });
+      lines(c, sub, x + 28, 400, { size: 17, weight: 500, fill: MK.dim, lh: 1.3 });
       popIn(c, m(mark) - .1);
     });
-    source(p, 'Bahan Ajar PDRI KB 7.2; PMK 96 Tahun 2023', .8, true);
+    const chain = G(p);
+    lines(chain, 'Nilai pabean naik → Bea Masuk kurang dibayar → nilai impor ikut naik →|PPN dan PPh Pasal 22 Impor ikut kurang dibayar', 92, 540, { size: 24, weight: 700, fill: MK.navy, lh: 1.4 });
+    show(chain, m('rantai'), .4);
+    const denda = G(p);
+    lines(denda, 'Denda kesalahan nilai pabean dihitung dari kekurangan Bea Masuk saja: 100% untuk|kekurangan sampai 50% dari Bea Masuk yang dibayar, berlapis sampai 1.000%.', 92, 650, { size: 20, weight: 600, fill: MK.dim, lh: 1.4 });
+    show(denda, m('denda'), .4);
+    source(p, 'Bahan Ajar PDRI KB 7.2; UU 10/1995 jo. UU 17/2006; PP 39/2019', m('s1'));
   }],
 
-  ['komoditas', 'Komoditas bertarif khusus', (m, D) => {
+  ['kasus3', 'Menghitung tagihan SPTNP', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Delapan kelompok komoditas dikenai tarif yang|berbeda dari tarif tunggal 7,5%', { tag: 'KOMODITAS TERTENTU' });
-    [['bag', 'gold', 'Tas'], ['shirt', 'blue', 'Produk tekstil'], ['shoe', 'gold', 'Alas kaki'], ['bike', 'sky', 'Sepeda'],
-     ['watch', 'blue', 'Jam tangan'], ['heart', 'sky', 'Kosmetik'], ['layers', 'gold', 'Besi dan baja'], ['book', 'blue', 'Buku']].forEach(([gl, v, n], i) => {
-      const x = 92 + (i % 4) * 215, y = 235 + Math.floor(i / 4) * 185, c = G(p), hot = n === 'Alas kaki';
-      mcard(c, x, y, 195, 165, { fill: hot ? '#FFF7E3' : '#fff' });
-      if (hot) mk('rect', { x, y, width: 195, height: 165, rx: 15, fill: 'none', stroke: MK.gold, 'stroke-width': 3 }, c);
-      tile(c, gl, x + 97, y + 62, { size: 76, v });
-      T(c, n, { x: x + 97, y: y + 132, size: 19, weight: 700, fill: MK.navy, anchor: 'middle' });
-      popIn(c, m('k8') + i * .12);
+    actionTitle(p, `Kasus 3: SPTNP menaikkan nilai kain,|total tagihan ${rp(K3.tot)}`, { tag: 'KASUS 3 · SPTNP ATAS KASUS 1' });
+    const H = G(p);
+    T(H, 'KOMPONEN', { x: 92, y: 246, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'CARA HITUNG', { x: 600, y: 246, size: 15, weight: 700, fill: MK.dim });
+    T(H, 'RUPIAH', { x: 1508, y: 246, size: 15, weight: 700, fill: MK.dim, anchor: 'end' });
+    mk('rect', { x: 92, y: 258, width: 1416, height: 3, fill: MK.navy }, H);
+    show(H, .4, .4);
+    [['np', 'Selisih nilai pabean', 'USD 6.000 × Rp18.155', K3.np, false],
+     ['bm', 'Kekurangan Bea Masuk', '10% × selisih nilai pabean', K3.bm, false],
+     ['ni', 'Selisih nilai impor', 'selisih pabean + kekurangan BM', K3.ni, true],
+     ['ppn', 'Kekurangan PPN Impor', '12% × 11/12 × selisih nilai impor', K3.ppn, false],
+     ['pph', 'Kekurangan PPh Pasal 22', '2,5% × selisih nilai impor', K3.pph, false],
+     ['denda', 'Denda administrasi', '100% × kekurangan Bea Masuk', K3.denda, false],
+     ['tot', 'Total tagihan SPTNP', 'BM + PPN + PPh 22 + denda', K3.tot, true]].forEach(([mark, n, how, v, hot], i) => {
+      const y = 280 + i * 60, g = G(p), t0 = m(mark) - .2, last = i === 6;
+      if (hot) mk('rect', { x: 84, y, width: 1432, height: 52, rx: 10, fill: last ? MK.navy : '#EAF2FB' }, g);
+      T(g, n, { x: 104, y: y + 36, size: 23, weight: 700, fill: last ? '#fff' : MK.navy });
+      T(g, how, { x: 600, y: y + 36, size: 20, weight: 500, fill: last ? '#D5E2F5' : MK.dim });
+      T(g, rp(v), { x: 1496, y: y + 38, size: last ? 30 : 25, weight: 800, fill: last ? MK.gold : MK.navy, anchor: 'end' });
+      slideUp(g, t0, .45);
     });
-    const k = G(p);
-    mcard(k, 980, 235, 528, 350, { fill: MK.navy });
-    tile(k, 'shoe', 1070, 335, { size: 100, v: 'gold' });
-    T(k, 'UNTUK LATIHAN: ALAS KAKI', { x: 1140, y: 320, size: 15, weight: 700, fill: '#D5E2F5' });
-    T(k, 'BM 25%', { x: 1020, y: 460, size: 62, weight: 800, fill: MK.gold });
-    T(k, 'PPh 5%', { x: 1020, y: 540, size: 62, weight: 800, fill: '#fff' });
-    popIn(k, m('kaki'));
-    const n = G(p);
-    lines(n, 'Angka ini untuk latihan; cocokkan dengan|tabel resmi DJBC sebelum kelas.', 92, 650, { size: 21, weight: 500, fill: MK.dim });
-    show(n, m('kaki') + 3, .4);
-    source(p, 'Bahan Ajar PDRI KB 7.2; PMK 96 Tahun 2023 dan perubahannya', m('k8'));
+    const note = G(p);
+    T(note, 'SPTNP tanggal 2 Maret 2026. BM 10% masih asumsi latihan (cek BTKI).', { x: 92, y: 718, size: 17, weight: 500, fill: MK.dim });
+    show(note, m('tot') + 1, .4);
+    source(p, 'Bahan Ajar PDRI KB 7.3; KMK 55/MK/EF.2/2026', m('np'));
+  }],
+
+  ['jalur1', 'Jalur kepabeanan: lihat penerbit surat', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Surat dari DJBC diuji ke DJBC: keberatan 60 hari|dengan jaminan, banding setelah tagihan dilunasi', { tag: 'JALUR KEPABEANAN' });
+    const base = G(p);
+    mk('rect', { x: 180, y: 452, width: 1240, height: 6, rx: 3, fill: MK.line }, base);
+    show(base, m('f1') - .3, .4);
+    [['f1', 'doc', 'sky', 'Keberatan', 'Dirjen Bea dan Cukai,|Portal DJBC. 60 hari,|jaminan sebesar tagihan.', 300],
+     ['f2', 'office', 'sky', 'Banding', 'Pengadilan Pajak.|60 hari setelah|tagihan dilunasi.', 800],
+     ['f3', 'law', 'gold', 'Peninjauan Kembali', 'Mahkamah Agung.|Alasan terbatas,|hanya satu kali.', 1300]].forEach(([mark, gl, v, head, sub, x], i) => {
+      const g = G(p);
+      mk('circle', { cx: x, cy: 455, r: 22, fill: '#fff', stroke: MK.navy, 'stroke-width': 5 }, g);
+      T(g, String(i + 1), { x, y: 463, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+      tile(g, gl, x, 355, { size: 90, v });
+      mcard(g, x - 200, 510, 400, 190);
+      T(g, head, { x, y: 560, size: 26, weight: 700, fill: MK.navy, anchor: 'middle' });
+      lines(g, sub, x, 598, { size: 18, weight: 600, fill: MK.dim, anchor: 'middle', lh: 1.35 });
+      popIn(g, m(mark) - .1);
+    });
+    const pegangan = pill(p, 'Pegangan: surat DJBC diajukan ke DJBC; surat DJP mengikuti UU KUP', 92, 706, { size: 18, anchor: 'start', bg: MK.gold });
+    slideUp(pegangan, m('f3') + 1);
+    source(p, 'Bahan Ajar PDRI KB 7.4; UU 17/2006 Pasal 93, 93A, 94, 95', m('f1'));
   }],
 
   ['q1', 'Cek pemahaman', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Cek pemahaman: ketentuan mana yang berlaku|untuk paket berikut?', { tag: 'CEK PEMAHAMAN', t0: .1 });
-    [['phones', 'sky', 'Paket earbuds', 'FOB USD 100'], ['pack', 'gold', 'Lewat PJT', 'bukan impor umum'], ['percent', 'blue', 'Ketentuan', '?']].forEach(([gl, v, n, sub], i) => {
+    actionTitle(p, 'Cek pemahaman: importir menerima SPTNP.|Ke mana dan berapa lama keberatannya?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['doc', 'sky', 'SPTNP', 'menaikkan nilai pabean'], ['law', 'gold', 'Keberatan', 'ke mana, dan berapa lama?'], ['office', 'blue', 'Tujuan', '?']].forEach(([gl, v, n, sub], i) => {
       const c = G(p), y = 250 + i * 150;
-      mcard(c, 92, y, 440, 126);
+      mcard(c, 92, y, 480, 126);
       tile(c, gl, 155, y + 62, { size: 76, v });
       T(c, n, { x: 210, y: y + 58, size: 26, weight: 700, fill: MK.navy });
       T(c, sub, { x: 210, y: y + 92, size: 19, weight: 500, fill: MK.dim });
       slideUp(c, .2 + i * .15);
     });
-  }, { ask: done => quiz({ x: 570, y: 220, w: 950, cls: 'side' }, [{
-    id: 'c-ambang', prompt: ['Sebuah paket earbuds bernilai FOB USD 100 dikirim lewat PJT. Ketentuan mana yang berlaku?'],
-    build: choice([['Bea Masuk 7,5%, PPh dikecualikan, PPN efektif 11%'], ['Bea Masuk dibebaskan, hanya PPN efektif 11%'], ['Tarif umum seperti impor biasa dengan PIB'], ['Bea Masuk 25% dan PPh 5%']], 0,
-      'FOB di atas USD 3 sampai USD 1.500: Bea Masuk 7,5%, PPh dikecualikan, PPN efektif 11%.',
-      [null, 'Pembebasan Bea Masuk hanya untuk FOB sampai USD 3.', 'Tarif umum berlaku untuk FOB di atas USD 1.500.', 'Tarif 25% dan 5% untuk komoditas alas kaki, bukan earbuds.']),
+  }, { ask: done => quiz({ x: 610, y: 220, w: 910, cls: 'side' }, [{
+    id: 'c-jalur-djbc', prompt: ['Importir menerima SPTNP yang menaikkan nilai pabean. Ke mana dan berapa lama ia dapat mengajukan keberatan?'],
+    build: choice([['Direktur Jenderal Bea dan Cukai lewat Portal DJBC, 60 hari'], ['Direktur Jenderal Pajak lewat KPP, 3 bulan'], ['Langsung banding ke Pengadilan Pajak'], ['Permohonan pengurangan sanksi ke DJP']], 0,
+      'Surat dari DJBC (SPTNP) diajukan keberatannya ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, 60 hari sejak tanggal penetapan, dengan jaminan sebesar tagihan.',
+      [null, 'Tenggat dan tujuan ini berlaku untuk surat dari DJP (SKP), bukan SPTNP.', 'Banding baru dapat diajukan setelah keputusan keberatan dan tagihan dilunasi.', 'Permohonan dipakai untuk kekeliruan tanpa sengketa, bukan untuk SPTNP yang menaikkan nilai pabean.']),
   }], done) }],
 
-  ['beda', 'Barang kiriman dan impor umum', (m, D) => {
+  ['hak', 'Dua keluarga hak wajib pajak', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Barang kiriman memakai dokumen, pengurus, dan tarif|yang berbeda dari impor umum', { tag: 'BANDINGAN' });
-    const H = G(p);
-    T(H, 'IMPOR UMUM', { x: 600, y: 250, size: 17, weight: 800, fill: MK.dim, anchor: 'middle' });
-    T(H, 'BARANG KIRIMAN', { x: 1210, y: 250, size: 17, weight: 800, fill: MK.goldDark, anchor: 'middle' });
-    mk('rect', { x: 92, y: 266, width: 1416, height: 3, fill: MK.navy }, H);
-    show(H, .4, .4);
-    [['r1', 'doc', 'blue', 'Dokumen', 'PIB', 'Consignment Note (CN) atau PIBK'],
-     ['r2', 'users', 'sky', 'Yang mengurus', 'Importir atau PPJK', 'PJT atau penyelenggara pos'],
-     ['r3', 'percent', 'gold', 'Bea Masuk', 'Tarif BTKI', 'Tarif tunggal 7,5%'],
-     ['r4', 'coins', 'blue', 'PPh Pasal 22', 'Tarif PMK 51/2025', 'Dikecualikan sampai USD 1.500']].forEach(([mark, gl, v, n, a, b], i) => {
-      const y = 290 + i * 100, g = G(p);
-      if (i) mk('rect', { x: 92, y: y - 6, width: 1416, height: 1.5, fill: MK.line }, g);
-      tile(g, gl, 135, y + 44, { size: 64, v, floor: false });
-      T(g, n, { x: 185, y: y + 54, size: 25, weight: 700, fill: MK.navy });
-      T(g, a, { x: 600, y: y + 54, size: 24, weight: 600, fill: MK.dim, anchor: 'middle' });
-      mk('rect', { x: 880, y: y + 8, width: 660 - 32, height: 72, rx: 14, fill: '#FFF7E3' }, g);
-      T(g, b, { x: 1210, y: y + 54, size: 24, weight: 700, fill: MK.navy, anchor: 'middle' });
-      slideUp(g, m(mark) - .2, .5);
-    });
-    source(p, 'Bahan Ajar PDRI KB 7.3', m('r1'));
-  }],
-
-  ['paketA', 'Hitung paket A: earbuds', (m, D) => {
-    const p = panel(0);
-    paper(p);
-    actionTitle(p, `Paket A, earbuds: total pungutan ${rp(A.tot)}`, { tag: 'MENGHITUNG PAKET A · KASUS 3' });
-    calcTable(p, m, [
-      ['np', 'Nilai pabean (CIF)', 'USD 40 × Rp18.155', A.np, false],
-      ['bm', 'Bea Masuk', '7,5% × nilai pabean', A.bm, false],
-      ['ni', 'Nilai impor', 'nilai pabean + Bea Masuk', A.ni, true],
-      ['ppn', 'PPN', 'beban efektif 11% × nilai impor', A.ppn, false],
-      ['pph', 'PPh Pasal 22', 'dikecualikan (FOB sampai USD 1.500)', 'Rp0', false],
-      ['tot', 'Total pungutan', 'Bea Masuk + PPN', A.tot, true],
-    ]);
-    source(p, 'Bahan Ajar PDRI KB 7.4; KMK 55/MK/EF.2/2026', m('np'));
-  }],
-
-  ['paketB', 'Hitung paket B: sepatu', (m, D) => {
-    const p = panel(0);
-    paper(p);
-    actionTitle(p, `Paket B, sepatu: total pungutan ${rp(B.tot)}`, { tag: 'MENGHITUNG PAKET B · KASUS 3' });
-    calcTable(p, m, [
-      ['np', 'Nilai pabean (CIF)', 'USD 95 × Rp18.155', B.np, false],
-      ['bm', 'Bea Masuk alas kaki', '25% × nilai pabean', B.bm, false],
-      ['ni', 'Nilai impor', 'nilai pabean + Bea Masuk', B.ni, true],
-      ['ppn', 'PPN', 'beban efektif 11% × nilai impor', B.ppn, false],
-      ['pph', 'PPh Pasal 22', '5% × nilai impor', B.pph, false],
-      ['tot', 'Total pungutan', 'BM + PPN + PPh 22', B.tot, true],
-    ]);
+    actionTitle(p, 'Wajib pajak punya dua keluarga hak: menyengketakan|ketetapan, atau memohon perbaikan tanpa sengketa', { tag: 'HAK WAJIB PAJAK · PERPAJAKAN' });
+    const col = (x, t0, gl, v, head, sub, items, riskTag) => {
+      const c = G(p);
+      mcard(c, x, 240, 700, 440);
+      tile(c, gl, x + 70, 310, { size: 84, v });
+      T(c, head, { x: x + 130, y: 300, size: 30, weight: 700, fill: MK.navy });
+      lines(c, sub, x + 130, 330, { size: 17, weight: 500, fill: MK.dim, lh: 1.3 });
+      mk('rect', { x: x + 30, y: 372, width: 640, height: 2, fill: MK.line }, c);
+      items.forEach((it, k) => T(c, it, { x: x + 56, y: 418 + k * 44, size: 20, weight: 600, fill: MK.navy }));
+      if (riskTag) pill(c, riskTag, x + 56, 622, { size: 15, anchor: 'start', bg: MK.red, ink: '#fff' });
+      slideUp(c, t0);
+      return c;
+    };
+    col(92, m('seng') - .2, 'law', 'blue', 'Sengketa', 'menguji kebenaran ketetapan,|dapat berujung di pengadilan',
+      ['Keberatan (Pasal 25, 26 UU KUP)', 'Banding (Pasal 27 UU KUP)', 'Gugatan (Pasal 23 UU KUP)', 'Peninjauan Kembali (UU 14/2002)'],
+      'Risiko: sanksi 30% keberatan, 60% banding atau PK');
+    col(842, m('mohon') - .2, 'check', 'gold', 'Permohonan', 'memperbaiki atau meringankan,|diputus DJP, tanpa sengketa',
+      ['Pembetulan SPT (Pasal 8)', 'Pembetulan ketetapan (Pasal 16)', 'Pengurangan/penghapusan sanksi (Ps. 36 huruf a)', 'Angsuran atau penundaan (Pasal 9)'],
+      null);
     const note = G(p);
-    T(note, 'Angka belum dibulatkan; pembulatan mengikuti ketentuan pengisian dokumen. BM 25% dan PPh 5% adalah asumsi latihan.', { x: 92, y: 716, size: 17, weight: 500, fill: MK.dim });
-    show(note, m('tot') + 1, .4);
-    source(p, 'Bahan Ajar PDRI KB 7.4; KMK 55/MK/EF.2/2026', m('np'));
-  }],
-
-  ['banding', 'Membandingkan dua paket', (m, D) => {
-    const p = panel(0);
-    paper(p);
-    actionTitle(p, 'Pungutan earbuds sekitar 19% dari nilai pabean,|pungutan sepatu sekitar 45%', { tag: 'MEMBACA ANGKANYA · KASUS 3' });
-    const base = 640, K = 330 / B.np;
-    const ax = G(p);
-    mk('rect', { x: 100, y: base, width: 780, height: 3, fill: MK.navy }, ax);
-    show(ax, .4, .3);
-    [['a', 'Earbuds', A, 220, [[A.bm, MK.sky, 'BM'], [A.ppn, MK.blue, 'PPN']], '19%'],
-     ['b', 'Sepatu', B, 640, [[B.bm, MK.sky, 'BM'], [B.ppn, MK.blue, 'PPN'], [B.pph, MK.gold, 'PPh']], '45%']].forEach(([mark, n, d, cx, segs, pc], i) => {
-      const t0 = m(mark) - .1, g = G(p);
-      const hp = d.np * K, r1 = mk('rect', { x: cx - 120, y: base, width: 100, height: 0, fill: MK.line }, g);
-      prog(q => { r1.setAttribute('y', base - hp * q); r1.setAttribute('height', hp * q); }, t0, .7, out);
-      let yy = base;
-      segs.forEach(([v, col, lab], k) => {
-        const h = Math.max(v * K, 2), yb = yy, r = mk('rect', { x: cx - 10, y: yb, width: 100, height: 0, fill: col }, g);
-        yy = yb - h;
-        prog(q => { r.setAttribute('y', yb - h * q); r.setAttribute('height', h * q); }, t0 + .6 + k * .3, .4, out);
-      });
-      T(g, n, { x: cx, y: base + 36, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
-      T(g, 'pabean | pungutan'.replace('|', '·'), { x: cx, y: base + 62, size: 15, weight: 500, fill: MK.dim, anchor: 'middle' });
-      const l1 = T(g, rp(d.np), { x: cx - 70, y: base - hp - 14, size: 17, weight: 700, fill: MK.dim, anchor: 'middle' });
-      const l2 = T(g, rp(d.tot), { x: cx + 40, y: yy - 14, size: 17, weight: 800, fill: MK.navy, anchor: 'middle' });
-      put(l1, { o: 0 }); put(l2, { o: 0 }); show(l1, t0 + .7, .3); show(l2, t0 + 1.5, .3);
-      const b = pill(g, pc, cx + 40, yy - 52, { size: 24, bg: i ? MK.gold : MK.sky, ink: MK.navy });
-      popIn(b, t0 + 1.7);
-    });
-    const c = G(p);
-    mcard(c, 930, 240, 578, 450, { fill: MK.navy });
-    tile(c, 'shoe', 1015, 335, { size: 96, v: 'gold' });
-    T(c, 'PENYEBABNYA', { x: 1085, y: 320, size: 15, weight: 700, fill: '#D5E2F5' });
-    lines(c, 'Tarif khusus alas kaki', 1085, 362, { size: 26, weight: 700, fill: '#fff' });
-    lines(c, 'Bea Masuk 25% ditambah PPh,|untuk melindungi industri|alas kaki dalam negeri.', 970, 470, { size: 24, weight: 600, fill: '#fff', lh: 1.4 });
-    popIn(c, m('why'));
-    source(p, 'Bahan Ajar PDRI KB 7.4; KMK 55/MK/EF.2/2026', m('a'));
+    T(note, 'Permohonan bukan pengganti keberatan untuk SKP yang sama.', { x: 92, y: 716, size: 19, weight: 600, fill: MK.navy });
+    show(note, m('mohon') + 1, .4);
+    source(p, 'Bahan Ajar PDRI KB 7.5 sampai 7.7', m('seng'));
   }],
 
   ['q2', 'Cek pemahaman', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Cek pemahaman: pungutan apa saja pada|paket sepatu Dita?', { tag: 'CEK PEMAHAMAN', t0: .1 });
-    [['shoe', 'gold', 'Paket B', 'sepatu sneakers'], ['tag', 'blue', 'Komoditas', 'alas kaki'], ['coins', 'sky', 'Pungutan', '?']].forEach(([gl, v, n, sub], i) => {
+    actionTitle(p, 'Cek pemahaman: STP denda karena telat lapor,|dan ia merasa khilaf. Jalur apa?', { tag: 'CEK PEMAHAMAN', t0: .1 });
+    [['doc', 'gold', 'STP', 'denda Rp500.000'], ['check', 'blue', 'Alasan', 'khilaf, bukan kesalahan'], ['law', 'sky', 'Jalur', '?']].forEach(([gl, v, n, sub], i) => {
       const c = G(p), y = 250 + i * 150;
       mcard(c, 92, y, 500, 126);
       tile(c, gl, 155, y + 62, { size: 76, v });
@@ -3614,26 +3649,71 @@ const BEATS = [
       T(c, sub, { x: 210, y: y + 92, size: 19, weight: 500, fill: MK.dim });
       slideUp(c, .2 + i * .15);
     });
-  }, { ask: done => quiz({ x: 640, y: 220, w: 880, cls: 'side' }, [{
-    id: 'c-pungutan-sepatu', prompt: ['Pungutan apa saja yang dikenakan pada paket sepatu Dita?'],
-    build: choice([['Bea Masuk 25%, PPN efektif 11%, dan PPh 5%'], ['Hanya PPN efektif 11%'], ['Bea Masuk 7,5% dan PPN, tanpa PPh'], ['Tidak ada pungutan karena FOB di bawah USD 1.500']], 0,
-      'Sepatu komoditas khusus: Bea Masuk 25% dan PPh 5%, ditambah PPN efektif 11%.',
-      [null, 'Pembebasan Bea Masuk hanya untuk FOB sampai USD 3, dan sepatu komoditas khusus.', 'Tarif tunggal 7,5% dan pengecualian PPh tidak berlaku untuk alas kaki.', 'Komoditas khusus tetap dipungut walau FOB di bawah USD 1.500.']),
+  }, { ask: done => quiz({ x: 650, y: 220, w: 870, cls: 'side' }, [{
+    id: 'c-stp-khilaf', prompt: ['PT Kain Prima Nusantara menerima STP denda Rp500.000 karena SPT Masa PPN terlambat. Ia ingin dendanya dihapus. Jalur apa?'],
+    build: choice([['Permohonan pengurangan atau penghapusan sanksi (Pasal 36 ayat (1) huruf a)'], ['Keberatan ke Direktur Jenderal Pajak, 3 bulan'], ['Banding ke Pengadilan Pajak'], ['Keberatan ke Direktur Jenderal Bea dan Cukai']], 0,
+      'STP bukan objek keberatan. Jalurnya permohonan pengurangan atau penghapusan sanksi ke Direktur Jenderal Pajak.',
+      [null, 'STP bukan objek keberatan Pasal 25 ayat (1) UU KUP.', 'Banding hanya diajukan atas keputusan keberatan.', 'STP diterbitkan DJP, bukan DJBC.']),
   }], done) }],
 
-  ['jawab', 'Jawaban untuk Dita', (m, D) => {
+  ['bandingkan', 'Membandingkan dua jalur', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Jawaban untuk Dita: sepatu komoditas bertarif khusus,|earbuds memakai tarif umum paket', { tag: 'MENJAWAB PERTANYAAN DITA' });
+    actionTitle(p, 'Dua jalur berbeda tenggat, syarat bayar,|dan risiko jika kalah', { tag: 'BANDINGAN' });
+    const H = G(p);
+    T(H, 'KEPABEANAN (DJBC)', { x: 600, y: 250, size: 17, weight: 800, fill: MK.dim, anchor: 'middle' });
+    T(H, 'PERPAJAKAN (DJP)', { x: 1210, y: 250, size: 17, weight: 800, fill: MK.goldDark, anchor: 'middle' });
+    mk('rect', { x: 92, y: 266, width: 1416, height: 3, fill: MK.navy }, H);
+    show(H, .4, .4);
+    [['r1', 'law', 'sky', 'Tenggat keberatan', '60 hari sejak penetapan', '3 bulan sejak dikirim'],
+     ['r2', 'coins', 'gold', 'Syarat bayar', 'Jaminan sebesar tagihan', 'Lunasi jumlah disetujui'],
+     ['r3', 'doc', 'blue', 'Tenggat banding', '60 hari setelah lunas', '3 bulan; sisa tertangguh'],
+     ['r4', 'percent', 'gold', 'Risiko jika kalah', 'Tidak ada sanksi khusus', 'Sanksi 30% atau 60%']].forEach(([mark, gl, v, n, a, b], i) => {
+      const y = 290 + i * 100, g = G(p);
+      if (i) mk('rect', { x: 92, y: y - 6, width: 1416, height: 1.5, fill: MK.line }, g);
+      tile(g, gl, 135, y + 44, { size: 64, v, floor: false });
+      T(g, n, { x: 185, y: y + 54, size: 24, weight: 700, fill: MK.navy });
+      T(g, a, { x: 600, y: y + 54, size: 21, weight: 600, fill: MK.dim, anchor: 'middle' });
+      mk('rect', { x: 880, y: y + 8, width: 660 - 32, height: 72, rx: 14, fill: '#FFF7E3' }, g);
+      T(g, b, { x: 1210, y: y + 54, size: 21, weight: 700, fill: MK.navy, anchor: 'middle' });
+      slideUp(g, m(mark) - .2, .5);
+    });
+    const peg = G(p);
+    T(peg, 'Pegangan: lihat siapa yang menerbitkan surat, lalu lihat jenis suratnya.', { x: 92, y: 720, size: 20, weight: 700, fill: MK.navy });
+    show(peg, m('r4') + 1, .4);
+    source(p, 'Bahan Ajar PDRI KB 7.9', m('r1'));
+  }],
+
+  ['lensa', 'Mengapa hak ini ada', (m, D) => {
+    const p = panel(0);
+    navy(p, 75, D);
+    actionTitle(p, 'Wewenang menetapkan datang bersama hak untuk|menguji dan memohon, dan sanksi menjaga kejujurannya', { tag: 'LENSA', dark: true });
+    [['l1', 'shield', 'blue', 'Kontrol atas wewenang', 'Pasal 23A UUD 1945: pungutan harus|diatur undang-undang, dan penetapan|pejabat harus dapat diuji'],
+     ['l2', 'law', 'gold', 'Kepastian dan keadilan', 'Asas certainty dan equality: wajib|pajak perlu jalan resmi untuk menguji|penetapan yang menurutnya keliru'],
+     ['l3', 'heart', 'sky', 'Peran Anda', 'Menetapkan dengan benar, lalu|menjelaskan hak dengan jujur.|Jangan menilai peluang menang']].forEach(([mark, gl, v, n, sub], i) => {
+      const x = 92 + i * 482, c = G(p);
+      mcard(c, x, 250, 450, 420, { dark: true });
+      tile(c, gl, x + 90, 335, { size: 96, v });
+      T(c, n, { x: x + 36, y: 440, size: 26, weight: 800, fill: MK.navy });
+      lines(c, sub, x + 36, 478, { size: 19, weight: 600, fill: MK.dim, lh: 1.35 });
+      popIn(c, m(mark) - .1);
+    });
+    source(p, 'Bahan Ajar PDRI KB 7.1 dan 7.10', .8, true);
+  }],
+
+  ['jawab', 'Jawaban untuk staf', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Dua map, dua jawaban: SPTNP ke DJBC,|SKPKB dan STP ke KPP', { tag: 'MENJAWAB DUA MAP' });
     const q = G(p);
     mcard(q, 92, 230, 500, 470);
     tile(q, 'chat', 175, 310, { size: 96, v: 'gold' });
     T(q, 'PERTANYAAN', { x: 245, y: 300, size: 16, weight: 700, fill: MK.dim });
-    lines(q, '“Sepatu Rp1,7 juta,|mengapa tagihannya|hampir Rp780 ribu?”', 132, 420, { size: 28, weight: 700, lh: 1.3 });
+    lines(q, '“Dua-duanya kami tidak|setuju, dan kas kami|sedang seret.”', 132, 420, { size: 28, weight: 700, lh: 1.3 });
     slideUp(q, .4);
-    [['a1', 'shoe', 'gold', 'Sepatu: komoditas bertarif khusus', 'melindungi industri alas|kaki dalam negeri'],
-     ['a2', 'coins', 'blue', 'BM 25% ditambah PPN dan PPh', `${rp(B.tot)} dari pabean ${rp(B.np)}`],
-     ['a3', 'phones', 'sky', 'Earbuds lebih kecil', 'tarif umum 7,5% dan|tanpa PPh']].forEach(([mark, gl, v, n, sub], i) => {
+    [['a1', 'doc', 'sky', 'Map SPTNP', 'Keberatan ke Dirjen Bea dan|Cukai, Portal DJBC, 60 hari'],
+     ['a2', 'law', 'blue', 'Map SKPKB', 'Keberatan ke Dirjen Pajak,|3 bulan, lunasi jumlah disetujui'],
+     ['a3', 'check', 'gold', 'Kas seret', 'Permohonan angsuran atau|penundaan, lewat KPP']].forEach(([mark, gl, v, n, sub], i) => {
       const y = 230 + i * 160, g = G(p);
       mcard(g, 640, y, 868, 140);
       tile(g, gl, 715, y + 70, { size: 80, v, floor: false });
@@ -3642,16 +3722,16 @@ const BEATS = [
       T(g, '0' + (i + 1), { x: 1470, y: y + 62, size: 30, weight: 700, fill: MK.line, anchor: 'end' });
       slideUp(g, m(mark) - .2, .5);
     });
-    source(p, 'Bahan Ajar PDRI KB 7.4', m('a1'));
+    source(p, 'Bahan Ajar PDRI KB 7.10', m('a1'));
   }],
 
   ['wrap', 'Rangkuman', (m, D) => {
     const p = panel(0);
     navy(p, 9, D);
-    actionTitle(p, 'Rangkuman: nilai FOB dan jenis komoditas|menentukan pungutan barang kiriman', { tag: 'RANGKUMAN BAB 7', dark: true });
-    [['w1', 'pack', 'sky', 'Barang kiriman|memakai ketentuan|khusus: nilai FOB|dan jenis komoditas'],
-     ['w2', 'percent', 'gold', 'FOB di atas USD 3|sampai USD 1.500:|BM 7,5%, PPh|dikecualikan'],
-     ['w3', 'coins', 'blue', 'PPN tetap dipungut,|beban efektif 11%;|komoditas tertentu|punya tarif sendiri']].forEach(([mark, gl, v, str], i) => {
+    actionTitle(p, 'Rangkuman: lihat penerbit surat, pilih sengketa|atau permohonan, lalu sebutkan haknya dengan jujur', { tag: 'RANGKUMAN BAB 7', dark: true });
+    [['w1', 'shield', 'sky', 'Penetapan DJBC|diuji ke DJBC:|keberatan 60 hari|dengan jaminan'],
+     ['w2', 'law', 'blue', 'Ketetapan DJP:|sengketa berisiko|sanksi, permohonan|tidak'],
+     ['w3', 'heart', 'gold', 'Sebutkan hak dan|tenggatnya dengan|jujur; jangan nilai|peluang menang']].forEach(([mark, gl, v, str], i) => {
       const x = 92 + i * 482, c = G(p);
       mcard(c, x, 250, 450, 450, { dark: true });
       const strip = mk('rect', { x, y: 250, width: 450, height: 12, rx: 6, fill: MK.gold, 'fill-opacity': 0 }, c);
@@ -3665,19 +3745,20 @@ const BEATS = [
   }],
 
   ['final1', 'Latihan bab', (m) => { const p = panel(0); paper(p); }, { ask: done => quiz(SCREEN, [{
-    id: 'p-tali', prompt: ['Latihan 7.1. Sebuah paket berisi tali sepatu bernilai FOB USD 2. Pungutan apa yang dikenakan?'],
-    build: choice([['Hanya PPN dengan beban efektif 11%'], ['Bea Masuk 7,5% dan PPN'], ['Bea Masuk 25% dan PPh 5%'], ['Tarif umum dengan PIB']], 0,
-      'FOB sampai USD 3: Bea Masuk dibebaskan dan PPh dikecualikan. Yang dibayar hanya PPN, beban efektif 11%.',
-      [null, 'Bea Masuk 7,5% berlaku untuk FOB di atas USD 3.', 'Tarif 25% dan 5% untuk alas kaki; tali sepatu bernilai FOB USD 2 jatuh pada batas terendah.', 'Tarif umum untuk FOB di atas USD 1.500.']),
+    id: 'p-sptnp', prompt: ['Latihan 7.1. Importir menerima SPTNP yang menaikkan nilai pabean. Jalur, tujuan, dan tenggatnya?'],
+    build: choice([['Keberatan ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, 60 hari'], ['Keberatan ke Direktur Jenderal Pajak, 3 bulan'], ['Gugatan ke Pengadilan Pajak, 14 hari'], ['Permohonan pengurangan sanksi ke DJP']], 0,
+      'SPTNP diterbitkan DJBC, jadi keberatannya ke Direktur Jenderal Bea dan Cukai lewat Portal DJBC, 60 hari sejak tanggal penetapan.',
+      [null, 'Tenggat dan tujuan ini berlaku untuk SKP dari DJP, bukan SPTNP.', 'Gugatan dipakai untuk pelaksanaan penagihan, bukan penetapan nilai pabean.', 'Permohonan dipakai tanpa sengketa; SPTNP ini sedang disengketakan.']),
   }, {
-    id: 'p-total-a', prompt: [`Latihan 7.2. Untuk paket A (earbuds), nilai impornya ${rp(A.ni)}. Hitung PPN dengan beban efektif 11%, lalu totalnya bersama Bea Masuk ${rp(A.bm)}.`],
-    build: blanks([{ parts: ['PPN: 11% × ' + rp(A.ni) + ' = Rp', { box: idNum(A.ppn) }], why: `11% × ${rp(A.ni)} = ${rp(A.ppn)}.`, hint: 'Kalikan nilai impor dengan 11%.' },
-      { parts: ['Total: ' + rp(A.bm) + ' + ' + rp(A.ppn) + ' = Rp', { box: idNum(A.tot) }], why: `${rp(A.bm)} + ${rp(A.ppn)} = ${rp(A.tot)}.`, hint: 'PPh dikecualikan, jadi hanya Bea Masuk dan PPN.' }]),
+    id: 'p-stp-khilaf2', prompt: ['Latihan 7.2. STP denda Rp500.000 karena SPT Masa PPN terlambat, dan importir merasa khilaf. Jalurnya?'],
+    build: choice([['Permohonan pengurangan atau penghapusan sanksi (Pasal 36 ayat (1) huruf a)'], ['Keberatan ke Direktur Jenderal Pajak'], ['Banding ke Pengadilan Pajak'], ['Peninjauan kembali ke Mahkamah Agung']], 0,
+      'STP bukan objek keberatan. Jalurnya permohonan pengurangan atau penghapusan sanksi.',
+      [null, 'STP bukan objek keberatan Pasal 25 ayat (1) UU KUP.', 'Banding hanya diajukan atas keputusan keberatan.', 'PK hanya atas putusan Pengadilan Pajak.']),
   }, {
-    id: 'p-jelaskan-dita', prompt: ['Latihan 7.3. Mana penjelasan yang paling tepat untuk Dita?'],
-    build: choice([['Sepatu termasuk komoditas bertarif khusus: Bea Masuk 25% ditambah PPN dan PPh, untuk melindungi industri alas kaki'], ['Tagihan itu keliru karena paket di bawah USD 1.500 pasti bebas pungutan'], ['Semua paket dikenai tarif tunggal 7,5% tanpa PPh'], ['Tagihan mengikuti harga sepatu di toko, bukan aturan pemerintah']], 0,
-      'Jelaskan komoditasnya, tarif khususnya, dan tujuan perlindungan industri dalam negeri.',
-      [null, 'Komoditas tertentu tetap dikenai tarif khusus walau nilainya di bawah USD 1.500.', 'Tarif tunggal 7,5% tidak berlaku untuk alas kaki.', 'Pungutan mengikuti ketentuan, bukan harga toko.']),
+    id: 'p-surat-paksa', prompt: ['Latihan 7.3. Importir menilai pelaksanaan Surat Paksa menyalahi prosedur. Jalur dan tenggatnya?'],
+    build: choice([['Gugatan ke Pengadilan Pajak, 14 hari sejak pelaksanaan penagihan'], ['Keberatan ke Direktur Jenderal Pajak, 3 bulan'], ['Permohonan pembetulan ke DJP'], ['Keberatan ke Direktur Jenderal Bea dan Cukai']], 0,
+      'Pelaksanaan penagihan yang dinilai menyalahi prosedur digugat ke Pengadilan Pajak, 14 hari sejak pelaksanaan.',
+      [null, 'Keberatan ditujukan pada ketetapan, bukan pelaksanaan penagihan.', 'Pembetulan dipakai untuk kesalahan tulis atau hitung, bukan prosedur penagihan.', 'Surat Paksa diterbitkan DJP, bukan DJBC.']),
   }], done, 'Latihan bab') }],
 
   ['finish', 'Selesai', (m, D) => {
@@ -3693,7 +3774,7 @@ const BEATS = [
     clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
     tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
     popIn(md, .3);
-    const orb = [['pack', 'blue'], ['phones', 'sky'], ['shoe', 'gold']].map(([gl, v], i) => {
+    const orb = [['law', 'blue'], ['doc', 'sky'], ['office', 'gold']].map(([gl, v], i) => {
       const e = tile(p, gl, 0, 0, { size: 64, v, floor: false });
       return { e, a: i * 2.094 };
     });
@@ -3705,7 +3786,7 @@ const BEATS = [
 ].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
 
 {
-  const NAVY = new Set(['intro', 'ambang', 'wrap']);
+  const NAVY = new Set(['intro', 'lensa', 'wrap']);
   BEATS.forEach((b, i) => {
     if (!i || b.lead === false) return;
     const prev = BEATS[i - 1];
