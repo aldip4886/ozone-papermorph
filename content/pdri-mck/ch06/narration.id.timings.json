@@ -1,2539 +1,2307 @@
 {
  "intro": {
-  "key": "ea4a2093a787f1d84331b0b0b46e47e1cb90517e",
-  "dur": 11.592,
+  "key": "5bd6f9afbcf043e83ec12e71ce0c9f05fdf3b22c",
+  "dur": 9.77,
   "words": [
    [
-    0.101041,
-    "Mari"
+    0.0,
+    "Sobat,"
    ],
    [
-    0.3745,
+    1.0,
+    "pada"
+   ],
+   [
+    1.2,
+    "matteri"
+   ],
+   [
+    1.58,
+    "ke"
+   ],
+   [
+    1.72,
+    "-6"
+   ],
+   [
+    1.9,
+    "ini,"
+   ],
+   [
+    2.44,
     "kita"
    ],
    [
-    0.569791,
-    "lanjutkan"
+    2.64,
+    "akan"
    ],
    [
-    1.520333,
-    "ya"
+    2.84,
+    "pelajari"
    ],
    [
-    2.171375,
-    "sobat"
-   ],
-   [
-    3.723958,
-    "Pada"
-   ],
-   [
-    3.932291,
-    "materi"
-   ],
-   [
-    4.231791,
-    "keenam"
-   ],
-   [
-    4.492208,
-    "ini"
-   ],
-   [
-    5.260416,
-    "kita"
-   ],
-   [
-    5.507833,
-    "menghitung"
-   ],
-   [
-    5.911458,
-    "PDRI"
-   ],
-   [
-    6.40625,
-    "atas"
-   ],
-   [
-    6.679708,
-    "barang"
-   ],
-   [
-    6.914083,
-    "mewah"
-   ],
-   [
-    7.708333,
-    "dan"
-   ],
-   [
-    7.929708,
-    "melihat"
-   ],
-   [
-    8.242208,
+    3.28,
     "bagaimana"
    ],
    [
-    8.671875,
+    3.8,
+    "penghitungan"
+   ],
+   [
+    4.36,
+    "PDRI"
+   ],
+   [
+    4.94,
+    "atas"
+   ],
+   [
+    5.46,
+    "barang"
+   ],
+   [
+    5.68,
+    "mewah"
+   ],
+   [
+    6.12,
+    "dan"
+   ],
+   [
+    6.52,
+    "bagaimana"
+   ],
+   [
+    6.96,
     "fasilitas"
    ],
    [
-    9.21875,
+    7.52,
     "mengubah"
    ],
    [
-    9.557291,
+    8.24,
     "jumlah"
    ],
    [
-    9.934916,
+    8.68,
     "yang"
    ],
    [
-    10.078125,
-    "dibayar"
-   ]
-  ],
-  "marks": {
-   "sub": 3.724
-  },
-  "cues": [
-   [
-    0.101,
-    "Mari kita lanjutkan, ya, sobat."
-   ],
-   [
-    3.724,
-    "Pada materi keenam ini, kita menghitung PDRI atas barang mewah, dan melihat bagaimana fasilitas mengubah jumlah yang dibayar."
+    8.84,
+    "dibayar."
    ]
   ]
  },
  "ask": {
-  "key": "0bbd1e9f7fee9f2040460efbb1eb674be7eae039",
-  "dur": 20.592,
+  "key": "994ece4625de902065df10415e8011e03540be26",
+  "dur": 20.78,
   "words": [
    [
-    0.101041,
+    0.0,
     "Kali"
    ],
    [
-    0.335416,
+    0.38,
     "ini"
    ],
    [
-    0.634916,
+    0.54,
     "kita"
    ],
    [
-    0.869291,
+    0.7,
     "pakai"
    ],
    [
-    1.15575,
-    "Kasus"
+    0.94,
+    "kasus"
    ],
    [
-    1.507291,
-    "2"
+    1.26,
+    "2,"
    ],
    [
-    2.864583,
+    1.98,
     "CV"
    ],
    [
-    3.164083,
+    2.34,
     "Roda"
    ],
    [
-    3.372416,
+    2.72,
     "Jaya"
    ],
    [
-    4.244791,
+    3.12,
     "importir"
    ],
    [
-    4.765625,
+    4.0,
     "dengan"
    ],
    [
-    5.0,
-    "API-U"
+    4.2,
+    "APU"
    ],
    [
-    5.351583,
+    4.86,
     "dan"
    ],
    [
-    5.520833,
+    5.2,
     "berstatus"
    ],
    [
-    5.976583,
+    5.76,
     "PKP"
    ],
    [
-    6.940125,
+    6.34,
     "mengimpor"
    ],
    [
-    7.382833,
+    7.2,
     "satu"
    ],
    [
-    7.630208,
+    7.6,
     "unit"
    ],
    [
-    7.851583,
-    "sepeda"
+    7.9,
+    "speda"
    ],
    [
-    8.164083,
+    8.26,
     "motor"
    ],
    [
-    8.4375,
+    8.48,
     "CBU"
    ],
    [
-    8.75,
-    "1.000"
+    9.2,
+    "1000"
    ],
    [
-    9.0495,
+    9.66,
     "cc"
    ],
    [
-    9.895833,
+    10.42,
     "dengan"
    ],
    [
-    10.15625,
+    10.82,
     "nilai"
    ],
    [
-    10.429708,
+    11.14,
     "CIF"
    ],
    [
-    10.703125,
-    "20.000"
+    11.74,
+    "20"
    ],
    [
-    11.263041,
+    12.08,
+    "ribu"
+   ],
+   [
+    12.62,
     "dolar"
    ],
    [
-    11.523458,
-    "Amerika"
+    12.82,
+    "Amerika."
    ],
    [
-    13.058875,
+    13.82,
     "Nanti"
    ],
    [
-    13.410416,
+    14.34,
     "kita"
    ],
    [
-    13.60575,
+    14.5,
     "akan"
    ],
    [
-    13.801041,
+    14.64,
     "lihat"
    ],
    [
-    14.569291,
+    14.84,
     "total"
    ],
    [
-    14.86875,
-    "pungutannya"
+    15.38,
+    "pengutannya"
    ],
    [
-    15.402625,
+    16.0,
     "lebih"
    ],
    [
-    15.65,
+    16.32,
     "dari"
    ],
    [
-    15.832291,
-    "dua"
+    16.64,
+    "2"
    ],
    [
-    16.027625,
+    17.04,
     "kali"
    ],
    [
-    16.235958,
+    17.46,
     "nilai"
    ],
    [
-    16.509375,
-    "pabeannya"
+    17.78,
+    "pabeyannya."
    ],
    [
-    18.135958,
+    18.74,
     "Mengapa"
    ],
    [
-    18.604708,
+    19.14,
     "bisa"
    ],
    [
-    18.839083,
+    19.36,
     "sebesar"
    ],
    [
-    19.216666,
-    "itu"
-   ]
-  ],
-  "marks": {
-   "kasus": 2.865,
-   "q": 13.059
-  },
-  "cues": [
-   [
-    0.101,
-    "Kali ini kita pakai Kasus 2."
-   ],
-   [
-    2.865,
-    "CV Roda Jaya, importir dengan API-U dan berstatus PKP, mengimpor satu unit sepeda motor CBU 1.000 cc, dengan nilai CIF 20.000 dolar Amerika."
-   ],
-   [
-    13.059,
-    "Nanti kita akan lihat, total pungutannya lebih dari dua kali nilai pabeannya."
-   ],
-   [
-    18.136,
-    "Mengapa bisa sebesar itu?"
+    19.68,
+    "itu?"
    ]
   ]
  },
  "mewah": {
-  "key": "8e772b436eaafd1e91ce65cd0028fe32de9678ee",
-  "dur": 22.584,
+  "key": "ad6f0c3607207a075d7ab8e0b6caa539ab5b0f95",
+  "dur": 20.5,
   "words": [
    [
-    0.1,
+    0.0,
     "Mulai"
    ],
    [
-    0.542708,
+    0.56,
     "dari"
    ],
    [
-    0.790125,
-    "PPN"
+    0.78,
+    "ppn."
    ],
    [
-    2.382833,
+    1.84,
     "Di"
    ],
    [
-    2.513041,
+    2.08,
     "materi"
    ],
    [
-    2.7995,
-    "keempat"
+    2.42,
+    "keempat,"
    ],
    [
-    3.710958,
-    "kain"
+    3.26,
+    "kan"
    ],
    [
-    3.932291,
+    3.36,
     "kita"
    ],
    [
-    4.127625,
+    3.52,
     "memakai"
    ],
    [
-    4.466166,
+    3.98,
     "dasar"
    ],
    [
-    4.752625,
+    4.46,
     "pengenaan"
    ],
    [
-    5.130208,
-    "11/12"
+    4.88,
+    "11x12"
    ],
    [
-    5.963541,
+    5.7,
     "dari"
    ],
    [
-    6.145833,
+    6.14,
     "nilai"
    ],
    [
-    6.380208,
-    "impor"
+    6.44,
+    "impor,"
    ],
    [
-    7.213541,
+    7.18,
     "jadi"
    ],
    [
-    7.526041,
+    7.46,
     "bebannya"
    ],
    [
-    7.942708,
-    "11"
+    8.0,
+    "11%."
    ],
    [
-    8.28125,
-    "persen"
-   ],
-   [
-    9.7245,
+    9.16,
     "Barang"
    ],
    [
-    10.128125,
+    9.96,
     "yang"
    ],
    [
-    10.258333,
+    10.08,
     "tergolong"
    ],
    [
-    10.688041,
+    10.46,
     "mewah"
    ],
    [
-    10.9745,
-    "berbeda"
+    10.8,
+    "berbeda,"
    ],
    [
-    12.552083,
-    "PPN-nya"
+    11.7,
+    "ppnnya"
    ],
    [
-    13.046875,
+    12.26,
     "12"
    ],
    [
-    13.411458,
-    "persen"
+    12.68,
+    "%"
    ],
    [
-    13.789083,
+    13.04,
     "dari"
    ],
    [
-    13.958333,
+    13.28,
     "nilai"
    ],
    [
-    14.192708,
+    13.68,
     "impor"
    ],
    [
-    14.453125,
+    13.98,
     "penuh"
    ],
    [
-    15.221375,
+    14.3,
     "tanpa"
    ],
    [
-    15.533875,
-    "11/12"
+    15.0,
+    "11x12."
    ],
    [
-    17.538041,
+    16.38,
     "Ini"
    ],
    [
-    17.811458,
+    16.76,
     "juga"
    ],
    [
-    18.058875,
+    16.96,
     "diatur"
    ],
    [
-    18.436458,
+    17.32,
     "dalam"
    ],
    [
-    18.696875,
+    17.52,
     "PMK"
    ],
    [
-    19.126583,
+    18.02,
     "131"
    ],
    [
-    20.16825,
-    "Tahun"
+    18.88,
+    "tahun"
    ],
    [
-    20.532833,
-    "2024"
-   ]
-  ],
-  "marks": {
-   "non": 2.383,
-   "lux": 9.725
-  },
-  "cues": [
-   [
-    0.1,
-    "Mulai dari PPN."
-   ],
-   [
-    2.383,
-    "Di materi keempat, kain kita memakai dasar pengenaan 11/12 dari nilai impor, jadi bebannya 11 persen."
-   ],
-   [
-    9.725,
-    "Barang yang tergolong mewah berbeda."
-   ],
-   [
-    12.552,
-    "PPN-nya 12 persen dari nilai impor penuh, tanpa 11/12."
-   ],
-   [
-    17.538,
-    "Ini juga diatur dalam PMK 131 Tahun 2024."
+    19.12,
+    "2024."
    ]
   ]
  },
  "ppnbm": {
-  "key": "b21ae2bec975934ada88102ee97352fe3fd492a8",
-  "dur": 23.784,
+  "key": "571c2dcaffb559301493ccf1100bff949db9e04a",
+  "dur": 23.98,
   "words": [
    [
-    0.115125,
+    0.0,
     "Selain"
    ],
    [
-    0.453666,
-    "PPN"
+    0.5,
+    "ppn,"
    ],
    [
-    1.391166,
+    1.26,
     "barang"
    ],
    [
-    1.690625,
+    1.62,
     "mewah"
    ],
    [
-    1.951041,
+    1.86,
     "dikenai"
    ],
    [
-    2.302625,
-    "PPnBM"
+    2.26,
+    "ppnbm"
    ],
    [
-    3.448458,
+    3.26,
     "atau"
    ],
    [
-    3.721875,
-    "Pajak"
+    3.6,
+    "pajak"
    ],
    [
-    4.047416,
-    "Penjualan"
+    4.14,
+    "penjualan"
    ],
    [
-    4.516166,
+    4.66,
     "atas"
    ],
    [
-    4.789583,
-    "Barang"
-   ],
-   [
-    5.05,
-    "Mewah"
-   ],
-   [
-    6.445333,
-    "UU"
-   ],
-   [
-    6.679708,
-    "PPN"
-   ],
-   [
-    7.122416,
-    "mengenakan"
-   ],
-   [
-    7.578125,
-    "PPnBM"
-   ],
-   [
-    8.229166,
-    "atas"
-   ],
-   [
-    8.476583,
-    "penyerahan"
-   ],
-   [
-    8.984375,
-    "dan"
-   ],
-   [
-    9.127625,
-    "impor"
-   ],
-   [
-    9.401041,
+    4.94,
     "barang"
    ],
    [
-    9.6875,
-    "yang"
+    5.16,
+    "mewah."
    ],
    [
-    9.83075,
-    "tergolong"
+    6.02,
+    "Undang"
    ],
    [
-    10.195333,
-    "mewah"
+    6.56,
+    "-undang"
    ],
    [
-    10.976583,
-    "di"
+    6.74,
+    "ppn"
    ],
    [
-    11.106791,
-    "samping"
+    7.18,
+    "mengenakan"
    ],
    [
-    11.510416,
-    "PPN"
+    7.58,
+    "ppnbm"
    ],
    [
-    13.046875,
-    "PPnBM"
+    8.62,
+    "atas"
    ],
    [
-    13.723958,
-    "dikenakan"
-   ],
-   [
-    14.153666,
-    "satu"
-   ],
-   [
-    14.414083,
-    "kali"
-   ],
-   [
-    14.583333,
-    "saja"
-   ],
-   [
-    15.494791,
-    "yaitu"
-   ],
-   [
-    15.833333,
-    "saat"
-   ],
-   [
-    16.067708,
-    "impor"
-   ],
-   [
-    16.419291,
-    "atau"
-   ],
-   [
-    16.614583,
-    "saat"
-   ],
-   [
-    16.848958,
+    8.94,
     "penyerahan"
    ],
    [
-    17.304708,
+    9.42,
+    "dan"
+   ],
+   [
+    9.76,
+    "impor"
+   ],
+   [
+    10.28,
+    "barang"
+   ],
+   [
+    10.6,
+    "yang"
+   ],
+   [
+    10.72,
+    "tergolong"
+   ],
+   [
+    11.12,
+    "mewah"
+   ],
+   [
+    11.56,
+    "di"
+   ],
+   [
+    12.16,
+    "samping"
+   ],
+   [
+    12.44,
+    "ppn."
+   ],
+   [
+    13.62,
+    "Ppnbm"
+   ],
+   [
+    14.4,
+    "dikenakan"
+   ],
+   [
+    14.76,
+    "satu"
+   ],
+   [
+    15.14,
+    "kali"
+   ],
+   [
+    15.32,
+    "saja,"
+   ],
+   [
+    16.06,
+    "yaitu"
+   ],
+   [
+    16.38,
+    "saat"
+   ],
+   [
+    16.52,
+    "impor"
+   ],
+   [
+    17.12,
+    "atau"
+   ],
+   [
+    17.58,
+    "saat"
+   ],
+   [
+    17.8,
+    "penyerahan"
+   ],
+   [
+    18.3,
     "oleh"
    ],
    [
-    17.5,
-    "pabrikan"
+    18.46,
+    "pabrikan."
    ],
    [
-    19.0625,
+    19.44,
     "Dan"
    ],
    [
-    19.270833,
+    19.78,
     "berbeda"
    ],
    [
-    19.648458,
+    20.16,
     "dengan"
    ],
    [
-    19.882833,
-    "PPN"
+    20.3,
+    "ppn,"
    ],
    [
-    20.833333,
-    "PPnBM"
+    21.18,
+    "ppnbm"
    ],
    [
-    21.5495,
+    21.9,
     "tidak"
    ],
    [
-    21.783875,
+    22.24,
     "dapat"
    ],
    [
-    22.070333,
-    "dikreditkan"
-   ]
-  ],
-  "marks": {
-   "b1": 6.445,
-   "b2": 13.047,
-   "b3": 19.062
-  },
-  "cues": [
-   [
-    0.115,
-    "Selain PPN, barang mewah dikenai PPnBM, atau Pajak Penjualan atas Barang Mewah."
-   ],
-   [
-    6.445,
-    "UU PPN mengenakan PPnBM atas penyerahan dan impor barang yang tergolong mewah, di samping PPN."
-   ],
-   [
-    13.047,
-    "PPnBM dikenakan satu kali saja, yaitu saat impor atau saat penyerahan oleh pabrikan."
-   ],
-   [
-    19.062,
-    "Dan berbeda dengan PPN, PPnBM tidak dapat dikreditkan."
+    22.72,
+    "dikreditkan."
    ]
   ]
  },
  "tarifbm": {
-  "key": "5a4f704722f955e681830a143a51a10265bf45a5",
-  "dur": 24.624,
+  "key": "1ff1c299714880ab1f520d3b5c5530ea25e864b8",
+  "dur": 23.14,
   "words": [
    [
-    0.101041,
+    0.0,
     "Tarif"
    ],
    [
-    0.439583,
+    0.68,
     "dan"
    ],
    [
-    0.608875,
+    0.82,
     "kelompok"
    ],
    [
-    0.947416,
+    1.24,
     "barangnya"
    ],
    [
-    1.403125,
+    1.66,
     "diatur"
    ],
    [
-    1.832833,
+    2.08,
     "dalam"
    ],
    [
-    2.09325,
+    2.38,
     "peraturan"
    ],
    [
-    2.509916,
-    "pelaksanaan"
+    2.82,
+    "pelaksanaan."
    ],
    [
-    4.270833,
+    3.8,
     "Untuk"
    ],
    [
-    4.51825,
+    4.08,
     "kendaraan"
    ],
    [
-    4.869791,
-    "bermotor"
+    4.42,
+    "bermotor,"
    ],
    [
-    5.78125,
+    5.04,
     "berlaku"
    ],
    [
-    6.171875,
+    5.5,
     "PMK"
    ],
    [
-    6.5625,
+    5.98,
     "141"
    ],
    [
-    7.539083,
-    "Tahun"
+    7.16,
+    "tahun"
    ],
    [
-    7.864583,
-    "2021"
+    7.52,
+    "2021,"
    ],
    [
-    9.414083,
+    8.76,
     "yang"
    ],
    [
-    9.622416,
+    9.14,
     "diubah"
    ],
    [
-    9.973958,
+    9.54,
     "dengan"
    ],
    [
-    10.221375,
+    9.68,
     "PMK"
    ],
    [
-    10.664083,
+    10.16,
     "42"
    ],
    [
-    11.223958,
-    "Tahun"
+    10.6,
+    "tahun"
    ],
    [
-    11.5625,
-    "2022"
+    11.12,
+    "2022."
    ],
    [
-    13.592708,
-    "Sepeda"
+    12.84,
+    "Spada"
    ],
    [
-    14.009375,
+    13.32,
     "motor"
    ],
    [
-    14.282833,
+    13.54,
     "250"
    ],
    [
-    15.207291,
+    14.12,
     "sampai"
    ],
    [
-    15.532833,
+    15.06,
     "500"
    ],
    [
-    15.9625,
+    15.52,
     "cc"
    ],
    [
-    16.366166,
+    16.06,
     "dikenai"
    ],
    [
-    16.73075,
-    "PPnBM"
+    16.56,
+    "PNBM"
    ],
    [
-    17.329708,
+    17.1,
     "60"
    ],
    [
-    17.720333,
-    "persen"
+    17.68,
+    "%"
    ],
    [
-    18.097916,
+    18.12,
     "dari"
    ],
    [
-    18.29325,
-    "nilai"
+    18.4,
+    "nila"
    ],
    [
-    18.540625,
-    "impor"
+    18.66,
+    "impor."
    ],
    [
-    19.998958,
-    "Sepeda"
+    19.58,
+    "Spada"
    ],
    [
-    20.389583,
+    19.86,
     "motor"
    ],
    [
-    20.728125,
+    20.12,
     "di"
    ],
    [
-    20.832291,
+    20.26,
     "atas"
    ],
    [
-    21.092708,
+    20.46,
     "500"
    ],
    [
-    21.496375,
+    20.76,
     "cc"
    ],
    [
-    21.952083,
+    21.3,
     "dikenai"
    ],
    [
-    22.35575,
-    "95"
-   ],
-   [
-    23.123958,
-    "persen"
-   ]
-  ],
-  "marks": {
-   "m1": 13.593,
-   "m2": 19.999
-  },
-  "cues": [
-   [
-    0.101,
-    "Tarif dan kelompok barangnya diatur dalam peraturan pelaksanaan."
-   ],
-   [
-    4.271,
-    "Untuk kendaraan bermotor, berlaku PMK 141 Tahun 2021, yang diubah dengan PMK 42 Tahun 2022."
-   ],
-   [
-    13.593,
-    "Sepeda motor 250 sampai 500 cc dikenai PPnBM 60 persen dari nilai impor."
-   ],
-   [
-    19.999,
-    "Sepeda motor di atas 500 cc dikenai 95 persen."
+    21.72,
+    "95%."
    ]
   ]
  },
  "q1": {
-  "key": "a6a320b4e5460a734ba0ff5c9c651b9f37b8c591",
-  "dur": 7.872,
+  "key": "540986f17b8c2c2d59224fa6cfab03abe25bb099",
+  "dur": 10.22,
   "words": [
    [
-    0.101041,
-    "Sekarang"
+    0.0,
+    "Quiz"
    ],
    [
-    1.064583,
-    "mari"
-   ],
-   [
-    1.312,
-    "kita"
-   ],
-   [
-    1.546375,
-    "cek"
-   ],
-   [
-    1.728666,
-    "pemahaman"
-   ],
-   [
-    2.197416,
-    "kamu"
-   ],
-   [
-    3.540625,
-    "Berapa"
-   ],
-   [
-    3.866166,
+    0.36,
     "tarif"
    ],
    [
-    4.126583,
-    "PPnBM"
+    0.92,
+    "ppnbm"
    ],
    [
-    4.751583,
+    1.56,
+    "motor,"
+   ],
+   [
+    2.1,
+    "kasus"
+   ],
+   [
+    2.5,
+    "2."
+   ],
+   [
+    3.16,
+    "Sekarang"
+   ],
+   [
+    3.9,
+    "mari"
+   ],
+   [
+    4.34,
+    "kita"
+   ],
+   [
+    4.56,
+    "cek"
+   ],
+   [
+    4.92,
+    "pemahaman"
+   ],
+   [
+    5.42,
+    "kamu."
+   ],
+   [
+    6.28,
+    "Berapa"
+   ],
+   [
+    6.76,
+    "tarif"
+   ],
+   [
+    7.16,
+    "ppnbm"
+   ],
+   [
+    7.94,
     "untuk"
    ],
    [
-    4.972916,
+    8.22,
     "motor"
    ],
    [
-    5.233333,
-    "CV"
+    8.6,
+    "Chevrolet"
    ],
    [
-    5.506791,
-    "Roda"
+    9.24,
+    "Dajaya"
    ],
    [
-    5.728125,
-    "Jaya"
-   ],
-   [
-    6.548458,
-    "ya"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, mari kita cek pemahaman kamu."
-   ],
-   [
-    3.541,
-    "Berapa tarif PPnBM untuk motor CV Roda Jaya, ya?"
+    9.54,
+    "ya?"
    ]
   ]
  },
  "hitung": {
-  "key": "7d32833a7845c8b679880947369b4d4107db6be1",
-  "dur": 41.712,
+  "key": "ca10e6957f3a9f19bb08b1f736fbc0501bbdf0bf",
+  "dur": 42.1,
   "words": [
    [
-    0.1,
+    0.0,
     "Mari"
    ],
    [
-    0.464583,
+    0.42,
     "kita"
    ],
    [
-    0.672916,
+    0.64,
     "hitung"
    ],
    [
-    0.972416,
-    "Kasus"
+    0.94,
+    "kasus"
    ],
    [
-    1.323958,
-    "2"
+    1.32,
+    "2,"
    ],
    [
-    2.695333,
-    "Nilai"
-   ],
-   [
-    2.96875,
-    "pabeannya"
-   ],
-   [
-    3.476583,
-    "20.000"
-   ],
-   [
-    3.984375,
-    "dolar"
-   ],
-   [
-    4.296875,
-    "dikali"
-   ],
-   [
-    4.609375,
-    "kurs"
-   ],
-   [
-    4.895833,
-    "18.155"
-   ],
-   [
-    6.614583,
-    "rupiah"
-   ],
-   [
-    7.539083,
-    "yaitu"
-   ],
-   [
-    7.890625,
-    "363,1"
-   ],
-   [
-    9.544291,
-    "juta"
-   ],
-   [
-    9.791666,
-    "rupiah"
-   ],
-   [
-    11.263041,
-    "Bea"
-   ],
-   [
-    11.510416,
-    "Masuknya"
-   ],
-   [
-    11.953125,
-    "40"
-   ],
-   [
-    12.33075,
-    "persen"
-   ],
-   [
-    13.203125,
-    "jadi"
-   ],
-   [
-    13.515625,
-    "145,24"
-   ],
-   [
-    15.273458,
-    "juta"
-   ],
-   [
-    16.678666,
-    "Nilai"
-   ],
-   [
-    17.004166,
-    "impornya"
-   ],
-   [
-    17.459916,
-    "508,34"
-   ],
-   [
-    19.0745,
-    "juta"
-   ],
-   [
-    19.308875,
-    "rupiah"
-   ],
-   [
-    20.78125,
-    "Dari"
-   ],
-   [
-    21.028666,
+    2.02,
     "nilai"
    ],
    [
-    21.25,
+    2.52,
+    "pabeannya"
+   ],
+   [
+    2.96,
+    "20"
+   ],
+   [
+    3.42,
+    "ribu"
+   ],
+   [
+    3.96,
+    "dolar"
+   ],
+   [
+    4.44,
+    "di"
+   ],
+   [
+    4.68,
+    "kali"
+   ],
+   [
+    4.82,
+    "kurs"
+   ],
+   [
+    5.14,
+    "18"
+   ],
+   [
+    5.64,
+    ".155"
+   ],
+   [
+    6.98,
+    "rupiah,"
+   ],
+   [
+    7.76,
+    "yaitu"
+   ],
+   [
+    8.2,
+    "363"
+   ],
+   [
+    9.38,
+    ",1"
+   ],
+   [
+    10.18,
+    "juta"
+   ],
+   [
+    10.42,
+    "rupiah,"
+   ],
+   [
+    11.12,
+    "biar"
+   ],
+   [
+    11.54,
+    "masuknya"
+   ],
+   [
+    11.9,
+    "40"
+   ],
+   [
+    12.18,
+    "persen,"
+   ],
+   [
+    12.82,
+    "jadi"
+   ],
+   [
+    13.16,
+    "145"
+   ],
+   [
+    14.42,
+    ",24"
+   ],
+   [
+    15.04,
+    "juta,"
+   ],
+   [
+    16.14,
+    "nilai"
+   ],
+   [
+    16.54,
+    "impornya"
+   ],
+   [
+    17.12,
+    "508"
+   ],
+   [
+    18.06,
+    ",34"
+   ],
+   [
+    18.66,
+    "juta"
+   ],
+   [
+    19.12,
+    "rupiah."
+   ],
+   [
+    20.48,
+    "Dari"
+   ],
+   [
+    20.9,
+    "nilai"
+   ],
+   [
+    21.2,
     "impor"
    ],
    [
-    21.484375,
-    "itu"
+    21.46,
+    "itu,"
    ],
    [
-    22.265625,
-    "PPN"
+    22.02,
+    "ppn"
    ],
    [
-    22.669291,
+    22.44,
     "12"
    ],
    [
-    23.007833,
+    22.78,
     "persen"
    ],
    [
-    23.346375,
+    23.22,
     "sebesar"
    ],
    [
-    23.710958,
+    23.62,
     "61"
    ],
    [
-    24.309916,
-    "juta"
+    24.08,
+    "juta,"
    ],
    [
-    25.169291,
-    "PPnBM"
+    25.0,
+    "ppnbm"
    ],
    [
-    25.742208,
+    25.82,
     "95"
    ],
    [
-    26.39325,
+    26.44,
     "persen"
    ],
    [
-    26.757833,
+    27.04,
     "sebesar"
    ],
    [
-    27.135416,
-    "482,9"
+    27.4,
+    "482"
    ],
    [
-    28.90625,
-    "juta"
+    28.72,
+    ",9"
    ],
    [
-    29.739583,
+    29.32,
+    "juta,"
+   ],
+   [
+    30.22,
     "dan"
    ],
    [
-    29.987,
-    "PPh"
+    30.5,
+    "pph"
    ],
    [
-    30.3125,
-    "Pasal"
+    31.08,
+    "pasal"
    ],
    [
-    30.664083,
+    31.5,
     "22"
    ],
    [
-    31.145833,
-    "10"
+    31.94,
+    ",10"
    ],
    [
-    31.432291,
+    32.44,
     "persen"
    ],
    [
-    31.783875,
+    32.9,
     "sebesar"
    ],
    [
-    32.1875,
-    "50,8"
+    33.3,
+    "50"
    ],
    [
-    33.138041,
-    "juta"
+    33.72,
+    ",8"
    ],
    [
-    34.53125,
+    34.3,
+    "juta."
+   ],
+   [
+    35.1,
     "Total"
    ],
    [
-    34.817708,
-    "PDRI-nya"
+    35.5,
+    "PDRI"
    ],
    [
-    35.507833,
-    "594,8"
+    36.1,
+    "-nya"
    ],
    [
-    37.122416,
-    "juta"
+    36.28,
+    "594"
    ],
    [
-    37.981791,
+    37.52,
+    ",8"
+   ],
+   [
+    38.08,
+    "juta,"
+   ],
+   [
+    38.62,
     "dan"
    ],
    [
-    38.216166,
+    38.88,
     "total"
    ],
    [
-    38.502625,
-    "pungutannya"
+    39.22,
+    "pengutannya"
    ],
    [
-    39.088541,
+    39.76,
     "740"
    ],
    [
-    40.039083,
+    40.86,
     "juta"
    ],
    [
-    40.260416,
-    "rupiah"
-   ]
-  ],
-  "marks": {
-   "np": 2.695,
-   "bm": 11.263,
-   "ni": 16.679,
-   "pdri": 20.781,
-   "tot": 34.531
-  },
-  "cues": [
-   [
-    0.1,
-    "Mari kita hitung Kasus 2."
-   ],
-   [
-    2.695,
-    "Nilai pabeannya 20.000 dolar dikali kurs 18.155 rupiah, yaitu 363,1 juta rupiah."
-   ],
-   [
-    11.263,
-    "Bea Masuknya 40 persen, jadi 145,24 juta."
-   ],
-   [
-    16.679,
-    "Nilai impornya 508,34 juta rupiah."
-   ],
-   [
-    20.781,
-    "Dari nilai impor itu, PPN 12 persen sebesar 61 juta, PPnBM 95 persen sebesar 482,9 juta, dan PPh Pasal 22 10 persen sebesar 50,8 juta."
-   ],
-   [
-    34.531,
-    "Total PDRI-nya 594,8 juta, dan total pungutannya 740 juta rupiah."
+    41.26,
+    "rupiah."
    ]
   ]
  },
  "regul": {
-  "key": "da8784f361aad69330f1778e3beebd6014b7e06c",
-  "dur": 18.072,
+  "key": "231ebc6e4f30840a6abe62572a879083a542986c",
+  "dur": 17.5,
   "words": [
    [
-    0.101041,
+    0.0,
     "Total"
    ],
    [
-    0.400541,
-    "pungutan"
+    0.54,
+    "penghutan"
    ],
    [
-    0.830208,
+    1.0,
     "740"
    ],
    [
-    1.715625,
+    1.94,
     "juta"
    ],
    [
-    1.937,
+    2.26,
     "rupiah"
    ],
    [
-    2.197416,
+    2.58,
     "itu"
    ],
    [
-    2.562,
+    2.82,
     "lebih"
    ],
    [
-    2.809375,
+    3.36,
     "dari"
    ],
    [
-    2.991666,
+    3.56,
     "dua"
    ],
    [
-    3.187,
+    3.76,
     "kali"
    ],
    [
-    3.408333,
-    "nilai"
+    4.08,
+    "nilepabean"
    ],
    [
-    3.720833,
-    "pabean"
+    4.66,
+    "motornya."
    ],
    [
-    4.098458,
-    "motornya"
-   ],
-   [
-    5.651041,
+    5.42,
     "Untuk"
    ],
    [
-    5.885416,
-    "menjelaskannya"
+    5.78,
+    "menjelaskannya,"
    ],
    [
-    7.083333,
+    6.86,
     "ingat"
    ],
    [
-    7.34375,
+    7.22,
     "fungsi"
    ],
    [
-    7.64325,
-    "regulerend"
+    7.54,
+    "reguleran,"
    ],
    [
-    8.632833,
+    8.46,
     "pajak"
    ],
    [
-    8.984375,
+    8.96,
     "dipakai"
    ],
    [
-    9.440125,
+    9.4,
     "untuk"
    ],
    [
-    9.661458,
+    9.54,
     "mengatur"
    ],
    [
-    10.026041,
+    9.94,
     "konsumsi"
    ],
    [
-    10.533875,
+    10.7,
     "barang"
    ],
    [
-    10.794291,
-    "mewah"
+    11.02,
+    "mewah."
    ],
    [
-    12.1875,
+    11.86,
     "Dan"
    ],
    [
-    12.421875,
+    12.2,
     "teori"
    ],
    [
-    12.695333,
+    12.5,
     "daya"
    ],
    [
-    12.916666,
-    "pikul"
+    12.72,
+    "pikul,"
    ],
    [
-    13.737,
+    13.36,
     "pembeli"
    ],
    [
-    13.997416,
+    13.72,
     "motor"
    ],
    [
-    14.244791,
+    13.88,
     "besar"
    ],
    [
-    14.570333,
+    14.32,
     "dianggap"
    ],
    [
-    14.973958,
+    14.96,
     "mampu"
    ],
    [
-    15.273458,
+    15.54,
     "memikul"
    ],
    [
-    15.638041,
+    15.96,
     "beban"
    ],
    [
-    15.911458,
+    16.2,
     "pajak"
    ],
    [
-    16.328125,
+    16.6,
     "yang"
    ],
    [
-    16.458333,
+    16.68,
     "lebih"
    ],
    [
-    16.666666,
-    "tinggi"
-   ]
-  ],
-  "marks": {
-   "reg": 5.651,
-   "pikul": 12.188
-  },
-  "cues": [
-   [
-    0.101,
-    "Total pungutan 740 juta rupiah itu lebih dari dua kali nilai pabean motornya."
-   ],
-   [
-    5.651,
-    "Untuk menjelaskannya, ingat fungsi regulerend: pajak dipakai untuk mengatur konsumsi barang mewah."
-   ],
-   [
-    12.188,
-    "Dan teori daya pikul: pembeli motor besar dianggap mampu memikul beban pajak yang lebih tinggi."
+    16.84,
+    "tinggi."
    ]
   ]
  },
  "fasilitas": {
-  "key": "5e32b89ae620710446c8242ce31457e0c1389fb2",
-  "dur": 33.6,
+  "key": "d5f542673762b2e9faf2f69019172f81d8ee568a",
+  "dur": 33.98,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    1.090625,
-    "fasilitas"
+    0.58,
+    "fasilitas."
    ],
    [
-    2.916666,
+    1.82,
     "Fasilitas"
    ],
    [
-    3.515625,
+    2.62,
     "mengubah"
    ],
    [
-    3.841166,
+    3.18,
     "jumlah"
    ],
    [
-    4.153666,
+    3.52,
     "yang"
    ],
    [
-    4.296875,
-    "dibayar"
+    3.68,
+    "dibayar."
    ],
    [
-    5.273458,
-    "jadi"
+    4.44,
+    "Jadi"
    ],
    [
-    5.585958,
+    4.78,
     "periksa"
    ],
    [
-    5.885416,
+    5.38,
     "dokumennya"
    ],
    [
-    6.40625,
+    5.94,
     "sebelum"
    ],
    [
-    6.731791,
-    "menghitung"
+    6.26,
+    "menghitung."
    ],
    [
-    8.255208,
+    7.34,
     "Surat"
    ],
    [
-    8.541666,
+    7.78,
     "Keterangan"
    ],
    [
-    8.90625,
+    8.16,
     "Bebas"
    ],
    [
-    9.713541,
+    8.72,
     "atau"
    ],
    [
-    10.013041,
-    "SKB"
+    9.04,
+    "SKB,"
    ],
    [
-    11.002625,
-    "PPh"
+    9.98,
+    "PPH"
    ],
    [
-    11.354166,
+    10.4,
     "Pasal"
    ],
    [
-    11.666666,
+    10.74,
     "22"
    ],
    [
-    12.226583,
+    11.12,
     "dari"
    ],
    [
-    12.421875,
-    "DJP"
+    11.58,
+    "DCP"
    ],
    [
-    12.890625,
+    12.14,
     "membuat"
    ],
    [
-    13.203125,
-    "PPh"
+    12.76,
+    "PPH"
    ],
    [
-    13.528666,
+    13.34,
     "Pasal"
    ],
    [
-    13.867208,
+    13.68,
     "22"
    ],
    [
-    14.440125,
+    14.14,
     "tidak"
    ],
    [
-    14.661458,
-    "dipungut"
+    14.56,
+    "dipunggut."
    ],
    [
-    15.481791,
-    "misalnya"
+    15.36,
+    "Misalnya"
    ],
    [
-    15.989583,
+    15.82,
     "karena"
    ],
    [
-    16.223958,
+    16.2,
     "wajib"
    ],
    [
-    16.510416,
+    16.58,
     "pajak"
    ],
    [
-    16.862,
+    16.94,
     "mengalami"
    ],
    [
-    17.1875,
+    17.4,
     "kerugian"
    ],
    [
-    17.552083,
+    17.84,
     "fiskal"
    ],
    [
-    17.96875,
+    18.44,
     "atau"
    ],
    [
-    18.229166,
+    18.68,
     "lebih"
    ],
    [
-    18.4375,
-    "bayar"
+    18.94,
+    "bayar."
    ],
    [
-    19.856791,
+    19.9,
     "PPN"
    ],
    [
-    20.260416,
+    20.44,
     "tidak"
    ],
    [
-    20.46875,
-    "dipungut"
+    20.66,
+    "dipunggut"
    ],
    [
-    20.872416,
+    21.22,
     "berarti"
    ],
    [
-    21.237,
+    21.58,
     "PPN"
    ],
    [
-    21.71875,
+    22.08,
     "tetap"
    ],
    [
-    21.953125,
-    "terutang"
+    22.36,
+    "terutang,"
    ],
    [
-    22.317708,
+    23.1,
     "tetapi"
    ],
    [
-    22.64325,
+    23.48,
     "tidak"
    ],
    [
-    22.877625,
-    "dibayar"
+    23.78,
+    "dibayar,"
    ],
    [
-    23.854166,
+    24.48,
     "dan"
    ],
    [
-    24.088541,
+    24.74,
     "pajak"
    ],
    [
-    24.388041,
+    25.04,
     "masukannya"
    ],
    [
-    24.947916,
+    25.56,
     "tetap"
    ],
    [
-    25.247416,
+    26.16,
     "dapat"
    ],
    [
-    25.546875,
-    "dikreditkan"
+    26.44,
+    "dikreditkan."
    ],
    [
-    27.226583,
+    27.18,
     "PPN"
    ],
    [
-    27.604166,
+    28.34,
     "dibebaskan"
    ],
    [
-    28.190125,
+    29.04,
     "berarti"
    ],
    [
-    28.528666,
+    29.54,
     "PPN"
    ],
    [
-    28.958333,
+    30.04,
     "tidak"
    ],
    [
-    29.179708,
+    30.3,
     "dibayar"
    ],
    [
-    30.130208,
+    30.86,
     "tetapi"
    ],
    [
-    30.494791,
+    31.38,
     "pajak"
    ],
    [
-    30.794291,
+    31.72,
     "masukannya"
    ],
    [
-    31.354166,
+    32.2,
     "tidak"
    ],
    [
-    31.601583,
+    32.56,
     "dapat"
    ],
    [
-    31.888041,
-    "dikreditkan"
-   ]
-  ],
-  "marks": {
-   "s1": 8.255,
-   "s2": 19.857,
-   "s3": 27.227
-  },
-  "cues": [
-   [
-    0.101,
-    "Sekarang, fasilitas."
-   ],
-   [
-    2.917,
-    "Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumennya sebelum menghitung."
-   ],
-   [
-    8.255,
-    "Surat Keterangan Bebas, atau SKB, PPh Pasal 22 dari DJP membuat PPh Pasal 22 tidak dipungut, misalnya karena wajib pajak mengalami kerugian fiskal atau lebih bayar."
-   ],
-   [
-    19.857,
-    "PPN tidak dipungut berarti PPN tetap terutang tetapi tidak dibayar, dan pajak masukannya tetap dapat dikreditkan."
-   ],
-   [
-    27.227,
-    "PPN dibebaskan berarti PPN tidak dibayar, tetapi pajak masukannya tidak dapat dikreditkan."
+    32.92,
+    "dikreditkan."
    ]
   ]
  },
  "skb": {
-  "key": "8c926e7a837fa70e25c59da456b897df625533a7",
-  "dur": 21.672,
+  "key": "2def760cdf567b0669221aee1efa51ac29f0742d",
+  "dur": 21.82,
   "words": [
    [
-    0.1,
+    0.0,
     "Contohnya"
    ],
    [
-    0.698958,
-    "begini"
+    0.58,
+    "begini,"
    ],
    [
-    2.239583,
-    "Tanpa"
+    1.42,
+    "tanpa"
    ],
    [
-    2.513041,
-    "fasilitas"
+    1.9,
+    "fasilitas,"
    ],
    [
-    3.554708,
+    3.04,
     "PDRI"
    ],
    [
-    4.088541,
-    "Kasus"
+    3.88,
+    "kasus"
    ],
    [
-    4.375,
+    4.32,
     "1"
    ],
    [
-    4.570333,
+    4.8,
     "terdiri"
    ],
    [
-    4.987,
+    5.3,
     "atas"
    ],
    [
-    5.234375,
+    5.62,
     "PPN"
    ],
    [
-    5.559916,
-    "Impor"
+    5.94,
+    "impor"
    ],
    [
-    5.9245,
+    6.4,
     "dan"
    ],
    [
-    6.119791,
-    "PPh"
+    6.56,
+    "PPH"
    ],
    [
-    6.445333,
-    "Pasal"
+    7.06,
+    "pasal"
    ],
    [
-    6.770833,
-    "22"
+    7.34,
+    "22,"
    ],
    [
-    7.916666,
+    8.12,
     "totalnya"
    ],
    [
-    8.385416,
-    "206,3"
+    8.82,
+    "206"
    ],
    [
-    9.53125,
+    9.68,
+    ",3"
+   ],
+   [
+    10.12,
     "juta"
    ],
    [
-    9.778666,
-    "rupiah"
+    10.36,
+    "rupiah."
    ],
    [
-    11.237,
+    11.24,
     "Kalau"
    ],
    [
-    11.458333,
-    "PT"
+    11.72,
+    "PTKN"
    ],
    [
-    11.692708,
-    "Kain"
+    12.16,
+    "Primanusan"
    ],
    [
-    11.927083,
-    "Prima"
+    12.62,
+    "Tara"
    ],
    [
-    12.148458,
-    "Nusantara"
-   ],
-   [
-    12.65625,
+    12.96,
     "memiliki"
    ],
    [
-    13.072916,
+    13.56,
     "SKB"
    ],
    [
-    13.528666,
-    "PPh"
+    14.26,
+    "PPH"
    ],
    [
-    13.89325,
-    "Pasal"
+    14.82,
+    "pasal"
    ],
    [
-    14.244791,
+    15.16,
     "22"
    ],
    [
-    14.791666,
+    15.56,
     "yang"
    ],
    [
-    14.947916,
-    "berlaku"
+    15.78,
+    "berlaku,"
    ],
    [
-    15.9245,
-    "PDRI-nya"
+    16.64,
+    "PDRI"
    ],
    [
-    16.679708,
+    17.32,
+    "nya"
+   ],
+   [
+    17.46,
     "hanya"
    ],
    [
-    16.953125,
+    17.8,
     "PPN"
    ],
    [
-    17.304708,
-    "Impor"
+    18.26,
+    "impor,"
    ],
    [
-    18.098958,
+    18.98,
     "yaitu"
    ],
    [
-    18.450541,
-    "168,1"
+    19.26,
+    "168"
    ],
    [
-    20.0,
+    20.16,
+    ",1"
+   ],
+   [
+    20.72,
     "juta"
    ],
    [
-    20.234375,
-    "rupiah"
-   ]
-  ],
-  "marks": {
-   "before": 2.24,
-   "after": 11.237
-  },
-  "cues": [
-   [
-    0.1,
-    "Contohnya begini."
-   ],
-   [
-    2.24,
-    "Tanpa fasilitas, PDRI Kasus 1 terdiri atas PPN Impor dan PPh Pasal 22, totalnya 206,3 juta rupiah."
-   ],
-   [
-    11.237,
-    "Kalau PT Kain Prima Nusantara memiliki SKB PPh Pasal 22 yang berlaku, PDRI-nya hanya PPN Impor, yaitu 168,1 juta rupiah."
+    20.96,
+    "rupiah."
    ]
   ]
  },
  "q2": {
-  "key": "deeea0f1cc4be605f43e698efb13a57d08692d27",
-  "dur": 7.32,
+  "key": "a1f8b37176467930fab5f07659be92f9f2ecb2ac",
+  "dur": 6.1,
   "words": [
    [
-    0.101041,
+    0.0,
     "Sekarang"
    ],
    [
-    1.051583,
+    0.82,
     "kita"
    ],
    [
-    1.298958,
+    1.18,
     "cek"
    ],
    [
-    1.48125,
+    1.5,
     "pemahaman"
    ],
    [
-    1.923958,
+    1.92,
     "lagi"
    ],
    [
-    2.666166,
-    "ya"
+    2.2,
+    "ya,"
    ],
    [
-    4.009375,
-    "Pajak"
+    2.84,
+    "pajak"
    ],
    [
-    4.373958,
+    3.34,
     "masukan"
    ],
    [
-    4.738541,
+    3.66,
     "mana"
    ],
    [
-    5.038041,
+    3.98,
     "yang"
    ],
    [
-    5.16825,
+    4.28,
     "masih"
    ],
    [
-    5.428666,
+    4.7,
     "dapat"
    ],
    [
-    5.689083,
-    "dikreditkan"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Sekarang, kita cek pemahaman lagi, ya."
-   ],
-   [
-    4.009,
-    "Pajak masukan mana yang masih dapat dikreditkan?"
+    4.96,
+    "dikreditkan."
    ]
   ]
  },
  "jawab": {
-  "key": "587158aee2e5f9fb160d5ccc4f6b9881f99833b4",
-  "dur": 21.624,
+  "key": "9e07f2db305aa34075d68ac4a0d7f3e9b63e0ff2",
+  "dur": 19.18,
   "words": [
    [
-    0.101041,
+    0.0,
     "Jadi"
    ],
    [
-    1.038541,
+    0.44,
     "mengapa"
    ],
    [
-    1.416166,
-    "pungutan"
+    1.08,
+    "penghutan"
    ],
    [
-    1.78075,
+    1.42,
     "motor"
    ],
    [
-    2.028125,
+    1.62,
     "ini"
    ],
    [
-    2.2495,
+    1.86,
     "begitu"
    ],
    [
-    2.535958,
-    "besar"
+    2.04,
+    "besar?"
    ],
    [
-    3.919291,
+    2.9,
     "Karena"
    ],
    [
-    4.179708,
+    3.14,
     "motor"
    ],
    [
-    4.440125,
+    3.5,
     "ini"
    ],
    [
-    4.6745,
+    3.78,
     "barang"
    ],
    [
-    4.908875,
-    "mewah"
+    4.14,
+    "mewah."
    ],
    [
-    5.742208,
-    "PPN-nya"
+    4.92,
+    "PPNnya"
    ],
    [
-    6.276041,
+    5.48,
     "12"
    ],
    [
-    6.640625,
-    "persen"
+    5.82,
+    "%"
    ],
    [
-    6.927083,
-    "penuh"
+    6.12,
+    "penuh,"
    ],
    [
-    7.630208,
+    6.8,
     "ditambah"
    ],
    [
-    8.085958,
-    "PPnBM"
+    7.26,
+    "PPNBM"
    ],
    [
-    8.697916,
-    "95"
+    7.8,
+    "95%."
    ],
    [
-    9.466166,
-    "persen"
+    9.36,
+    "PPNBM"
    ],
    [
-    10.950541,
-    "PPnBM"
-   ],
-   [
-    11.640625,
+    10.48,
     "tidak"
    ],
    [
-    11.848958,
+    10.7,
     "dapat"
    ],
    [
-    12.083333,
-    "dikreditkan"
+    10.9,
+    "dikreditkan,"
    ],
    [
-    13.177083,
+    11.7,
     "jadi"
    ],
    [
-    13.502625,
-    "benar-benar"
+    11.98,
+    "benar"
    ],
    [
-    14.0495,
+    12.48,
+    "-benar"
+   ],
+   [
+    12.78,
     "menjadi"
    ],
    [
-    14.401041,
-    "beban"
+    12.96,
+    "beban."
    ],
    [
-    15.819291,
-    "Tujuannya"
+    13.76,
+    "Tujuhannya"
    ],
    [
-    16.340125,
+    14.34,
     "mengatur"
    ],
    [
-    16.691666,
+    14.92,
     "konsumsi"
    ],
    [
-    17.173458,
+    15.58,
     "barang"
    ],
    [
-    17.407833,
-    "mewah"
+    15.82,
+    "mewah,"
    ],
    [
-    18.228125,
+    16.42,
     "sesuai"
    ],
    [
-    18.592708,
+    16.78,
     "fungsi"
    ],
    [
-    18.905208,
-    "regulerend"
+    17.08,
+    "reguleren"
    ],
    [
-    19.439083,
+    17.54,
     "dan"
    ],
    [
-    19.634375,
+    17.86,
     "teori"
    ],
    [
-    19.933875,
+    18.24,
     "daya"
    ],
    [
-    20.18125,
-    "pikul"
-   ]
-  ],
-  "marks": {
-   "a1": 3.919,
-   "a2": 10.951,
-   "a3": 15.819
-  },
-  "cues": [
-   [
-    0.101,
-    "Jadi, mengapa pungutan motor ini begitu besar?"
-   ],
-   [
-    3.919,
-    "Karena motor ini barang mewah: PPN-nya 12 persen penuh, ditambah PPnBM 95 persen."
-   ],
-   [
-    10.951,
-    "PPnBM tidak dapat dikreditkan, jadi benar-benar menjadi beban."
-   ],
-   [
-    15.819,
-    "Tujuannya mengatur konsumsi barang mewah, sesuai fungsi regulerend dan teori daya pikul."
+    18.46,
+    "pikul."
    ]
   ]
  },
  "wrap": {
-  "key": "bc3acbf8f846fd2bc32c12e7a053b8ce92408885",
-  "dur": 18.72,
+  "key": "fc3e36df5a585dcab73d618f6c4a5c42c91b7541",
+  "dur": 17.78,
   "words": [
    [
-    0.100541,
-    "Jadi"
+    0.0,
+    "Ini"
    ],
    [
-    1.064083,
-    "ini"
+    0.34,
+    "rangkumannya."
    ],
    [
-    1.376583,
-    "rangkumannya"
-   ],
-   [
-    3.098958,
+    1.36,
     "Untuk"
    ],
    [
-    3.333333,
+    1.66,
     "barang"
    ],
    [
-    3.554708,
-    "mewah"
+    1.88,
+    "mewah,"
    ],
    [
-    4.375,
-    "PPN-nya"
+    2.56,
+    "ppnnya"
    ],
    [
-    4.882833,
+    3.2,
     "12"
    ],
    [
-    5.247416,
-    "persen"
+    3.84,
+    "%"
    ],
    [
-    5.598958,
+    4.3,
     "dikali"
    ],
    [
-    5.898458,
+    4.9,
     "nilai"
    ],
    [
-    6.119791,
+    5.22,
     "impor"
    ],
    [
-    6.940125,
+    5.7,
     "ditambah"
    ],
    [
-    7.382833,
-    "PPnBM"
+    6.54,
+    "ppnbm"
    ],
    [
-    8.046875,
+    7.62,
     "sesuai"
    ],
    [
-    8.398458,
-    "tarifnya"
+    8.06,
+    "tarifnya."
    ],
    [
-    9.933875,
-    "PPnBM"
+    9.08,
+    "Ppnbm"
    ],
    [
-    10.702083,
+    9.86,
     "tidak"
    ],
    [
-    10.936458,
+    10.12,
     "dapat"
    ],
    [
-    11.235958,
-    "dikreditkan"
+    10.48,
+    "dikreditkan."
    ],
    [
-    12.981791,
+    11.94,
     "Fasilitas"
    ],
    [
-    13.58075,
+    12.58,
     "mengubah"
    ],
    [
-    13.90625,
+    13.04,
     "jumlah"
    ],
    [
-    14.20575,
+    13.38,
     "yang"
    ],
    [
-    14.348958,
-    "dibayar"
+    13.52,
+    "dibayar,"
    ],
    [
-    15.338541,
+    14.3,
     "jadi"
    ],
    [
-    15.651041,
+    14.6,
     "periksa"
    ],
    [
-    15.976583,
+    15.46,
     "dokumen"
    ],
    [
-    16.315125,
+    15.8,
     "fasilitas"
    ],
    [
-    16.901041,
+    16.42,
     "sebelum"
    ],
    [
-    17.200541,
-    "menghitung"
-   ]
-  ],
-  "marks": {
-   "w1": 3.099,
-   "w2": 9.934,
-   "w3": 12.982
-  },
-  "cues": [
-   [
-    0.101,
-    "Jadi, ini rangkumannya."
-   ],
-   [
-    3.099,
-    "Untuk barang mewah, PPN-nya 12 persen dikali nilai impor, ditambah PPnBM sesuai tarifnya."
-   ],
-   [
-    9.934,
-    "PPnBM tidak dapat dikreditkan."
-   ],
-   [
-    12.982,
-    "Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumen fasilitas sebelum menghitung."
+    16.98,
+    "menghitung."
    ]
   ]
  },
  "final1": {
-  "key": "fd9b25b2407520510080d1a14602182f4f225e68",
-  "dur": 7.368,
+  "key": "e532ef24050bdfa61ccd390859b8097c17a26e5c",
+  "dur": 5.26,
   "words": [
    [
-    0.1,
-    "Nah"
+    0.0,
+    "Nah,"
    ],
    [
-    0.894291,
+    0.88,
     "sekarang"
    ],
    [
-    1.284916,
+    0.94,
     "kita"
    ],
    [
-    1.480208,
+    1.16,
     "latihan"
    ],
    [
-    2.300541,
-    "ya"
+    1.6,
+    "ya,"
    ],
    [
-    3.670833,
-    "Coba"
+    2.14,
+    "coba"
    ],
    [
-    4.009375,
+    2.52,
     "kamu"
    ],
    [
-    4.217708,
+    2.74,
     "temukan"
    ],
    [
-    4.582291,
+    3.08,
     "kesalahan"
    ],
    [
-    5.129166,
+    3.76,
     "dalam"
    ],
    [
-    5.3245,
+    3.98,
     "hitungan"
    ],
    [
-    5.715125,
+    4.46,
     "berikut"
    ],
    [
-    6.014583,
-    "ini"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.1,
-    "Nah, sekarang kita latihan, ya."
-   ],
-   [
-    3.671,
-    "Coba kamu temukan kesalahan dalam hitungan berikut ini."
+    4.72,
+    "ini."
    ]
   ]
  },
  "finish": {
-  "key": "6adaf49ec04386041867f92f2904e26c4f5f6114",
-  "dur": 9.096,
+  "key": "146ff02c9c29ef00e49180b58966f18ade83c8c9",
+  "dur": 8.18,
   "words": [
    [
-    0.101041,
-    "Bagus"
+    0.0,
+    "Materi"
    ],
    [
-    1.064583,
-    "materi"
+    0.62,
+    "K6"
    ],
    [
-    1.455208,
-    "keenam"
+    0.92,
+    "selesai,"
    ],
    [
-    1.78075,
-    "selesai"
+    1.78,
+    "berikutnya"
    ],
    [
-    3.332291,
-    "Berikutnya"
-   ],
-   [
-    4.373958,
+    2.38,
     "kita"
    ],
    [
-    4.621375,
+    2.8,
     "bahas"
    ],
    [
-    4.907833,
-    "barang"
+    3.2,
+    "upaya"
    ],
    [
-    5.129166,
-    "kiriman"
+    3.54,
+    "hukum"
    ],
    [
-    6.001583,
+    4.0,
     "lewat"
    ],
    [
-    6.314083,
-    "dua"
+    4.74,
+    "2"
    ],
    [
-    6.483333,
-    "paket"
+    4.94,
+    "MAP"
    ],
    [
-    6.74375,
-    "belanja"
+    5.16,
+    "surat"
    ],
    [
-    7.186458,
-    "daring"
+    5.48,
+    "penetapan"
    ],
    [
-    7.433875,
+    5.94,
     "milik"
    ],
    [
-    7.66825,
-    "Dita"
-   ]
-  ],
-  "marks": {},
-  "cues": [
-   [
-    0.101,
-    "Bagus, materi keenam selesai."
+    6.36,
+    "PT"
    ],
    [
-    3.332,
-    "Berikutnya, kita bahas barang kiriman, lewat dua paket belanja daring milik Dita."
+    6.56,
+    "Kain"
+   ],
+   [
+    6.92,
+    "Primanusantara."
    ]
   ]
  }

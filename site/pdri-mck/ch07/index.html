@@ -16,7 +16,7 @@
 /* Bab 7 (KB 7, v3): Upaya Hukum dan Hak Wajib Pajak. Penetapan DJBC (SPTNP dkk.) sebagai pintu masuk, Kasus 3
    (SPTNP atas Kasus 1), jalur kepabeanan, lalu hak wajib pajak di bidang perpajakan: sengketa vs permohonan,
    jalur banding dua instansi, dan menjawab pengguna jasa yang tidak setuju. McKinsey-style exhibits, INSW design. */
-const CHAPTER = { number: 7, title: 'Upaya Hukum dan Hak Wajib Pajak', minutes: 6, language: 'id' };
+const CHAPTER = { number: 7, title: 'Upaya Hukum dan Hak Wajib Pajak', minutes: 5, language: 'id' };
 
 const paper = p => bgPaper(p);
 const navy = (p, seed, D) => bgNavy(p, seed, D);
@@ -186,10 +186,10 @@ const BEATS = [
       [null, 'Tenggat dan tujuan ini berlaku untuk surat dari DJP (SKP), bukan SPTNP.', 'Banding baru dapat diajukan setelah keputusan keberatan dan tagihan dilunasi.', 'Permohonan dipakai untuk kekeliruan tanpa sengketa, bukan untuk SPTNP yang menaikkan nilai pabean.']),
   }], done) }],
 
-  ['hak', 'Dua keluarga hak wajib pajak', (m, D) => {
+  ['hak', 'Dua kelompok hak wajib pajak', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Wajib pajak punya dua keluarga hak: menyengketakan|ketetapan, atau memohon perbaikan tanpa sengketa', { tag: 'HAK WAJIB PAJAK · PERPAJAKAN' });
+    actionTitle(p, 'Wajib pajak punya dua kelompok hak: menyengketakan|ketetapan, atau memohon perbaikan tanpa sengketa', { tag: 'HAK WAJIB PAJAK · PERPAJAKAN' });
     const col = (x, t0, gl, v, head, sub, items, riskTag) => {
       const c = G(p);
       mcard(c, x, 240, 700, 440);

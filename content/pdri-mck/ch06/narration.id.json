@@ -1,11 +1,12 @@
 {
- "voice": null,
- "note": "Belum direkam. Naskah dari docs/naskah-voiceover; waktu diperkirakan 140 kata per menit.",
+ "voice": "Google AI Studio Gemini 3.8 Flash TTS — Bodi",
+ "rate": "sekitar 160 kata per menit",
+ "note": "Voiceover Chapter 6 direkam di Google AI Studio (Bodi) pada 25 Nov 2026, menggantikan draf. Teks narasi disamakan dengan ucapan di rekaman. Timing hasil forced-alignment faster-whisper.",
  "beats": {
-  "intro": "Mari kita lanjutkan, ya, sobat. [[sub]]Pada materi keenam ini, kita menghitung PDRI atas barang mewah, dan melihat bagaimana fasilitas mengubah jumlah yang dibayar.",
+  "intro": "Sobat, [[sub]]pada materi keenam ini, kita akan pelajari bagaimana penghitungan PDRI atas barang mewah, dan bagaimana fasilitas mengubah jumlah yang dibayar.",
   "ask": "[[ask]]Kali ini kita pakai Kasus dua. CV Roda Jaya, importir dengan API-U dan berstatus PKP, mengimpor satu unit sepeda motor CBU seribu cc, dengan nilai CIF dua puluh ribu dolar Amerika. [[ans]]Nanti kita akan lihat, total pungutannya lebih dari dua kali nilai pabeannya. Mengapa bisa sebesar itu?",
   "mewah": "[[kain]]Mulai dari PPN. Di materi keempat, kain kita memakai dasar pengenaan sebelas per dua belas dari nilai impor, jadi bebannya sebelas persen. [[motor]]Barang yang tergolong mewah berbeda. PPN-nya dua belas persen dari nilai impor penuh, tanpa sebelas per dua belas. [[dasar]]Ini juga diatur dalam PMK seratus tiga puluh satu Tahun dua ribu dua puluh empat.",
-  "ppnbm": "[[c1]]Selain PPN, barang mewah dikenai PPnBM, atau Pajak Penjualan atas Barang Mewah. UU PPN mengenakan PPnBM atas penyerahan dan impor barang yang tergolong mewah, di samping PPN. [[c2]]PPnBM dikenakan satu kali saja, yaitu saat impor atau saat penyerahan oleh pabrikan. [[c3]]Dan berbeda dengan PPN, PPnBM tidak dapat dikreditkan.",
+  "ppnbm": "[[c1]]Selain PPN, barang mewah dikenai PPnBM, atau Pajak Penjualan atas Barang Mewah. Undang-Undang PPN mengenakan PPnBM atas penyerahan dan impor barang yang tergolong mewah, di samping PPN. [[c2]]PPnBM dikenakan satu kali saja, yaitu saat impor atau saat penyerahan oleh pabrikan. [[c3]]Dan berbeda dengan PPN, PPnBM tidak dapat dikreditkan.",
   "tarifbm": "Tarif dan kelompok barangnya diatur dalam peraturan pelaksanaan. Untuk kendaraan bermotor, berlaku PMK seratus empat puluh satu Tahun dua ribu dua puluh satu, yang diubah dengan PMK empat puluh dua Tahun dua ribu dua puluh dua. [[t60]]Sepeda motor dua ratus lima puluh sampai lima ratus cc dikenai PPnBM enam puluh persen dari nilai impor. [[t95]]Sepeda motor di atas lima ratus cc dikenai sembilan puluh lima persen.",
   "q1": "Sekarang, mari kita cek pemahaman kamu. Berapa tarif PPnBM untuk motor CV Roda Jaya, ya?",
   "hitung": "[[np]]Mari kita hitung Kasus dua. Nilai pabeannya dua puluh ribu dolar dikali kurs delapan belas ribu seratus lima puluh lima rupiah, yaitu tiga ratus enam puluh tiga koma satu juta rupiah. [[bm]]Bea Masuknya empat puluh persen, jadi seratus empat puluh lima koma dua empat juta. [[ni]]Nilai impornya lima ratus delapan koma tiga empat juta rupiah. [[ppn]]Dari nilai impor itu, PPN dua belas persen sebesar enam puluh satu juta, [[ppnbm]]PPnBM sembilan puluh lima persen sebesar empat ratus delapan puluh dua koma sembilan juta, dan [[pph]]PPh Pasal dua puluh dua sepuluh persen sebesar lima puluh koma delapan juta. [[tot]]Total PDRI-nya lima ratus sembilan puluh empat koma delapan juta, dan total pungutannya tujuh ratus empat puluh juta rupiah.",
@@ -14,8 +15,8 @@
   "skb": "[[tanpa]]Contohnya begini. Tanpa fasilitas, PDRI Kasus satu terdiri atas PPN Impor dan PPh Pasal dua puluh dua, totalnya dua ratus enam koma tiga juta rupiah. [[dengan]]Kalau PT Kain Prima Nusantara memiliki SKB PPh Pasal dua puluh dua yang berlaku, PDRI-nya hanya PPN Impor, yaitu seratus enam puluh delapan koma satu juta rupiah.",
   "q2": "Sekarang, kita cek pemahaman lagi, ya. Pajak masukan mana yang masih dapat dikreditkan?",
   "jawab": "Jadi, mengapa pungutan motor ini begitu besar? [[a1]]Karena motor ini barang mewah: PPN-nya dua belas persen penuh, ditambah PPnBM sembilan puluh lima persen. [[a2]]PPnBM tidak dapat dikreditkan, jadi benar-benar menjadi beban. [[a3]]Tujuannya mengatur konsumsi barang mewah, sesuai fungsi regulerend dan teori daya pikul.",
-  "wrap": "Jadi, ini rangkumannya. [[w1]]Untuk barang mewah, PPN-nya dua belas persen dikali nilai impor, ditambah PPnBM sesuai tarifnya. [[w2]]PPnBM tidak dapat dikreditkan. [[w3]]Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumen fasilitas sebelum menghitung.",
+  "wrap": "Ini rangkumannya. [[w1]]Untuk barang mewah, PPN-nya dua belas persen dikali nilai impor, ditambah PPnBM sesuai tarifnya. [[w2]]PPnBM tidak dapat dikreditkan. [[w3]]Fasilitas mengubah jumlah yang dibayar, jadi periksa dokumen fasilitas sebelum menghitung.",
   "final1": "Nah, sekarang kita latihan, ya. Coba kamu temukan kesalahan dalam hitungan berikut ini.",
-  "finish": "Bagus, materi keenam selesai. Berikutnya, kita bahas barang kiriman, lewat dua paket belanja daring milik Dita."
+  "finish": "Materi keenam selesai. Berikutnya, kita bahas upaya hukum, lewat dua map surat penetapan milik PT Kain Prima Nusantara."
  }
 }

@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 W = pathlib.Path(sys.argv[1]).resolve()
 (W / 'png').mkdir(parents=True, exist_ok=True)
 with sync_playwright() as p:
-    b = p.chromium.launch()
+    b = p.chromium.launch(channel=__import__("os").environ.get("PW_CHANNEL") or None)
     pg = b.new_page(viewport={'width': 1920, 'height': 1080}, device_scale_factor=1.5)
     errs = []
     pg.on('pageerror', lambda e: errs.append(str(e)))

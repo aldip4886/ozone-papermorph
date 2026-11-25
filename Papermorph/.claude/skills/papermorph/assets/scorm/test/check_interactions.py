@@ -99,7 +99,7 @@ async def main(zpath, mastery_hint=None):
         await route.fulfill(status=404, body="")
 
     async with async_playwright() as pw:
-        browser = await pw.chromium.launch(args=["--autoplay-policy=no-user-gesture-required"])
+        browser = await pw.chromium.launch(channel=__import__("os").environ.get("PW_CHANNEL") or None, args=["--autoplay-policy=no-user-gesture-required"])
         page = await browser.new_page(viewport={"width": 1600, "height": 960})
         page.on("pageerror", lambda e: errors.append(str(e)))
         page.on("console", lambda m: m.type == "error" and not m.text.startswith("Failed to load resource") and errors.append(m.text))
