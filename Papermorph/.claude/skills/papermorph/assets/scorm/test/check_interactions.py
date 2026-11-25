@@ -20,6 +20,7 @@ This guards specifically against two regressions found in the field:
   - The LMS briefly seeing "failed" (no score yet) right before "passed" (with the real score), because
     finishCard's own progress() call reported before the chapter's score had been recorded.
 """
+import os
 import asyncio
 import json
 import re
@@ -108,9 +109,10 @@ async def main(zpath, mastery_hint=None):
         await page.goto(f"{ORIGIN}/mock-lms.html?pkg=pkg&v={version}&reset")
 
         book = lambda: page.frame_locator("#sco").frame_locator("#book")
-        await book().locator(".ch").first.wait_for(state="attached")
-        await book().locator("#cover .btn.go").click()
-        await book().locator(f"#ch{first:02d}").click()
+        if not os.environ.get("DIRECT"):   # DIRECT=1: the package opens straight on the lesson (tools/pdri/scorm/skip_cover.py)
+            await book().locator(".ch").first.wait_for(state="attached")
+            await book().locator("#cover .btn.go").click()
+            await book().locator(f"#ch{first:02d}").click()
         lesson = None
         for _ in range(100):
             lesson = page.frame(url=lambda u: f"/ch{first:02d}/index.html" in u)

@@ -9,6 +9,7 @@ servers do, returns 404 for folder URLs. It checks that the session opens, that 
 (folder links rewritten), that reaching the finish card reports the chapter to the LMS, and that a reload with
 the book's localStorage cleared resumes with the chapter's checkmark. No files are generated.
 """
+import os
 import asyncio
 import json
 import sys
@@ -51,13 +52,15 @@ async def main(zpath):
         await page.goto(f"{ORIGIN}/mock-lms.html?pkg=pkg&v={version}&reset")
 
         book = lambda: page.frame_locator("#sco").frame_locator("#book")
-        await book().locator(".ch").first.wait_for(state="attached")
+        if not os.environ.get("DIRECT"):
+            await book().locator(".ch").first.wait_for(state="attached")
         log = await page.evaluate("LOG.join('\\n')")
         assert ("Initialize(\"\") -> true" in log) or ("LMSInitialize(\"\") -> true" in log), "the session did not open"
         print(f"PASS SCORM {version}: session opened, contents shown")
 
-        await book().locator("#cover .btn.go").click()   # "Open the book", as a learner does
-        await book().locator(f"#ch{first:02d}").click()
+        if not os.environ.get("DIRECT"):   # DIRECT=1: the package opens straight on the lesson (tools/pdri/scorm/skip_cover.py)
+            await book().locator("#cover .btn.go").click()   # "Open the book", as a learner does
+            await book().locator(f"#ch{first:02d}").click()
         lesson = page.frame(url=lambda u: f"/ch{first:02d}/index.html" in u)
         for _ in range(100):
             lesson = page.frame(url=lambda u: f"/ch{first:02d}/index.html" in u)
@@ -80,8 +83,18 @@ async def main(zpath):
         # Resume must come from the LMS alone, as on another device: clear the book's localStorage first.
         await page.evaluate("document.getElementById('sco').contentWindow.document.getElementById('book').contentWindow.localStorage.clear()")
         await page.goto(f"{ORIGIN}/mock-lms.html?pkg=pkg&v={version}")
-        await book().locator(f"#ch{first:02d}.done").wait_for(state="attached", timeout=10000)
-        print("PASS resume: the chapter's checkmark is back after a reload")
+        if os.environ.get("DIRECT"):   # no contents page: the lesson itself must see the saved progress
+            for _ in range(100):
+                lesson = page.frame(url=lambda u: f"/ch{first:02d}/index.html" in u)
+                if lesson and await lesson.evaluate("typeof BOOK_PROGRESS_KEY === 'string'"):
+                    break
+                await page.wait_for_timeout(100)
+            done = await lesson.evaluate("JSON.parse(localStorage.getItem(BOOK_PROGRESS_KEY) || '{}').done || []")
+            assert first in done, f"resume: lesson did not get the saved progress ({done})"
+            print("PASS resume: the lesson sees its saved progress after a reload")
+        else:
+            await book().locator(f"#ch{first:02d}.done").wait_for(state="attached", timeout=10000)
+            print("PASS resume: the chapter's checkmark is back after a reload")
         await browser.close()
     assert not errors, errors
     print("PASS no page errors")
