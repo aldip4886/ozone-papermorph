@@ -3609,10 +3609,10 @@ const BEATS = [
       [null, 'Tenggat dan tujuan ini berlaku untuk surat dari DJP (SKP), bukan SPTNP.', 'Banding baru dapat diajukan setelah keputusan keberatan dan tagihan dilunasi.', 'Permohonan dipakai untuk kekeliruan tanpa sengketa, bukan untuk SPTNP yang menaikkan nilai pabean.']),
   }], done) }],
 
-  ['hak', 'Dua keluarga hak wajib pajak', (m, D) => {
+  ['hak', 'Dua kelompok hak wajib pajak', (m, D) => {
     const p = panel(0);
     paper(p);
-    actionTitle(p, 'Wajib pajak punya dua keluarga hak: menyengketakan|ketetapan, atau memohon perbaikan tanpa sengketa', { tag: 'HAK WAJIB PAJAK · PERPAJAKAN' });
+    actionTitle(p, 'Wajib pajak punya dua kelompok hak: menyengketakan|ketetapan, atau memohon perbaikan tanpa sengketa', { tag: 'HAK WAJIB PAJAK · PERPAJAKAN' });
     const col = (x, t0, gl, v, head, sub, items, riskTag) => {
       const c = G(p);
       mcard(c, x, 240, 700, 440);

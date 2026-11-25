@@ -25,7 +25,7 @@ Pembacaan mengikuti naskah `docs/naskah-voiceover/` yang lebih baru, sedangkan `
 | 6 | `ppnbm` | "UU PPN" dibaca "Undang-Undang PPN" | Narasi disamakan |
 | 6 | `wrap`, `finish` | Tanpa "Jadi," dan tanpa "Bagus," | Narasi disamakan |
 | 7 | `jalur1` | Kalimat pembuka rekaman "Terhadap penetapan ini, PT Kain Prima Nusantara bisa melakukan upaya hukum." | Narasi disamakan |
-| 7 | `hak` | "dua kelompok hak", ditambah "Hak ini digunakan untuk…" dan "Permohonan bertujuan…" | Narasi disamakan. Teks di layar (adegan `hak`) masih "dua keluarga hak" |
+| 7 | `hak` | "dua kelompok hak", ditambah "Hak ini digunakan untuk…" dan "Permohonan bertujuan…" | Narasi disamakan. Teks di layar (adegan `hak`) sudah diubah menjadi "dua kelompok hak" |
 | 7 | `bandingkan`, `lensa` | Kalimat pembuka dan "Undang-Undang Dasar", "berdasarkan undang-undang" berbeda dari narasi lama | Narasi disamakan |
 | 7 | `wrap` | Pembaca mengucapkan "Untuk ketetapan dari DJP, wajib pajak bisa menempuh jalur sengketa… atau permohonan, yang tidak ada sanksi", tanpa "Jadi," | Narasi dan naskah md disamakan |
 | 7 | `finish` | Tanpa "Bagus," | Narasi dan naskah md disamakan |
@@ -68,10 +68,14 @@ python .claude/skills/pdri-build-chapter/scripts/build_outputs.py 7
 - Skrip cek (`check_scorm.py`, `check_interactions.py`, `check_all_interactions.py`, `shoot_scenes.py`) kini membaca env `PW_CHANNEL`. Di mesin ini Chromium headless-shell bawaan Playwright crash saat membuka paket (bahkan paket Bab 5 yang sudah lulus), sehingga dipakai Chrome terpasang (`PW_CHANNEL=chrome`). Tanpa env itu perilaku lama tidak berubah.
 - Untuk `e2e_mck_chNN.py`, set `CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe"`.
 
-## 6. Lanjutan
+## 6. Pembaruan susulan (25 Nov)
 
-1. Review dengar kedua bab, terutama pelafalan persen, "PMK 51", dan singkatan.
-2. Putuskan apakah `intro` Bab 6 direkam ulang dengan pembuka "Mari kita lanjutkan, ya, sobat."
-3. Sesuaikan teks layar Bab 7 adegan `hak` ("dua keluarga hak") dengan ucapan "dua kelompok hak" bila ingin identik.
-4. Uji paket di SCORM Cloud atau LMS target.
-5. Gambar storyboard Bab 6–7 dan kolom "Durasi draf" di naskah belum diperbarui.
+- Teks layar Bab 7 adegan `hak` (judul adegan dan judul aksi) diubah dari "dua keluarga hak" menjadi "dua kelompok hak", sesuai naskah dan rekaman. Paket SCORM, HTML per adegan, dan PDF Bab 7 dibangun ulang; semua cek lulus lagi.
+- Kolom "Durasi draf" di naskah Bab 6–7 kini "Durasi rekaman" (detik dari MP3 final), beserta total durasi di atas tabel.
+- Storyboard Bab 6–7 dibangun ulang dengan `make_storyboard.py`: lembar kontak `books/pdri/review/ch0{6,7}-mck/storyboard-adegan.jpg` dan `docs/storyboard-pdri/bab{6,7}-storyboard.md`. Storyboard Bab 7 sebelumnya masih versi "Barang Kiriman". Kolom durasi memakai durasi VO, bukan durasi pratinjau MP4.
+
+## 7. Lanjutan
+
+1. Review dengar kedua bab.
+2. Uji paket di SCORM Cloud atau LMS target.
+3. `dist/pdri/pdf/bab7-barang-kiriman-fullscreen.pdf` adalah sisa lama (tidak dilacak git) dan boleh dihapus.
