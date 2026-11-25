@@ -139,8 +139,11 @@ naskah "Durasi draf", uncommitted leftovers).
 
 ## Known gotchas
 
-- The interaction-tracking `scorm-bridge.js`/`scorm-host.js` and `check_interactions.py` live only in the
-  local `Papermorph/` clone (uncommitted there). If `Papermorph/.claude/skills/papermorph/assets/scorm/scorm-bridge.js`
-  has no `onInteraction`, stop and tell the user — packages built without it don't report answers.
+- `Papermorph/` is vendored in this repo (engine + skill, with the interaction-tracking `scorm-bridge.js`/
+  `scorm-host.js` and `check_interactions.py`); see `Papermorph/UPSTREAM.md` for the upstream base and how to
+  update. Its demo books (`Papermorph/site/`) are not in the repo. If
+  `Papermorph/.claude/skills/papermorph/assets/scorm/scorm-bridge.js` has no `onInteraction`, stop and tell the
+  user — packages built without it don't report answers. Never re-add a nested `Papermorph/.git`: git would
+  then store only a pointer, not the files.
 - The local HTTP server may be blocked in this environment; use `file://` URLs (everything here works with them).
 - Ch03 MP3s are 44.1 kHz/96 kbps (per-scene HTML ~1 MB each); ch04+ are 24 kHz/48 kbps.
