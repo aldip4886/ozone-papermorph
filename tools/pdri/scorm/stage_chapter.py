@@ -62,6 +62,19 @@ def main():
         if d.name != chdir:
             _rmtree(d)
 
+    # Working notes and scratch output left in a chapter folder (reports, *.md/*.txt, outputs/) are not part of
+    # the lesson. They once ended up inside the Bab 3 zip, so keep them out of every package.
+    # Older takes kept beside the installed audio (audio/bodi, audio/bodi-wav, *.wav) are not used by the
+    # lesson either; only audio/<lang>/ is.
+    junk = [out / chdir / 'outputs'] + [d for d in (out / chdir / 'audio').glob('*')
+                                        if d.is_dir() and len(d.name) != 2]
+    for d in junk:
+        if d.exists():
+            _rmtree(d)
+    for f in list(out.rglob('*')):
+        if f.is_file() and f.suffix.lower() in ('.md', '.txt', '.wav'):
+            f.unlink()
+
     cover = out / 'index.html'
     cover_html = cover.read_text(encoding='utf-8')
     call = re.search(r'Contents\.book\(\{.*?\n\}\);', cover_html, re.S)
