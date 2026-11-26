@@ -47,7 +47,10 @@ def patch(path: Path):
     tmp = Path(tempfile.mkdtemp()) / path.name
     with zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as z:
         for info, data in out:   # imsmanifest.xml stays first
-            z.writestr(info.filename, data)
+            # DOS entry, readable by all: a zip built on Linux marks files 0600, which an LMS server can't serve
+            zi = zipfile.ZipInfo(info.filename, info.date_time)
+            zi.create_system, zi.external_attr, zi.compress_type = 0, 0o644 << 16, info.compress_type
+            z.writestr(zi, data)
     shutil.move(str(tmp), path)
     print(f'{path}: opens on {chap}')
 

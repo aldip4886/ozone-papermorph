@@ -19,6 +19,7 @@ import argparse
 import json
 import re
 import sys
+import time
 import zipfile
 from html import escape
 from pathlib import Path
@@ -213,7 +214,11 @@ def main():
         # The manifest goes first; some LMS importers look for it at the start of the archive.
         for name in ['imsmanifest.xml'] + sorted(k for k in files if k != 'imsmanifest.xml'):
             kind = zipfile.ZIP_STORED if Path(name).suffix.lower() in STORED else zipfile.ZIP_DEFLATED
-            z.writestr(name, files[name], compress_type=kind)
+            # Same entry header on every OS: built on Linux, a bare writestr() marks each file 0600 (owner only), and
+            # an LMS that unpacks on its own server then can't serve the files (the upload or launch fails).
+            info = zipfile.ZipInfo(name, time.localtime()[:6])
+            info.create_system, info.external_attr, info.compress_type = 0, 0o644 << 16, kind
+            z.writestr(info, files[name])
     size = zpath.stat().st_size / 1e6
     print(f'{zpath}  ({size:.1f} MB, SCORM {a.version}, {len(chs)} chapters, '
           f'{"mastery " + str(a.mastery) + "%" if a.mastery is not None else "completion only"})')

@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KB 4 · Estafet PPN</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/mck.js"></script>
+<script src="audio/id/timings.js"></script>
+<script>
+'use strict';
+/* KB 4 · Estafet PPN dalam rantai produksi dan distribusi (docs/storyboard-kb4-estafet-ppn-v1.md). A lesson of its own
+   beside Bab 4: the folder is ch41 (the build tools number chapters), the learner sees "KB 4". Kain impor -> konveksi ->
+   toko -> pembeli kemeja with an effective PPN of 11%: PPN Impor as input tax, PK - PM at every stage, the waterfall
+   to Rp352 juta, and two drag-and-drop activities (order the chain, match PK/PM/setoran). */
+const CHAPTER = { number: 41, label: 'KB 4', title: 'Estafet PPN dalam Rantai Produksi dan Distribusi', minutes: 4, language: 'id' };
+// the cover and the finish card name this lesson "KB 4", not "Bab KB 4"
+Object.assign(TRANSLATIONS.id, { chapterNumber: '{n}', chapterComplete: '{n} selesai', chapterPractice: 'Latihan' });
+
+const paper = p => bgPaper(p);
+const navy = (p, seed, D) => bgNavy(p, seed, D);
+Object.assign(GLYPH, {
+  store: 'M4 11v9h16v-9 M3 4h18l1 5a2.5 2.5 0 0 1-5 0a2.5 2.5 0 0 1-5 0a2.5 2.5 0 0 1-5 0a2.5 2.5 0 0 1-5 0z M10 20v-5h4v5',
+});
+const okTick = (p, x, y, r = 20, col = MK.green) => {
+  const ok = G(p, { x, y });
+  mk('circle', { r, fill: col }, ok);
+  path(ok, `M${-r * .45} ${r * .05}l${r * .3} ${r * .3}l${r * .6} ${-r * .6}`, { stroke: '#fff', 'stroke-width': r * .22, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  return ok;
+};
+const noTick = (p, x, y, r = 20) => {
+  const g = G(p, { x, y });
+  mk('circle', { r, fill: MK.red }, g);
+  path(g, `M${-r * .35} ${-r * .35}L${r * .35} ${r * .35}M${r * .35} ${-r * .35}L${-r * .35} ${r * .35}`, { stroke: '#fff', 'stroke-width': r * .22, 'stroke-linecap': 'round' });
+  return g;
+};
+
+// Kasus 1 (KB 4.6) and the relay with an effective 11% (KB 4.5)
+const NI = 1528230000, PPNI = NI * 11 / 12 * .12;                    // 168.105.300
+const RELAY = [   // [pos, seller, glyph, tile, buyer, glyph, tile, sale, PK, PM, setor]
+  [1, 'Importir kain', 'ship', 'blue', 'Kas negara', 'shield', 'sky', 0, 0, PPNI, PPNI],
+  [2, 'Importir', 'fabric', 'gold', 'Konveksi', 'factory', 'sky', 1.8e9, 198e6, PPNI, 198e6 - PPNI],
+  [3, 'Konveksi', 'factory', 'sky', 'Toko', 'store', 'gold', 2.5e9, 275e6, 198e6, 77e6],
+  [4, 'Toko', 'store', 'gold', 'Pembeli', 'shirt', 'blue', 3.2e9, 352e6, 275e6, 77e6],
+];
+const TOTAL = RELAY.reduce((a, r) => a + r[10], 0);                    // 352.000.000
+
+/* ---------- drag-and-drop questions ----------
+   dragBoard(build, opts) is a quiz builder: build(body) lays out the cards and the drop slots in the card's DOM and
+   returns { cards: [{ el, val }], slots: [{ el, want, key }] }. A card is dragged onto a slot (mouse or finger), or
+   chosen with a click and then its slot clicked, or placed with its number key into the next empty slot (Backspace
+   takes the last one back). Periksa grades every slot; a card on a wrong slot goes back to its own place in the pool
+   and the learner tries again. Each slot is one cmi.interactions row (its key). */
+document.head.append(Object.assign(document.createElement('style'), { textContent: `
+.dd { display: flex; flex-direction: column; gap: 16px; }
+.ddpool { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; border-radius: 16px; background: rgba(10, 42, 92, .05); border: 2px dashed #B7C4D8; }
+.ddhome { width: var(--cw); height: var(--ch); border-radius: 14px; background: rgba(154, 169, 194, .16); display: flex; }
+.ddcard { position: relative; width: 100%; height: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 6px 14px;
+  background: #fff; color: #0A2A5C; border: 2px solid #D6DEEA; border-radius: 14px; box-shadow: 0 4px 10px rgba(10, 42, 92, .14);
+  font: 700 19px/1.2 var(--ui); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.ddcard svg { flex: none; }
+.ddcard .b { position: absolute; top: -10px; left: -10px; width: 26px; height: 26px; border-radius: 50%; background: #0A2A5C; color: #fff; font: 700 15px/26px var(--ui); text-align: center; }
+.ddcard.chip { justify-content: center; font-size: 20px; }
+.ddcard.blue { background: #E8F2FC; border-color: #3A9BE1; }
+.ddcard.gold { background: #FFF4D6; border-color: #F5B324; }
+.ddcard.sel { border-color: #F5B324; box-shadow: 0 0 0 4px rgba(245, 179, 36, .5); }
+.ddcard.drag { z-index: 20; cursor: grabbing; pointer-events: none; box-shadow: 0 16px 34px rgba(0, 0, 0, .3); }
+.ddcard.good { border-color: #22A55A; box-shadow: 0 0 0 3px rgba(34, 165, 90, .35); }
+.ddcard.bad { animation: shake .4s; }
+.dd.locked .ddcard { cursor: default; }
+.ddslot { position: relative; width: var(--sw2); height: var(--sh2); box-sizing: border-box; border-radius: 14px; border: 2px dashed #3A9BE1; background: rgba(58, 155, 225, .08); display: flex; }
+.ddslot.hot { border-color: #F5B324; background: rgba(245, 179, 36, .22); }
+.ddslot .n { position: absolute; top: -13px; left: -11px; width: 28px; height: 28px; border-radius: 50%; background: #F5B324; color: #0A2A5C; font: 800 16px/28px var(--ui); text-align: center; z-index: 1; }
+.ddtrack { display: flex; align-items: center; gap: 6px; }
+.ddtrack .ar { color: #F5B324; font: 800 30px var(--ui); }
+.ddends { display: flex; justify-content: space-between; font: 700 15px var(--ui); color: #4A5F80; letter-spacing: .06em; margin-top: -8px; }
+.ddtab { display: grid; grid-template-columns: 290px repeat(3, 236px); gap: 10px 16px; align-items: center; }
+.ddtab .hd { font: 700 15px var(--ui); letter-spacing: .06em; color: #4A5F80; }
+.ddtab .hd.gold { color: #C8901A; }
+.ddtab .tx { display: flex; align-items: center; gap: 10px; font: 700 19px/1.2 var(--ui); color: #0A2A5C; }
+.ddnote { margin: 0; font-size: 20px; color: #D83C3C; }
+.ddnote:empty { display: none; }
+` }));
+
+const glyphSvg = (glyph, v, size) => {
+  const s = document.createElementNS(NS, 'svg');
+  Object.assign(s.style, { width: size + 'px', height: size + 'px', overflow: 'visible' });
+  s.setAttribute('viewBox', '-50 -50 100 100');
+  tile(s, glyph, 0, 0, { size: 96, v, floor: false });
+  return s;
+};
+
+const dragBoard = (build, { yes, type = 'choice', show = String }) => (body, api) => {
+  const wrapEl = h('div', 'dd'), note = h('p', 'ddnote');
+  body.append(wrapEl);
+  const { cards, slots } = build(wrapEl);
+  wrapEl.append(note);
+  cards.forEach((c, i) => {
+    c.home = c.el.parentNode; c.at = null; c.i = i;
+    c.el.prepend(h('span', 'b', String(i + 1)));
+  });
+  let sel = null, locked = false;
+  const fill = [];                                       // slots in the order they were filled (Backspace)
+  const occupant = s => cards.find(c => c.at === s);
+  const pick = c => { sel?.el.classList.remove('sel'); sel = c === sel ? null : c; sel?.el.classList.add('sel'); };
+  const place = (c, s) => {
+    if (c.at === s) return;
+    if (c.at) fill.splice(fill.indexOf(c.at), 1);
+    if (s) { const o = occupant(s); if (o) place(o, null); }
+    c.at = s;
+    (s ? s.el : c.home).append(c.el);
+    c.el.classList.remove('good', 'bad');
+    if (s) fill.push(s);
+    note.textContent = '';
+  };
+  const slotOf = el => slots.find(s => s.el === el);
+  for (const s of slots) s.el.addEventListener('click', () => {
+    if (locked) return;
+    if (sel) { place(sel, s); pick(sel); } else if (occupant(s)) pick(occupant(s));
+  });
+  for (const c of cards) {
+    let start = null, moved = false, k = 1;
+    c.el.addEventListener('pointerdown', e => {
+      if (locked || e.button > 0) return;
+      e.preventDefault(); e.stopPropagation();
+      c.el.setPointerCapture(e.pointerId);
+      start = [e.clientX, e.clientY]; moved = false;
+      k = c.el.getBoundingClientRect().width / c.el.offsetWidth || 1;
+    });
+    c.el.addEventListener('pointermove', e => {
+      if (!start) return;
+      const dx = e.clientX - start[0], dy = e.clientY - start[1];
+      if (!moved && Math.hypot(dx, dy) < 6) return;
+      moved = true;
+      c.el.classList.add('drag');
+      c.el.style.transform = `translate(${dx / k}px, ${dy / k}px)`;
+      const over = document.elementsFromPoint(e.clientX, e.clientY).map(x => x.closest?.('.ddslot')).find(Boolean);
+      slots.forEach(s => s.el.classList.toggle('hot', s.el === over));
+    });
+    const up = e => {
+      if (!start) return;
+      start = null;
+      c.el.classList.remove('drag'); c.el.style.transform = '';
+      slots.forEach(s => s.el.classList.remove('hot'));
+      if (!moved) { pick(c); return; }
+      const hit = document.elementsFromPoint(e.clientX, e.clientY);
+      const s = slotOf(hit.map(x => x.closest?.('.ddslot')).find(Boolean));
+      if (s) place(c, s); else if (hit.some(x => x.closest?.('.ddpool'))) place(c, null);
+      if (sel) pick(sel);
+    };
+    c.el.addEventListener('pointerup', up);
+    c.el.addEventListener('pointercancel', up);
+    c.el.addEventListener('click', e => e.stopPropagation());
+  }
+  wrapEl.querySelector('.ddpool')?.addEventListener('click', e => {
+    if (!locked && sel?.at && !e.target.closest('.ddcard')) { place(sel, null); pick(sel); }
+  });
+  // the answer as number keys, read by the chapter checks (tools/pdri/e2e_mck_ch41.py)
+  const used = new Set();
+  wrapEl.dataset.keys = slots.map(s => { const c = cards.find(c => !used.has(c) && c.val === s.want); used.add(c); return c.i + 1; }).join(',');
+  return {
+    check() {
+      if (slots.some(s => !occupant(s))) { note.textContent = 'Isi semua tempat dulu, lalu periksa.'; return; }
+      const rows = slots.map(s => {
+        const c = occupant(s), ok = c.val === s.want;
+        return { key: s.key, type, ok, response: String(c.val), correct: String(s.want), c };
+      });
+      const right = rows.filter(r => r.ok).length, all = right === rows.length;
+      for (const r of rows) {
+        if (r.ok) r.c.el.classList.add('good');
+        else { place(r.c, null); r.c.el.classList.add('bad'); }
+      }
+      api.grade(all, all ? yes : [`${right} dari ${rows.length} sudah tepat. Kartu yang keliru kembali ke tempatnya; coba lagi.`],
+        { right, total: rows.length, rows: rows.map(({ c, ...r }) => r) });
+    },
+    reveal() {
+      for (const s of slots) {
+        if (occupant(s)?.val === s.want) continue;
+        const c = cards.find(c => c.val === s.want && !(c.at && c.at.want === c.val));
+        place(c, s);
+      }
+      cards.forEach(c => c.el.classList.add('good'));
+      return yes;
+    },
+    lock() { locked = true; wrapEl.classList.add('locked'); if (sel) pick(sel); },
+    hint: [kbd('1'), '–', kbd(String(cards.length)), ' tempatkan kartu, ', kbd('⌫'), ' ambil kembali, ', kbd('Enter'), ' periksa, atau seret kartunya'],
+    key(e) {
+      if (locked) return false;
+      if (e.key === 'Backspace') { const s = fill[fill.length - 1]; if (s) place(occupant(s), null); return true; }
+      const c = /^[1-9]$/.test(e.key) && cards[+e.key - 1];
+      if (!c) return false;
+      const s = c.at ? null : slots.find(s => !occupant(s));
+      place(c, s ?? null);
+      return true;
+    },
+  };
+};
+
+// the four stages to put in order (storyboard 1); shown shuffled, answer a, b, c, d
+const STEPS = { a: ['ship', 'blue', 'Importir membayar PPN Impor'], b: ['fabric', 'gold', 'Importir menjual kain'],
+  c: ['factory', 'sky', 'Konveksi membuat kemeja'], d: ['store', 'gold', 'Toko menjual kepada pembeli'] };
+const SHUFFLED = ['c', 'a', 'd', 'b'];
+const orderBoard = wrapEl => {
+  wrapEl.style.setProperty('--cw', '300px'); wrapEl.style.setProperty('--ch', '112px');
+  wrapEl.style.setProperty('--sw2', '300px'); wrapEl.style.setProperty('--sh2', '112px');
+  const pool = h('div', 'ddpool'), track = h('div', 'ddtrack');
+  const cards = SHUFFLED.map(id => {
+    const [gl, v, lab] = STEPS[id], home = h('div', 'ddhome');
+    const el = h('div', 'ddcard', [glyphSvg(gl, v, 66), h('span', '', lab)]);
+    el.setAttribute('aria-label', lab);
+    home.append(el); pool.append(home);
+    return { el, val: id };
+  });
+  const slots = ['a', 'b', 'c', 'd'].map((want, i) => {
+    const el = h('div', 'ddslot', [h('span', 'n', String(i + 1))]);
+    if (i) track.append(h('span', 'ar', '→'));
+    track.append(el);
+    return { el, want, key: 'tahap-' + (i + 1) };
+  });
+  wrapEl.append(pool, track, h('div', 'ddends', [h('span', '', 'MULAI: IMPOR'), h('span', '', 'AKHIR: PEMBELI KEMEJA')]));
+  return { cards, slots };
+};
+
+// the matching (storyboard 11): three sales x PK, PM, setoran; the number cards in a fixed shuffled order
+const SALES = RELAY.slice(1);
+const CHIPS = [275e6, 29894700, 198e6, 77e6, 352e6, PPNI, 198e6, 77e6, 275e6];
+const isSetor = v => v === 29894700 || v === 77e6;
+const matchBoard = wrapEl => {
+  wrapEl.style.setProperty('--cw', '206px'); wrapEl.style.setProperty('--ch', '50px');
+  wrapEl.style.setProperty('--sw2', '236px'); wrapEl.style.setProperty('--sh2', '58px');
+  const tab = h('div', 'ddtab'), pool = h('div', 'ddpool');
+  tab.append(h('div', 'hd', 'TRANSAKSI'), h('div', 'hd', 'PAJAK KELUARAN (PK)'), h('div', 'hd', 'PAJAK MASUKAN (PM)'), h('div', 'hd gold', 'PPN DISETOR'));
+  const slots = [];
+  SALES.forEach(([pos, seller, gl, v, buyer, , , , pk, pm, setor]) => {
+    tab.append(h('div', 'tx', [glyphSvg(gl, v, 44), h('span', '', `${seller} → ${buyer.toLowerCase()}`)]));
+    [['pk', pk], ['pm', pm], ['setor', setor]].forEach(([col, want]) => {
+      const el = h('div', 'ddslot');
+      tab.append(el);
+      slots.push({ el, want, key: `${seller.toLowerCase()}-${col}` });
+    });
+  });
+  const cards = CHIPS.map(v => {
+    const home = h('div', 'ddhome'), el = h('div', 'ddcard chip ' + (isSetor(v) ? 'gold' : 'blue'), rp(v));
+    home.append(el); pool.append(home);
+    return { el, val: v };
+  });
+  wrapEl.append(tab, pool);
+  return { cards, slots };
+};
+
+/* ---------- the estafet card and the sale of one pos (storyboard 6-9) ---------- */
+const REVEAL = {};   // pos -> shows the result on the stage once the learner has it right
+function posBeat(k) {
+  const [pos, seller, sg, sv, buyer, bg, bv, sale, pk, pm, setor] = RELAY[k];
+  return (m, D) => {
+    const p = panel(0);
+    paper(p);
+    const titles = ['Pos 1: PPN Impor menjadi pajak masukan|importir kain', 'Pos 2: importir menjual kain ke konveksi|dan menyetor PK − PM',
+      'Pos 3: konveksi menjual ke toko; PM-nya|adalah PK importir', 'Pos 4: toko menjual kemeja kepada pembeli;|pembeli akhir tidak mengkreditkan'];
+    actionTitle(p, titles[k], { tag: `ESTAFET PPN · POS ${pos} DARI 4` });
+    // the estafet card, left
+    const card = G(p);
+    mcard(card, 92, 230, 640, 470);
+    mk('rect', { x: 92, y: 230, width: 640, height: 12, rx: 6, fill: MK.gold }, card);
+    tile(card, sg, 160, 305, { size: 84, v: sv });
+    T(card, 'KARTU ESTAFET · POS ' + pos, { x: 220, y: 292, size: 15, weight: 700, fill: MK.dim });
+    T(card, k ? `${seller} → ${buyer.toLowerCase()}` : 'Importir kain', { x: 220, y: 330, size: 27, weight: 700, fill: MK.navy });
+    mk('rect', { x: 122, y: 362, width: 580, height: 2, fill: MK.line }, card);
+    slideUp(card, .3);
+    const rows = k ? [['Harga jual sebelum PPN', rp(sale), 'pk'], ['Pajak keluaran (PK) · 11%', rp(pk), 'pk'], ['Pajak masukan (PM)', rp(pm), 'pm']]
+      : [['Nilai impor (Kasus 1)', rp(NI), 'pib'], ['Tarif efektif', '12% × 11/12 = 11%', 'pib']];
+    rows.forEach(([lab, val, mark], i) => {
+      const y = 414 + i * 62, g = G(p);
+      T(g, lab, { x: 122, y, size: 21, weight: 600, fill: MK.navy });
+      T(g, val, { x: 702, y, size: 23, weight: 800, fill: MK.navy, anchor: 'end' });
+      if (i) mk('rect', { x: 122, y: y - 38, width: 580, height: 1.5, fill: MK.line }, g);
+      slideUp(g, k ? (i ? m(mark) - .2 : .9) : m('pib') - .2 + i * .6, .5);
+    });
+    if (k) {   // the PM came in on the previous card
+      const from = pill(p, `diteruskan dari pos ${pos - 1}`, 702, 414 + 2 * 62 + 26, { size: 14, anchor: 'middle', bg: MK.goldLight });
+      put(from, { x: 702 - from._w / 2, o: 0 }); show(from, m('pm') + .6, .4);
+    }
+    const ry = 414 + rows.length * 62 - 6, res = G(p);
+    mk('rect', { x: 112, y: ry - 16, width: 600, height: 70, rx: 12, fill: MK.navy }, res);
+    T(res, k ? 'PPN disetor = PK − PM' : 'Pajak masukan (PM)', { x: 136, y: ry + 28, size: 22, weight: 700, fill: '#fff' });
+    const q = T(res, '?', { x: 690, y: ry + 32, size: 34, weight: 800, fill: MK.gold, anchor: 'end' });
+    const ans = T(res, rp(k ? setor : pm), { x: 690, y: ry + 32, size: 30, weight: 800, fill: MK.gold, anchor: 'end', o: 0 });
+    slideUp(res, m(k ? 'setor' : 'pm') - .2, .5);
+    REVEAL[pos] = () => { fx(q, { o: 0 }, 0, .2); fx(ans, { o: 1 }, .1, .4); pulseFx(ans, 1.12); };
+    // the sale, right: seller -> buyer, with the price and the tax on the arrow
+    const sx = 900, bx = 1380, y = 420, s = G(p);
+    tile(s, sg, sx, y, { size: 120, v: sv });
+    T(s, k ? seller : 'Importir', { x: sx, y: y + 100, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+    popIn(s, .5);
+    const b = G(p);
+    tile(b, bg, bx, y, { size: 120, v: bv });
+    T(b, buyer, { x: bx, y: y + 100, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+    popIn(b, .8);
+    flow(p, `M${sx + 80} ${y}H${bx - 80}`, MK.gold, m(k ? 'pk' : 'pib') - .4, .6, 5);
+    mkHead(p, bx - 78, y, 0, MK.gold, m(k ? 'pk' : 'pib') + .1, 18);
+    const tag = pill(p, k ? `${rp(sale)} + PPN` : 'PIB · PPN Impor', (sx + bx) / 2, y - 40, { size: 18, bg: '#fff', ink: MK.navy, stroke: MK.line });
+    popIn(tag, m(k ? 'pk' : 'pib') + .2);
+    if (k === 3) { const e = pill(p, 'Pembeli akhir menanggung PPN', 1140, 690, { size: 17, bg: MK.goldLight }); popIn(e, m('akhir')); }
+    // the relay so far, under the sale
+    RELAY.forEach(([n, , gl, v], i) => {
+      const x = 900 + i * 160, g = G(p);
+      if (i) mk('rect', { x: x - 125, y: 618, width: 90, height: 4, rx: 2, fill: i <= k ? MK.gold : MK.line }, g);
+      tile(g, gl, x, 620, { size: i === k ? 66 : 50, v: i <= k ? v : 'sky', o: i <= k ? 1 : .35, floor: false });
+      put(g, { o: 0 }); show(g, .6 + i * .1, .4);
+    });
+    source(p, k ? 'Bahan Ajar PDRI KB 4.5; angka disederhanakan, beban efektif 11%' : 'Bahan Ajar PDRI KB 4.6, Kasus 1', .8);
+  };
+}
+const posAsk = k => {
+  const [pos, , , , , , , , pk, pm, setor] = RELAY[k];
+  const prompts = [`PPN Impor = 12% × 11/12 × ${rp(NI)}. Berapa pajak masukan importir?`,
+    `PK ${rp(pk)}, PM ${rp(pm)}. Berapa PPN yang disetor importir?`,
+    `PK ${rp(pk)}, PM ${rp(pm)}. Berapa PPN yang disetor konveksi?`,
+    `PK ${rp(pk)}, PM ${rp(pm)}. Berapa PPN yang disetor toko?`];
+  const why = k ? `${rp(pk)} − ${rp(pm)} = ${rp(setor)}.` : `DPP = 11/12 × ${rp(NI)} = Rp1.400.877.500; PPN Impor = 12% × Rp1.400.877.500 = ${rp(PPNI)}. Bagi importir PKP, inilah pajak masukannya.`;
+  return done => quiz({ x: 790, y: 220, w: 730, cls: 'side' }, [{
+    id: 'c-pos' + pos, prompt: [prompts[k]],
+    build: blanks([{ parts: [k ? 'PK − PM = Rp' : 'PM = Rp', { box: idNum(k ? setor : PPNI) }], why,
+      hint: k ? 'Kurangkan pajak masukan dari pajak keluaran.' : 'Kalikan nilai impor dengan 11/12, lalu dengan 12%.', fx: () => REVEAL[pos]?.() }]),
+  }], done, 'Kartu estafet');
+};
+
+/* ---------- beats ---------- */
+const BEATS = [
+  ['susun', 'Susun alur PPN', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Susun alur PPN dari impor|sampai pembeli akhir', { tag: 'KB 4 · ESTAFET PPN' });
+    SHUFFLED.forEach((id, i) => {
+      const [gl, v, lab] = STEPS[id], x = 92 + i * 362, g = G(p);
+      mcard(g, x, 260, 330, 130);
+      tile(g, gl, x + 70, 325, { size: 84, v });
+      lines(g, lab.replace(/^(\S+ \S+) /, '$1|'), x + 128, 316, { size: 21, weight: 700 });
+      popIn(g, m('kain') + .3 + i * .25);
+    });
+    [0, 1, 2, 3].forEach(i => {
+      const x = 92 + i * 362, g = G(p);
+      mk('rect', { x, y: 470, width: 330, height: 130, rx: 15, fill: MK.sky, 'fill-opacity': .07, stroke: MK.sky, 'stroke-width': 2.5, 'stroke-dasharray': '10 8' }, g);
+      mk('circle', { cx: x + 4, cy: 474, r: 18, fill: MK.gold }, g);
+      T(g, String(i + 1), { x: x + 4, y: 481, size: 19, weight: 800, fill: MK.navy, anchor: 'middle' });
+      if (i) { flow(g, `M${x - 26} 535H${x - 8}`, MK.gold, m('ajak') + i * .2, .2, 4); mkHead(g, x - 7, 535, 0, MK.gold, m('ajak') + i * .2 + .15, 9); }
+      slideUp(g, m('ajak') - .2 + i * .15, .4);
+    });
+    const ends = G(p);
+    T(ends, 'MULAI: IMPOR', { x: 92, y: 640, size: 16, weight: 700, fill: MK.dim });
+    T(ends, 'AKHIR: PEMBELI KEMEJA', { x: 1508, y: 640, size: 16, weight: 700, fill: MK.dim, anchor: 'end' });
+    put(ends, { o: 0 }); show(ends, m('ajak') + .6, .4);
+  }, { ask: done => quiz({ x: 92, y: 205, w: 1416, cls: 'side' }, [{
+    id: 'c-susun', prompt: ['Seret keempat kartu ke jalur alur, dari impor (1) sampai pembeli akhir (4).'],
+    build: dragBoard(orderBoard, { yes: 'PPN Impor dibayar lebih dulu, lalu importir menjual kain, konveksi membuat dan menjual kemeja, dan toko menjual kepada pembeli akhir.' }),
+  }], done, 'Aktivitas') }],
+
+  ['tahap', 'PPN di setiap tahap', (m, D) => {
+    const p = panel(0);
+    navy(p, 43, D);
+    actionTitle(p, 'PPN dikenakan pada setiap tahap penjualan', { tag: 'CIRI PPN', dark: true });
+    const CH = [['ship', 'blue', 'Importir'], ['factory', 'sky', 'Konveksi'], ['store', 'gold', 'Toko'], ['cart', 'blue', 'Pembeli']];
+    CH.forEach(([gl, v, n], i) => {
+      const x = 250 + i * 366, g = G(p);
+      tile(g, gl, x, 300, { size: 104, v });
+      pill(g, n, x, 384, { size: 18, bg: '#fff', ink: MK.navy });
+      popIn(g, .4 + i * .2);
+      if (i) {
+        flow(p, `M${x - 290} 300H${x - 76}`, MK.gold, m('tingkat') + (i - 1) * .35, .4, 5);
+        mkHead(p, x - 74, 300, 0, MK.gold, m('tingkat') + (i - 1) * .35 + .35, 16);
+        const t = pill(p, 'PK − PM', x - 183, 262, { size: 15, bg: MK.gold });
+        popIn(t, m('ganda') + .3 + (i - 1) * .25);
+      }
+    });
+    [['konsumsi', 'cart', 'gold', 'Pajak atas konsumsi', 'Bebannya ada pada|konsumsi barang'],
+     ['langsung', 'rate', 'blue', 'Tidak langsung', 'Penjual memungut dan|menyetor; pembeli|menanggung'],
+     ['tingkat', 'layers', 'sky', 'Bertingkat', 'Dikenakan pada|setiap tahap|penjualan'],
+     ['ganda', 'calc', 'gold', 'Tidak berganda', 'Setiap tahap|menghitung PPN|keluaran dan masukan']].forEach(([mark, gl, v, head, ex], i) => {
+      const x = 92 + i * 362, c = G(p);
+      mcard(c, x, 450, 330, 260, { dark: true });
+      mk('rect', { x, y: 450, width: 330, height: 10, rx: 5, fill: [MK.gold, MK.blue, MK.sky, MK.gold][i] }, c);
+      tile(c, gl, x + 60, 515, { size: 72, v, floor: false });
+      T(c, head, { x: x + 108, y: 523, size: 20, weight: 800, fill: MK.navy });
+      lines(c, ex, x + 30, 600, { size: 19, weight: 500, fill: MK.dim, lh: 1.32 });
+      popIn(c, m(mark) - .1);
+    });
+    source(p, 'Bahan Ajar PDRI KB 4.1 dan 4.5', .8, true);
+  }],
+
+  ['rumus', 'PK, PM, dan setoran', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPN Impor menjadi pajak masukan bagi PKP', { tag: 'PAJAK KELUARAN DAN PAJAK MASUKAN' });
+    const eq = G(p);
+    const box = (x, w, fill, ink, top, big, sub) => {
+      mk('rect', { x, y: 210, width: w, height: 150, rx: 16, fill }, eq);
+      T(eq, top, { x: x + 28, y: 250, size: 15, weight: 700, fill: ink === '#fff' ? '#D5E2F5' : MK.dim });
+      T(eq, big, { x: x + 28, y: 305, size: big.length > 3 ? 31 : 40, weight: 800, fill: ink });
+      T(eq, sub, { x: x + 28, y: 340, size: 18, weight: 500, fill: ink === '#fff' ? '#D5E2F5' : MK.dim });
+    };
+    box(92, 380, '#FFF4D6', MK.navy, 'PAJAK KELUARAN', 'PK', 'dipungut saat menjual');
+    T(eq, '−', { x: 507, y: 305, size: 56, weight: 800, fill: MK.navy, anchor: 'middle' });
+    box(542, 380, '#E8F2FC', MK.navy, 'PAJAK MASUKAN', 'PM', 'yang dapat dikreditkan');
+    T(eq, '=', { x: 957, y: 305, size: 56, weight: 800, fill: MK.navy, anchor: 'middle' });
+    box(992, 516, MK.navy, '#fff', 'HASILNYA', 'PPN yang harus disetor', 'setiap masa pajak');
+    slideUp(eq, m('rumus') - .2);
+    [['kb', 'PK > PM', 'Kurang bayar', 'selisihnya disetor ke kas negara', 'coins', 'gold', 560, MK.gold], ['lb', 'PM > PK', 'Lebih bayar', 'dikembalikan atau dikompensasikan', 'wallet', 'sky', 1048, MK.sky]].forEach(([mark, cond, n, sub, gl, v, x, col]) => {
+      flow(p, `M1250 362L${x + 230} 440`, MK.navy, m(mark) - .1, .4, 3);
+      const c = G(p);
+      mcard(c, x, 445, 460, 150);
+      mk('rect', { x, y: 445, width: 10, height: 150, rx: 5, fill: col }, c);
+      pill(c, cond, x + 40, 485, { size: 16, anchor: 'start', bg: MK.navy, ink: '#fff' });
+      T(c, n, { x: x + 40, y: 545, size: 28, weight: 700, fill: MK.navy });
+      T(c, sub, { x: x + 40, y: 576, size: 17, weight: 500, fill: MK.dim });
+      tile(c, gl, x + 400, 520, { size: 70, v, floor: false });
+      popIn(c, m(mark) + .25);
+    });
+    const d = G(p);
+    mcard(d, 92, 445, 430, 255, { fill: '#FFF7E3' });
+    tile(d, 'doc', 160, 515, { size: 76, v: 'blue', floor: false });
+    T(d, '+', { x: 225, y: 527, size: 34, weight: 700, fill: MK.dim, anchor: 'middle' });
+    tile(d, 'wallet', 290, 515, { size: 76, v: 'gold', floor: false });
+    T(d, 'PIB + bukti pembayaran', { x: 122, y: 600, size: 22, weight: 700, fill: MK.navy });
+    lines(d, 'dipersamakan dengan faktur|pajak → PPN Impor menjadi PM', 122, 636, { size: 18, weight: 500, fill: MK.dim });
+    slideUp(d, m('pib') - .2);
+    flow(p, 'M420 445Q470 400 600 366', MK.goldDark, m('pib') + .5, .5, 4);
+    mkHead(p, 600, 366, -.25, MK.goldDark, m('pib') + .95);
+    source(p, 'Bahan Ajar PDRI KB 4.4', m('rumus'));
+  }],
+
+  ['status', 'Status PKP', (m, D) => {
+    const p = panel(0);
+    navy(p, 41, D);
+    actionTitle(p, 'Status PKP menentukan pengkreditan', { tag: 'PKP ATAU BUKAN PKP · PANGGIL ULANG BU RINA', dark: true });
+    [['pkp', 'office', 'blue', 'PT Kain Prima Nusantara', 'PKP', MK.green, [['Membayar PPN Impor', true], ['Mengkreditkan PPN Impor sebagai pajak masukan', true]], 'PPN Impor tidak hilang: dikreditkan'],
+     ['rina', 'user', 'gold', 'Bu Rina', 'Bukan PKP', MK.red, [['Membayar PPN Impor', true], ['Mengkreditkan PPN Impor', false]], 'PPN Impor menjadi bagian biaya']].forEach(([mark, gl, v, n, st, col, rows, foot], i) => {
+      const x = 92 + i * 726, c = G(p);
+      mcard(c, x, 240, 690, 450, { dark: true });
+      tile(c, gl, x + 85, 320, { size: 96, v });
+      T(c, n, { x: x + 150, y: 315, size: 29, weight: 700, fill: MK.navy });
+      pill(c, st, x + 150, 350, { size: 17, anchor: 'start', bg: col, ink: '#fff' });
+      mk('rect', { x: x + 36, y: 395, width: 618, height: 2, fill: MK.line }, c);
+      popIn(c, m(mark) - .1);
+      rows.forEach(([s, ok], j) => {
+        const y = 450 + j * 76, r = G(p);
+        (ok ? okTick : noTick)(r, x + 62, y - 8, 20);
+        T(r, s, { x: x + 100, y, size: 21, weight: 600, fill: MK.navy });
+        slideUp(r, (i && !ok ? m('tidak') : m(mark) + .5) + j * .4, .4);
+      });
+      const f = G(p);
+      mk('rect', { x: x + 36, y: 602, width: 618, height: 62, rx: 12, fill: i ? '#FDECEC' : '#E7F6EE' }, f);
+      T(f, foot, { x: x + 60, y: 641, size: 21, weight: 700, fill: i ? MK.red : MK.green });
+      slideUp(f, (i ? m('tidak') : m(mark)) + 1, .4);
+    });
+    source(p, 'Bahan Ajar PDRI KB 3.3 dan 4.4', .8, true);
+  }],
+
+  ['estafet', 'Estafet PPN', (m, D) => {
+    const p = panel(0);
+    navy(p, 45, D);
+    actionTitle(p, 'Estafet PPN: ikuti kain sampai menjadi kemeja', { tag: 'ESTAFET PPN', dark: true });
+    const CH = [['ship', 'blue', 'Importir kain'], ['factory', 'sky', 'Konveksi'], ['store', 'gold', 'Toko'], ['shirt', 'blue', 'Pembeli kemeja']];
+    const X = i => 250 + i * 366;
+    CH.forEach(([gl, v, n], i) => {
+      const g = G(p);
+      tile(g, gl, X(i), 360, { size: 130, v });
+      pill(g, n, X(i), 462, { size: 19, bg: '#fff', ink: MK.navy });
+      popIn(g, m('rantai') + i * .35);
+      if (i) { flow(p, `M${X(i - 1) + 88} 360H${X(i) - 88}`, MK.gold, m('rantai') + i * .35 - .1, .35, 6); mkHead(p, X(i) - 86, 360, 0, MK.gold, m('rantai') + i * .35 + .2, 18); }
+    });
+    // the estafet card travels along the chain
+    const baton = G(p);
+    mk('rect', { x: -120, y: -48, width: 240, height: 96, rx: 14, fill: '#fff' }, baton);
+    mk('rect', { x: -120, y: -48, width: 240, height: 10, rx: 5, fill: MK.gold }, baton);
+    T(baton, 'KARTU ESTAFET', { y: -8, size: 15, weight: 800, fill: MK.goldDark, anchor: 'middle' });
+    T(baton, 'PK · PM · Setor', { y: 26, size: 22, weight: 700, fill: MK.navy, anchor: 'middle' });
+    put(baton, { x: X(0), y: 565, o: 0 });
+    show(baton, m('kartu'), .4);
+    tw(baton, { x: X(2) }, m('kartu') + .8, 3.2, io);
+    const t = pill(p, 'Beban efektif 11% = 12% × 11/12', 800, 680, { size: 22, bg: MK.gold });
+    popIn(t, m('tarif'));
+    source(p, 'Bahan Ajar PDRI KB 4.5', .8, true);
+  }],
+
+  ['pos1', 'Pos 1: importir kain', posBeat(0), { ask: posAsk(0) }],
+  ['pos2', 'Pos 2: importir ke konveksi', posBeat(1), { ask: posAsk(1) }],
+  ['pos3', 'Pos 3: konveksi ke toko', posBeat(2), { ask: posAsk(2) }],
+  ['pos4', 'Pos 4: toko ke pembeli', posBeat(3), { ask: posAsk(3) }],
+
+  ['total', 'Total setoran', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Setoran di setiap pos membentuk|total PPN Rp352.000.000', { tag: 'GRAFIK AIR TERJUN PPN' });
+    const base = 668, top = 262, s = (base - top) / TOTAL, W = 180;
+    const ax = G(p);
+    mk('rect', { x: 120, y: base, width: 1360, height: 3, fill: MK.navy }, ax);
+    put(ax, { o: 0 }); show(ax, .3, .4);
+    const BARS = [['b1', 'PPN Impor', RELAY[0][10], MK.blue], ['b2', 'Importir', RELAY[1][10], MK.sky], ['b3', 'Konveksi', RELAY[2][10], MK.sky], ['b4', 'Toko', RELAY[3][10], MK.sky]];
+    let acc = 0;
+    BARS.forEach(([mark, n, v, col], i) => {
+      const x = 150 + i * 270, y1 = base - acc * s, hgt = v * s, t0 = m(mark);
+      const bar = mk('rect', { x, y: y1, width: W, height: 0, rx: 4, fill: col }, p);
+      prog(q => { bar.setAttribute('height', hgt * q); bar.setAttribute('y', y1 - hgt * q); }, t0, .6, out);
+      if (i) { const d = mk('rect', { x: x - 90, y: y1 - 1.5, width: 90, height: 3, fill: MK.faint }, p); put(d, { o: 0 }); show(d, t0 - .2, .3); }
+      const lab = T(p, rp(v), { x: x + W / 2, y: y1 - hgt - 14, size: 20, weight: 800, fill: MK.navy, anchor: 'middle', o: 0 });
+      show(lab, t0 + .4, .3);
+      const c = T(p, n, { x: x + W / 2, y: base + 34, size: 20, weight: 700, fill: MK.navy, anchor: 'middle', o: 0 });
+      show(c, t0, .3);
+      acc += v;
+    });
+    const tx = 150 + 4 * 270, t0 = m('tot');
+    const tb = mk('rect', { x: tx, y: base, width: W, height: 0, rx: 4, fill: MK.navy }, p);
+    prog(q => { tb.setAttribute('height', TOTAL * s * q); tb.setAttribute('y', base - TOTAL * s * q); }, t0, .8, out);
+    const d = mk('rect', { x: tx - 90, y: top - 1.5, width: 90, height: 3, fill: MK.faint }, p); put(d, { o: 0 }); show(d, t0 - .2, .3);
+    const tl = T(p, rp(TOTAL), { x: tx + W / 2, y: top + 40, size: 21, weight: 800, fill: MK.gold, anchor: 'middle', o: 0 }); show(tl, t0 + .6, .3);
+    const tc = T(p, 'Total', { x: tx + W / 2, y: base + 34, size: 20, weight: 800, fill: MK.navy, anchor: 'middle', o: 0 }); show(tc, t0, .3);
+    const pl = pill(p, '= PPN yang dibayar pembeli akhir', 1290, 218, { size: 18, bg: MK.gold });
+    popIn(pl, t0 + 1.2);
+    source(p, 'Bahan Ajar PDRI KB 4.5; angka disederhanakan', m('b1'));
+  }],
+
+  ['cocok', 'Cocokkan PK, PM, dan setoran', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Cocokkan PK, PM, dan setoran|untuk setiap transaksi', { tag: 'LATIHAN · PENCOCOKAN KARTU' });
+    const g = G(p);
+    ['TRANSAKSI', 'PK', 'PM', 'PPN DISETOR'].forEach((s, j) => T(g, s, { x: j ? 520 + (j - 1) * 330 : 92, y: 262, size: 16, weight: 700, fill: j === 3 ? MK.goldDark : MK.dim }));
+    SALES.forEach(([, seller, gl, v, buyer], i) => {
+      const y = 300 + i * 86;
+      tile(g, gl, 122, y + 32, { size: 54, v, floor: false });
+      T(g, `${seller} → ${buyer.toLowerCase()}`, { x: 165, y: y + 40, size: 21, weight: 700, fill: MK.navy });
+      [0, 1, 2].forEach(j => mk('rect', { x: 520 + j * 330, y, width: 300, height: 64, rx: 12, fill: MK.sky, 'fill-opacity': .07, stroke: MK.sky, 'stroke-width': 2, 'stroke-dasharray': '9 7' }, g));
+    });
+    slideUp(g, .5);
+    CHIPS.forEach((v, i) => {
+      const x = 150 + (i % 5) * 264, y = 580 + Math.floor(i / 5) * 70, c = G(p);
+      mk('rect', { x, y, width: 240, height: 54, rx: 12, fill: isSetor(v) ? '#FFF4D6' : '#E8F2FC', stroke: isSetor(v) ? MK.gold : MK.sky, 'stroke-width': 2 }, c);
+      T(c, rp(v), { x: x + 120, y: y + 35, size: 20, weight: 800, fill: MK.navy, anchor: 'middle' });
+      popIn(c, m('ajak') + .3 + i * .12);
+    });
+  }, { ask: done => quiz({ x: 92, y: 200, w: 1416, cls: 'side' }, [{
+    id: 'p-cocok', prompt: ['Seret setiap kartu angka ke sel yang tepat: PK, PM, dan PPN disetor untuk setiap transaksi.'],
+    build: dragBoard(matchBoard, { type: 'numeric', yes: 'PM setiap penjual adalah PK penjual sebelumnya, dan setorannya PK − PM: Rp29.894.700, Rp77.000.000, Rp77.000.000.' }),
+  }], done, 'Latihan') }],
+
+  ['inti', 'Inti estafet PPN', (m, D) => {
+    const p = panel(0);
+    navy(p, 7, D);
+    actionTitle(p, 'Inti estafet PPN', { tag: 'RANGKUMAN KB 4', dark: true });
+    const CH = [['ship', 'blue'], ['factory', 'sky'], ['store', 'gold'], ['shirt', 'blue']];
+    CH.forEach(([gl, v], i) => {
+      const x = 330 + i * 300, g = G(p);
+      if (i) mk('rect', { x: x - 240, y: 288, width: 180, height: 5, rx: 2.5, fill: MK.gold }, g);
+      tile(g, gl, x, 290, { size: 96, v });
+      popIn(g, .3 + i * .15);
+      const ok = okTick(p, x + 40, 250, 18);
+      popIn(ok, m('cap') + i * .3);
+    });
+    const q = G(p);
+    mcard(q, 92, 400, 1416, 200, { dark: true });
+    T(q, '“', { x: 130, y: 500, size: 110, weight: 800, fill: MK.gold });
+    lines(q, 'Pengusaha menyetorkan selisih PPN Keluaran dan PPN Masukan.|Pembeli akhir menanggung PPN.', 210, 485, { size: 33, weight: 700, lh: 1.4 });
+    slideUp(q, m('kutip') - .2);
+    const st = G(p, { x: 1350, y: 300 });
+    mk('circle', { r: 78, fill: 'none', stroke: MK.gold, 'stroke-width': 6 }, st);
+    mk('circle', { r: 64, fill: 'none', stroke: MK.gold, 'stroke-width': 2 }, st);
+    T(st, 'SELESAI', { y: 10, size: 26, weight: 800, fill: MK.gold, anchor: 'middle' });
+    st.setAttribute('transform', 'translate(1350 300) rotate(-14)');
+    const sw = wrap(st, 1350, 300); put(sw, { s: 2, o: 0 }); tw(sw, { s: 1, o: 1 }, m('cap') + 1.4, .35, out);
+    const pl = pill(p, `Total setoran ${rp(TOTAL)} = PPN yang dibayar pembeli akhir`, 800, 660, { size: 24, bg: MK.gold });
+    popIn(pl, m('cap') + 2);
+    source(p, 'Bahan Ajar PDRI KB 4.5 dan 4.7', .8, true);
+  }],
+
+  ['finish', 'Selesai', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    const left = G(p);
+    path(left, 'M0 0H640L470 900H0Z', { fill: MK.navy });
+    path(p, 'M640 0H700L530 900H470Z', { fill: MK.gold });
+    path(p, 'M712 0H742L572 900H542Z', { fill: MK.sky });
+    const md = G(p, { x: 300, y: 440 });
+    const rays = G(md);
+    for (let i = 0; i < 16; i++) path(rays, `M0 0L${-18} -260L18 -260Z`, { fill: MK.gold, 'fill-opacity': .12 }).setAttribute('transform', `rotate(${i * 22.5})`);
+    clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
+    tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
+    popIn(md, .3);
+    const orb = [['ship', 'blue'], ['factory', 'sky'], ['store', 'gold']].map(([gl, v], i) => ({ e: tile(p, gl, 0, 0, { size: 64, v, floor: false }), a: i * 2.094 }));
+    clockRun(t => orb.forEach(o => put(o.e, { x: 300 + 190 * Math.cos(o.a + t * .4), y: 440 + 190 * Math.sin(o.a + t * .4) * .55 })), D, { tail: true });
+    orb.forEach(o => { put(o.e, { o: 0 }); show(o.e, .8, .5); });
+    const hd = T(p, 'Selamat, Sobat Pemelajar!', { x: 1120, y: 200, size: 44, weight: 700, fill: MK.navy, anchor: 'middle' });
+    slideUp(hd, .5);
+  }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
+
+{
+  const NAVY = new Set(['tahap', 'status', 'estafet', 'inti']);
+  BEATS.forEach((b, i) => {
+    if (!i || b.lead === false) return;
+    const prev = BEATS[i - 1];
+    if (NAVY.has(b.id) !== NAVY.has(prev.id) || b.id === 'finish') {
+      const run = b.run;
+      b.run = (m, D) => { run(m, D); wipeIn(S.panel); };
+    }
+  });
+}
+
+mkBoot();
+</script>
+</body>
+</html>
