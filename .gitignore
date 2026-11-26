@@ -10,6 +10,7 @@ books/*/source.md
 .claude/skills/*
 !.claude/skills/pdri-build-chapter/
 !.claude/skills/pdri-voiceover/
+!.claude/skills/pdri-presentasi/
 # working leftovers
 _to_delete/
 __pycache__/
