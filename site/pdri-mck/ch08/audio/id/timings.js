@@ -1,421 +1,482 @@
 window.TIMINGS = {
  "intro": {
-  "dur": 12.717,
+  "dur": 9.13,
   "marks": {
-   "sub": 3.011
+   "sub": 0.0
   },
   "cues": [
    [
-    0.1,
-    "Mari kita lanjutkan, ya, sobat."
-   ],
-   [
-    3.011,
+    0.05,
     "Inilah materi kedelapan, materi terakhir."
    ],
    [
-    5.851,
+    2.99,
     "Kita kembali ke staf PT Kain Prima Nusantara, dan menyusun jawaban lengkap untuk tagihannya."
    ]
-  ],
-  "silent": true
+  ]
  },
  "ask": {
-  "dur": 17.471,
+  "dur": 17.05,
   "marks": {
-   "ask": 0.1,
-   "bekal": 9.269
+   "ask": 0.0,
+   "bekal": 8.5
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Ingat pertanyaan di hari pertama?"
    ],
    [
-    2.637,
+    1.93,
     "Pak, Bu, hitungan ini dari mana?"
    ],
    [
-    5.891,
+    5.13,
     "Pungutannya lebih dari separuh harga kain kami."
    ],
    [
-    9.269,
+    8.45,
     "Sekarang Anda punya semua bekalnya: nilai impor, PPN, PPh Pasal dua puluh dua, dan dasar hukumnya."
    ]
-  ],
-  "silent": true
+  ]
  },
  "lengkap": {
-  "dur": 46.62,
+  "dur": 45.95,
   "marks": {
-   "np": 2.663,
-   "bm": 12.767,
-   "bmtp": 16.934,
-   "ni": 24.047,
-   "ppn": 28.594,
-   "pph": 32.233,
-   "pdri": 37.19,
-   "tot": 41.266
+   "np": 2.5,
+   "bm": 13.28,
+   "bmtp": 17.38,
+   "ni": 24.54,
+   "ppn": 28.36,
+   "pph": 32.66,
+   "pdri": 37.0,
+   "tot": 41.18
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Mari kita susun jawaban lengkapnya."
    ],
    [
-    2.663,
-    "Nilai pabean enam puluh ribu dolar dikali delapan belas ribu seratus lima puluh lima rupiah, yaitu satu koma nol delapan sembilan miliar rupiah."
+    2.45,
+    "Nilai pabean enam puluh ribu dolar dikali delapan belas ribu seratus lima puluh lima rupiah,"
    ],
    [
-    12.767,
-    "Bea Masuk sepuluh persen, seratus delapan koma sembilan juta, dan BMTP seratus ribu meter dikali tiga ribu tiga ratus rupiah, tiga ratus tiga puluh juta."
+    9.19,
+    "yaitu satu koma nol delapan sembilan miliar rupiah."
    ],
    [
-    24.047,
+    13.23,
+    "Bea Masuk sepuluh persen, seratus delapan koma sembilan juta,"
+   ],
+   [
+    17.33,
+    "dan BMTP seratus ribu meter dikali tiga ribu tiga ratus rupiah, tiga ratus tiga puluh juta."
+   ],
+   [
+    24.49,
     "Jadi nilai impornya satu koma lima dua delapan miliar rupiah."
    ],
    [
-    28.594,
-    "PPN Impor seratus enam puluh delapan koma satu juta dan PPh Pasal dua puluh dua tiga puluh delapan koma dua juta, sehingga total PDRI dua ratus enam koma tiga juta."
+    28.31,
+    "PPN Impor seratus enam puluh delapan koma satu juta"
    ],
    [
-    41.266,
+    32.61,
+    "dan PPh Pasal dua puluh dua tiga puluh delapan koma dua juta,"
+   ],
+   [
+    36.95,
+    "sehingga total PDRI dua ratus enam koma tiga juta."
+   ],
+   [
+    41.13,
     "Total pungutannya enam ratus empat puluh lima koma dua juta rupiah."
    ]
-  ],
-  "silent": true
+  ]
  },
  "porsi": {
-  "dur": 32.52,
+  "dur": 33.75,
   "marks": {
-   "bmtp": 2.967,
-   "ppn": 10.931,
-   "pph": 17.791,
-   "pdri": 25.273
+   "bmtp": 3.78,
+   "ppn": 11.82,
+   "pph": 18.76,
+   "pdri": 26.1
   },
   "cues": [
    [
-    0.1,
-    "Dari mana lebih dari separuh itu?"
+    0.05,
+    "Dari mana tagihan yang lebih dari separuh harga kain itu?"
    ],
    [
-    2.967,
-    "Porsi terbesar adalah BMTP, tiga ratus tiga puluh juta, bea pengaman untuk melindungi industri tekstil dalam negeri."
+    3.73,
+    "Porsi terbesar adalah BMTP, tiga ratus tiga puluh juta,"
    ],
    [
-    10.931,
+    8.01,
+    "bea pengaman untuk melindungi industri tekstil dalam negeri."
+   ],
+   [
+    11.77,
     "Lalu PPN seratus enam puluh delapan koma satu juta, yang dapat dikreditkan sebagai pajak masukan."
    ],
    [
-    17.791,
+    18.71,
     "Dan PPh Pasal dua puluh dua tiga puluh delapan koma dua juta, yang dikreditkan di SPT Tahunan."
    ],
    [
-    25.273,
+    26.05,
     "Jadi, PDRI sebesar dua ratus enam koma tiga juta itu dapat diperhitungkan kembali oleh importir."
    ]
-  ],
-  "silent": true
+  ]
  },
  "variasi": {
-  "dur": 37.729,
+  "dur": 35.63,
   "marks": {
-   "v1": 2.049,
-   "v2": 14.234,
-   "v3": 28.336
+   "v1": 2.32,
+   "v2": 13.5,
+   "v3": 26.78
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, tiga variasi."
    ],
    [
-    2.049,
-    "Kalau importir tidak memiliki API, PPh Pasal dua puluh dua menjadi seratus empat belas koma enam juta, dan total PDRI dua ratus delapan puluh dua koma tujuh juta."
+    2.27,
+    "Kalau importir tidak memiliki API, PPh Pasal dua puluh dua menjadi seratus empat belas koma enam juta,"
    ],
    [
-    14.234,
+    8.97,
+    "dan total PDRI dua ratus delapan puluh dua koma tujuh juta."
+   ],
+   [
+    13.45,
     "Kalau petugas lupa memasukkan BMTP, nilai impornya hanya satu koma satu sembilan delapan miliar."
    ],
    [
-    20.751,
-    "PPN menjadi seratus tiga puluh satu koma delapan juta dan PPh tiga puluh juta, keduanya kurang pungut."
+    20.29,
+    "PPN menjadi seratus tiga puluh satu koma delapan juta dan PPh tiga puluh juta,"
    ],
    [
-    28.336,
-    "Dan kalau importir memiliki SKB PPh Pasal dua puluh dua, PDRI-nya hanya PPN, seratus enam puluh delapan koma satu juta."
+    25.47,
+    "keduanya kurang pungut."
+   ],
+   [
+    26.73,
+    "Dan kalau importir memiliki SKB PPh Pasal dua puluh dua,"
+   ],
+   [
+    31.13,
+    "PDRI-nya hanya PPN, seratus enam puluh delapan koma satu juta."
    ]
-  ],
-  "silent": true
+  ]
  },
  "q1": {
-  "dur": 7.997,
+  "dur": 7.95,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, mari kita cek pemahaman kamu."
    ],
    [
-    3.244,
+    2.65,
     "Berapa total PDRI kalau importir tidak memiliki API, ya?"
    ]
-  ],
-  "silent": true
+  ]
  },
  "salah": {
-  "dur": 38.76,
+  "dur": 36.78,
   "marks": {
-   "e1": 3.044,
-   "e2": 16.863,
-   "e3": 26.449
+   "e1": 2.54,
+   "e2": 16.34,
+   "e3": 25.4
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Ada tiga kesalahan yang sering terjadi."
    ],
    [
-    3.044,
+    2.49,
     "Pertama, Bea Masuk atau BMTP tidak dimasukkan ke nilai impor."
    ],
    [
-    7.791,
-    "Akibatnya PPN kurang tiga puluh enam koma tiga juta, dan PPh Pasal dua puluh dua kurang delapan koma dua lima juta."
+    7.65,
+    "Akibatnya PPN kurang tiga puluh enam koma tiga juta,"
    ],
    [
-    16.863,
+    11.83,
+    "dan PPh Pasal dua puluh dua kurang delapan koma dua lima juta."
+   ],
+   [
+    16.29,
     "Kedua, DPP sebelas per dua belas dipakai untuk barang mewah."
    ],
    [
-    21.597,
+    20.73,
     "PPN motor Kasus dua jadi kurang lima koma nol delapan juta."
    ],
    [
-    26.449,
+    25.35,
     "Ketiga, tarif PPh Pasal dua puluh dua salah pilih."
    ],
    [
-    30.724,
-    "Importir tanpa API dikenai dua koma lima persen, sehingga PPh-nya kurang tujuh puluh enam koma empat juta."
+    28.81,
+    "Importir tanpa API dikenai dua koma lima persen,"
+   ],
+   [
+    32.33,
+    "sehingga PPh-nya kurang tujuh puluh enam koma empat juta."
    ]
-  ],
-  "silent": true
+  ]
  },
  "q2": {
-  "dur": 6.814,
+  "dur": 5.7,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Sekarang, kita cek pemahaman lagi, ya."
    ],
    [
-    3.431,
+    2.39,
     "Coba temukan kesalahan dalam hitungan ini."
    ]
-  ],
-  "silent": true
+  ]
  },
  "jelaskan": {
-  "dur": 49.94,
+  "dur": 53.94,
   "marks": {
-   "j1": 7.344,
-   "j2": 16.97,
-   "j3": 25.963,
-   "j4": 35.311
+   "j1": 6.84,
+   "j2": 17.52,
+   "j3": 26.64,
+   "j4": 36.4
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Lalu, bagaimana menjelaskannya kepada pengguna jasa?"
    ],
    [
-    3.411,
+    2.99,
     "Susun dalam empat langkah, paling lama dua menit."
    ],
    [
-    7.344,
-    "Satu, nilai impor: pajak dihitung dari harga kain dalam rupiah ditambah Bea Masuk dan BMTP, sebesar satu koma lima tiga miliar."
+    6.79,
+    "Satu, nilai impor: pajak dihitung dari harga kain dalam rupiah ditambah Bea Masuk dan BMTP,"
    ],
    [
-    16.97,
-    "Dua, PPN Impor seratus enam puluh delapan koma satu juta, yang dapat dikreditkan sebagai pajak masukan di SPT Masa PPN."
+    14.21,
+    "sebesar satu koma lima tiga miliar."
    ],
    [
-    25.963,
-    "Tiga, PPh Pasal dua puluh dua tiga puluh delapan koma dua juta, pembayaran di muka yang dapat dikreditkan di SPT Tahunan."
+    17.47,
+    "Dua, PPN Impor seratus enam puluh delapan koma satu juta,"
    ],
    [
-    35.311,
-    "Empat, dasar hukumnya: PMK seratus tiga puluh satu Tahun dua ribu dua puluh empat untuk PPN, dan PMK lima puluh satu Tahun dua ribu dua puluh lima untuk PPh Pasal dua puluh dua."
+    21.99,
+    "yang dapat dikreditkan sebagai pajak masukan di SPT Masa PPN."
+   ],
+   [
+    26.59,
+    "Tiga, PPh Pasal dua puluh dua tiga puluh delapan koma dua juta,"
+   ],
+   [
+    32.13,
+    "pembayaran di muka yang dapat dikreditkan di SPT Tahunan."
+   ],
+   [
+    36.35,
+    "Empat, dasar hukumnya: PMK seratus tiga puluh satu Tahun dua ribu dua puluh empat untuk PPN,"
+   ],
+   [
+    42.81,
+    "dan PMK lima puluh satu Tahun dua ribu dua puluh lima untuk PPh Pasal dua puluh dua."
+   ],
+   [
+    48.37,
+    "Importir pun jadi paham bahwa sistem di Indonesia itu adil dan transparan."
    ]
-  ],
-  "silent": true
+  ]
  },
  "hak": {
-  "dur": 20.749,
+  "dur": 20.41,
   "marks": {
-   "tanya": 3.27,
-   "jawab": 7.139,
-   "tenggat": 16.551
+   "tanya": 2.86,
+   "jawab": 6.08,
+   "tenggat": 16.56
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Kadang, pengguna jasa tetap tidak setuju."
    ],
    [
-    3.27,
+    2.81,
     "Kalau saya tidak setuju, saya harus ke mana?"
    ],
    [
-    7.139,
-    "Tutup dengan haknya, dari materi ketujuh: Bapak, Ibu, dapat mengajukan keberatan kepada Direktur Jenderal Bea dan Cukai melalui Portal DJBC, paling lambat enam puluh hari sejak tanggal penetapan."
+    6.03,
+    "Tutup dengan haknya, dari materi ketujuh: Bapak, Ibu,"
+   ],
+   [
+    10.81,
+    "dapat mengajukan keberatan kepada Direktur Jenderal Bea dan Cukai melalui Portal DJBC,"
+   ],
+   [
+    16.51,
+    "paling lambat enam puluh hari sejak tanggal penetapan."
    ]
-  ],
-  "silent": true
+  ]
  },
  "layanan": {
-  "dur": 18.813,
+  "dur": 19.21,
   "marks": {
-   "l1": 3.057,
-   "l2": 5.846,
-   "l3": 8.434,
-   "l4": 11.973
+   "l1": 3.18,
+   "l2": 6.22,
+   "l3": 9.02,
+   "l4": 12.82
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Penjelasan yang baik memenuhi empat hal."
    ],
    [
-    3.057,
+    3.13,
     "Angkanya tepat: semua komponen benar."
    ],
    [
-    5.846,
+    6.17,
     "Dasar hukumnya disebut tanpa diminta."
    ],
    [
-    8.434,
+    8.97,
     "Bahasanya awam, dan selesai dalam dua menit."
    ],
    [
-    11.973,
+    12.77,
     "Dan sikapnya tenang saat ditanya balik, serta tahu kapan mengarahkan pengguna jasa ke DJP."
    ]
-  ],
-  "silent": true
+  ]
  },
  "empat": {
-  "dur": 33.64,
+  "dur": 33.44,
   "marks": {
-   "q1": 4.581,
-   "q2": 13.507,
-   "q3": 20.08,
-   "q4": 25.393
+   "q1": 5.14,
+   "q2": 13.52,
+   "q3": 20.14,
+   "q4": 26.14
   },
   "cues": [
    [
-    0.1,
-    "Selama delapan materi, Anda sudah menjawab empat pertanyaan kasus."
+    0.05,
+    "Selama delapan sesi ini, Anda sudah menjawab empat pertanyaan kasus."
    ],
    [
-    4.581,
+    5.09,
     "Atas dasar apa negara memungut?"
    ],
    [
-    7.093,
-    "Undang-undang, sesuai Pasal dua puluh tiga A UUD seribu sembilan ratus empat puluh lima."
+    7.23,
+    "Undang-undang,"
    ],
    [
-    13.507,
+    8.17,
+    "sesuai Pasal dua puluh tiga A Undang-Undang Dasar seribu sembilan ratus empat puluh lima."
+   ],
+   [
+    13.47,
     "Siapa yang memungut?"
    ],
    [
-    15.217,
+    15.05,
     "DJBC di pelabuhan, dengan tiga sistem pemungutan yang bekerja bersama."
    ],
    [
-    20.08,
+    20.09,
     "Apakah PPN Impor hilang?"
    ],
    [
-    22.171,
+    22.39,
     "Tidak, PPN dikreditkan sebagai pajak masukan."
    ],
    [
-    25.393,
+    26.09,
     "Mengapa PPh dipungut sebelum kain terjual?"
    ],
    [
-    28.376,
+    28.57,
     "Karena PPh Pasal dua puluh dua Impor adalah cicilan di muka."
    ]
-  ],
-  "silent": true
+  ]
  },
  "wrap": {
-  "dur": 22.014,
+  "dur": 20.29,
   "marks": {
-   "w1": 2.049,
-   "w2": 7.597,
-   "w3": 16.014
+   "w1": 2.2,
+   "w2": 7.78,
+   "w3": 14.92
   },
   "cues": [
    [
-    0.1,
+    0.05,
     "Jadi, ini rangkumannya."
    ],
    [
-    2.049,
+    2.15,
     "Hitung dari nilai impor, yaitu nilai pabean ditambah Bea Masuk dan BMTP."
    ],
    [
-    7.597,
-    "Waspadai tiga kesalahan yang sering terjadi: nilai impor, DPP barang mewah, dan tarif PPh Pasal dua puluh dua."
+    7.73,
+    "Waspadai tiga kesalahan yang sering terjadi: nilai impor,"
    ],
    [
-    16.014,
+    11.25,
+    "DPP barang mewah, dan tarif PPh Pasal dua puluh dua."
+   ],
+   [
+    14.87,
     "Jelaskan dalam empat langkah, dengan bahasa awam dan dasar hukum yang jelas."
    ]
-  ],
-  "silent": true
+  ]
  },
  "final1": {
-  "dur": 6.737,
+  "dur": 5.7,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Nah, ini latihan terakhir, ya."
    ],
    [
-    2.999,
-    "Coba kamu kerjakan lomba hitung berikut ini."
+    2.57,
+    "Coba kamu kerjakan hitungan berikut ini."
    ]
-  ],
-  "silent": true
+  ]
  },
  "finish": {
-  "dur": 15.703,
+  "dur": 14.27,
   "marks": {},
   "cues": [
    [
-    0.1,
+    0.05,
     "Selamat, sobat, seluruh materi PDRI sudah selesai."
    ],
    [
-    3.916,
-    "Terakhir, tuliskan refleksi Anda di Paspor Misi: satu hal yang paling berguna, dan satu kesalahan yang ingin Anda hindari."
+    3.99,
+    "Terakhir, tuliskan refleksi Anda di Paspor Misi: satu hal yang paling berguna,"
    ],
    [
-    12.817,
+    9.17,
+    "dan satu kesalahan yang ingin Anda hindari."
+   ],
+   [
+    12.03,
     "Sampai jumpa di meja layanan!"
    ]
-  ],
-  "silent": true
+  ]
  }
 };
