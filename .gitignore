@@ -11,6 +11,7 @@ books/*/source.md
 !.claude/skills/pdri-build-chapter/
 !.claude/skills/pdri-voiceover/
 !.claude/skills/pdri-presentasi/
+!.claude/skills/pdri-scorm-skip-cover/
 # working leftovers
 _to_delete/
 __pycache__/

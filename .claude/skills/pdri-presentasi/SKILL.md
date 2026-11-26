@@ -21,7 +21,7 @@ thumbnails inlined; no audio). Approved design (2026-11-26): Bab 1 mockup, then 
 - Engine patches (string `must()` replacements, fail loudly if engine.js changes): volume.js loader removed,
   `new URL('../', location.href)` → constant (srcdoc has no hierarchical URL), and `m()` no longer throws for a beat
   flagged `auto` (below). Also hidden: the finish card's "Semua bab" link (`.finwrap a.btn.quiet`), which led nowhere.
-- **Stale timings.js:** a beat in index.html that timings.js lacks (known case: ch03 `syarat`, `rina` — the site lesson
+- **Stale timings.js:** a beat in index.html that timings.js lacks (happened once: ch03 `syarat`, `rina`, fixed on main 26 Nov — the site lesson
   itself errors there) gets `{marks: {}, auto: true}`; each mark it asks for is placed, on first use, at
   `FIRST + GAP * n`. The build prints a `warning:` line per such beat — tell the user, the lesson in `site/` needs its
   timings regenerated (skill `pdri-build-chapter`), the deck does not.

@@ -1,6 +1,8 @@
 import base64, re, json, sys, pathlib
 R = pathlib.Path(__file__).resolve().parents[3]/'site/pdri-mck'; L = R/'lib'
 N = int(sys.argv[2]) if len(sys.argv) > 2 else 1; C = R/f'ch{N:02d}'
+sys.path.insert(0, str(R.parents[1]/'tools/pdri')); from chapter_name import meta; NAME = meta(N)['name']
+LAB = NAME if meta(N)['label'] else str(N)   # the label the lesson shows: '3 · Adegan 2 dari 16' or 'KB 4 · Adegan 2 dari 13'
 OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
 b64 = lambda p, mt: f'data:{mt};base64,' + base64.b64encode(p.read_bytes()).decode()
 def css(name):
@@ -27,7 +29,7 @@ esc = lambda s: s.replace('</script', '<\\/script')
 names = [f'{k+1:02d}-{bid}.html' for k, (bid, _) in enumerate(ids)]
 for k, (bid, title) in enumerate(ids):
     nxt = f", next: '{names[k+1]}'" if k + 1 < len(ids) else ''
-    sc = script.replace(oldc, f"const CHAPTER = {{ number: {N}, label: '{N} · Adegan {k+1} dari {len(ids)}', title: {json.dumps(title)}, minutes: 1, language: 'id'{nxt} }};")
+    sc = script.replace(oldc, f"const CHAPTER = {{ number: {N}, label: '{LAB} · Adegan {k+1} dari {len(ids)}', title: {json.dumps(title)}, minutes: 1, language: 'id'{nxt} }};")
     sc = sc.replace('\nmkBoot();', f"\n{{ let s = {k}; while (s > 0 && BEATS[s].lead === false) s--; if (s < {k}) {{ const pre = BEATS.slice(s, {k}), r = BEATS[{k}].run; BEATS[{k}].run = (m, D) => {{ pre.forEach(b => b.run(() => -60, 0)); r(m, D); }}; }} }}\nBEATS.splice(0, BEATS.length, BEATS[{k}]);\nmkBoot();")
     clip = C/f'audio/id/{bid}.mp3'
     pre = f"window.CLIP = {{ {json.dumps(bid)}: '{b64(clip, 'audio/mpeg')}' }};" if clip.exists() else ''
@@ -36,7 +38,7 @@ for k, (bid, title) in enumerate(ids):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bab {N} · Adegan {k+1}: {title}</title>
+<title>{NAME} · Adegan {k+1}: {title}</title>
 <style>{CSS}</style>
 </head>
 <body>

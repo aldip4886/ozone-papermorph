@@ -147,3 +147,8 @@ naskah "Durasi draf", uncommitted leftovers).
   then store only a pointer, not the files.
 - The local HTTP server may be blocked in this environment; use `file://` URLs (everything here works with them).
 - Ch03 MP3s are 44.1 kHz/96 kbps (per-scene HTML ~1 MB each); ch04+ are 24 kHz/48 kbps.
+- A SCORM zip built on Linux (cloud session) got Unix entries with mode 0600, which an LMS that unpacks on its own
+  server can't serve — Bab 3 and 8 failed to upload that way (2026-11-26). `scorm.py` and `skip_cover.py` now write every
+  entry as DOS, 0644, on any OS. Check a zip with
+  `python -c "import zipfile,sys; z=zipfile.ZipFile(sys.argv[1]); print({(i.create_system, oct(i.external_attr>>16)) for i in z.infolist()})" X.zip`
+  → expect `{(0, '0o644')}` (older Windows builds show `(0, '0o600')`, also fine).
