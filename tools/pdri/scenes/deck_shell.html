@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@TITLE@ · Presentasi</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+<style>
+@FONTS@
+:root { color-scheme: dark; --ink: #071A3A; --panel: #0B214A; --line: rgba(255,255,255,.12); --dim: #9FB3D6; --text: #EEF3FB; --gold: #F5B324; --bar: 58px; --side: 300px; }
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; overflow: hidden; background: var(--ink); color: var(--text); font: 15px/1.45 Poppins, system-ui, sans-serif; }
+button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+#app { position: fixed; inset: 0; display: grid; grid-template-rows: 1fr var(--bar); grid-template-columns: 0 1fr; transition: grid-template-columns .22s; }
+#app.side { grid-template-columns: var(--side) 1fr; }
+
+/* sidebar: every scene as a thumbnail */
+#side { grid-row: 1 / 3; overflow: hidden; background: var(--panel); border-right: 1px solid var(--line); }
+#side .in { width: var(--side); height: 100%; overflow: auto; padding: 18px 16px 28px; }
+#side h2 { margin: 0 0 2px; font-size: 15px; }
+#side .sub { color: var(--dim); font-size: 13px; margin-bottom: 16px; }
+#list { display: grid; gap: 14px; }
+#list button { display: grid; grid-template-columns: 22px 1fr; gap: 4px 8px; text-align: left; padding: 6px; border-radius: 10px; }
+#list button:hover { background: rgba(255,255,255,.06); }
+#list b { grid-row: 1 / 3; font-size: 13px; color: var(--dim); padding-top: 2px; text-align: right; }
+#list .th { aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #1A3D73; outline: 2px solid transparent; outline-offset: 2px; }
+#list .th img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#list span { font-size: 13px; line-height: 1.3; color: #DCE6F6; }
+#list button.cur b { color: var(--gold); }
+#list button.cur .th { outline-color: var(--gold); }
+#list button.cur span { color: #fff; font-weight: 600; }
+
+/* the slide */
+#screen { position: relative; min-width: 0; min-height: 0; }
+#slide { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: var(--ink); transition: opacity .18s; }
+#slide.out { opacity: 0; }
+
+/* bottom bar */
+#nav { grid-column: 2; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding: 0 14px; border-top: 1px solid var(--line); min-width: 0; }
+.name { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mark { width: 22px; height: 22px; border-radius: 6px; background: #12366F; display: grid; place-items: center; flex: none; }
+.mark i { width: 12px; height: 12px; border-radius: 3px; background: var(--gold); }
+.name div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--dim); }
+.name div b { color: var(--gold); font-weight: 600; margin-right: 6px; }
+.name div strong { color: var(--text); font-weight: 600; }
+.mid { display: flex; align-items: center; gap: 6px; }
+.right { display: flex; justify-content: flex-end; gap: 6px; }
+.ib { height: 40px; min-width: 40px; padding: 0 10px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: var(--text); }
+.ib:hover { background: rgba(255,255,255,.08); }
+.ib[disabled] { opacity: .3; cursor: default; background: none; }
+.ib.on { background: rgba(245,179,36,.16); color: var(--gold); }
+.ib svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#count { min-width: 70px; text-align: center; font-variant-numeric: tabular-nums; color: var(--dim); }
+#count b { color: var(--text); font-weight: 600; }
+
+/* full screen: the controls lie over the slide's foot and fade out until the pointer moves */
+:root.fs #app { grid-template-rows: 1fr 0; }
+:root.fs #nav { position: fixed; left: 0; right: 0; bottom: 0; height: var(--bar); background: rgba(7,26,58,.9); transition: opacity .3s; z-index: 5; }
+:root.fs #app.side #nav { left: var(--side); }
+:root.fs:not(.awake) #nav:not(:hover) { opacity: 0; }
+
+@media (max-width: 760px) {
+  :root { --side: 240px; }
+  .name div { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side" aria-label="Daftar adegan"><div class="in"><h2>Daftar adegan</h2><div class="sub" id="sideSub"></div><div id="list"></div></div></aside>
+  <div id="screen"><iframe id="slide" title="Adegan" allow="fullscreen"></iframe></div>
+  <footer id="nav">
+    <div class="name"><div class="mark"><i></i></div><div id="where"></div></div>
+    <div class="mid">
+      <button class="ib" id="bPrev" title="Adegan sebelumnya (←)" aria-label="Adegan sebelumnya"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <div id="count"></div>
+      <button class="ib" id="bNext" title="Adegan berikutnya (→)" aria-label="Adegan berikutnya"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="right">
+      <button class="ib" id="bSide" title="Daftar adegan (G)" aria-label="Daftar adegan"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M9 4.5v15"/></svg></button>
+      <button class="ib" id="bFull" title="Layar penuh (F)" aria-label="Layar penuh"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </footer>
+</div>
+
+<script>
+/*@DATA@*/
+</script>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const escH = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const S = { i: -1, win: null, t: 0 };
+
+function docFor(i) {
+  const sc = SHARED.script.replace('/*@CHAPTER@*/', () => CHAPTERS[i]).replace('/*@PICK@*/', () => PICKS[i]);
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
+    + `<style>${SHARED.css}</style></head><body><script>${SHARED.eng}<\/script><script>${SHARED.vol}<\/script><script>${SHARED.mck}<\/script>`
+    + `<script>${SHARED.tim}<\/script><script>\n${sc}<\/script><script>${SHARED.deck}<\/script></body></html>`;
+}
+
+document.title = `Bab ${DECK.n} · ${DECK.title} · Presentasi`;
+$('sideSub').textContent = `Bab ${DECK.n} · ${DECK.title} · ${DECK.count} adegan`;
+const list = $('list');
+SLIDES.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.innerHTML = `<b>${i + 1}</b><div class="th">${s.thumb ? `<img src="${s.thumb}" alt="" loading="lazy">` : ''}</div><span>${escH(s.title)}</span>`;
+  b.onclick = () => go(i - S.i);
+  list.append(b);
+});
+
+/* ---------- slides ---------- */
+const frame = $('slide');
+function show(i) {
+  S.i = i;
+  const s = SLIDES[i], n = SLIDES.length;
+  $('count').innerHTML = `<b>${i + 1}</b> / ${n}`;
+  $('where').innerHTML = `<b>BAB ${DECK.n}</b><strong>${escH(s.title)}</strong>`;
+  $('where').title = `Bab ${DECK.n} · ${DECK.title} · Adegan ${i + 1}: ${s.title}`;
+  $('bPrev').disabled = i === 0; $('bNext').disabled = i === n - 1;
+  [...list.children].forEach((b, k) => b.classList.toggle('cur', k === i));
+  list.children[i].scrollIntoView({ block: 'nearest' });
+  history.replaceState(null, '', '#' + (i + 1));
+  frame.classList.add('out');
+  clearTimeout(S.t);
+  S.t = setTimeout(() => { S.win = null; frame.srcdoc = docFor(i); }, 160);
+}
+function go(d) {
+  const i = Math.max(0, Math.min(SLIDES.length - 1, S.i + d));
+  if (i !== S.i) show(i);
+}
+const focusSlide = () => { try { frame.focus(); S.win?.focus(); } catch {} };
+window.deck = {   // called from inside each slide
+  ready(win) { S.win = win; requestAnimationFrame(() => frame.classList.remove('out')); focusSlide(); },
+  go,
+  key,
+};
+
+/* ---------- sidebar, full screen, keys ---------- */
+function toggleSide(on = !$('app').classList.contains('side')) { $('app').classList.toggle('side', on); $('bSide').classList.toggle('on', on); if (on) list.children[S.i]?.scrollIntoView({ block: 'nearest' }); setTimeout(focusSlide, 250); }
+function toggleFull() { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.().catch(() => {}); }
+document.addEventListener('fullscreenchange', () => { document.documentElement.classList.toggle('fs', !!document.fullscreenElement); wake(); focusSlide(); });
+let sleepT;
+function wake() { const r = document.documentElement; r.classList.add('awake'); clearTimeout(sleepT); sleepT = setTimeout(() => r.classList.remove('awake'), 2500); }
+addEventListener('pointermove', wake);
+frame.addEventListener('load', () => { try { frame.contentWindow.addEventListener('pointermove', wake); } catch {} });
+
+function key(k) {
+  if (k === 'escape') { if ($('app').classList.contains('side')) toggleSide(false); }
+  else if (k === 'g') toggleSide();
+  else if (k === 'f') toggleFull();
+}
+addEventListener('keydown', e => {
+  if (e.altKey || e.metaKey || e.ctrlKey) return;
+  const k = e.key;
+  if (k === 'ArrowRight' || k === 'PageDown') { e.preventDefault(); go(1); }
+  else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(-1); }
+  else if (/^[gGfF]$/.test(k) || k === 'Escape') { e.preventDefault(); key(k.toLowerCase()); }
+});
+$('bPrev').onclick = () => go(-1);
+$('bNext').onclick = () => go(1);
+$('bSide').onclick = () => toggleSide();
+$('bFull').onclick = toggleFull;
+$('screen').addEventListener('pointerdown', focusSlide);
+
+/* #N opens scene N */
+const h0 = parseInt(location.hash.slice(1), 10);
+show(h0 >= 1 && h0 <= SLIDES.length ? h0 - 1 : 0);
+</script>
+</body>
+</html>
