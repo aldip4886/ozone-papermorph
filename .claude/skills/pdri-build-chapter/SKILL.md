@@ -152,3 +152,10 @@ naskah "Durasi draf", uncommitted leftovers).
   entry as DOS, 0644, on any OS. Check a zip with
   `python -c "import zipfile,sys; z=zipfile.ZipFile(sys.argv[1]); print({(i.create_system, oct(i.external_attr>>16)) for i in z.infolist()})" X.zip`
   → expect `{(0, '0o644')}` (older Windows builds show `(0, '0o600')`, also fine).
+- Lessons with a `CHAPTER.label` (KB 4 in ch41, KB 5 in ch51) are named by it: `build_outputs.py N --skip-cover` writes
+  `dist/pdri/kb4-scorm*.zip`, `dist/pdri/html/kb4/`, `dist/pdri/pdf/kb4-<slug>-fullscreen.pdf` (`tools/pdri/chapter_name.py`).
+  Their e2e checks are `tools/pdri/e2e_mck_ch41.py` / `ch51.py` ('%' answers a drag-and-drop `dragBoard`, in `lib/mck.js`).
+- `build_scenes.py` / `build_deck.py` find beats by lines starting with two spaces and `['id', '`: indent data arrays that
+  look like that by three spaces, or they are taken for beats (happened with `SCEN` in ch51).
+- A quiz card must stay above the player bar once answered (feedback makes it taller): keep its Lanjutkan button above
+  y ≈ 800, or `check_interactions.py` times out clicking it.
