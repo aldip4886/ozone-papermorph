@@ -1,0 +1,20 @@
+{
+  "voice": "Google AI Studio Gemini 3.8 Flash TTS — Bodi",
+  "rate": "sekitar 150 kata per menit",
+  "note": "KB 5 · PPh Pasal 22 Impor (storyboard docs/storyboard-kb5-pph22-impor-v1.md). Naskah 26 Nov 2026; teks di sini memakai angka, naskah rekaman (docs/naskah-voiceover/kb5-pph22-impor-naskah-voiceover.md) menuliskannya dengan kata.",
+  "beats": {
+    "pembuka": "Mari kita lanjutkan, ya, sobat. [[tanya]]Staf PT Kain Prima Nusantara bertanya lagi: kain kami belum laku, kok PPh sudah dipungut? [[misi]]Ini pertanyaan keempat di Paspor Misi kamu. Mari kita jawab bersama.",
+    "jalur": "Mulai dari gambaran besarnya. [[tahun]]Selama tahun berjalan, PPh dilunasi melalui beberapa jalur. [[p21]]PPh 21 dipotong oleh pemberi kerja. [[p22]]PPh 22 dipungut oleh pihak tertentu, termasuk atas impor. [[p23]]PPh 23 dipotong atas penghasilan tertentu. [[p25]]Dan PPh 25 diangsur sendiri setiap bulan. [[spt]]Semuanya adalah pelunasan PPh tahun berjalan, yang diperhitungkan di SPT Tahunan.",
+    "beda": "Apakah bedanya dipotong dan dipungut? [[potong]]Pada pemotongan, pihak yang membayar penghasilan memotong pajak dari pembayarannya. [[pungut]]Pada pemungutan, pihak yang ditunjuk memungut pajak atas transaksi tertentu. [[ajak]]Sekarang, coba seret PPh 21, PPh 22 Impor, PPh 23, dan PPh 25 ke kelompok yang tepat.",
+    "pungut": "PPh Pasal 22 Impor dipungut saat impor. [[siapa]]Pemungutnya DJBC dan bank devisa. [[dasar]]Dasar pemungutannya nilai impor. [[saat]]Terutangnya bersamaan dengan pembayaran Bea Masuk. [[sifat]]Dan sifatnya tidak final. Ketentuannya ada dalam PMK 51 Tahun 2025.",
+    "dimuka": "Jadi, apa sebenarnya PPh 22 Impor ini? [[transaksi]]Ia dipungut atas transaksi impor, [[wajib]]tetapi sebenarnya merupakan pembayaran di muka atas PPh importir. [[kredit]]Karena itu, PPh 22 Impor dikreditkan dalam SPT Tahunan PPh importir. Ingat, PPh 22 Impor mengangsur kewajiban subjektif importir.",
+    "spt": "Ke SPT mana kreditnya masuk? Itu mengikuti jenis wajib pajaknya. [[pt]]PT Kain Prima Nusantara adalah badan, jadi kreditnya masuk SPT Tahunan PPh Badan. [[rina]]Bu Rina adalah orang pribadi, jadi kreditnya masuk SPT Tahunan PPh Orang Pribadi.",
+    "hitung": "Sekarang kita hitung untuk Kasus 1. [[cek]]Cek dulu: pos 5208.21.00 tidak tercantum dalam Lampiran A sampai D PMK 51 Tahun 2025, dan importirnya memiliki API-U. [[tarif]]Jadi tarifnya 2,5 persen dari nilai impor. [[ni]]Nilai impornya 1.528.230.000 rupiah. Coba hitung PPh 22 Impornya, ya.",
+    "langkah": "Bagaimana memilih tarif PPh 22 Impor? Ikuti tiga langkah. [[l1]]Langkah pertama, cek apakah barangnya tercantum di Lampiran A atau B. Jika ya, tarifnya 10 persen atau 7,5 persen. [[l2]]Langkah kedua, cek apakah barangnya emas batangan. Jika ya, tarifnya 0,25 persen. [[l3]]Langkah ketiga, cek status API. Dengan API, tarifnya 2,5 persen, atau 0,5 persen untuk kedelai, gandum, dan tepung terigu. [[tanpa]]Tanpa API, tarifnya 7,5 persen.",
+    "tarif": "Sekarang giliran kamu: pilih tarifmu. [[ajak]]Seret tarif yang tepat ke setiap skenario, dengan mengikuti tiga langkah tadi. Ingat, tarif 0,5 persen untuk kedelai, gandum, dan tepung terigu hanya berlaku dengan API.",
+    "alur": "Sekarang, ikuti uangnya. [[lima]]PPh 22 Impor berjalan melalui lima tahap, dari PIB sampai SPT Tahunan. [[ajak]]Coba susun kelima tahap itu, lalu pasangkan pihak atau dokumen pada setiap tahap. Kalau ada yang keliru, kartunya kembali, dan kamu bisa mencoba lagi.",
+    "kredit": "Jadi, inilah jawaban untuk staf importir tadi. [[m1]]PPh 22 Impor dipungut atas transaksi impor. [[m2]]Ia menjadi pembayaran di muka atas PPh importir. [[m3]]Dan ia dikreditkan dalam SPT Tahunan, bukan pajak final. [[cap]]Misi KB 5 selesai.",
+    "api": "Satu pertanyaan terakhir. [[banding]]Untuk barang lain, tarifnya 2,5 persen dengan API, dan 7,5 persen tanpa API, tiga kali lipat. [[tanya]]Apa dampaknya bagi importir tanpa API? Pilih pernyataan yang paling tepat.",
+    "finish": "Sekarang kamu tahu kan mengapa PPh sudah dipungut walaupun kain belum laku. Lihat hasilmu, lalu ulangi bagian yang masih ragu, ya."
+  }
+}

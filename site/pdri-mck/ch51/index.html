@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KB 5 · PPh Pasal 22 Impor</title>
+<link rel="stylesheet" href="../lib/engine.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230A2A5C%27/%3E%3Crect x=%277%27 y=%277%27 width=%2718%27 height=%2718%27 rx=%275%27 fill=%27%23F5B324%27/%3E%3C/svg%3E">
+</head>
+<body>
+<script src="../lib/engine.js"></script>
+<script src="../lib/mck.js"></script>
+<script src="audio/id/timings.js"></script>
+<script>
+'use strict';
+/* KB 5 · Alur pengkreditan PPh Pasal 22 Impor (docs/storyboard-kb5-pph22-impor-v1.md). A lesson of its own beside
+   Bab 5: the folder is ch51, the learner sees "KB 5". Kain belum laku, kok PPh sudah dipungut? The ways PPh is paid
+   during the year, dipotong vs dipungut, who collects PPh 22 Impor and when, a prepayment credited in the SPT
+   Tahunan, Kasus 1 (2,5% x Rp1.528.230.000), the three-step rate choice, and four activities: sort the PPh types,
+   Pilih Tarifmu, follow the money (order + pairs), and the API question. Drag-and-drop: dragBoard in mck.js. */
+const CHAPTER = { number: 51, label: 'KB 5', title: 'Alur Pengkreditan PPh Pasal 22 Impor', minutes: 4, language: 'id' };
+// the cover and the finish card name this lesson "KB 5", not "Bab KB 5"
+Object.assign(TRANSLATIONS.id, { chapterNumber: '{n}', chapterComplete: '{n} selesai', chapterPractice: 'Latihan' });
+
+const paper = p => bgPaper(p);
+const navy = (p, seed, D) => bgNavy(p, seed, D);
+const okTick = (p, x, y, r = 20, col = MK.green) => {
+  const ok = G(p, { x, y });
+  mk('circle', { r, fill: col }, ok);
+  path(ok, `M${-r * .45} ${r * .05}l${r * .3} ${r * .3}l${r * .6} ${-r * .6}`, { stroke: '#fff', 'stroke-width': r * .22, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  return ok;
+};
+const stamp = (p, x, y, top, bottom, t0, rot = -14) => {
+  const st = G(p, { x, y });
+  mk('circle', { r: 88, fill: 'none', stroke: MK.gold, 'stroke-width': 6 }, st);
+  mk('circle', { r: 72, fill: 'none', stroke: MK.gold, 'stroke-width': 2 }, st);
+  T(st, top, { y: -8, size: 22, weight: 800, fill: MK.gold, anchor: 'middle' });
+  T(st, bottom, { y: 24, size: 18, weight: 700, fill: MK.gold, anchor: 'middle' });
+  st.setAttribute('transform', `translate(${x} ${y}) rotate(${rot})`);
+  const sw = wrap(st, x, y); put(sw, { s: 2, o: 0 }); tw(sw, { s: 1, o: 1 }, t0, .35, out);
+  return sw;
+};
+
+// Kasus 1 (KB 5.6): kain tenunan kapas, pos 5208.21.00, API-U, 2,5% x nilai impor
+const NI = 1528230000, PPH = NI * .025;                                 // 38.205.750
+
+/* ---------- the boards of the drag-and-drop activities (dragBoard, mck.js) ---------- */
+// storyboard 3: PPh 21, 22 Impor, 23 and 25 into pemotongan, pemungutan, angsuran sendiri
+const SORT_CARDS = [['PPh 23', 'potong'], ['PPh 22 Impor', 'pungut'], ['PPh 25', 'angsur'], ['PPh 21', 'potong']];
+const sortBoard = wrapEl => {
+  wrapEl.style.setProperty('--cw', '300px'); wrapEl.style.setProperty('--ch', '52px');
+  wrapEl.style.setProperty('--sw2', '300px'); wrapEl.style.setProperty('--sh2', '52px');
+  const pool = h('div', 'ddpool'), cols = h('div', 'ddcols');
+  const cards = SORT_CARDS.map(([lab, val]) => {
+    const home = h('div', 'ddhome'), el = h('div', 'ddcard chip ' + (val === 'pungut' ? 'gold' : 'blue'), lab);
+    home.append(el); pool.append(home);
+    return { el, val };
+  });
+  const slots = [];
+  [['potong', 'Pemotongan', 'pembayar penghasilan memotong', 2], ['pungut', 'Pemungutan', 'pihak yang ditunjuk memungut', 1], ['angsur', 'Angsuran sendiri', 'wajib pajak mengangsur sendiri', 1]].forEach(([want, n, sub, k]) => {
+    const col = h('div', 'ddcol', [h('p', 'hd', n), h('p', 'sub', sub)]);
+    for (let i = 0; i < k; i++) { const el = h('div', 'ddslot'); col.append(el); slots.push({ el, want, key: want + (k > 1 ? '-' + (i + 1) : '') }); }
+    cols.append(col);
+  });
+  wrapEl.append(pool, cols);
+  return { cards, slots };
+};
+
+// storyboard 9: Pilih Tarifmu, eight scenarios in a 4 x 2 grid
+const SCEN = [['fabric', 'gold', 'Kain kapas, importir ber-API-U', '2,5%'], ['gem', 'sky', 'Emas batangan', '0,25%'],
+   ['cart', 'blue', 'Kedelai, importir tanpa API', '7,5%'], ['doc', 'gold', 'Barang dalam Lampiran A', '10%'],
+   ['cart', 'gold', 'Gandum, importir ber-API', '0,5%'], ['fabric', 'sky', 'Kain kapas, importir tanpa API', '7,5%'],
+   ['doc', 'sky', 'Barang dalam Lampiran B', '7,5%'], ['cart', 'sky', 'Tepung terigu, importir ber-API', '0,5%']];
+const RATES = ['7,5%', '0,25%', '2,5%', '10%', '0,5%', '7,5%', '0,5%', '7,5%'];
+const rateBoard = wrapEl => {
+  wrapEl.style.setProperty('--cw', '150px'); wrapEl.style.setProperty('--ch', '46px');
+  wrapEl.style.setProperty('--sw2', '150px'); wrapEl.style.setProperty('--sh2', '48px');
+  const steps = h('div', 'ddsteps', [h('span', '', '① Lampiran A atau B?'), h('span', 'ar', '→'), h('span', '', '② Emas batangan?'), h('span', 'ar', '→'), h('span', '', '③ Punya API?')]);
+  const gridEl = h('div', 'ddgrid'), pool = h('div', 'ddpool');
+  const slots = SCEN.map(([gl, v, lab, want], i) => {
+    const el = h('div', 'ddslot');
+    gridEl.append(h('div', 'ddsc', [glyphSvg(gl, v, 46), h('span', '', lab), el]));
+    return { el, want, key: 'skenario-' + (i + 1) };
+  });
+  const cards = RATES.map(r => {
+    const home = h('div', 'ddhome'), el = h('div', 'ddcard chip gold', r);
+    home.append(el); pool.append(home);
+    return { el, val: r };
+  });
+  wrapEl.append(steps, gridEl, pool);
+  return { cards, slots };
+};
+
+// storyboard 10: the five stages of the money, then the party or document of each
+const STAGES = { a: ['doc', 'blue', 'PIB diajukan'], b: ['wallet', 'gold', 'PPh 22 dibayar bersama Bea Masuk'], c: ['bank', 'sky', 'Dana masuk ke kas negara'],
+  d: ['shield', 'blue', 'DJBC melaporkan hasil pemungutan'], e: ['calc', 'gold', 'Importir mengkreditkan di SPT Tahunan'] };
+const STAGE_MIX = ['c', 'a', 'e', 'b', 'd'];
+const orderBoard = wrapEl => {
+  wrapEl.style.setProperty('--cw', '246px'); wrapEl.style.setProperty('--ch', '96px');
+  wrapEl.style.setProperty('--sw2', '246px'); wrapEl.style.setProperty('--sh2', '96px');
+  const pool = h('div', 'ddpool'), track = h('div', 'ddtrack');
+  const cards = STAGE_MIX.map(id => {
+    const [gl, v, lab] = STAGES[id], home = h('div', 'ddhome');
+    const el = h('div', 'ddcard small', [glyphSvg(gl, v, 46), h('span', '', lab)]);
+    home.append(el); pool.append(home);
+    return { el, val: id };
+  });
+  const slots = ['a', 'b', 'c', 'd', 'e'].map((want, i) => {
+    const el = h('div', 'ddslot', [h('span', 'n', String(i + 1))]);
+    if (i) track.append(h('span', 'ar', '→'));
+    track.append(el);
+    return { el, want, key: 'tahap-' + (i + 1) };
+  });
+  wrapEl.append(pool, track, h('div', 'ddends', [h('span', '', 'MULAI: PIB'), h('span', '', 'AKHIR: SPT TAHUNAN')]));
+  return { cards, slots };
+};
+const PAIRS = [['a', 'Importir · PIB'], ['b', 'Importir dan bank devisa'], ['c', null], ['d', 'DJBC · pemungutan dan pelaporan'], ['e', 'Importir · SPT Tahunan']];
+const PAIR_MIX = [3, 0, 4, 1];
+const pairBoard = wrapEl => {
+  wrapEl.style.setProperty('--cw', '256px'); wrapEl.style.setProperty('--ch', '58px');
+  wrapEl.style.setProperty('--sw2', '246px'); wrapEl.style.setProperty('--sh2', '62px');
+  const row = h('div', 'ddtrack top'), pool = h('div', 'ddpool');
+  const slots = [];
+  PAIRS.forEach(([id, want], i) => {
+    const [gl, v, lab] = STAGES[id];
+    const col = h('div', 'ddstage', [h('div', 'st', [h('span', 'n', String(i + 1)), glyphSvg(gl, v, 40), h('span', '', lab)])]);
+    if (want) { const el = h('div', 'ddslot'); col.append(el); slots.push({ el, want, key: 'pihak-tahap-' + (i + 1) }); }
+    else col.append(h('div', 'ddfixed', 'Kas negara'));
+    if (i) row.append(h('span', 'ar', '→'));
+    row.append(col);
+  });
+  const cards = PAIR_MIX.map(k => {
+    const home = h('div', 'ddhome'), el = h('div', 'ddcard chip blue', PAIRS[k][1]);
+    home.append(el); pool.append(home);
+    return { el, val: PAIRS[k][1] };
+  });
+  wrapEl.append(row, pool);
+  return { cards, slots };
+};
+document.head.append(Object.assign(document.createElement('style'), { textContent: `
+.ddcols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ddcol { display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 16px; border-radius: 16px; background: rgba(58, 155, 225, .07); border: 2px solid #D6DEEA; }
+.ddcol .hd { margin: 0; font: 800 22px var(--ui); color: #0A2A5C; }
+.ddcol .sub { margin: 0 0 4px; font: 500 16px var(--ui); color: #4A5F80; }
+.ddsteps { display: flex; gap: 10px; align-items: center; font: 700 17px var(--ui); color: #0A2A5C; }
+.ddsteps span:not(.ar) { padding: 4px 14px; border-radius: 999px; background: #FFF4D6; border: 1.5px solid #F5B324; }
+.ddsteps .ar { color: #F5B324; font-weight: 800; }
+.ddgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ddsc { display: grid; grid-template-columns: 46px 1fr 150px; align-items: center; gap: 6px 10px; padding: 8px 12px; border-radius: 14px; background: #fff; border: 2px solid #D6DEEA; font: 700 16px/1.25 var(--ui); color: #0A2A5C; }
+.ddsc { grid-template-columns: 46px 1fr; } .ddsc .ddslot { grid-column: 1 / -1; width: 100%; }
+.ddcard.small { font-size: 16px; gap: 8px; padding: 6px 10px; }
+.ddtrack.top { align-items: flex-start; }
+.ddstage { display: flex; flex-direction: column; gap: 10px; width: 246px; }
+.ddstage .st { position: relative; display: flex; align-items: center; gap: 8px; height: 76px; padding: 0 10px; border-radius: 14px; background: #0A2A5C; color: #fff; font: 700 15px/1.2 var(--ui); }
+.ddstage .st .n { position: absolute; top: -11px; left: -9px; width: 26px; height: 26px; border-radius: 50%; background: #F5B324; color: #0A2A5C; font: 800 15px/26px var(--ui); text-align: center; }
+.ddfixed { height: 62px; display: grid; place-items: center; border-radius: 14px; background: #E8F2FC; border: 2px solid #3A9BE1; font: 700 18px var(--ui); color: #0A2A5C; }
+.ddtrack .ar { color: #F5B324; font: 800 24px var(--ui); }
+.ddtrack.top .ar { margin-top: 22px; }
+` }));
+
+/* ---------- beats ---------- */
+const BEATS = [
+  ['pembuka', 'KB 5 · PPh Pasal 22 Impor', (m, D) => {
+    const p = panel(0);
+    navy(p, 51, D);
+    const ring = G(p, { x: 1130, y: 450 });
+    mk('circle', { r: 240, fill: 'none', stroke: MK.sky, 'stroke-width': 3, 'stroke-opacity': .6, 'stroke-dasharray': '6 10' }, ring);
+    path(ring, 'M-260 0A260 260 0 0 1 0 -260', { stroke: MK.gold, 'stroke-width': 14, 'stroke-linecap': 'round', fill: 'none' });
+    clockRun(t => ring.setAttribute('transform', `translate(1130 450) rotate(${t * 6})`), D, { tail: true });
+    const mid = G(p, { x: 1130, y: 450 });
+    mk('circle', { r: 140, fill: '#fff' }, mid);
+    tile(mid, 'question', 0, -20, { size: 140, v: 'gold' });
+    T(mid, 'PPh 22', { y: 88, size: 28, weight: 800, fill: MK.navy, anchor: 'middle' });
+    popIn(mid, .3);
+    [['calendar', 'blue', 'Tahun berjalan'], ['ship', 'sky', 'Impor'], ['doc', 'gold', 'PIB'], ['coins', 'gold', 'Dipungut']].forEach(([gl, v, n], k) => {
+      const a = -Math.PI * .75 + k * Math.PI / 2, x = 1130 + 240 * Math.cos(a), y = 450 + 240 * Math.sin(a), g = G(p);
+      tile(g, gl, x, y, { size: 88, v, floor: false });
+      pill(g, n, x, y + 62, { size: 16, bg: '#fff', ink: MK.navy });
+      popIn(g, .8 + k * .25);
+    });
+    const tg = pill(p, 'KB 5 · KEGIATAN BELAJAR 5', 92, 230, { size: 20, anchor: 'start' });
+    slideUp(tg, .4);
+    const t1 = T(p, 'PPh Pasal 22', { x: 92, y: 330, size: 70, weight: 700, fill: '#fff' });
+    const t2 = T(p, 'Impor', { x: 92, y: 412, size: 70, weight: 700, fill: MK.gold });
+    slideUp(t1, .6); slideUp(t2, .75);
+    const q = G(p);
+    mcard(q, 92, 470, 700, 150, { dark: true });
+    tile(q, 'chat', 165, 545, { size: 84, v: 'gold', floor: false });
+    T(q, 'STAF PT KAIN PRIMA NUSANTARA', { x: 225, y: 520, size: 15, weight: 700, fill: MK.dim });
+    lines(q, '“Kain belum laku, kok PPh|sudah dipungut?”', 225, 560, { size: 27, weight: 700 });
+    slideUp(q, m('tanya') - .2);
+    const pp = G(p);
+    tile(pp, 'passport', 130, 680, { size: 64, v: 'sky', floor: false });
+    T(pp, 'PASPOR MISI · PERTANYAAN 4', { x: 180, y: 688, size: 19, weight: 700, fill: MK.gold });
+    slideUp(pp, m('misi'));
+  }],
+
+  ['jalur', 'Jalur pelunasan PPh', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPh dilunasi melalui beberapa jalur|selama tahun berjalan', { tag: 'PELUNASAN PPh TAHUN BERJALAN' });
+    const X0 = 700, DX = 50, MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const ax = G(p);
+    mk('rect', { x: X0 - 10, y: 400, width: DX * 11 + 20, height: 3, fill: MK.navy }, ax);
+    MONTHS.forEach((mo, i) => { mk('rect', { x: X0 + i * DX - 1, y: 394, width: 2, height: 14, fill: MK.navy }, ax); T(ax, mo, { x: X0 + i * DX, y: 384, size: 15, weight: 600, fill: MK.dim, anchor: 'middle' }); });
+    tile(ax, 'calendar', 560, 396, { size: 52, v: 'blue', floor: false });
+    put(ax, { o: 0 }); show(ax, m('tahun'), .5);
+    [['p21', 'PPh 21', 'dipotong pemberi kerja', MK.sky], ['p22', 'PPh 22', 'dipungut pihak tertentu, termasuk atas impor', MK.gold],
+     ['p23', 'PPh 23', 'dipotong atas penghasilan tertentu', MK.sky], ['p25', 'PPh 25', 'diangsur sendiri setiap bulan', MK.sky]].forEach(([mark, n, sub, col], i) => {
+      const y = 460 + i * 66, g = G(p), gold = col === MK.gold;
+      if (gold) mk('rect', { x: 80, y: y - 30, width: 1180, height: 60, rx: 12, fill: MK.goldLight, 'fill-opacity': .55 }, g);
+      pill(g, n, 92, y, { size: 19, anchor: 'start', bg: gold ? MK.gold : MK.navy, ink: gold ? MK.navy : '#fff' });
+      T(g, sub, { x: 200, y: y + 7, size: 19, weight: gold ? 700 : 500, fill: MK.navy });
+      const ln = mk('rect', { x: X0, y: y - 2, width: 0, height: 4, rx: 2, fill: col }, g);
+      MONTHS.forEach((_, j) => { const d = mk('circle', { cx: X0 + j * DX, cy: y, r: gold ? 8 : 6, fill: col, 'fill-opacity': 0 }, g); prog(q => d.setAttribute('fill-opacity', q), m(mark) + .2 + j * .05, .2); });
+      prog(q => ln.setAttribute('width', DX * 11 * q), m(mark), .8, out);
+      flow(g, `M${X0 + DX * 11 + 14} ${y}L1300 ${y}`, col, m('spt') + i * .1, .35, 3);
+      slideUp(g, m(mark) - .2, .4);
+    });
+    const s = G(p);
+    tile(s, 'doc', 1400, 540, { size: 120, v: 'gold' });
+    T(s, 'SPT Tahunan', { x: 1400, y: 636, size: 23, weight: 800, fill: MK.navy, anchor: 'middle' });
+    lines(s, 'pelunasan PPh|tahun berjalan', 1400, 670, { size: 17, weight: 500, fill: MK.dim, anchor: 'middle' });
+    popIn(s, m('spt') + .4);
+    source(p, 'Bahan Ajar PDRI KB 5', m('tahun'));
+  }],
+
+  ['beda', 'Pemotongan dan pemungutan', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Bedakan pemotongan dan pemungutan', { tag: 'AKTIVITAS · KATEGORI PAJAK' });
+    [['potong', 'wallet', 'blue', 'Pemotongan', 'Pihak yang membayar penghasilan|memotong pajak dari pembayarannya'],
+     ['pungut', 'shield', 'gold', 'Pemungutan', 'Pihak yang ditunjuk memungut pajak|atas transaksi tertentu']].forEach(([mark, gl, v, n, ex], i) => {
+      const x = 92 + i * 726, c = G(p);
+      mcard(c, x, 240, 690, 250);
+      mk('rect', { x, y: 240, width: 690, height: 12, rx: 6, fill: i ? MK.gold : MK.blue }, c);
+      tile(c, gl, x + 90, 335, { size: 96, v });
+      T(c, n, { x: x + 160, y: 345, size: 34, weight: 800, fill: MK.navy });
+      lines(c, ex, x + 40, 425, { size: 22, weight: 500, fill: MK.dim });
+      popIn(c, m(mark) - .1);
+    });
+    SORT_CARDS.forEach(([lab, val], i) => {
+      const x = 92 + i * 362, c = G(p);
+      mk('rect', { x, y: 560, width: 330, height: 64, rx: 14, fill: val === 'pungut' ? '#FFF4D6' : '#E8F2FC', stroke: val === 'pungut' ? MK.gold : MK.sky, 'stroke-width': 2 }, c);
+      T(c, lab, { x: x + 165, y: 601, size: 24, weight: 800, fill: MK.navy, anchor: 'middle' });
+      popIn(c, m('ajak') + .3 + i * .2);
+    });
+  }, { ask: done => quiz({ x: 92, y: 165, w: 1416, cls: 'side' }, [{
+    id: 'p-kategori', prompt: ['Seret setiap jenis PPh ke kelompoknya: pemotongan, pemungutan, atau angsuran sendiri.'],
+    build: dragBoard(sortBoard, { type: 'fill-in', yes: 'PPh 21 dan PPh 23 dipotong oleh pihak yang membayar penghasilan; PPh 22 Impor dipungut oleh pihak yang ditunjuk atas transaksi impor; PPh 25 diangsur sendiri setiap bulan.' }),
+  }], done, 'Aktivitas') }],
+
+  ['pungut', 'Dipungut saat impor', (m, D) => {
+    const p = panel(0);
+    navy(p, 43, D);
+    actionTitle(p, 'PPh Pasal 22 Impor dipungut saat impor', { tag: 'PPh PASAL 22 IMPOR', dark: true });
+    [['siapa', 'user', 'blue', 'PEMUNGUT', 'DJBC dan|bank devisa'], ['dasar', 'calc', 'gold', 'DASAR', 'Nilai impor'],
+     ['saat', 'clock', 'sky', 'SAAT TERUTANG', 'Bersamaan dengan|pembayaran|Bea Masuk'], ['sifat', 'check', 'gold', 'SIFAT', 'Tidak final']].forEach(([mark, gl, v, head, val], i) => {
+      const x = 92 + i * 362, c = G(p);
+      mcard(c, x, 245, 330, 400, { dark: true });
+      mk('rect', { x, y: 245, width: 330, height: 10, rx: 5, fill: [MK.blue, MK.gold, MK.sky, MK.gold][i] }, c);
+      tile(c, gl, x + 165, 345, { size: 110, v });
+      T(c, head, { x: x + 165, y: 450, size: 16, weight: 800, fill: MK.dim, anchor: 'middle' });
+      lines(c, val, x + 165, 500, { size: 29, weight: 800, fill: MK.navy, anchor: 'middle', lh: 1.25 });
+      popIn(c, m(mark) - .1);
+    });
+    const pl = pill(p, 'Dasar hukum: PMK 51 Tahun 2025', 800, 690, { size: 21, bg: MK.gold });
+    popIn(pl, m('sifat') + 1.2);
+    source(p, 'Bahan Ajar PDRI KB 5; PMK 51 Tahun 2025', .8, true);
+  }],
+
+  ['dimuka', 'Pembayaran di muka', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'PPh 22 Impor adalah pembayaran di muka|atas PPh importir', { tag: 'PEMBAYARAN DI MUKA' });
+    const a = G(p);
+    mcard(a, 92, 225, 1416, 170);
+    T(a, 'LAPIS 1 · TRANSAKSI IMPOR', { x: 122, y: 262, size: 15, weight: 800, fill: MK.dim });
+    [['ship', 'sky', 'Kain diimpor', 340], ['doc', 'blue', 'PIB', 760], ['coins', 'gold', 'PPh 22 dipungut', 1120]].forEach(([gl, v, n, x], i) => {
+      tile(a, gl, x, 312, { size: 70, v, floor: false });
+      T(a, n, { x: x + 50, y: 320, size: 21, weight: 700, fill: MK.navy });
+      if (i) { mk('rect', { x: x - 150, y: 310, width: 90, height: 4, rx: 2, fill: MK.gold }, a); }
+    });
+    slideUp(a, m('transaksi') - .2);
+    const b = G(p);
+    mcard(b, 92, 440, 1100, 230);
+    T(b, 'LAPIS 2 · KEWAJIBAN PPh IMPORTIR SELAMA SATU TAHUN', { x: 122, y: 478, size: 15, weight: 800, fill: MK.dim });
+    tile(b, 'idcard', 185, 575, { size: 80, v: 'blue', floor: false });
+    T(b, 'Importir', { x: 185, y: 640, size: 18, weight: 700, fill: MK.navy, anchor: 'middle' });
+    mk('rect', { x: 300, y: 545, width: 860, height: 60, rx: 10, fill: MK.sky, 'fill-opacity': .18 }, b);
+    T(b, 'PPh terutang setahun', { x: 1140, y: 584, size: 19, weight: 600, fill: MK.navy, anchor: 'end' });
+    slideUp(b, m('wajib') - .4);
+    const seg = mk('rect', { x: 300, y: 545, width: 0, height: 60, rx: 10, fill: MK.gold }, p);
+    prog(q => seg.setAttribute('width', 300 * q), m('wajib') + .3, .6, out);
+    const sl = T(p, 'PPh 22 · dibayar di muka', { x: 320, y: 584, size: 19, weight: 800, fill: MK.navy, o: 0 });
+    show(sl, m('wajib') + .8, .3);
+    flow(p, 'M1170 352Q1100 450 460 540', MK.goldDark, m('wajib'), .7, 4);
+    mkHead(p, 460, 540, 2.6, MK.goldDark, m('wajib') + .6);
+    const s = G(p);
+    tile(s, 'doc', 1390, 560, { size: 110, v: 'gold' });
+    T(s, 'SPT Tahunan', { x: 1390, y: 648, size: 22, weight: 800, fill: MK.navy, anchor: 'middle' });
+    T(s, 'PPh importir', { x: 1390, y: 676, size: 17, weight: 500, fill: MK.dim, anchor: 'middle' });
+    popIn(s, m('kredit') + .3);
+    flow(p, 'M1200 575H1316', MK.gold, m('kredit'), .4, 5);
+    mkHead(p, 1318, 575, 0, MK.gold, m('kredit') + .35, 16);
+    const k = pill(p, 'dikreditkan', 1258, 535, { size: 16, bg: MK.gold });
+    popIn(k, m('kredit') + .5);
+    source(p, 'Bahan Ajar PDRI KB 3.3 dan KB 5', m('transaksi'));
+  }],
+
+  ['spt', 'Kredit ke SPT yang mana', (m, D) => {
+    const p = panel(0);
+    navy(p, 41, D);
+    actionTitle(p, 'Kredit pajak mengikuti jenis wajib pajaknya', { tag: 'KE SPT TAHUNAN YANG MANA?', dark: true });
+    [['pt', 'office', 'blue', 'PT Kain Prima Nusantara', 'Wajib pajak badan', 'SPT Tahunan', 'PPh Badan', 'gold'],
+     ['rina', 'user', 'gold', 'Bu Rina', 'Wajib pajak orang pribadi', 'SPT Tahunan', 'PPh Orang Pribadi', 'sky']].forEach(([mark, gl, v, n, sub, s1, s2, sv], i) => {
+      const y = 250 + i * 225, a = G(p);
+      mcard(a, 92, y, 560, 180, { dark: true });
+      tile(a, gl, 180, y + 90, { size: 96, v });
+      T(a, n, { x: 250, y: y + 82, size: 27, weight: 700, fill: MK.navy });
+      pill(a, sub, 250, y + 120, { size: 16, anchor: 'start', bg: MK.navy, ink: '#fff' });
+      popIn(a, m(mark) - .2);
+      flow(p, `M670 ${y + 90}H960`, MK.gold, m(mark) + .3, .6, 6);
+      mkHead(p, 962, y + 90, 0, MK.gold, m(mark) + .85, 18);
+      const t = pill(p, 'PPh 22 Impor', 815, y + 58, { size: 17, bg: MK.gold });
+      popIn(t, m(mark) + .5);
+      const b = G(p);
+      mcard(b, 988, y, 520, 180, { dark: true });
+      tile(b, 'doc', 1075, y + 90, { size: 96, v: sv });
+      T(b, s1, { x: 1145, y: y + 80, size: 22, weight: 600, fill: MK.dim });
+      T(b, s2, { x: 1145, y: y + 116, size: 29, weight: 800, fill: MK.navy });
+      popIn(b, m(mark) + .9);
+    });
+    source(p, 'Bahan Ajar PDRI KB 5', .8, true);
+  }],
+
+  ['hitung', 'Kasus 1: hitung PPh 22', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, `Kasus 1: PPh 22 Impor ${rp(PPH)}`, { tag: 'KASUS 1 · HITUNG PPh 22 IMPOR' });
+    const c = G(p);
+    mcard(c, 92, 225, 640, 300);
+    T(c, 'CEK TARIF DULU', { x: 122, y: 268, size: 15, weight: 800, fill: MK.dim });
+    slideUp(c, m('cek') - .3);
+    [['Pos 5208.21.00', 'tidak ada di Lampiran A–D'], ['Status importir', 'memiliki API-U']].forEach(([a, b], i) => {
+      const y = 322 + i * 64, g = G(p);
+      if (i) mk('rect', { x: 122, y: y - 36, width: 580, height: 1.5, fill: MK.line }, g);
+      T(g, a, { x: 122, y, size: 22, weight: 700, fill: MK.navy });
+      T(g, b, { x: 640, y, size: 19, weight: 600, fill: MK.dim, anchor: 'end' });
+      okTick(g, 680, y - 7, 16);
+      slideUp(g, m('cek') + .4 + i * 1.6, .4);
+    });
+    const tr = G(p);
+    mk('rect', { x: 112, y: 425, width: 600, height: 80, rx: 12, fill: '#FFF4D6' }, tr);
+    T(tr, 'Tarif: barang lain dengan API', { x: 136, y: 474, size: 21, weight: 700, fill: MK.navy });
+    T(tr, '2,5%', { x: 690, y: 480, size: 38, weight: 800, fill: MK.goldDark, anchor: 'end' });
+    slideUp(tr, m('tarif') - .2, .4);
+    const n = G(p);
+    mcard(n, 92, 545, 640, 160);
+    tile(n, 'container', 165, 625, { size: 80, v: 'blue', floor: false });
+    T(n, 'NILAI IMPOR', { x: 225, y: 600, size: 15, weight: 800, fill: MK.dim });
+    T(n, rp(NI), { x: 225, y: 645, size: 34, weight: 800, fill: MK.navy });
+    slideUp(n, m('ni') - .2, .4);
+    // the result card (right): revealed when the learner has it right
+    const r = G(p);
+    mk('rect', { x: 800, y: 590, width: 708, height: 115, rx: 18, fill: MK.navy }, r);
+    T(r, 'PPh PASAL 22 IMPOR', { x: 840, y: 625, size: 16, weight: 800, fill: '#D5E2F5' });
+    T(r, `= 2,5% × ${rp(NI)}`, { x: 1470, y: 625, size: 20, weight: 700, fill: '#fff', anchor: 'end' });
+    const q = T(r, '?', { x: 840, y: 685, size: 46, weight: 800, fill: MK.gold });
+    const ans = T(r, rp(PPH), { x: 840, y: 685, size: 46, weight: 800, fill: MK.gold, o: 0 });
+    slideUp(r, m('ni') + .4, .5);
+    REVEAL.pph = () => { fx(q, { o: 0 }, 0, .2); fx(ans, { o: 1 }, .1, .4); pulseFx(ans, 1.08); };
+    source(p, 'Bahan Ajar PDRI KB 5, Kasus 1; PMK 51 Tahun 2025', m('cek'));
+  }, { ask: done => quiz({ x: 800, y: 225, w: 708, cls: 'side' }, [{
+    id: 'c-pph22', prompt: [`Tarif 2,5% dari nilai impor ${rp(NI)}. Berapa PPh Pasal 22 Impornya?`],
+    build: blanks([{ parts: ['PPh 22 = Rp', { box: idNum(PPH) }], why: `2,5% × ${rp(NI)} = ${rp(PPH)}.`,
+      hint: 'Kalikan nilai impor dengan 2,5%, atau bagi dengan 40.', fx: () => REVEAL.pph?.() }]),
+  }], done, 'Kalkulator') }],
+
+  ['langkah', 'Tiga langkah memilih tarif', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Pilih tarif PPh Pasal 22 dalam tiga langkah', { tag: 'DIAGRAM KEPUTUSAN TARIF' });
+    const XS = [250, 690, 1130], Y = 320;
+    [['l1', 'Lampiran A|atau B?', '10% (Lampiran A)|7,5% (Lampiran B)', 'Ya'], ['l2', 'Emas|batangan?', '0,25%', 'Ya'],
+     ['l3', 'Punya API?', '2,5%|0,5% kedelai, gandum,|tepung terigu', 'Ya']].forEach(([mark, qn, res, ya], i) => {
+      const x = XS[i], d = G(p);
+      path(d, `M${x} ${Y - 92}L${x + 140} ${Y}L${x} ${Y + 92}L${x - 140} ${Y}Z`, { fill: '#fff', stroke: MK.navy, 'stroke-width': 3 });
+      mk('circle', { cx: x - 110, cy: Y - 70, r: 20, fill: MK.gold }, d);
+      T(d, String(i + 1), { x: x - 110, y: Y - 63, size: 20, weight: 800, fill: MK.navy, anchor: 'middle' });
+      lines(d, qn, x, Y - (qn.includes('|') ? 6 : -8), { size: 22, weight: 800, fill: MK.navy, anchor: 'middle' });
+      popIn(d, m(mark) - .1);
+      flow(p, `M${x} ${Y + 96}V${Y + 168}`, MK.green, m(mark) + .5, .3, 4);
+      mkHead(p, x, Y + 170, Math.PI / 2, MK.green, m(mark) + .75);
+      const yl = T(p, ya, { x: x + 14, y: Y + 140, size: 17, weight: 800, fill: MK.green, o: 0 }); show(yl, m(mark) + .5, .3);
+      const r = G(p), rl = res.split('|');
+      mk('rect', { x: x - 165, y: Y + 178, width: 330, height: 150, rx: 16, fill: MK.navy }, r);
+      if (rl[0].length > 8) rl.forEach((s, j) => T(r, s, { x, y: Y + 245 + j * 40, size: 26, weight: 800, fill: MK.gold, anchor: 'middle' }));
+      else {
+        T(r, rl[0], { x, y: Y + 238, size: 40, weight: 800, fill: MK.gold, anchor: 'middle' });
+        rl.slice(1).forEach((s, j) => T(r, s, { x, y: Y + 274 + j * 26, size: 18, weight: 600, fill: '#D5E2F5', anchor: 'middle' }));
+      }
+      popIn(r, m(mark) + .9);
+      if (i < 2) {
+        flow(p, `M${x + 144} ${Y}H${XS[i + 1] - 146}`, MK.red, m(XS[i + 1] === 690 ? 'l2' : 'l3') - .5, .4, 4);
+        mkHead(p, XS[i + 1] - 144, Y, 0, MK.red, m(XS[i + 1] === 690 ? 'l2' : 'l3') - .15);
+        const tl = T(p, 'Tidak', { x: (x + XS[i + 1]) / 2, y: Y - 12, size: 17, weight: 800, fill: MK.red, anchor: 'middle', o: 0 });
+        show(tl, m(XS[i + 1] === 690 ? 'l2' : 'l3') - .4, .3);
+      }
+    });
+    flow(p, `M${1130 + 144} ${Y}H1356`, MK.red, m('tanpa') - .2, .3, 4);
+    mkHead(p, 1358, Y, 0, MK.red, m('tanpa') + .05);
+    const tl = T(p, 'Tidak', { x: 1316, y: Y - 12, size: 17, weight: 800, fill: MK.red, anchor: 'middle', o: 0 }); show(tl, m('tanpa') - .2, .3);
+    const nr = G(p);
+    mk('rect', { x: 1366, y: Y - 70, width: 142, height: 140, rx: 16, fill: MK.navy }, nr);
+    T(nr, '7,5%', { x: 1437, y: Y + 6, size: 36, weight: 800, fill: MK.gold, anchor: 'middle' });
+    T(nr, 'tanpa API', { x: 1437, y: Y + 40, size: 17, weight: 600, fill: '#D5E2F5', anchor: 'middle' });
+    popIn(nr, m('tanpa') + .3);
+    const note = T(p, 'Barang yang tidak dikuasai: 7,5% dari harga jual lelang', { x: 92, y: 712, size: 18, weight: 600, fill: MK.dim, o: 0 });
+    show(note, m('tanpa') + 1.2, .4);
+    source(p, 'PMK 51 Tahun 2025; Bahan Ajar PDRI KB 5', m('l1'));
+  }],
+
+  ['tarif', 'Pilih Tarifmu', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Pilih Tarifmu', { tag: 'AKTIVITAS · PILIH TARIFMU' });
+    SCEN.forEach(([gl, v, lab], i) => {
+      const x = 92 + (i % 4) * 358, y = 245 + Math.floor(i / 4) * 210, c = G(p);
+      mcard(c, x, y, 336, 185);
+      tile(c, gl, x + 50, y + 55, { size: 64, v, floor: false });
+      lines(c, lab.replace(', ', ',|').replace(' Lampiran', '|Lampiran'), x + 95, y + 48, { size: 18, weight: 700 });
+      mk('rect', { x: x + 20, y: y + 110, width: 296, height: 54, rx: 12, fill: MK.gold, 'fill-opacity': .08, stroke: MK.gold, 'stroke-width': 2, 'stroke-dasharray': '9 7' }, c);
+      T(c, 'tarif ?', { x: x + 168, y: y + 144, size: 18, weight: 700, fill: MK.goldDark, anchor: 'middle' });
+      popIn(c, .4 + i * .12);
+    });
+    const r = G(p);
+    ['0,25%', '0,5%', '2,5%', '7,5%', '10%'].forEach((v, i) => pill(r, v, 92 + i * 150, 700, { size: 22, anchor: 'start', bg: MK.gold }));
+    slideUp(r, m('ajak') + .3);
+  }, { ask: done => quiz({ x: 92, y: 140, w: 1416, cls: 'side' }, [{
+    id: 'p-tarif', prompt: ['Seret tarif PPh Pasal 22 Impor yang tepat ke setiap skenario. Ikuti tiga langkah di atasnya.'],
+    build: dragBoard(rateBoard, { type: 'fill-in', yes: 'Lampiran A 10%, Lampiran B 7,5%; emas batangan 0,25%; dengan API 2,5%, atau 0,5% untuk kedelai, gandum, dan tepung terigu; tanpa API 7,5%.' }),
+  }], done, 'Aktivitas') }],
+
+  ['alur', 'Ikuti uangnya', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Ikuti uangnya dari PIB sampai SPT Tahunan', { tag: 'AKTIVITAS · IKUTI UANGNYA' });
+    const XS = [0, 1, 2, 3, 4].map(i => 210 + i * 295);
+    const line = mk('rect', { x: XS[0], y: 418, width: 0, height: 6, rx: 3, fill: MK.gold }, p);
+    prog(q => line.setAttribute('width', (XS[4] - XS[0]) * q), m('lima'), 1.2, out);
+    XS.forEach((x, i) => {
+      const g = G(p);
+      mk('circle', { cx: x, cy: 421, r: 62, fill: '#fff', stroke: MK.navy, 'stroke-width': 4 }, g);
+      T(g, String(i + 1), { x, y: 438, size: 46, weight: 800, fill: MK.navy, anchor: 'middle' });
+      mk('rect', { x: x - 120, y: 510, width: 240, height: 64, rx: 12, fill: MK.sky, 'fill-opacity': .07, stroke: MK.sky, 'stroke-width': 2, 'stroke-dasharray': '9 7' }, g);
+      popIn(g, m('lima') + .2 + i * .25);
+    });
+    const ends = G(p);
+    T(ends, 'PIB', { x: XS[0], y: 320, size: 20, weight: 800, fill: MK.dim, anchor: 'middle' });
+    T(ends, 'SPT Tahunan', { x: XS[4], y: 320, size: 20, weight: 800, fill: MK.dim, anchor: 'middle' });
+    put(ends, { o: 0 }); show(ends, m('lima') + 1.2, .4);
+  }, { ask: done => quiz({ x: 92, y: 205, w: 1416, cls: 'side' }, [{
+    id: 'p-alur-tahap', prompt: ['Susun kelima tahap perjalanan uang PPh 22 Impor, dari PIB (1) sampai SPT Tahunan (5).'],
+    build: dragBoard(orderBoard, { yes: 'PIB diajukan, PPh 22 dibayar bersama Bea Masuk, dana masuk ke kas negara, DJBC melaporkan hasil pemungutan, lalu importir mengkreditkannya di SPT Tahunan.' }),
+  }, {
+    id: 'p-alur-pihak', prompt: ['Sekarang pasangkan pihak atau dokumen pada setiap tahap.'],
+    build: dragBoard(pairBoard, { type: 'fill-in', yes: 'Importir mengajukan PIB; importir membayar melalui bank devisa; DJBC memungut dan melaporkan; importir mengkreditkan di SPT Tahunan.' }),
+  }], done, 'Aktivitas') }],
+
+  ['kredit', 'Dikreditkan, bukan final', (m, D) => {
+    const p = panel(0);
+    navy(p, 7, D);
+    actionTitle(p, 'PPh Pasal 22 Impor dikreditkan,|bukan pajak final', { tag: 'JAWABAN UNTUK STAF · RANGKUMAN KB 5', dark: true });
+    [['m1', 'ship', 'sky', 'Dipungut atas transaksi impor'], ['m2', 'wallet', 'gold', 'Menjadi pembayaran di muka PPh importir'], ['m3', 'doc', 'blue', 'Dikreditkan dalam SPT Tahunan']].forEach(([mark, gl, v, s], i) => {
+      const y = 260 + i * 140, g = G(p);
+      mcard(g, 92, y, 860, 115, { dark: true });
+      tile(g, gl, 160, y + 57, { size: 76, v, floor: false });
+      T(g, s, { x: 220, y: y + 66, size: 26, weight: 700, fill: MK.navy });
+      okTick(g, 900, y + 57, 22);
+      T(g, '0' + (i + 1), { x: 850, y: y + 68, size: 28, weight: 700, fill: MK.line, anchor: 'end' });
+      slideUp(g, m(mark) - .2, .5);
+    });
+    const ps = G(p);
+    mcard(ps, 1000, 260, 508, 395, { dark: true });
+    tile(ps, 'passport', 1080, 335, { size: 86, v: 'sky' });
+    T(ps, 'PASPOR MISI', { x: 1140, y: 330, size: 22, weight: 800, fill: MK.navy });
+    T(ps, 'Pertanyaan 4', { x: 1140, y: 360, size: 17, weight: 600, fill: MK.dim });
+    lines(ps, '“Kain belum laku, kok PPh|sudah dipungut?”', 1036, 430, { size: 21, weight: 700, fill: MK.navy });
+    lines(ps, 'Karena PPh 22 Impor adalah|pembayaran di muka yang nanti|dikreditkan.', 1036, 510, { size: 18, weight: 500, fill: MK.dim });
+    slideUp(ps, .5);
+    stamp(p, 1400, 650, 'MISI KB 5', 'SELESAI', m('cap') + .4);
+    source(p, 'Bahan Ajar PDRI KB 5', .8, true);
+  }],
+
+  ['api', 'Tanpa API tiga kali lipat', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    actionTitle(p, 'Tanpa API tiga kali lipat.|Apa dampaknya?', { tag: 'REFLEKSI · BARANG LAIN' });
+    const law = G(p);
+    tile(law, 'law', 400, 290, { size: 110, v: 'gold' });
+    popIn(law, .4);
+    const base = 650;
+    [['Dengan API', 2.5, 250, MK.sky], ['Tanpa API', 7.5, 550, MK.gold]].forEach(([n, r, x, col], i) => {
+      const hh = r * 34, bar = mk('rect', { x: x - 70, y: base, width: 140, height: 0, rx: 8, fill: col }, p);
+      prog(q => { bar.setAttribute('height', hh * q); bar.setAttribute('y', base - hh * q); }, m('banding') + i * 1.2, .7, out);
+      const lab = T(p, String(r).replace('.', ',') + '%', { x, y: base - hh - 16, size: 36, weight: 800, fill: MK.navy, anchor: 'middle', o: 0 });
+      show(lab, m('banding') + i * 1.2 + .6, .3);
+      const nl = T(p, n, { x, y: base + 34, size: 21, weight: 700, fill: MK.navy, anchor: 'middle', o: 0 });
+      show(nl, m('banding') + i * 1.2, .3);
+    });
+    mk('rect', { x: 150, y: base, width: 500, height: 3, fill: MK.navy }, p);
+    const x3 = pill(p, '× 3', 400, 450, { size: 24, bg: MK.navy, ink: '#fff' });
+    popIn(x3, m('banding') + 2.6);
+  }, { ask: done => quiz({ x: 790, y: 150, w: 730, cls: 'side' }, [{
+    id: 'c-api', prompt: ['Tanpa API, barang lain dipungut 7,5%, bukan 2,5%. Apa dampaknya bagi importir?'],
+    build: choice([['Setoran di muka lebih besar dan arus kas tertekan, tetapi PPh 22 tetap dapat dikreditkan.'],
+      ['PPh 22-nya menjadi final.'], ['PPh setahunnya pasti tiga kali lipat.'], ['Tidak ada dampak apa pun.']], 0,
+      'Uang yang dibayar di muka lebih besar, tetapi PPh 22 tetap tidak final dan dapat dikreditkan jika memenuhi ketentuan. Beda tarif ini mendorong importir memiliki API (fungsi regulerend, asas equality).',
+      [null, 'Tarif lebih tinggi tidak mengubah sifatnya: tetap tidak final.', 'PPh setahun dihitung di SPT Tahunan; PPh 22 hanya pembayaran di muka.', 'Uang di muka lebih besar, jadi arus kas terdampak.']),
+  }], done) }],
+
+  ['finish', 'Selesai', (m, D) => {
+    const p = panel(0);
+    paper(p);
+    const left = G(p);
+    path(left, 'M0 0H640L470 900H0Z', { fill: MK.navy });
+    path(p, 'M640 0H700L530 900H470Z', { fill: MK.gold });
+    path(p, 'M712 0H742L572 900H542Z', { fill: MK.sky });
+    const md = G(p, { x: 300, y: 440 });
+    const rays = G(md);
+    for (let i = 0; i < 16; i++) path(rays, `M0 0L${-18} -260L18 -260Z`, { fill: MK.gold, 'fill-opacity': .12 }).setAttribute('transform', `rotate(${i * 22.5})`);
+    clockRun(t => rays.setAttribute('transform', `rotate(${t * 8})`), D, { tail: true });
+    tile(md, 'medal', 0, 0, { size: 190, v: 'gold' });
+    popIn(md, .3);
+    const orb = [['ship', 'blue'], ['coins', 'gold'], ['doc', 'sky']].map(([gl, v], i) => ({ e: tile(p, gl, 0, 0, { size: 64, v, floor: false }), a: i * 2.094 }));
+    clockRun(t => orb.forEach(o => put(o.e, { x: 300 + 190 * Math.cos(o.a + t * .4), y: 440 + 190 * Math.sin(o.a + t * .4) * .55 })), D, { tail: true });
+    orb.forEach(o => { put(o.e, { o: 0 }); show(o.e, .8, .5); });
+    const hd = T(p, 'Selamat, Sobat Pemelajar!', { x: 1120, y: 200, size: 44, weight: 700, fill: MK.navy, anchor: 'middle' });
+    slideUp(hd, .5);
+  }, { ask: finishCard }],
+].map(([id, title, run, extra]) => ({ id, title, run, ...extra }));
+const REVEAL = {};
+
+{
+  const NAVY = new Set(['pembuka', 'pungut', 'spt', 'kredit']);
+  BEATS.forEach((b, i) => {
+    if (!i || b.lead === false) return;
+    const prev = BEATS[i - 1];
+    if (NAVY.has(b.id) !== NAVY.has(prev.id) || b.id === 'finish') {
+      const run = b.run;
+      b.run = (m, D) => { run(m, D); wipeIn(S.panel); };
+    }
+  });
+}
+
+mkBoot();
+</script>
+</body>
+</html>
